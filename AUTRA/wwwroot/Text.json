@@ -1,0 +1,387 @@
+{
+    "nodes": [
+        {
+            "$id": "9",
+            "support": 1,
+            "position": {
+                "x": 0,
+                "y": 0,
+                "z": 0
+            },
+            "pointLoads": []
+        },
+        {
+            "$id": "10",
+            "support": 1,
+            "position": {
+                "x": 6,
+                "y": 0,
+                "z": 0
+            },
+            "pointLoads": []
+        },
+        {
+            "$id": "11",
+            "support": 1,
+            "position": {
+                "x": 0,
+                "y": 0,
+                "z": 5
+            },
+            "pointLoads": []
+        },
+        {
+            "$id": "12",
+            "support": 1,
+            "position": {
+                "x": 6,
+                "y": 0,
+                "z": 5
+            },
+            "pointLoads": []
+        },
+        {
+            "$id": "1",
+            "support": 0,
+            "position": {
+                "x": 0,
+                "y": 3,
+                "z": 0
+            },
+            "pointLoads": []
+        },
+        {
+            "$id": "2",
+            "support": 0,
+            "position": {
+                "x": 6,
+                "y": 3,
+                "z": 0
+            },
+            "pointLoads": []
+        },
+        {
+            "$id": "3",
+            "support": 0,
+            "position": {
+                "x": 0,
+                "y": 3,
+                "z": 5
+            },
+            "pointLoads": []
+        },
+        {
+            "$id": "4",
+            "support": 0,
+            "position": {
+                "x": 6,
+                "y": 3,
+                "z": 5
+            },
+            "pointLoads": []
+        },
+        {
+            "$id": "5",
+            "support": 0,
+            "position": {
+                "x": 2,
+                "y": 3,
+                "z": 0
+            },
+            "pointLoads": [
+                {
+                    "magnitude": -1,
+                    "pattern": "live"
+                },
+                {
+                    "magnitude": -0.75,
+                    "pattern": "dead"
+                }
+            ]
+        },
+        {
+            "$id": "6",
+            "support": 0,
+            "position": {
+                "x": 2,
+                "y": 3,
+                "z": 5
+            },
+            "pointLoads": [
+                {
+                    "magnitude": -1,
+                    "pattern": "live"
+                },
+                {
+                    "magnitude": -0.75,
+                    "pattern": "dead"
+                }
+            ]
+        },
+        {
+            "$id": "7",
+            "support": 0,
+            "position": {
+                "x": 4,
+                "y": 3,
+                "z": 0
+            },
+            "pointLoads": [
+                {
+                    "magnitude": -1,
+                    "pattern": "live"
+                },
+                {
+                    "magnitude": -0.75,
+                    "pattern": "dead"
+                }
+            ]
+        },
+        {
+            "$id": "8",
+            "support": 0,
+            "position": {
+                "x": 4,
+                "y": 3,
+                "z": 5
+            },
+            "pointLoads": [
+                {
+                    "magnitude": -1,
+                    "pattern": "live"
+                },
+                {
+                    "magnitude": -0.75,
+                    "pattern": "dead"
+                }
+            ]
+        }
+    ],
+    "material": {
+        "$id": "m",
+        "name": "ST_37"
+    },
+    "sections": [
+        {
+            "$id": "s1",
+            "name": "IPE 200",
+            "material": {
+                "$ref": "m"
+            }
+        },
+        {
+            "$id": "s2",
+            "name": "IPE 270",
+            "material": {
+                "$ref": "m"
+            }
+        },
+        {
+            "$id": "s3",
+            "name": "IPE 360",
+            "material": {
+                "$ref": "m"
+            }
+        }
+    ],
+    "secondaryBeams": [
+        {
+            "section": {
+                "$ref": "s1"
+            },
+            "startNode": {
+                "$ref": "1"
+            },
+            "endNode": {
+                "$ref": "3"
+            },
+            "lineLoads": [
+                {
+                    "magnitude": -1,
+                    "pattern": "live"
+                },
+                {
+                    "magnitude": -0.75,
+                    "pattern": "dead"
+                }
+            ],
+            "length": 5,
+            "innerNodes": []
+        },
+        {
+            "section": {
+                "$ref": "s1"
+            },
+            "startNode": {
+                "$ref": "5"
+            },
+            "endNode": {
+                "$ref": "6"
+            },
+            "lineLoads": [
+                {
+                    "magnitude": -1.5,
+                    "pattern": "dead"
+                },
+                {
+                    "magnitude": -2,
+                    "pattern": "live"
+                }
+            ],
+            "length": 5,
+            "innerNodes": []
+        },
+        {
+            "section": {
+                "$ref": "s1"
+            },
+            "startNode": {
+                "$ref": "7"
+            },
+            "endNode": {
+                "$ref": "8"
+            },
+            "lineLoads": [
+                {
+                    "magnitude": -1.5,
+                    "pattern": "dead"
+                },
+                {
+                    "magnitude": -2,
+                    "pattern": "live"
+                }
+            ],
+            "length": 5,
+            "innerNodes": []
+        },
+        {
+            "section": {
+                "$ref": "s1"
+            },
+            "startNode": {
+                "$ref": "2"
+            },
+            "endNode": {
+                "$ref": "4"
+            },
+            "lineLoads": [
+                {
+                    "magnitude": -1,
+                    "pattern": "live"
+                },
+                {
+                    "magnitude": -0.75,
+                    "pattern": "dead"
+                }
+            ],
+            "length": 5,
+            "innerNodes": []
+        }
+    ],
+    "mainBeams": [
+        {
+            "section": {
+                "$ref": "s2"
+            },
+            "startNode": {
+                "$ref": "1"
+            },
+            "endNode": {
+                "$ref": "2"
+            },
+            "lineLoads": [],
+            "length": 6,
+            "innerNodes": [
+                {
+                    "$ref": "5"
+                },
+                {
+                    "$ref": "7"
+                }
+            ]
+        },
+        {
+            "section": {
+                "$ref": "s2"
+            },
+            "startNode": {
+                "$ref": "3"
+            },
+            "endNode": {
+                "$ref": "4"
+            },
+            "lineLoads": [],
+            "length": 6,
+            "innerNodes": [
+                {
+                    "$ref": "6"
+                },
+                {
+                    "$ref": "8"
+                }
+            ]
+        }
+    ],
+    "columns": [
+        {
+            "section": {
+                "$ref": "s3"
+            },
+            "startNode": {
+                "$ref": "1"
+            },
+            "endNode": {
+                "$ref": "9"
+            },
+            "lineLoads": [],
+            "length": 3
+        },
+        {
+            "section": {
+                "$ref": "s3"
+            },
+            "startNode": {
+                "$ref": "2"
+            },
+            "endNode": {
+                "$ref": "10"
+            },
+            "lineLoads": [],
+            "length": 3
+        },
+        {
+            "section": {
+                "$ref": "s3"
+            },
+            "startNode": {
+                "$ref": "3"
+            },
+            "endNode": {
+                "$ref": "11"
+            },
+            "lineLoads": [],
+            "length": 3
+        },
+        {
+            "section": {
+                "$ref": "s3"
+            },
+            "startNode": {
+                "$ref": "4"
+            },
+            "endNode": {
+                "$ref": "12"
+            },
+            "lineLoads": [],
+            "length": 3
+        }
+    ],
+    "projectProperties": {
+        "Number": "1",
+        "Name": "AUTRA2",
+        "Designer": "AUTRA2",
+        "Location": "Smart Village",
+        "City": "Giza",
+        "Country": "Egypt"
+    }
+}

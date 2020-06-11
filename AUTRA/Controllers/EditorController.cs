@@ -9,6 +9,7 @@ using AUTRA.Design;
 using AUTRA.Helper;
 using Microsoft.AspNetCore.Mvc;
 using Newtonsoft.Json;
+using Newtonsoft.Json.Converters;
 
 namespace AUTRA.Controllers
 {
@@ -34,7 +35,11 @@ namespace AUTRA.Controllers
             stopwatch.Start();
             Design.AUTRA.Init(project);
             stopwatch.Stop();
-            string response = JsonConvert.SerializeObject(project);
+            string response = JsonConvert.SerializeObject(project,
+                new StringEnumConverter
+                {
+                    CamelCaseText = true
+                }); 
 
             return response;
             //return Json(project);

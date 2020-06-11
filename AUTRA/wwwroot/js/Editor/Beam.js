@@ -42,7 +42,7 @@ class Beam extends FrameElement {
             return mesh;
     }
     showShear(pattern) {
-        let stations = this.visual.strainingActions.find(sa => sa.pattern == pattern).stations;
+        let stations = this.visual.strainingActions.find(sa => sa.Pattern == pattern).Stations;
         let shape = new THREE.Shape();
         for (let i = 0; i < stations.length; i++) {
             shape.lineTo(stations[i].x, stations[i].Vo /** 0.25*/);

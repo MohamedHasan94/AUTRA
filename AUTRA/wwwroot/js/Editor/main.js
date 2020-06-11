@@ -523,6 +523,14 @@
                 console.log(res)
                 debugger
                 res = JSON.parse(res);
+
+                for (let i = 0; i < mainBeams[0].length; i++) {
+                    mainBeams[0][i].visual.strainingActions = res.MainBeams[i].StrainingActions;
+                }
+
+                for (let i = 0; i < secondaryBeams[0].length; i++) {
+                    secondaryBeams[0][i].visual.strainingActions = res.SecondaryBeams[i].StrainingActions;
+                }
             },
             error: function (x, y, res) {
                 console.log(res)

@@ -1,4 +1,6 @@
-﻿using System;
+﻿using Newtonsoft.Json;
+using Newtonsoft.Json.Converters;
+using System;
 using System.Collections.Generic;
 using System.ComponentModel;
 using System.Text;
@@ -18,6 +20,7 @@ namespace AUTRA.Design
 		BEARING_NON_PRETENSIONED,SLIP_PRETENSIONED,BEARING_PRETENSIONED
 	}
 	[DefaultValue(NONE)]
+	//[JsonConverter(typeof(StringEnumConverter))]
 	public enum LoadPattern
 	{
 		NONE,DEAD,LIVE,WIND,COMBINATION

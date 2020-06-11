@@ -10,6 +10,7 @@ using AUTRA.Helper;
 using Microsoft.AspNetCore.Mvc;
 using Newtonsoft.Json;
 using Newtonsoft.Json.Converters;
+using Newtonsoft.Json.Serialization;
 
 namespace AUTRA.Controllers
 {
@@ -35,11 +36,15 @@ namespace AUTRA.Controllers
             stopwatch.Start();
             Design.AUTRA.Init(project);
             stopwatch.Stop();
-            string response = JsonConvert.SerializeObject(project,
-                new StringEnumConverter
+            string response = JsonConvert.SerializeObject(project,/*new JsonSerializerSettings
+            {
+                ContractResolver = new DefaultContractResolver { NamingStrategy = new CamelCaseNamingStrategy() }
+            ,
+                */new StringEnumConverter
                 {
                     CamelCaseText = true
-                }); 
+                }
+            ); 
 
             return response;
             //return Json(project);

@@ -59,7 +59,7 @@ namespace AUTRA.Design
             var supports = new List<Support>();
             model.Columns.AssignSupports(supports);
             #endregion
-           
+
             #region AUTRA Design Module
             AUTRADesign designer = new AUTRADesign(model,supports ,egASDCode, sections,patterns,bolt);
             designer.CreateCombo("1.2D+1.4L", new FactoredPattern() { Pattern = LoadPattern.DEAD, ScaleFactor = 1.2 }, new FactoredPattern() { Pattern = LoadPattern.LIVE, ScaleFactor = 1.4 });
@@ -68,7 +68,7 @@ namespace AUTRA.Design
             designer.Design(equalAngles);
 
             
-            designer.CreateReports(@"D:\ITI\GraduationPoject\AUTRA\AUTRA\wwwroot\Outputs\Reports");//To be changed
+            designer.CreateReports(@"D:\ITI\Graduation Project\AUTRA\AUTRA\wwwroot\Outputs\Reports");//To be changed
             #endregion
 
 

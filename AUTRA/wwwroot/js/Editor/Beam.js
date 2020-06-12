@@ -28,30 +28,39 @@ class Beam extends FrameElement {
     }
     showMoment(pattern) {
         let stations = this.visual.strainingActions.find(sa => sa.pattern == pattern).stations;
-            let shape = new THREE.Shape();
-            for (let i = 0; i < stations.length; i++) {
-                shape.lineTo(stations[i].x, stations[i].Mo*-0.25);
-            }
-            shape.lineTo(this.data.length, 0);
-            let geometry = new THREE.ShapeBufferGeometry(shape);
-            let material = new THREE.MeshBasicMaterial({ color: 0x00ff00,transparent : true, opacity : 0.3,  side: THREE.DoubleSide});
-            let mesh = new THREE.Mesh(geometry, material);
-            mesh.rotation.copy(this.visual.mesh.rotation);
-            mesh.rotation.y -= 0.5*Math.PI;
-            mesh.position.copy(this.visual.mesh.position);
-            return mesh;
-    }
-    showShear(pattern) {
-        let stations = this.visual.strainingActions.find(sa => sa.Pattern == pattern).Stations;
         let shape = new THREE.Shape();
         for (let i = 0; i < stations.length; i++) {
-            shape.lineTo(stations[i].x, stations[i].Vo /** 0.25*/);
-            shape.lineTo(stations[i].x, stations[i].Vf /** 0.25*/);
+            shape.lineTo(stations[i].x, stations[i].mo * -0.25);
         }
-        console.log(shape)
+        shape.lineTo(this.data.length, 0);
         let geometry = new THREE.ShapeBufferGeometry(shape);
-        let material = new THREE.MeshBasicMaterial({ color: 0x00ff00, transparent: true, opacity: 0.3, side: THREE.DoubleSide });
+        let material = new THREE.MeshBasicMaterial({ color: 0x0000ff, transparent: true, opacity: 0.7, side: THREE.DoubleSide });
         let mesh = new THREE.Mesh(geometry, material);
+        mesh.rotation.copy(this.visual.mesh.rotation);
+        mesh.rotation.y -= 0.5 * Math.PI;
+        mesh.position.copy(this.visual.mesh.position);
+        return mesh;
+    }
+    showShear(pattern) {
+        let stations = this.visual.strainingActions.find(sa => sa.pattern == pattern).stations;
+        let shape1 = new THREE.Shape();
+        let shape2 = shape1.clone();
+
+        let half = parseInt(0.5 * (stations.length) + 1);
+        for (let i = 0; i < half; i++) {
+            shape1.lineTo(stations[i].x, stations[i].vo * 0.25);
+            shape1.lineTo(stations[i].x, stations[i].vf * 0.25);
+        }
+        let geometry1 = new THREE.ShapeBufferGeometry(shape1);
+        shape2.moveTo(stations[half-1].x, 0);
+        for (let i = half; i < stations.length; i++) {
+            shape2.lineTo(stations[i].x, stations[i].vo * 0.25);
+            shape2.lineTo(stations[i].x, stations[i].vf * 0.25);
+        }
+        shape2.lineTo(this.data.length, 0);
+        let geometry2 = new THREE.ShapeBufferGeometry(shape2);
+        let material = new THREE.MeshBasicMaterial({ color: 0x0000ff, transparent: true, opacity: 0.7, side: THREE.DoubleSide });
+        let mesh = new THREE.Mesh(THREE.BufferGeometryUtils.mergeBufferGeometries([geometry1, geometry2]), material);
         mesh.rotation.copy(this.visual.mesh.rotation);
         mesh.rotation.y -= 0.5 * Math.PI;
         mesh.position.copy(this.visual.mesh.position);
@@ -73,7 +82,7 @@ function getSecCoords(mainCoord, secSpacing) {
 
     for (var i = 1; i < number; i++) {
         while (sum < mainCoord[i]) {
-            sum = 10*sum + 10 * (secSpacing[i - 1] ?? secSpacing[0]);
+            sum = 10 * sum + 10 * (secSpacing[i - 1] ?? secSpacing[0]);
             sum /= 10;
             coord.push(sum);
         }
@@ -188,10 +197,10 @@ function createZBeams(editor, coordX, coordY, coordZ, section, coordXToCheck, no
 
                 mainBeams[((coordXToCheck.length - 1) * (j + 1)) + (i - m)].data.innerNodes.push({ "$ref": node2.data.$id });
             }
-            else{
+            else {
                 beam = new Beam(section, new THREE.Vector3(coordX[i], coordY, coordZ[j]), new THREE.Vector3(coordX[i], coordY, coordZ[j + 1]),
                     shape, lineMaterial.clone(), meshMaterial.clone(), nodes[coordXToCheck.length * j + a], nodes[coordXToCheck.length * (j + 1) + a]);
-            }                        
+            }
             beams.push(beam);
             editor.addToGroup(beam.visual.mesh, 'elements');
             editor.createPickingObject(beam);

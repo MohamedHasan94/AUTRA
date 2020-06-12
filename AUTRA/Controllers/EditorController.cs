@@ -36,19 +36,13 @@ namespace AUTRA.Controllers
             stopwatch.Start();
             Design.AUTRA.Init(project);
             stopwatch.Stop();
-            string response = JsonConvert.SerializeObject(project,/*new JsonSerializerSettings
+            string response = JsonConvert.SerializeObject(project,new JsonSerializerSettings
             {
-                ContractResolver = new DefaultContractResolver { NamingStrategy = new CamelCaseNamingStrategy() }
-            ,
-                */new StringEnumConverter
-                {
-                    CamelCaseText = true
-                }
-            ); 
+                ContractResolver = new DefaultContractResolver { NamingStrategy = new CamelCaseNamingStrategy() },
+                Converters = new List<JsonConverter> { new StringEnumConverter(new CamelCaseNamingStrategy()) }
+            }); 
 
             return response;
-            //return Json(project);
-            //return "Done";
         }
 
         [HttpPost]

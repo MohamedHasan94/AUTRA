@@ -525,11 +525,15 @@
                 res = JSON.parse(res);
 
                 for (let i = 0; i < mainBeams[0].length; i++) {
-                    mainBeams[0][i].visual.strainingActions = res.MainBeams[i].StrainingActions;
+                    mainBeams[0][i].visual.strainingActions = res.mainBeams[i].strainingActions;
                 }
 
                 for (let i = 0; i < secondaryBeams[0].length; i++) {
-                    secondaryBeams[0][i].visual.strainingActions = res.SecondaryBeams[i].StrainingActions;
+                    secondaryBeams[0][i].visual.strainingActions = res.secondaryBeams[i].strainingActions;
+                }
+
+                for (let i = 0; i < columns[0].length; i++) {
+                    columns[0][i].visual.strainingActions = res.columns[i].strainingActions;
                 }
             },
             error: function (x, y, res) {
@@ -591,26 +595,7 @@
     window.lightTheme = () => editor.lightTheme();
 
     window.screenshot = () => editor.screenshot(); 
-
-    $('#reactions').change((event) => {
-        let file = event.target.files[0];
-        let reader = new FileReader();
-        reader.onload = function (evt) {
-            let model = JSON.parse(evt.target.result);
-            for (let i = 0; i < 4; i++) {
-                nodes[i].visual.reactions = model.nodes[i].reactions;
-                editor.addToGroup(nodes[i].showReaction('dead'), 'results');
-                secondaryBeams[0][i].visual.strainingActions = model.secondaryBeams[i].strainingActions;
-                editor.addToGroup(secondaryBeams[0][i].showMoment('dead'), 'results');
-            }
-            for (var i = 0; i < 2; i++) {
-                mainBeams[0][i].visual.strainingActions = model.mainBeams[i].strainingActions;
-                editor.addToGroup(mainBeams[0][i].showMoment('dead'), 'results');
-            }
-        };
-        reader.readAsText(file);
-    });
-
+        
     window.result = () => {
         editor.clearGroup('results');
         let pattern = $('#resultPattern').val();
@@ -629,24 +614,24 @@
                 }
                 break;
             case 'V':
-                for (var i = 0; i < mainBeams.length; i++) {
-                    for (var j = 0; j < mainBeams[i].length; j++) {
-                        editor.addToGroup(mainBeams[i][j].showShear(pattern), 'results');
-                        break;
-                    }
-                }
-                /*for (var i = 0; i < secondaryBeams.length; i++) {
+                for (var i = 0; i < secondaryBeams.length; i++) {
                     for (var j = 0; j < secondaryBeams[i].length; j++) {
                         editor.addToGroup(secondaryBeams[i][j].showShear(pattern), 'results');
                     }
-                }*/
+                }
+                for (var i = 0; i < mainBeams.length; i++) {
+                    for (var j = 0; j < mainBeams[i].length; j++) {
+                        editor.addToGroup(mainBeams[i][j].showShear(pattern), 'results');
+                    }
+                }
                 break;
-            case 'No': 
+            case 'No':
                 for (var i = 0; i < columns.length; i++) {
                     for (var j = 0; j < columns[i].length; j++) {
                         editor.addToGroup(columns[i][j].showNormal(pattern), 'results');
                     }
                 }
+                break;
             case 'rv':
                 for (var i = 0; i < nodes.length; i++) {
                     if (nodes[i].data.support)

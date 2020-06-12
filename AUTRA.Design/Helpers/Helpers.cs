@@ -20,7 +20,6 @@ namespace AUTRA.Design
 		BEARING_NON_PRETENSIONED,SLIP_PRETENSIONED,BEARING_PRETENSIONED
 	}
 	[DefaultValue(NONE)]
-	//[JsonConverter(typeof(StringEnumConverter))]
 	public enum LoadPattern
 	{
 		NONE,DEAD,LIVE,WIND,COMBINATION

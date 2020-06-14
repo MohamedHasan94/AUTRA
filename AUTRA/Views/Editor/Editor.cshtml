@@ -64,7 +64,7 @@
 
                     <li>
                         <a href="#" id="elementMove">
-                            Move Element  </br>
+                            Move Element  <br/>
                         </a>
                         <div id="elementMoveDetails">
                             <input type="text" id="xMove" size="15" placeholder="Displacement in X"> </br>
@@ -106,24 +106,24 @@
                         <a href="#" id="drawElement"> Draw element </a>
                         <div id="drawElementDetails">
                             <select id="drawSection">
-                                <option value="IPE 80">IPE 80</option>
-                                <option value="IPE 100">IPE 100</option>
-                                <option value="IPE 120">IPE 120</option>
-                                <option value="IPE 140">IPE 140</option>
-                                <option value="IPE 160">IPE 160</option>
-                                <option value="IPE 180">IPE 180</option>
-                                <option value="IPE 200">IPE 200</option>
-                                <option value="IPE 220">IPE 220</option>
-                                <option value="IPE 240">IPE 240</option>
-                                <option value="IPE 270">IPE 270</option>
-                                <option value="IPE 300">IPE 300</option>
-                                <option value="IPE 330">IPE 330</option>
-                                <option value="IPE 360">IPE 360</option>
-                                <option value="IPE 400">IPE 400</option>
-                                <option value="IPE 450">IPE 450</option>
-                                <option value="IPE 500">IPE 500</option>
-                                <option value="IPE 550">IPE 550</option>
-                                <option value="IPE 600">IPE 600</option>
+                                <option value="IPE 80">IPE80</option>
+                                <option value="IPE 100">IPE100</option>
+                                <option value="IPE 120">IPE120</option>
+                                <option value="IPE 140">IPE140</option>
+                                <option value="IPE 160">IPE160</option>
+                                <option value="IPE 180">IPE180</option>
+                                <option value="IPE 200">IPE200</option>
+                                <option value="IPE 220">IPE220</option>
+                                <option value="IPE 240">IPE240</option>
+                                <option value="IPE 270">IPE270</option>
+                                <option value="IPE 300">IPE300</option>
+                                <option value="IPE 330">IPE330</option>
+                                <option value="IPE 360">IPE360</option>
+                                <option value="IPE 400">IPE400</option>
+                                <option value="IPE 450">IPE450</option>
+                                <option value="IPE 500">IPE500</option>
+                                <option value="IPE 550">IPE550</option>
+                                <option value="IPE 600">IPE600</option>
                             </select>
                             <a onclick="startDrawMode()">start Draw Mode</a>
                             <a onclick="endDrawMode()">end Draw Mode</a>
@@ -288,8 +288,8 @@
                     </li>
 
                     @*<li>
-                            <input type="file" id="reactions" />
-                        </li>*@
+            <input type="file" id="reactions" />
+        </li>*@
 
                     <li>
                         <select id="resultPattern">
@@ -308,6 +308,10 @@
                             <option value="1">Fill Diagrams</option>
                         </select>
                         <button onclick="result()">Show Result</button>
+                    </li>
+
+                    <li>
+                        <button onclick="hideResults()">Hide Results</button>
                     </li>
                 </ul>
             </li>
@@ -464,6 +468,7 @@
     </div>
 
     @* Scripts *@
+    
     <script src="~/lib/jquery/dist/jquery.min.js"></script>
     <script src="~/lib/bootstrap/dist/js/bootstrap.min.js"></script>
     <script src="~/lib/three.js/three.js"></script>

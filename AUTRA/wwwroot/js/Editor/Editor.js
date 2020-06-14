@@ -16,21 +16,19 @@ class Editor {
         this.pickingScene.background = new THREE.Color(0);
         this.camera = new THREE.PerspectiveCamera(45, window.innerWidth / window.innerHeight, 0.1, 5000);
         this.renderer = new THREE.WebGLRenderer({ antialias: true, canvas: document.getElementById('canvas') });
-        this.currentId = 0;
+        this.currentId = 0; //to match objects with correspondents in picking scene
         this.canvas;
     }
     init(coordX, coordZ) {
         //#region Creating camera
-        this.camera.position.set(0.5*coordX, 15, 2*coordZ);
-        let cameraPosition = new THREE.Vector3(0.5 * coordX, 0, 0.5*coordZ);
-        this.camera.lookAt(cameraPosition); //looks at origin(0,0,0)
+        this.camera.position.set(0.5 * coordX, 15, 2 * coordZ);
+        this.camera.lookAt(new THREE.Vector3(0.5 * coordX, 0, 0.5 * coordZ)); //looks at the middle of the model
         //#endregion
 
         //#region Renderer
         this.renderer.setClearColor(0xdddddd); //setting color of canvas
         this.canvas = this.renderer.domElement;
         this.renderer.setSize(window.innerWidth, window.innerHeight); //setting width and height of canvas(canvas.width, canvas.height)
-        //document.body.appendChild(this.canvas); //append canvas tag to html
         //#endregion
 
         //#region Controls
@@ -40,10 +38,8 @@ class Editor {
             MIDDLE: THREE.MOUSE.PAN,
             RIGHT: THREE.MOUSE.ROTATE
         };
-
-        orbitControls.target.set(0.5 * coordX, 0, 0.5*coordZ);
+        orbitControls.target.set(0.5 * coordX, 0, 0.5 * coordZ); //Set the target to the camera lookAt
         orbitControls.update();
-        console.log(orbitControls.target);
         //#endregion
 
         //#region Light
@@ -51,7 +47,7 @@ class Editor {
         directionalLight.position.set(0, 5, 3);
         this.scene.add(directionalLight);
         //#endregion
-                
+
         //Collect similar objects in groups
         this.scene.userData.elements = new THREE.Group();
         this.scene.add(this.scene.userData.elements);
@@ -70,10 +66,10 @@ class Editor {
         this.renderer.render(this.scene, this.camera);
         requestAnimationFrame(() => this.loop());
     }
-    addToGroup(object, type) {
+    addToGroup(object, type) { //add object to one of the created groups(elements,nodes.....)
         this.scene.userData[type].add(object);
     }
-    removeFromGroup(object, type) {
+    removeFromGroup(object, type) { //remove object from one of the created groups
         this.scene.userData[type].remove(object);
         object.geometry.dispose();
         object.material.dispose();
@@ -83,19 +79,19 @@ class Editor {
             object.userData.picking.geometry.dispose();
         }
     }
-    addToScene(object) {
+    addToScene(object) { //add to scene directly
         this.scene.add(object);
     }
-    removeFromScene(object) {
+    removeFromScene(object) {//remove from scene directly
         this.scene.remove(object);
         object.geometry.dispose();
         object.material.dispose();
     }
-    createPickingObject(object) {
+    createPickingObject(object) { //Create a picking object for the parameter
         this.pickingScene.add(pickingObject(object, ++this.currentId));
         this.picker.recordObject(object, this.currentId);
     }
-    toggleBeams() {
+    toggleBeams() { //Toggle view between wireframe and 3D
         let elements = this.scene.userData.elements;
         let length = elements.children.length;
         let visual;
@@ -120,16 +116,16 @@ class Editor {
             y: (event.clientY - rect.top) * this.canvas.height / rect.height
         };
     }
-    pick(event) {
+    pick(event) { //Highlights object on hover
         this.picker.pick(this.setPickPosition(event), this.renderer, this.pickingScene, this.camera);
     }
-    select(event, multiple) {
+    select(event, multiple) { //Select single object on click
         this.picker.select(this.setPickPosition(event), multiple, this.renderer, this.pickingScene, this.camera);
     }
-    selectByArea(initialPosition, rectWidth, rectHeight, multiple) {
+    selectByArea(initialPosition, rectWidth, rectHeight, multiple) {//Select multiple objects by area (hold and drag mouse)
         this.picker.selectByArea(initialPosition, rectWidth, rectHeight, multiple, this.renderer, this.pickingScene, this.camera)
     }
-    clearGroup(group) {
+    clearGroup(group) { //Clear the components of a group
         group = this.scene.userData[group];
         let length = group.children.length;
         for (let i = 0; i < length; i++) {
@@ -145,6 +141,16 @@ class Editor {
             }
         }
         group.children = [];
+    }
+    hideGroup(groupName) { //Temporarily hide a group from scene
+        let group = this.scene.userData[groupName];
+        if (this.scene.children.includes(group))
+            this.scene.remove(group);
+    }
+    showGroup(groupName) {//show the temporarily hiden group from scene
+        let group = this.scene.userData[groupName];
+        if (!this.scene.children.includes(group))
+            this.scene.add(group);
     }
     darkTheme = function () {
         this.renderer.setClearColor(0x000000);
@@ -172,7 +178,7 @@ class Editor {
                 nodes[i].material.color.setHex(supportsColor);
         }
     }
-    screenshot() {
+    screenshot() { //Take a screenshot to the view
         let imgData;
         try {
             this.renderer.render(this.scene, this.camera);
@@ -194,7 +200,7 @@ class Editor {
             document.body.removeChild(link); //The link is no longer needed
         }, 1000);
     }
-    getIntersected(position) {
+    getIntersected(position) { //get the object at the given position (world position)
         let widthHalf = window.innerWidth / 2, heightHalf = window.innerHeight / 2;
         position.project(this.camera); //Project the 3D world position on the screen
         //The resulting position is between[-1,1] WebGl coordinates with the origin at the screen center

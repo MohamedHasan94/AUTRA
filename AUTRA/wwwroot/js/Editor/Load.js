@@ -12,11 +12,11 @@ let fontMaterial = new THREE.MeshBasicMaterial({ color: 0x000000 });
 
 class Load {
     constructor(magnitude, pattern) {
-        this.magnitude = magnitude * -1;
+        this.magnitude = magnitude < 0 ? magnitude : -1 * magnitude;
         this.pattern = pattern;
     }
     clone() {
-        return new this.constructor(-this.magnitude, this.pattern);
+        return new this.constructor(this.magnitude, this.pattern);
     }
 }
 

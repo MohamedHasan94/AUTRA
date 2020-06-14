@@ -83,8 +83,14 @@ class GPUPickHelper {
         this.getObjects(initialPosition, rectWidth, rectHeight, renderer, pickingScene, camera);
 
         for (let item of this.tempSelected) {
-            item.material.color.setHex(item.material.color.getHex() + this.emissiveFlash);
-            this.selectedObject.add(item);
+            if (!this.selectedObject.has(item)) {
+                item.material.color.setHex(item.material.color.getHex() + this.emissiveFlash);
+                this.selectedObject.add(item);
+            }
+            else {
+                this.selectedObject.delete(item);
+                item.material.color.setHex(item.material.color.getHex() - this.emissiveFlash);
+            }
         }
         this.tempSelected.clear();
     }
@@ -93,19 +99,25 @@ class GPUPickHelper {
         // restore the color if there is a picked object
         if (!multiple)
             this.unselect();
-
+        debugger
         let object = this.getObject(cssPosition, renderer, pickingScene, camera, this.objectIds);
 
         if (object) {
-            this.selectedObject.add(object);
-            object.material.color.setHex(object.material.color.getHex() + this.emissiveFlash);
-            if (object.userData.element) {
-                let element = object.userData.element;
-                $('#beamSection').val(element.visual.sectionName);
-                $('#beamStart').val(`${object.position.x},${object.position.z},${object.position.y}`);
-                $('#beamEnd').val(`${element.visual.endPoint.x},${element.visual.endPoint.z},${element.visual.endPoint.y}`);
-                $('#beamDead').val(object.userData.element.data.lineLoads[0] ? object.userData.element.data.lineLoads[0].magnitude*-1 : 0);
-                $('#beamLive').val(object.userData.element.data.lineLoads[1] ? object.userData.element.data.lineLoads[1].magnitude*-1 : 0);
+            if (!this.selectedObject.has(object)) {
+                this.selectedObject.add(object);
+                object.material.color.setHex(object.material.color.getHex() + this.emissiveFlash);
+                if (object.userData.element) {
+                    let element = object.userData.element;
+                    $('#beamSection').val(element.visual.sectionName);
+                    $('#beamStart').val(`${object.position.x},${object.position.z},${object.position.y}`);
+                    $('#beamEnd').val(`${element.visual.endPoint.x},${element.visual.endPoint.z},${element.visual.endPoint.y}`);
+                    $('#beamDead').val(object.userData.element.data.lineLoads[0] ? object.userData.element.data.lineLoads[0].magnitude * -1 : 0);
+                    $('#beamLive').val(object.userData.element.data.lineLoads[1] ? object.userData.element.data.lineLoads[1].magnitude * -1 : 0);
+                }
+            }
+            else {
+                this.selectedObject.delete(object);
+                object.material.color.setHex(object.material.color.getHex() - this.emissiveFlash);
             }
         }
     }

@@ -12,7 +12,7 @@ function Grid(spaceX, spaceZ, shift, levels) {
 
     //Variable spacing:
     this.lineLengthInX = spaceX[numberInX - 1] + 2 * shift;
-    this.lineLengthInZ = spaceZ[numberInX - 1] + 2 * shift;
+    this.lineLengthInZ = spaceZ[numberInZ - 1] + 2 * shift;
 
     //Create a Group of grid lines
     this.linesInX = new THREE.Group();

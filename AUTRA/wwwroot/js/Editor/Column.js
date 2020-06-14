@@ -36,12 +36,30 @@ class Column extends FrameElement {
         mesh.position.copy(this.visual.mesh.position);
         return mesh;
     }
+    static generate(columns, editor) {
+        let generatedColumns = [];
+        let previousSection = columns[0].section.name;
+        let dimensions = new SectionDimensions(parseInt(previousSection.split('E')[1]) / 1000);
+        let shape = createShape(dimensions);
+        for (let i = 0; i < columns.length; i++) {
+            if (columns[i].section.name !== previousSection) {
+                dimensions = new SectionDimensions(parseInt(columns[i].section.name.split('E')[1]) / 1000);
+                shape = createShape(dimensions);
+            }
+            let column = new Column(columns[i].section, columns[i].startNode.data.position, columns[i].endNode.data.position,
+                shape, lineMaterial.clone(), meshMaterial.clone(), columns[i].startNode, columns[i].endNode);
+            generatedColumns.push(column);
+            editor.addToGroup(column.visual.mesh, 'elements');
+            editor.createPickingObject(column);
+        }
+        return generatedColumns;
+    }
 }
 
 function generateColumnsX(editor, coordX, coordZ, mainNodesA, mainNodesB, section) {
     let columns = [];
     let xNo = coordX.length, zNo = coordZ.length;
-    let dimensions = new SectionDimensions(parseInt(section.name.split(' ')[1]) / 1000);
+    let dimensions = new SectionDimensions(parseInt(section.name.split('E')[1]) / 1000);
     let shape = createShape(dimensions);
     for (let i = 0; i < xNo; i++) {
 
@@ -61,7 +79,7 @@ function generateColumnsX(editor, coordX, coordZ, mainNodesA, mainNodesB, sectio
 function generateColumnsZ(editor, coordX, coordZ, mainNodesA, mainNodesB, section) {
     let columns = [];
     let xNo = coordX.length, zNo = coordZ.length;
-    let dimensions = new SectionDimensions(parseInt(section.name.split(' ')[1]) / 1000);
+    let dimensions = new SectionDimensions(parseInt(section.name.split('E')[1]) / 1000);
     let shape = createShape(dimensions);
     for (let i = 0; i < zNo; i++) {
 
@@ -80,7 +98,7 @@ function generateColumnsZ(editor, coordX, coordZ, mainNodesA, mainNodesB, sectio
 }
 
 function drawColumnByTwoPoints(section, startNode, endNode) {
-    let dimensions = new SectionDimensions(parseInt(section.name.split(' ')[1]) / 1000);
+    let dimensions = new SectionDimensions(parseInt(section.name.split('E')[1]) / 1000);
     let shape = createShape(dimensions);
     return new Column(section, startNode.data.position.clone(), endNode.data.position.clone(), shape,
         lineMaterial.clone(), meshMaterial.clone(), startNode, endNode);

@@ -113,6 +113,31 @@ class Beam extends FrameElement {
             type2.unshift(beam);
         }
     }
+    static generate(beams, editor) {
+        let generatedBeams = [];
+        let previousSection = beams[0].section.name;
+        let dimensions = new SectionDimensions(parseInt(previousSection.split('E')[1]) / 1000);
+        let shape = createShape(dimensions);
+        for (let i = 0; i < beams.length; i++) {
+            if (beams[i].section.name !== previousSection) {
+                dimensions = new SectionDimensions(parseInt(beams[i].section.name.split('E')[1]) / 1000);
+                shape = createShape(dimensions);
+            }
+            let beam = new Beam(beams[i].section, beams[i].startNode.data.position, beams[i].endNode.data.position,
+                shape, lineMaterial.clone(), meshMaterial.clone(), beams[i].startNode, beams[i].endNode);
+            for (let j = 0; j < beams[i].innerNodes.length; j++) {
+                beam.data.innerNodes.push({ $ref: beams[i].innerNodes[j].$id })
+            }
+
+            for (let j = 0; j < beams[i].lineLoads.length; j++) {
+                beam.data.lineLoads.push(new LineLoad(beams[i].lineLoads[j].magnitude, beams[i].lineLoads[j].pattern))
+            }            
+            generatedBeams.push(beam);
+            editor.addToGroup(beam.visual.mesh, 'elements');
+            editor.createPickingObject(beam);
+        }
+        return generatedBeams;
+    }
 }
 
 //Calculate the starting coords of secondary beams
@@ -162,7 +187,7 @@ let meshMaterial = new THREE.MeshPhongMaterial({ color: 0x0000ff });
 function createXBeams(editor, coordX, coordY, coordZ, section, coordZToCheck, nodes, mainBeams) {
     let beams = [];
     let secBeamsNodes = [];
-    let dimensions = new SectionDimensions(parseInt(section.name.split(' ')[1]) / 1000);
+    let dimensions = new SectionDimensions(parseInt(section.name.split('E')[1]) / 1000);
     let shape = createShape(dimensions);
 
     let m = 0, a = -1, e = 1, createNode = false;
@@ -208,7 +233,7 @@ function createXBeams(editor, coordX, coordY, coordZ, section, coordZToCheck, no
 function createZBeams(editor, coordX, coordY, coordZ, section, coordXToCheck, nodes, mainBeams) {
     let beams = [];
     let secBeamsNodes = [];
-    let dimensions = new SectionDimensions(parseInt(section.name.split(' ')[1]) / 1000);
+    let dimensions = new SectionDimensions(parseInt(section.name.split('E')[1]) / 1000);
     let shape = createShape(dimensions);
 
     let m = 0, a = -1, e = 1, createNode = false;
@@ -253,7 +278,7 @@ function createZBeams(editor, coordX, coordY, coordZ, section, coordXToCheck, no
 //Main beams on Z (Creates both beams and nodes)
 function createZBeamsWithNodes(editor, coordX, coordY, coordZ, section) {
     let beams = [];
-    let dimensions = new SectionDimensions(parseInt(section.name.split(' ')[1]) / 1000);
+    let dimensions = new SectionDimensions(parseInt(section.name.split('E')[1]) / 1000);
     let shape = createShape(dimensions);
 
     let nodes = [];
@@ -280,7 +305,7 @@ function createZBeamsWithNodes(editor, coordX, coordY, coordZ, section) {
 //Main beams on X (Creates both beams and nodes)
 function createXBeamsWithNodes(editor, coordX, coordY, coordZ, section) {
     let beams = [];
-    let dimensions = new SectionDimensions(parseInt(section.name.split(' ')[1]) / 1000);
+    let dimensions = new SectionDimensions(parseInt(section.name.split('E')[1]) / 1000);
     let shape = createShape(dimensions);
 
     let nodes = [];
@@ -305,7 +330,7 @@ function createXBeamsWithNodes(editor, coordX, coordY, coordZ, section) {
 }
 
 function drawBeamByTwoPoints(section, startNode, endNode) {
-    let dimensions = new SectionDimensions(parseInt(section.name.split(' ')[1]) / 1000);
+    let dimensions = new SectionDimensions(parseInt(section.name.split('E')[1]) / 1000);
     let shape = createShape(dimensions);
     return new Beam(section, startNode.visual.mesh.position.clone(), endNode.visual.mesh.position.clone(), shape,
         lineMaterial.clone(), meshMaterial.clone(), startNode, endNode);

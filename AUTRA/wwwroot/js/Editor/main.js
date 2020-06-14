@@ -40,7 +40,7 @@
             nodes = createNodesZ(editor, coordX, coordZ);
         }
         else {
-            sections.push({ $id: `s${++sectionId}`, name: 'IPE 200' }, { $id: `s${++sectionId}`, name: 'IPE 270' }, { $id: `s${++sectionId}`, name: 'IPE 360' });
+            sections.push({ $id: `${sectionId += 1000}`, name: 'IPE200' }, { $id: `${sectionId += 1000}`, name: 'IPE270' }, { $id: `${sectionId += 1000}`, name: 'IPE360' });
             let mainNodes = new Array(), mainBeamsLoop, secondaryBeamsLoop, mainNodesLoop, secNodesLoop, nodesLoop;
             if (document.getElementById("xOrient").checked) { //Draw main beams on X-axis
 
@@ -183,7 +183,7 @@
         let sectionName = $('#drawSection').val();
         let sectionObject = sections.find(s => s.name === sectionName); //Check if section already exists
         if (!sectionObject) { //If not existing , create one
-            sectionObject = { $id: `s${++sectionId}`, name: sectionName };
+            sectionObject = { $id: `${sectionId += 1000}`, name: sectionName };
             sections.push(sectionObject);
         }
         let start = drawingPoints[0], end = drawingPoints[1];
@@ -434,7 +434,7 @@
         let sectionName = $('#section').val();
         let existingSection = sections.find(s => s.name == sectionName);//Check if the section already exists
         if (!existingSection) {//if not create a new one
-            existingSection = { $id: `s${sections.length}`, name: sectionName };
+            existingSection = { $id: `${sectionId += 1000}`, name: sectionName };
             sections.push(existingSection);
         }
         for (let item of editor.picker.selectedObject) {
@@ -522,7 +522,6 @@
         model.grids.coordZ = grids.coordZ;
         model.grids.levels = grids.levels;
         model = JSON.stringify(model);
-        console.log(model)
         return model;
     }
 
@@ -535,13 +534,13 @@
             contentType: 'application/json',
             data: createModel(),
             success: function (res) {
-                debugger
                 if (domEvents)
                     domEvents.destroy();//Clear old events (if existing)
                 domEvents = new THREEx.DomEvents(editor.camera, canvas); 
 
                 res = JSON.parse(res);
                 editor.clearGroup('results');
+                editor.hideGroup('nodes');
                 for (let i = 0; i < mainBeams[0].length; i++) {
                     mainBeams[0][i].visual.strainingActions = res.mainBeams[i].strainingActions;
                     mainBeams[0][i].visual.strainingActions.push(res.mainBeams[i].combinedSA[0]);
@@ -574,7 +573,7 @@
             url: `/Editor/Save`,
             type: "POST",
             contentType: 'text/plain',
-            data: creatModel(),
+            data: createModel(),
             success: function (res) {
                 console.log(res)
             },
@@ -585,10 +584,11 @@
     }
 
     window.downloadFile = function () {
-        this.localStorage.setItem('Model', createModel()); //Save data to localStorage ??!! Option #1
+        let model = createModel();
+        //this.localStorage.setItem('Model', model); //Save data to localStorage ??!! Option #1
 
         //Save data on client machine if no internet connection Option #2
-        let text = new Blob([createModel()], { type: 'text/json' }); //Blob : An object that represents a file
+        let text = new Blob([model], { type: 'text/json' }); //Blob : An object that represents a file
 
         let textFile = window.URL.createObjectURL(text); // The URL to that object
 
@@ -604,7 +604,7 @@
         }, 1000);
     }
 
-    $('#upload').change(function (event) { //Read data from uploaded file
+    /*$('#upload').change(function (event) { //Read data from uploaded file
         debugger
         let file = event.target.files[0];
         var reader = new FileReader();
@@ -613,7 +613,7 @@
             console.log(obj);
         };
         reader.readAsText(file);
-    });
+    });*/
 
     //used to toggle between dark and light themes
     window.darkTheme = () => editor.darkTheme();
@@ -623,7 +623,8 @@
     window.screenshot = () => editor.screenshot();
 
     window.result = () => {
-        editor.clearGroup('results');
+        editor.clearGroup('results'); //Clear displayed results(if any)
+        editor.hideGroup('nodes'); //Temporarily hide nodes (for clearer display of stations)
         let pattern = $('#resultPattern').val();
         let strainingAction = $('#strainingAction').val();
         let display = parseInt($('#display').val());
@@ -673,4 +674,12 @@
                 break;
         }
     };
+
+    window.hideResults = () => {
+        if (domEvents)
+            domEvents.destroy();//Clear old events (if existing)
+
+        editor.clearGroup('results'); //Clear diplayed results
+        editor.showGroup('nodes'); //Display nodes again
+    }
 })();

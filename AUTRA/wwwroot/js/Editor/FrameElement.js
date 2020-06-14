@@ -86,7 +86,7 @@ class FrameElement {
 
     }
     changeSection(section) {
-        let dimensions = new SectionDimensions(parseInt(section.name.split(' ')[1]) / 1000);
+        let dimensions = new SectionDimensions(parseInt(section.name.split('E')[1]) / 1000);
         let shape = createShape(dimensions);
         this.visual.extruded.geometry.dispose();
         extrudeSettings.depth = this.data.length;

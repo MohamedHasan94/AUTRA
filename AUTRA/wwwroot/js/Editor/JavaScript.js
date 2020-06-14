@@ -67,10 +67,9 @@
         debugger
         canvas = editor.renderer.domElement;
         return $.ajax({
-            url: '/Outputs/Saved/Model.txt',
+            url: '/Outputs/Saved/Model.json',
             success: function (data) {
                 debugger
-                data = JSON.parse(data);
                 retrocycle(data)
                 buildModel(data);
             },
@@ -87,72 +86,32 @@
         editor.init(model.grids.coordX[model.grids.coordX.length - 1], model.grids.coordZ[model.grids.coordZ.length - 1]); //Setup editor
 
         grids = new Grid(model.grids.coordX, model.grids.coordZ, 3, model.grids.levels);
+
+        levels = grids.levels;
         editor.addToGroup(grids.linesInX, 'grids'); //Add x-grids to scene (as a group)this.meshInX
         editor.addToGroup(grids.linesInZ, 'grids'); //Add z-grids to scene (as a group)
         editor.addToGroup(grids.letters, 'grids'); //Add z-grids to scene (as a group)
         editor.addToGroup(grids.axes, 'grids'); //Add z-grids to scene (as a group)
 
         sections = model.sections;
+        sectionId = parseInt(model.sections[model.sections.length - 1].$id);
+        generateNodes(model.nodes, nodes);
 
-        nodes = generateNodes(model.nodes);
-
-        mainBeams.push(generateBeams(model.mainBeams));
-        /*sections.push({ $id: `s${++sectionId}`, name: 'IPE 200' }, { $id: `s${++sectionId}`, name: 'IPE 270' }, { $id: `s${++sectionId}`, name: 'IPE 360' });
-        let mainNodes = new Array(), mainBeamsLoop, secondaryBeamsLoop, mainNodesLoop, secNodesLoop, nodesLoop;
-        if (document.getElementById("xOrient").checked) { //Draw main beams on X-axis
-
-            //creating and adding the Hinged-Nodes to MainNodes Array
-            lowerNodesIntial = createNodesZ(editor, coordX, coordZ);
-            mainNodes.push(lowerNodesIntial);
-            nodes = nodes.concat(lowerNodesIntial);
-
-            for (let i = 1; i < coordY.length; i++) {
-
-                [mainBeamsLoop, secondaryBeamsLoop, mainNodesLoop, secNodesLoop] = generateMainBeamsX(editor, coordX, coordY[i], coordZ,
-                    sections[1], sections[0], secSpacing); //Auto generate floor beams and nodes in X
-
-                nodesLoop = mainNodesLoop.concat(secNodesLoop);
-                nodes = nodes.concat(nodesLoop);
-                mainNodes.push(mainNodesLoop);
-
-                columnsLoop = generateColumnsZ(editor, coordX, coordZ, mainNodes[i - 1], mainNodes[i], sections[2]); //Auto generate columns
-
-                mainBeams.push(mainBeamsLoop);
-                secondaryBeams.push(secondaryBeamsLoop);
-                columns.push(columnsLoop);
-            }
-        }
-        else {
-
-            //creating and adding the Hinged-Nodes to MainNodes Array
-            lowerNodesIntial = createNodesX(editor, coordX, coordZ);
-            mainNodes.push(lowerNodesIntial);
-            nodes = nodes.concat(lowerNodesIntial);
-
-            for (let i = 1; i < coordY.length; i++) {
-                [mainBeamsLoop, secondaryBeamsLoop, mainNodesLoop, secNodesLoop] = generateMainBeamsZ(editor, coordX, coordY[i], coordZ,
-                    sections[1], sections[0], secSpacing); //Auto generate floor beams and nodes in Z
-
-                nodesLoop = mainNodesLoop.concat(secNodesLoop);
-                nodes = nodes.concat(nodesLoop);
-                mainNodes.push(mainNodesLoop);
-
-                columnsLoop = generateColumnsX(editor, coordX, coordZ, mainNodes[i - 1], mainNodes[i], sections[2]); //Auto generate columns 
-
-                mainBeams.push(mainBeamsLoop);
-                secondaryBeams.push(secondaryBeamsLoop);
-                columns.push(columnsLoop);
-            }
-        }*/
-
-
+        secondaryBeams.push(Beam.generate(model.secondaryBeams, editor));
+        mainBeams.push(Beam.generate(model.mainBeams, editor));
+        columns.push(Column.generate(model.columns, editor));     
     }
 
-    function generateNodes(modelNodes) {
+    function generateNodes(modelNodes, nodes) {        
         for (let i = 0; i < modelNodes.length; i++) {
-            Node.create(modelNodes[i].position.x, modelNodes[i].position.y, modelNodes[i].position.z, modelNodes[i].support, editor, nodes, modelNodes[i].$id);
+            let node = Node.create(modelNodes[i].position.x, modelNodes[i].position.y, modelNodes[i].position.z, modelNodes[i].support, editor, nodes, modelNodes[i].$id);
+            for (let j = 0; j < modelNodes[i].pointLoads.length; j++) {
+                node.addPointLoad(new PointLoad(modelNodes[i].pointLoads[j].magnitude, modelNodes[i].pointLoads[j].pattern))
+            }
+            modelNodes[i].data = node.data; //switch modelNodes position to Vector3
         }
     }
+
     init();
 
     canvas.addEventListener('mousemove', function (event) {
@@ -228,7 +187,7 @@
         let sectionName = $('#drawSection').val();
         let sectionObject = sections.find(s => s.name === sectionName); //Check if section already exists
         if (!sectionObject) { //If not existing , create one
-            sectionObject = { $id: `s${++sectionId}`, name: sectionName };
+            sectionObject = { $id: `${sectionId += 1000}`, name: sectionName };
             sections.push(sectionObject);
         }
         let start = drawingPoints[0], end = drawingPoints[1];
@@ -479,7 +438,7 @@
         let sectionName = $('#section').val();
         let existingSection = sections.find(s => s.name == sectionName);//Check if the section already exists
         if (!existingSection) {//if not create a new one
-            existingSection = { $id: `s${sections.length}`, name: sectionName };
+            existingSection = { $id: `${sectionId += 1000}`, name: sectionName };
             sections.push(existingSection);
         }
         for (let item of editor.picker.selectedObject) {
@@ -563,25 +522,21 @@
         for (var i = 0; i < columns[0].length; i++) {
             model.columns.push(columns[0][i].data);
         }
-
-        //model = JSON.stringify(model);
-        //console.log(model)
+        model.grids.coordX = grids.coordX;
+        model.grids.coordZ = grids.coordZ;
+        model.grids.levels = grids.levels;
+        model = JSON.stringify(model);
+        console.log(model)
         return model;
     }
 
     window.solve = function () { //Send data to server        
         editor.clearGroup('loads');
-        let model = createModel();
-        model.grids.coordX = grids.coordX;
-        model.grids.coordZ = grids.coordZ;
-        model.grids.levels = grids.levels;
-
-        model = this.JSON.stringify(model);
         $.ajax({
             url: `/Editor/Solve`,
             type: "POST",
             contentType: 'application/json',
-            data: model,
+            data: createModel(),
             success: function (res) {
                 debugger
                 if (domEvents)
@@ -590,6 +545,7 @@
 
                 res = JSON.parse(res);
                 editor.clearGroup('results');
+                editor.hideGroup('nodes');
                 for (let i = 0; i < mainBeams[0].length; i++) {
                     mainBeams[0][i].visual.strainingActions = res.mainBeams[i].strainingActions;
                     mainBeams[0][i].visual.strainingActions.push(res.mainBeams[i].combinedSA[0]);
@@ -618,15 +574,11 @@
     }
 
     window.save = function () { // Save data on the server
-        let model = createModel();
-        model.grids = grids;
-        model = this.JSON.stringify(model);
-
         $.ajax({
             url: `/Editor/Save`,
             type: "POST",
             contentType: 'text/plain',
-            data: model,
+            data: createModel(),
             success: function (res) {
                 console.log(res)
             },
@@ -637,14 +589,11 @@
     }
 
     window.downloadFile = function () {
-        let model = createModel();
-        mdeol.grids = grids;
-        model = this.JSON.stringify(model);
 
-        this.localStorage.setItem('Model', model); //Save data to localStorage ??!! Option #1
+        this.localStorage.setItem('Model', createModel()); //Save data to localStorage ??!! Option #1
 
         //Save data on client machine if no internet connection Option #2
-        let text = new Blob([model], { type: 'text/json' }); //Blob : An object that represents a file
+        let text = new Blob([createModel()], { type: 'text/json' }); //Blob : An object that represents a file
 
         let textFile = window.URL.createObjectURL(text); // The URL to that object
 
@@ -660,7 +609,7 @@
         }, 1000);
     }
 
-    $('#upload').change(function (event) { //Read data from uploaded file
+    /*$('#upload').change(function (event) { //Read data from uploaded file
         debugger
         let file = event.target.files[0];
         var reader = new FileReader();
@@ -669,7 +618,7 @@
             console.log(obj);
         };
         reader.readAsText(file);
-    });
+    });*/
 
     //used to toggle between dark and light themes
     window.darkTheme = () => editor.darkTheme();
@@ -680,6 +629,7 @@
 
     window.result = () => {
         editor.clearGroup('results');
+        editor.hideGroup('nodes'); //Temporarily hide nodes (for clearer display of stations)
         let pattern = $('#resultPattern').val();
         let strainingAction = $('#strainingAction').val();
         let display = parseInt($('#display').val());
@@ -729,4 +679,12 @@
                 break;
         }
     };
+
+    window.hideResults = () => {
+        if (domEvents)
+            domEvents.destroy();//Clear old events (if existing)
+
+        editor.clearGroup('results'); //Clear diplayed results
+        editor.showGroup('nodes'); //Display nodes again
+    }
 })();

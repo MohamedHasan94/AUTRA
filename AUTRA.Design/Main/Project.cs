@@ -14,6 +14,8 @@ namespace AUTRA.Design
         public List<Beam> SecondaryBeams { get; set; }
         public List<Beam> MainBeams { get; set; }
         public List<Column> Columns { get; set; }
+        public List<Support> Supports { get; set; }
+        public Grids Grids { get; set; }
     }
 
 
@@ -25,5 +27,13 @@ namespace AUTRA.Design
         public string Location { get; set; }
         public string City { get; set; }
         public string Country { get; set; }
+        public string Owner { get; set; }
+    }
+
+    public struct Grids
+    {
+        public double[] CoordX { get; set; }
+        public double[] CoordZ { get; set; }
+        public double[] Levels { get; set; }
     }
 }

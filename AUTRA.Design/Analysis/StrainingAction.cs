@@ -5,7 +5,7 @@ using System.Text;
 using System.Linq;
 namespace AUTRA.Design
 {
-   public class StrainingAction
+    public class StrainingAction
     {
         #region Constructor
         public StrainingAction()

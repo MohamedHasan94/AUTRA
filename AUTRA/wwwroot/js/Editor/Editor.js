@@ -19,11 +19,11 @@ class Editor {
         this.currentId = 0;
         this.canvas;
     }
-    init(sections) {
-        this.picker.sections = sections;
+    init(coordX, coordZ) {
         //#region Creating camera
-        this.camera.position.set(0, 35, 70);
-        this.camera.lookAt(this.scene.position); //looks at origin(0,0,0)
+        this.camera.position.set(0.5*coordX, 15, 2*coordZ);
+        let cameraPosition = new THREE.Vector3(0.5 * coordX, 0, 0.5*coordZ);
+        this.camera.lookAt(cameraPosition); //looks at origin(0,0,0)
         //#endregion
 
         //#region Renderer
@@ -40,6 +40,10 @@ class Editor {
             MIDDLE: THREE.MOUSE.PAN,
             RIGHT: THREE.MOUSE.ROTATE
         };
+
+        orbitControls.target.set(0.5 * coordX, 0, 0.5*coordZ);
+        orbitControls.update();
+        console.log(orbitControls.target);
         //#endregion
 
         //#region Light
@@ -47,13 +51,7 @@ class Editor {
         directionalLight.position.set(0, 5, 3);
         this.scene.add(directionalLight);
         //#endregion
-
-        //#region Creating Axess
-        let axes = new THREE.AxesHelper(5);
-        axes.position.set(-10, 0, 10);
-        this.scene.add(axes);
-        //#endregion
-
+                
         //Collect similar objects in groups
         this.scene.userData.elements = new THREE.Group();
         this.scene.add(this.scene.userData.elements);

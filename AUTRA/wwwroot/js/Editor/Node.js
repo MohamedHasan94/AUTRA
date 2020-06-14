@@ -4,9 +4,9 @@ let hingeMaterial = new THREE.MeshPhongMaterial({ color: 0x6633ff });
 let hingeGeometry = new THREE.ConeBufferGeometry(0.3, 0.3, 4);
 let id = 0;
 class Node {
-    constructor(coordX, coordY, coordZ, support) {
+    constructor(coordX, coordY, coordZ, support, nodeId) {
         this.data = {};
-        this.data.$id = `${++id}`; //Metadata for JSON Referencing(to reference nodes in beams)
+        this.data.$id = nodeId; //Metadata for JSON Referencing(to reference nodes in beams)
         this.data.support = support ?? 0;
         this.data.position = new THREE.Vector3(coordX, coordY, coordZ);  //TODO : Switch Y & Z?!	
         this.data.pointLoads = [];
@@ -25,7 +25,7 @@ class Node {
     addLoad(load, replace) {
         let index = this.data.pointLoads.findIndex(l => l.pattern === load.pattern);
         if (index < 0) { //has no load of the same case(pattern)	
-            this.data.pointLoads.push(load);
+            this.data.pointLoads.push(load.clone());
             index = this.data.pointLoads.length - 1;
         }
         else if (replace) //has a load of the same case(pattern) , Replace it	
@@ -37,9 +37,13 @@ class Node {
     showReaction(pattern) {
         let reaction = this.visual.reactions.find(r => r.pattern == pattern);
         let position = this.visual.mesh.position.clone();
-        position.y -= 1.15;
-        let arrow = new THREE.ArrowHelper(new THREE.Vector3(0, 1, 0), position, 1, 0xcc00ff);
-        let textGeometry = new THREE.TextBufferGeometry(`${reaction.rv}`, {
+        let scale = 0.11 * reaction.rv + 0.39; //(1t --> 0.5),(15t --> 2)
+        scale = scale > 2 ? 2 : scale < 0.5 ? 0.5 : scale;
+        position.y -= scale + 0.15;
+
+        let arrow = new THREE.ArrowHelper(new THREE.Vector3(0, 1, 0), position, scale, 0xcc00ff);
+
+        let textGeometry = new THREE.TextBufferGeometry(`${reaction.rv.toFixed(2)} t`, {
             font: myFont,
             size: 0.2,
             height: 0,
@@ -50,8 +54,8 @@ class Node {
         arrow.add(text);
         return arrow;
     }
-    static create(coordX, coordY, coordZ, support, editor, nodes) { //Static method to handle node creation, 
-        let node = new Node(coordX, coordY, coordZ, support);       // recording, visualization 
+    static create(coordX, coordY, coordZ, support, editor, nodes, nodeId) { //Static method to handle node creation, 
+        let node = new Node(coordX, coordY, coordZ, support, nodeId??`${++id}`);       // recording, visualization 
         nodes.push(node);
         editor.addToGroup(node.visual.mesh, 'nodes');
         editor.createPickingObject(node);

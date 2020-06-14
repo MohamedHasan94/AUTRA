@@ -56,19 +56,19 @@ namespace AUTRA.Design
             var patterns= new List<LoadPattern> { LoadPattern.DEAD, LoadPattern.LIVE }; //This should be sent with model
             #endregion
             #region Define Supports
-            var supports = new List<Support>();
-            model.Columns.AssignSupports(supports);
+            model.Supports = new List<Support>();
+            model.Columns.AssignSupports(model.Supports);
             #endregion
 
             #region AUTRA Design Module
-            AUTRADesign designer = new AUTRADesign(model,supports ,egASDCode, sections,patterns,bolt);
+            AUTRADesign designer = new AUTRADesign(model,egASDCode, sections,patterns,bolt);
             designer.CreateCombo("1.2D+1.4L", new FactoredPattern() { Pattern = LoadPattern.DEAD, ScaleFactor = 1.2 }, new FactoredPattern() { Pattern = LoadPattern.LIVE, ScaleFactor = 1.4 });
             //designer.CreateCombo("1.2D+1.4L", new FactoredPattern() { Pattern = LoadPattern.DEAD, ScaleFactor = 1.2 }, new FactoredPattern() { Pattern = LoadPattern.LIVE, ScaleFactor = 1.4 });
             designer.RunAnalysis();
             designer.Design(equalAngles);
 
             
-            designer.CreateReports(@"D:\ITI\Graduation Project\AUTRA\AUTRA\wwwroot\Outputs\Reports");//To be changed
+            designer.CreateReports(@".\wwwroot\Outputs\Reports");//To be changed
             #endregion
 
 

@@ -13,10 +13,9 @@ namespace AUTRA.Design
     {
         //AUTRA will be the Entry Point for the design module
         #region Constructors
-        public AUTRADesign(Project project, List<Support> supports, ICodeDesigner code, List<Section> sections,List<LoadPattern> patterns,Bolt bolt)
+        public AUTRADesign(Project project, ICodeDesigner code, List<Section> sections,List<LoadPattern> patterns,Bolt bolt)
         {
             Project = project;
-            Supports = supports;
             DesignCode = code;
             Combos = new List<LoadCombination>();
             Sections = sections;
@@ -68,7 +67,7 @@ namespace AUTRA.Design
                 Analysis.SolveColumn(column,Patterns);
                 Analysis.LinearAddCombineSA(column, Combos);
             }
-            foreach (var support in Supports)
+            foreach (var support in Project.Supports)
             {
                 Analysis.SolveReaction(support);
                 Analysis.LinearAddCombineReactions(support, Combos);

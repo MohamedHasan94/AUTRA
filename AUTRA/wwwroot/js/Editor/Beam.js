@@ -1,5 +1,9 @@
 let vector = new THREE.Vector3();
 let zVector = new THREE.Vector3(0, 0, 1);
+let shapes = [THREE.Path, THREE.Shape];
+let meshes = [THREE.Line, THREE.Mesh];
+let materials = [new THREE.LineBasicMaterial({ color: 0x0000ff }), new THREE.MeshBasicMaterial({ color: 0x0000ff, transparent: true, opacity: 0.7, side: THREE.DoubleSide })];
+
 class Beam extends FrameElement {
     constructor(section, startPoint, endPoint, shape, lineMaterial, meshMaterial, startNode, endNode) {
         let direction = (vector.clone().subVectors(endPoint, startPoint)).normalize();
@@ -17,50 +21,86 @@ class Beam extends FrameElement {
     addLoad(load, replace) {
         let index = this.data.lineLoads.findIndex(l => l.pattern === load.pattern);
         if (index < 0) { //has no load of the same case(pattern)
-            this.data.lineLoads.push(load);
+            this.data.lineLoads.push(load.clone());
             index = this.data.lineLoads.length - 1;
         }
         else if (replace) //has a load of the same case(pattern) , Replace it
-            this.data.lineLoads[index] = load;
+            this.data.lineLoads[index] = load.clone();
         else              //has a load of the same case(pattern) , Add to it
             this.data.lineLoads[index].magnitude += load.magnitude;
         return index;
     }
-    showMoment(pattern) {
+    showMoment(pattern, display, domEvents) {
         let stations = this.visual.strainingActions.find(sa => sa.pattern == pattern).stations;
-        let shape = new THREE.Shape();
-        for (let i = 0; i < stations.length; i++) {
-            shape.lineTo(stations[i].x, stations[i].mo * -0.25);
+        let half = parseInt(0.5 * stations.length);
+
+        let scale = -1 * (0.095 * stations[half].mo + 0.185);//(1 --> 0.25, 20 --> 2)
+        scale = scale < -2 ? -2 : scale > -0.25 ? -0.25 : scale; //Check that scale is in boundries
+        scale /= stations[half].mo; // Get the ratio(will be multiplied by the value)
+
+        let shape = new shapes[display]();
+        if (this.data.innerNodes.length == 0) {
+            shape.quadraticCurveTo(stations[half].x, stations[half].mo * scale*2, this.data.length, stations[stations.length - 1].mo * scale);
         }
-        shape.lineTo(this.data.length, 0);
-        let geometry = new THREE.ShapeBufferGeometry(shape);
-        let material = new THREE.MeshBasicMaterial({ color: 0x0000ff, transparent: true, opacity: 0.7, side: THREE.DoubleSide });
-        let mesh = new THREE.Mesh(geometry, material);
+        else {
+            for (let i = 1; i < stations.length; i++) {
+                shape.lineTo(stations[i].x, stations[i].mo * scale);
+            }
+        }
+        let geometry;
+        if (display) {
+            geometry = new THREE.ShapeBufferGeometry(shape);
+        }
+        else {
+            geometry = new THREE.BufferGeometry().setFromPoints(shape.getPoints());
+        }
+        let mesh = new meshes[display](geometry, materials[display]);
+        this.createresultNodes(stations, scale, domEvents, mesh, 'mo','t.m', '');
         mesh.rotation.copy(this.visual.mesh.rotation);
         mesh.rotation.y -= 0.5 * Math.PI;
         mesh.position.copy(this.visual.mesh.position);
         return mesh;
     }
-    showShear(pattern) {
+    showShear(pattern, display, domEvents) {
         let stations = this.visual.strainingActions.find(sa => sa.pattern == pattern).stations;
-        let shape1 = new THREE.Shape();
-        let shape2 = shape1.clone();
 
-        let half = parseInt(0.5 * (stations.length) + 1);
+        let scale = 0.06 * stations[0].vo + 0.19;
+        scale = scale > 2 ? 2 : scale < 0.25 ? 0.25 : scale;//Check that scale is in boundries
+        scale /= stations[0].vo;// Get the ratio(will be multiplied by the value)
+                
+        let shape1 = new shapes[display]();
+        let shape2 = shape1.clone();
+        
+        let half = parseInt(0.5 * stations.length);
         for (let i = 0; i < half; i++) {
-            shape1.lineTo(stations[i].x, stations[i].vo * 0.25);
-            shape1.lineTo(stations[i].x, stations[i].vf * 0.25);
+            shape1.lineTo(stations[i].x, stations[i].vo * scale);
+            
+            shape1.lineTo(stations[i].x, stations[i].vf * scale);
         }
-        let geometry1 = new THREE.ShapeBufferGeometry(shape1);
-        shape2.moveTo(stations[half-1].x, 0);
+        shape1.lineTo(stations[half].x, stations[half].vo * scale);
+
+        shape2.moveTo(stations[half].x, 0);
         for (let i = half; i < stations.length; i++) {
-            shape2.lineTo(stations[i].x, stations[i].vo * 0.25);
-            shape2.lineTo(stations[i].x, stations[i].vf * 0.25);
+            shape2.lineTo(stations[i].x, stations[i].vo * scale);
+            shape2.lineTo(stations[i].x, stations[i].vf * scale);
         }
-        shape2.lineTo(this.data.length, 0);
-        let geometry2 = new THREE.ShapeBufferGeometry(shape2);
-        let material = new THREE.MeshBasicMaterial({ color: 0x0000ff, transparent: true, opacity: 0.7, side: THREE.DoubleSide });
-        let mesh = new THREE.Mesh(THREE.BufferGeometryUtils.mergeBufferGeometries([geometry1, geometry2]), material);
+        shape2.lineTo(stations[stations.length - 1].x, 0);
+
+        let geometry;
+        if (display) {
+            let geometry1 = new THREE.ShapeBufferGeometry(shape1);
+            let geometry2 = new THREE.ShapeBufferGeometry(shape2);
+            geometry = THREE.BufferGeometryUtils.mergeBufferGeometries([geometry1, geometry2]);
+        }
+        else {
+            let geometry1 = new THREE.BufferGeometry().setFromPoints(shape1.getPoints());
+            let geometry2 = new THREE.BufferGeometry().setFromPoints(shape2.getPoints());
+            geometry = THREE.BufferGeometryUtils.mergeBufferGeometries([geometry1, geometry2]);
+        }
+
+        let mesh = new meshes[display](geometry, materials[display]);
+
+        this.createresultNodes(stations, scale, domEvents, mesh, 'vo', 't', 'vf');
         mesh.rotation.copy(this.visual.mesh.rotation);
         mesh.rotation.y -= 0.5 * Math.PI;
         mesh.position.copy(this.visual.mesh.position);
@@ -70,7 +110,7 @@ class Beam extends FrameElement {
         let beamIndex = type1.indexOf(beam);
         if (beamIndex > -1) {
             type1.splice(beamIndex, 1);
-            type2.push(beam);
+            type2.unshift(beam);
         }
     }
 }

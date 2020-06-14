@@ -39,17 +39,18 @@ namespace AUTRA.Design
                 //{
                 //    column.StartNode.PointLoads = PointLoad.CreateZeroPointLoadList(patterns);
                 //}
-                rs = re = column.EndNode.PointLoads.FirstOrDefault(l => l.Pattern == pattern).Magnitude;
+                rs = column.EndNode.PointLoads.FirstOrDefault(l => l.Pattern == pattern).Magnitude;
+                //rs = re = column.EndNode.PointLoads.FirstOrDefault(l => l.Pattern == pattern).Magnitude;
                 column.StartNode.PointLoads.FirstOrDefault(l => l.Pattern == pattern).Magnitude += rs;
                 double w = 0;
                 if (pattern==LoadPattern.DEAD)
                 {
-                    rs = column.StartNode.PointLoads.FirstOrDefault(l => l.Pattern == pattern).Magnitude += -1*column.Section.W/1000 * column.Length; //add own weight of column to the reaction at base
                     w = -1*column.Section.W/1000;//w=> will be the weight of column only in Dead load pattern otherwise =0
+                    rs = column.StartNode.PointLoads.FirstOrDefault(l => l.Pattern == pattern).Magnitude += w * column.Length; //add own weight of column to the reaction at base
                 }
                 foreach (var station in sa.Stations)
                 {
-                    station.No += re + w * station.X;
+                    station.No += rs - w * station.X;
                 }
             }
         }

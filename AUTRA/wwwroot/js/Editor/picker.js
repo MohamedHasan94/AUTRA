@@ -101,7 +101,6 @@ class GPUPickHelper {
             object.material.color.setHex(object.material.color.getHex() + this.emissiveFlash);
             if (object.userData.element) {
                 let element = object.userData.element;
-                //let name = this.sections.find(s => s.$id == element.data.section.$ref).name;
                 $('#beamSection').val(element.visual.sectionName);
                 $('#beamStart').val(`${object.position.x},${object.position.z},${object.position.y}`);
                 $('#beamEnd').val(`${element.visual.endPoint.x},${element.visual.endPoint.z},${element.visual.endPoint.y}`);

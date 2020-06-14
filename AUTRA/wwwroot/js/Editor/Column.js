@@ -9,16 +9,28 @@ class Column extends FrameElement {
         return new Column({ $id: this.data.section.$ref, name: this.visual.sectionName }, this.visual.mesh.position.clone(), this.visual.endPoint.clone(), this.visual.extruded.geometry.parameters.shapes,
             lineMaterial.clone(), meshMaterial.clone(), this.startNode, this.endNode);
     }
-    showNormal(pattern) {
+    showNormal(pattern, display, domEvents) {
         let stations = this.visual.strainingActions.find(sa => sa.pattern == pattern).stations;
-        let shape = new THREE.Shape();
+        let scale = 0.125;
+        if (stations[0].no < -5)
+            scale = 0.063;
+
+        let shape = new shapes[display]();        
         for (let i = 0; i < stations.length; i++) {
-            shape.lineTo(stations[i].x, stations[i].no * 0.125);
+            shape.lineTo(stations[i].x, stations[i].no * scale);
         }
         shape.lineTo(this.data.length, 0);
-        let geometry = new THREE.ShapeBufferGeometry(shape);
-        let material = new THREE.MeshBasicMaterial({ color: 0x0000ff, transparent: true, opacity: 0.7, side: THREE.DoubleSide });
-        let mesh = new THREE.Mesh(geometry, material);
+
+        let geometry;
+        if (display) {
+            geometry = new THREE.ShapeBufferGeometry(shape);
+        }
+        else {
+            geometry = new THREE.BufferGeometry().setFromPoints(shape.getPoints());
+        }
+        let mesh = new meshes[display](geometry, materials[display]);
+        this.createresultNodes(stations, scale, domEvents, mesh, 'no', 't', '');
+
         mesh.rotation.copy(this.visual.mesh.rotation);
         mesh.rotation.y -= 0.5 * Math.PI;
         mesh.position.copy(this.visual.mesh.position);

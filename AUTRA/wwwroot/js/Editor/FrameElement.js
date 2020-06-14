@@ -70,6 +70,9 @@ class ElementVisual { // Visual data for editor
     }
 }
 
+let pointGeometry = new THREE.SphereBufferGeometry(0.05, 15, 15);
+let pointMaterial = new THREE.MeshBasicMaterial({ color: 0xcc00dd });
+
 class FrameElement {
     constructor(section, startPoint, endPoint, shape, lineMaterial, meshMaterial, startNode, endNode, direction, rotation) {
         this.data = new ElementData(section.$id, startPoint, endPoint, startNode, endNode); //Data to be sent to backend
@@ -90,5 +93,33 @@ class FrameElement {
         this.visual.extruded.geometry = new THREE.ExtrudeBufferGeometry(shape, extrudeSettings);
         this.data.section = section.$id;
         this.visual.sectionName = section.name;
+    }
+
+    createresultNodes(stations, scale, domEvents, parent, action, unit, action2) {
+        let name = action[0];
+        for (let i = 0; i < stations.length; i++) {
+            let point = new THREE.Mesh(pointGeometry, pointMaterial.clone());
+            point.userData.otherColor = 0xffaa00;
+            point.userData.value = `${name} = ${stations[i][action].toFixed(2)}  ${stations[i][action2] ? stations[i][action2].toFixed(2) : ""} ${unit}`
+            point.userData.x = `${stations[i].x} m`
+            point.position.set(stations[i].x, stations[i][action] * scale, 0);
+            domEvents.addEventListener(point, 'mouseover', (event) => {
+                let object = event.intersect.object;
+                let temp = object.userData.otherColor;
+                object.userData.otherColor = object.material.color.getHex();
+                object.material.color.setHex(temp);
+                $('#action').val(point.userData.value);
+                $('#station').val(point.userData.x);
+            })
+            domEvents.addEventListener(point, 'mouseout', (event) => {
+                let object = event.target;
+                let temp = object.userData.otherColor;
+                object.userData.otherColor = object.material.color.getHex();
+                object.material.color.setHex(temp);
+                $('#action').val('');
+                $('#station').val('');
+            })
+            parent.add(point);
+        }
     }
 }

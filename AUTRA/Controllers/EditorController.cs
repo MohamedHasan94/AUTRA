@@ -21,10 +21,10 @@ namespace AUTRA.Controllers
             return View("Editor");
         }
 
-        //public IActionResult Open(string path)
-        //{
-        //    return null;
-        //}
+        public IActionResult Open(/*string path*/)
+        {
+            return View("Open");
+        }
 
 
         [HttpPost]
@@ -63,7 +63,5 @@ namespace AUTRA.Controllers
         //{
         //    return null;
         //}
-
-
     }
 }

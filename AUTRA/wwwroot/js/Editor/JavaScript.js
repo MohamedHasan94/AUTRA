@@ -1,4 +1,4 @@
-//https://threejsfundamentals.org/threejs/lessons/threejs-picking.html
+﻿//https://threejsfundamentals.org/threejs/lessons/threejs-picking.html
 
 (function () {
     //#region  Shared variables
@@ -10,104 +10,149 @@
     let draw = false, drawingPoints = [];
     let sectionId = 0;
     //#endregion
+    function retrocycle(o) {
+        var self = this;
+        self.identifiers = [];
+        self.refs = [];
 
+        self.rez = function (value) {
+
+            // The rez function walks recursively through the object looking for $ref
+            // properties. When it finds one that has a value that is a path, then it
+            // replaces the $ref object with a reference to the value that is found by
+            // the path.
+
+            var i, item, name, path;
+
+            if (value && typeof value === 'object') {
+                if (Object.prototype.toString.apply(value) === '[object Array]') {
+                    for (i = 0; i < value.length; i += 1) {
+                        item = value[i];
+                        if (item && typeof item === 'object') {
+                            path = item.$ref;
+                            if (typeof path === 'string' && path != null) {
+                                //self.refs[parseInt(path)] = {};
+
+                                value[i] = self.identifiers[parseInt(path)]
+                            } else {
+                                self.identifiers[parseInt(item.$id)] = item;
+                                self.rez(item);
+                            }
+                        }
+                    }
+                } else {
+                    for (name in value) {
+                        if (typeof value[name] === 'object') {
+                            item = value[name];
+                            if (item) {
+                                path = item.$ref;
+                                if (typeof path === 'string' && path != null) {
+                                    value[name] = self.identifiers[parseInt(path)]
+                                } else {
+                                    self.identifiers[parseInt(item.$id)] = item;
+                                    self.rez(item);
+                                }
+                            }
+                        }
+                    }
+                }
+            }
+
+        };
+        self.rez(o);
+        self.identifiers = [];
+    }
     function init() {
         editor = new Editor(); //Instantiate editor
-        //editor.init(sections); //Setup editor
+        debugger
         canvas = editor.renderer.domElement;
+        return $.ajax({
+            url: '/Outputs/Saved/Model.txt',
+            success: function (data) {
+                debugger
+                data = JSON.parse(data);
+                retrocycle(data)
+                buildModel(data);
+            },
+            error: function (x, y, err) {
+                debugger
+                console.log(err)
+            }
+        });
 
-        $('#exampleModal').modal('show'); //Temporary data input
+        //$('#exampleModal').modal('show'); //Temporary data input
     }
 
-    $('#createGrids').click(function () {
-        $('#exampleModal').modal('hide');
-        let secSpacing, coordX, coordZ;
-        coordX = getCoords($('#spaceX').val()); //Get X-coordinates from X-spacings
-        coordZ = getCoords($('#spaceZ').val()); //Get Z-coordinates from Z-spacings
-        levels = getCoords($('#spaceY').val()); //Get Y-coordinates from Y-spacings
-        secSpacing = $('#secSpace').val().split(' ').map(s => parseFloat(s)); //Spacing between secondary beams
+    function buildModel(model) {
+        editor.init(model.grids.coordX[model.grids.coordX.length - 1], model.grids.coordZ[model.grids.coordZ.length - 1]); //Setup editor
 
-        grids = new Grid(coordX, coordZ, 3, levels);
-
-        editor.init(coordX[coordX.length - 1], coordZ[coordZ.length - 1]); //Setup editor
-
+        grids = new Grid(model.grids.coordX, model.grids.coordZ, 3, model.grids.levels);
         editor.addToGroup(grids.linesInX, 'grids'); //Add x-grids to scene (as a group)this.meshInX
         editor.addToGroup(grids.linesInZ, 'grids'); //Add z-grids to scene (as a group)
         editor.addToGroup(grids.letters, 'grids'); //Add z-grids to scene (as a group)
         editor.addToGroup(grids.axes, 'grids'); //Add z-grids to scene (as a group)
 
-        if (!document.getElementById("autoMode").checked) {
-            nodes = createNodesZ(editor, coordX, coordZ);
+        sections = model.sections;
+
+        nodes = generateNodes(model.nodes);
+
+        mainBeams.push(generateBeams(model.mainBeams));
+        /*sections.push({ $id: `s${++sectionId}`, name: 'IPE 200' }, { $id: `s${++sectionId}`, name: 'IPE 270' }, { $id: `s${++sectionId}`, name: 'IPE 360' });
+        let mainNodes = new Array(), mainBeamsLoop, secondaryBeamsLoop, mainNodesLoop, secNodesLoop, nodesLoop;
+        if (document.getElementById("xOrient").checked) { //Draw main beams on X-axis
+
+            //creating and adding the Hinged-Nodes to MainNodes Array
+            lowerNodesIntial = createNodesZ(editor, coordX, coordZ);
+            mainNodes.push(lowerNodesIntial);
+            nodes = nodes.concat(lowerNodesIntial);
+
+            for (let i = 1; i < coordY.length; i++) {
+
+                [mainBeamsLoop, secondaryBeamsLoop, mainNodesLoop, secNodesLoop] = generateMainBeamsX(editor, coordX, coordY[i], coordZ,
+                    sections[1], sections[0], secSpacing); //Auto generate floor beams and nodes in X
+
+                nodesLoop = mainNodesLoop.concat(secNodesLoop);
+                nodes = nodes.concat(nodesLoop);
+                mainNodes.push(mainNodesLoop);
+
+                columnsLoop = generateColumnsZ(editor, coordX, coordZ, mainNodes[i - 1], mainNodes[i], sections[2]); //Auto generate columns
+
+                mainBeams.push(mainBeamsLoop);
+                secondaryBeams.push(secondaryBeamsLoop);
+                columns.push(columnsLoop);
+            }
         }
         else {
-            sections.push({ $id: `s${++sectionId}`, name: 'IPE 200' }, { $id: `s${++sectionId}`, name: 'IPE 270' }, { $id: `s${++sectionId}`, name: 'IPE 360' });
-            let mainNodes = new Array(), mainBeamsLoop, secondaryBeamsLoop, mainNodesLoop, secNodesLoop, nodesLoop;
-            if (document.getElementById("xOrient").checked) { //Draw main beams on X-axis
 
-                //creating and adding the Hinged-Nodes to MainNodes Array
-                lowerNodesIntial = createNodesZ(editor, coordX, coordZ);
-                mainNodes.push(lowerNodesIntial);
-                nodes = nodes.concat(lowerNodesIntial);
+            //creating and adding the Hinged-Nodes to MainNodes Array
+            lowerNodesIntial = createNodesX(editor, coordX, coordZ);
+            mainNodes.push(lowerNodesIntial);
+            nodes = nodes.concat(lowerNodesIntial);
 
-                for (let i = 1; i < levels.length; i++) {
+            for (let i = 1; i < coordY.length; i++) {
+                [mainBeamsLoop, secondaryBeamsLoop, mainNodesLoop, secNodesLoop] = generateMainBeamsZ(editor, coordX, coordY[i], coordZ,
+                    sections[1], sections[0], secSpacing); //Auto generate floor beams and nodes in Z
 
-                    [mainBeamsLoop, secondaryBeamsLoop, mainNodesLoop, secNodesLoop] = generateMainBeamsX(editor, coordX, levels[i], coordZ,
-                        sections[1], sections[0], secSpacing); //Auto generate floor beams and nodes in X
+                nodesLoop = mainNodesLoop.concat(secNodesLoop);
+                nodes = nodes.concat(nodesLoop);
+                mainNodes.push(mainNodesLoop);
 
-                    nodesLoop = mainNodesLoop.concat(secNodesLoop);
-                    nodes = nodes.concat(nodesLoop);
-                    mainNodes.push(mainNodesLoop);
+                columnsLoop = generateColumnsX(editor, coordX, coordZ, mainNodes[i - 1], mainNodes[i], sections[2]); //Auto generate columns 
 
-                    columnsLoop = generateColumnsZ(editor, coordX, coordZ, mainNodes[i - 1], mainNodes[i], sections[2]); //Auto generate columns
-
-                    mainBeams.push(mainBeamsLoop);
-                    secondaryBeams.push(secondaryBeamsLoop);
-                    columns.push(columnsLoop);
-                }
+                mainBeams.push(mainBeamsLoop);
+                secondaryBeams.push(secondaryBeamsLoop);
+                columns.push(columnsLoop);
             }
-            else {
+        }*/
 
-                //creating and adding the Hinged-Nodes to MainNodes Array
-                lowerNodesIntial = createNodesX(editor, coordX, coordZ);
-                mainNodes.push(lowerNodesIntial);
-                nodes = nodes.concat(lowerNodesIntial);
 
-                for (let i = 1; i < levels.length; i++) {
-                    [mainBeamsLoop, secondaryBeamsLoop, mainNodesLoop, secNodesLoop] = generateMainBeamsZ(editor, coordX, levels[i], coordZ,
-                        sections[1], sections[0], secSpacing); //Auto generate floor beams and nodes in Z
-
-                    nodesLoop = mainNodesLoop.concat(secNodesLoop);
-                    nodes = nodes.concat(nodesLoop);
-                    mainNodes.push(mainNodesLoop);
-
-                    columnsLoop = generateColumnsX(editor, coordX, coordZ, mainNodes[i - 1], mainNodes[i], sections[2]); //Auto generate columns 
-
-                    mainBeams.push(mainBeamsLoop);
-                    secondaryBeams.push(secondaryBeamsLoop);
-                    columns.push(columnsLoop);
-                }
-            }
-        }
-    })
-
-    //Turn spacings into coordinates
-    function getCoords(input) {
-        let coord = [], space, number, sum = 0;
-        if (input.includes('*')) { //Equal spacing
-            [number, space] = input.split('*').map(s => parseFloat(s));
-        }
-        else { //Variable spacing
-            space = input.split(' ').map(s => parseFloat(s));
-            number = space.length;
-        }
-        number++;
-        for (var i = 0; i < number; i++) {
-            coord[i] = sum;
-            sum += space[i] ?? space;
-        }
-        return coord;
     }
 
+    function generateNodes(modelNodes) {
+        for (let i = 0; i < modelNodes.length; i++) {
+            Node.create(modelNodes[i].position.x, modelNodes[i].position.y, modelNodes[i].position.z, modelNodes[i].support, editor, nodes, modelNodes[i].$id);
+        }
+    }
     init();
 
     canvas.addEventListener('mousemove', function (event) {
@@ -495,7 +540,7 @@
             "Location": "Smart Village",
             "City": "Giza",
             "Country": "Egypt",
-            "Owner" : "AUTRA"
+            "Owner": "AUTRA"
         }
         for (var i = 0; i < nodes.length; i++) {
             model.nodes.push(nodes[i].data);
@@ -518,27 +563,30 @@
         for (var i = 0; i < columns[0].length; i++) {
             model.columns.push(columns[0][i].data);
         }
-        model.grids.coordX = grids.coordX;
-        model.grids.coordZ = grids.coordZ;
-        model.grids.levels = grids.levels;
-        model = JSON.stringify(model);
-        console.log(model)
+
+        //model = JSON.stringify(model);
+        //console.log(model)
         return model;
     }
 
     window.solve = function () { //Send data to server        
         editor.clearGroup('loads');
+        let model = createModel();
+        model.grids.coordX = grids.coordX;
+        model.grids.coordZ = grids.coordZ;
+        model.grids.levels = grids.levels;
 
+        model = this.JSON.stringify(model);
         $.ajax({
             url: `/Editor/Solve`,
             type: "POST",
             contentType: 'application/json',
-            data: createModel(),
+            data: model,
             success: function (res) {
                 debugger
                 if (domEvents)
                     domEvents.destroy();//Clear old events (if existing)
-                domEvents = new THREEx.DomEvents(editor.camera, canvas); 
+                domEvents = new THREEx.DomEvents(editor.camera, canvas);
 
                 res = JSON.parse(res);
                 editor.clearGroup('results');
@@ -570,11 +618,15 @@
     }
 
     window.save = function () { // Save data on the server
+        let model = createModel();
+        model.grids = grids;
+        model = this.JSON.stringify(model);
+
         $.ajax({
             url: `/Editor/Save`,
             type: "POST",
             contentType: 'text/plain',
-            data: creatModel(),
+            data: model,
             success: function (res) {
                 console.log(res)
             },
@@ -585,10 +637,14 @@
     }
 
     window.downloadFile = function () {
-        this.localStorage.setItem('Model', createModel()); //Save data to localStorage ??!! Option #1
+        let model = createModel();
+        mdeol.grids = grids;
+        model = this.JSON.stringify(model);
+
+        this.localStorage.setItem('Model', model); //Save data to localStorage ??!! Option #1
 
         //Save data on client machine if no internet connection Option #2
-        let text = new Blob([createModel()], { type: 'text/json' }); //Blob : An object that represents a file
+        let text = new Blob([model], { type: 'text/json' }); //Blob : An object that represents a file
 
         let textFile = window.URL.createObjectURL(text); // The URL to that object
 

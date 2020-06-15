@@ -1,0 +1,495 @@
+﻿@{
+    Layout = null;
+}
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <link href="~/lib/bootstrap/dist/css/bootstrap.min.css" rel="stylesheet" />
+    <link href="~/css/style.css" rel="stylesheet" />
+    <link href="~/css/sidebar.css" rel="stylesheet" />
+    <title>Editor</title>
+</head>
+<body>
+    <canvas id="canvas" style="position:absolute"></canvas>
+    <div class="btn" id="sidebarBtn">
+        <span class="fas fa-bars"></span>
+    </div>
+    <nav class="sidebar">
+        <div class="text">
+            Options
+        </div>
+        <ul>
+            <li>
+                <a href="#" class="feat-btn">
+                    Edit
+                    <span class="fas fa-caret-down first"></span>
+                </a>
+                <ul class="feat-show">
+                    @*<li>
+                            <a href="#" onclick="editGrids()">
+                                Grids
+                                <table class="table table-borderless table-dark">
+                                    <tbody>
+                                        <tr>
+                                            <th>X</th>
+                                            <td><input type="text" id="x" value="0" size="5"></td>
+                                        </tr>
+                                        <tr>
+                                            <th>Y</th>
+                                            <td><input type="text" id="y" value="0" size="5"></td>
+                                        </tr>
+                                        <tr>
+                                            <th>Z</th>
+                                            <td><input type="text" id="z" value="0" size="5"></td>
+                                        </tr>
+                                    <tbody>
+                                </table>
+
+                            </a>
+                        </li>*@
+                    <li>
+                        <a href="#" id="elementSec" data-toggle="popover" data-placement="right" data-content="1)select a member from the drawing canvas 2)specify the new section">
+                            <!-- changeSection handles both beams & columns-->
+                            Element Section<br>
+                        </a>
+                        <div id="elementSecDetails">
+                            <input type="text" id="section" placeholder="Choose member" size="15"> <br>
+                            <button type="button" class="btn btn-info" onclick="changeSection()">Done</button>
+                        </div>
+
+                    </li>
+
+                    <li>
+                        <a href="#" id="elementMove">
+                            Move Element  <br/>
+                        </a>
+                        <div id="elementMoveDetails">
+                            <input type="text" id="xMove" size="15" placeholder="Displacement in X"> </br>
+                            <input type="text" id="yMove" size="15" placeholder="Displacement in Y"> </br>
+                            <input type="text" id="zMove" size="15" placeholder="Displacement in Z"> </br>
+                            <button type="button" class="btn btn-info" onclick="move()">Done</button>
+                        </div>
+
+
+                    </li>
+
+                    <li>
+                        <a href="#" id="elementCopy">
+                            Copy Element
+                        </a>
+                        <div id="elementCopyDetails">
+
+                            <input type="text" id="xCopy" size="15" placeholder="Displacement in X">
+                            <input type="text" id="yCopy" size="15" placeholder="Displacement in Y">
+                            <input type="text" id="zCopy" size="15" placeholder="Displacement in Z">
+                            <input type="text" id="Replication" size="15" placeholder="No. of copies">
+                            <button type="button" class="btn btn-info" onclick="copy()">Done</button>
+                        </div>
+
+                    </li>
+
+
+                    <li>
+                </ul>
+            </li>
+
+            <li>
+                <a href="#" class="serv-btn">
+                    Add Elements
+                    <span class="fas fa-caret-down second"></span>
+                </a>
+                <ul class="serv-show">
+                    <li>
+                        <a href="#" id="drawElement"> Draw element </a>
+                        <div id="drawElementDetails">
+                            <select id="drawSection">
+                                <option value="IPE 80">IPE80</option>
+                                <option value="IPE 100">IPE100</option>
+                                <option value="IPE 120">IPE120</option>
+                                <option value="IPE 140">IPE140</option>
+                                <option value="IPE 160">IPE160</option>
+                                <option value="IPE 180">IPE180</option>
+                                <option value="IPE 200">IPE200</option>
+                                <option value="IPE 220">IPE220</option>
+                                <option value="IPE 240">IPE240</option>
+                                <option value="IPE 270">IPE270</option>
+                                <option value="IPE 300">IPE300</option>
+                                <option value="IPE 330">IPE330</option>
+                                <option value="IPE 360">IPE360</option>
+                                <option value="IPE 400">IPE400</option>
+                                <option value="IPE 450">IPE450</option>
+                                <option value="IPE 500">IPE500</option>
+                                <option value="IPE 550">IPE550</option>
+                                <option value="IPE 600">IPE600</option>
+                            </select>
+                            <a onclick="startDrawMode()">start Draw Mode</a>
+                            <a onclick="endDrawMode()">end Draw Mode</a>
+                        </div>
+                    </li>
+                    <li>
+                        <a href="#" id="addNodeCoord">
+                            Add node by coordinates
+
+                        </a>
+                        <div id="addNodeCoordDetails">
+                            <table class="table table-borderless table-dark">
+                                <tbody>
+                                    <tr>
+                                        <th>X</th>
+                                        <td><input type="text" id="nodeXCoord" value="0" size="5"></td>
+                                    </tr>
+                                    <tr>
+                                        <th>Y</th>
+                                        <td><input type="text" id="nodeYCoord" value="0" size="5"></td>
+                                    </tr>
+                                    <tr>
+                                        <th>Z</th>
+                                        <td><input type="text" id="nodeZCoord" value="0" size="5"></td>
+                                    </tr>
+                                    <tr>
+                                        <th>
+
+                                            <button type="button" class="btn btn-info" onclick="createNode()">Done</button>
+                                        </th>
+                                    </tr>
+                                <tbody>
+                            </table>
+                        </div>
+
+                    </li>
+
+                    <li>
+                        <a href="#" id="addNodeBeam">
+                            Add node to beam
+                        </a>
+                        <div id="addNodeBeamDetails">
+                            <table class="table table-borderless table-dark">
+                                <tbody>
+                                    <tr>
+                                        <th>Distances from beam start</th>
+                                        <br>
+                                        <td><input type="text" id="nodeToBeam" value="0" size="5"></td>
+                                    </tr>
+                                    <tr>
+                                        <th>
+                                            <button type="button" class="btn btn-info" onclick="addNodeToBeam()">Done</button>
+                                        </th>
+                                    </tr>
+                                <tbody>
+                            </table>
+                        </div>
+
+                    </li>
+                </ul>
+            </li>
+            <li>
+                <a href="#" class="loads-btn">
+                    Loads
+                    <span class="fas fa-caret-down third"></span>
+                </a>
+                <ul class="loads-show">
+                    <li>
+                        <a href="#" id="addFloorLoad">
+                            Add Floor load
+                        </a>
+                        <div id="addFloorLoadDetails">
+                            <input type="text" id="floorLoad" placeholder="load value" size="10"> <br>
+                            <select id="floorLoadCase">
+                                <option value="dead">Dead</option>
+                                <option value="live">Live</option>
+                            </select>
+                            <button type="button" class="btn btn-info" onclick="addFloorLoad()">Done</button>
+
+                            <!-- <input type="checkbox" id="replace" size="5"> replace -->
+                        </div>
+                    </li>
+
+                    <li>
+                        <a href="#" id="addLineLoad">
+                            Add Line load
+                        </a>
+                        <div id="addLineLoadDetails">
+                            <input type="text" id="lineLoad" placeholder="load value" size="10"> <br>
+                            <select id="lineLoadCase">
+                                <option value="dead">Dead</option>
+                                <option value="live">Live</option>
+                            </select>
+                            <input type="checkbox" id="replaceLineLoad" size="5"> replace
+                            <button type="button" class="btn btn-info" onclick="addLineLoad()">Done</button>
+                        </div>
+
+                    </li>
+                    <li>
+                        <a href="#" id="addPointLoad">
+                            Add Point load
+                        </a>
+                        <div id="addPointLoadDetails">
+                            <input type="text" id="pointLoad" placeholder="load value" size="10">
+                            <select id="pointLoadCase">
+                                <option value="dead">Dead</option>
+                                <option value="live">Live</option>
+                            </select>
+                            <input type="checkbox" id="replacePointLoad" size="5"> replace
+                            <button type="button" class="btn btn-info" onclick="addPointLoad()">Done</button>
+                        </div>
+
+                    </li>
+
+                    <li>
+                        <div style="display:flex">
+                            <a href="#" onclick="showLoads()">
+                                Show Loads
+                            </a>
+                            <select id="showLoadCase">
+                                <option value="dead">Dead</option>
+                                <option value="live">Live</option>
+                            </select>
+                        </div>
+                    </li>
+
+                    <li>
+                        <a href="#" onclick="hideLoads()">
+                            Hide Loads
+                        </a>
+                    </li>
+                </ul>
+            </li>
+            <li>
+                <a href="#" class="myModel-btn">
+                    Document
+                    <span class="fas fa-caret-down fourth"></span>
+                </a>
+                <ul class="myModel-show">
+                    <li>
+                        <a href="#" onclick="solve()">
+                            Solve
+                            <br />
+                        </a>
+                    </li>
+                    <li>
+                        <a href="#" onclick="save()">
+                            Save
+                        </a>
+                    </li>
+
+                    <li>
+                        <a href="#" onclick="downloadFile()">
+                            Download Model
+                        </a>
+                    </li>
+
+                    <li>
+                        <a href="#" onclick="screenshot()">
+                            Screenshot
+                        </a>
+                    </li>
+
+                    @*<li>
+            <input type="file" id="reactions" />
+        </li>*@
+
+                    <li>
+                        <select id="resultPattern">
+                            <option value="dead">Dead</option>
+                            <option value="live">Live</option>
+                            <option value="combination">combination</option>
+                        </select>
+                        <select id="strainingAction">
+                            <option value="Mo">Moment</option>
+                            <option value="V">Shear</option>
+                            <option value="No">Normal</option>
+                            <option value="rv">Reaction</option>
+                        </select>
+                        <select id="display">
+                            <option value="0">Wireframe</option>
+                            <option value="1">Fill Diagrams</option>
+                        </select>
+                        <button onclick="result()">Show Result</button>
+                    </li>
+
+                    <li>
+                        <button onclick="hideResults()">Hide Results</button>
+                    </li>
+                </ul>
+            </li>
+
+            <li>
+                <a href="#" class="mySelect-btn" id="mySelectBtn">
+                    Select
+                    <span class="fas fa-caret-down fifth"></span>
+                    @*<div class="form-group" id="selmodes">
+                            <label for="areaMode" style="font-weight: bold;">Area Selection Mode</label>
+
+                            <div class="radio form-group">
+                                <label>
+                                    <input type="radio" name="areaSelMode" id="areaModeOn" value="areaModeOn">On
+                                </label>
+                            </div>
+                            <div class="radio form-group">
+                                <label><input type="radio" name="areaSelMode" id="areaModeOff" value="areaModeOff" checked>Off</label>
+                            </div>
+                        </div>*@
+                </a>
+                <ul class="mySelect-show" id="mySelectShow">
+
+                    @*<li>
+                            hi
+                        </li>*@
+                </ul>
+            </li>
+
+
+            <li id="dark">
+                <a href="#" class="theme-btn" onclick="darkTheme()">
+                    Dark Theme
+
+                </a>
+
+            </li>
+
+            <li id="light">
+                <a href="#" class="theme-btn" onclick="lightTheme()">
+                    light Theme
+
+                </a>
+
+            </li>
+
+            <li>
+                <a href="#" onclick="toggle()">
+                    Toggle View
+                </a>
+            </li>
+
+        </ul>
+    </nav>
+
+    <div style="position:absolute;top:20px;right:20px">
+        <input type="text" id="beamSection" disabled>
+        <input type="text" id="beamStart" disabled>
+        <input type="text" id="beamEnd" disabled>
+        <input type="text" id="beamDead" disabled>
+        <input type="text" id="beamLive" disabled>
+        <input type="text" id="station" disabled>
+        <input type="text" id="action" disabled>
+    </div>
+    <!-- Modal -->
+    <div class="modal fade" id="exampleModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel"
+         aria-hidden="true">
+        <div class="modal-dialog" role="document">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h5 class="modal-title" id="exampleModalLabel">Floor System</h5>
+                    <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                        <span aria-hidden="true">&times;</span>
+                    </button>
+                </div>
+
+                <div class="modal-body">
+
+                    <div class="form-group">
+                        <label class="subtitle" style="font-weight: bold;">Grids</label>
+                    </div>
+                    <div class="form-group">
+                        <label for="spaceX">Spacing in X-direction</label>
+                        <input type="text" name="" id="spaceX" class="form-control" value="3*6" required>
+                    </div>
+                    <div class="form-group">
+                        <label for="spaceZ">Spacing in Z-direction</label>
+                        <input type="text" name="" id="spaceZ" class="form-control" value="2*8" required>
+                    </div>
+                    <div class="form-group">
+                        <label for="height">Levels</label>
+                        <input type="text" name="" id="spaceY" class="form-control" value="2*3" required>
+                    </div>
+
+                    <div class="form-group" id="modes">
+                        <label for="drawingMode" style="font-weight: bold;">Drawing Mode</label>
+
+                        <div class="radio form-group">
+                            <label>
+                                <input type="radio" name="modegrp" id="autoMode" value="autoMode"
+                                       onclick="showHideAutoModeData()" checked>Automated
+                            </label>
+                        </div>
+                        <div class="radio form-group">
+                            <label><input type="radio" name="modegrp" id="manMode" value="manMode">Manual</label>
+                        </div>
+
+
+                    </div>
+                    <div id="autoModeData">
+                        <div class="form-group">
+                            <label class="subtitle" style="font-weight: bold;">Beams</label>
+                        </div>
+                        <div class="form-group">
+                            <label for="mainOrient">Main Beams Orientation</label>
+
+
+                            <div class="radio" class="form-group">
+                                <label><input type="radio" name="optradio" id="xOrient" value="X" checked>X Axis</label>
+                            </div>
+                            <div class="radio" class="form-group">
+                                <label><input type="radio" name="optradio" id="yOrient" value="Y">Y Axis</label>
+                            </div>
+
+
+                        </div>
+                        <div class="form-group">
+                            <label for="secSpace">Seccondary beams spacing</label>
+                            <input type="text" name="" id="secSpace" class="form-control" value="2" required>
+                        </div>
+                        <!-- <div class="form-group">
+                            <label class="subtitle" style="font-weight: bold;">Loads</label>
+                        </div>
+
+                        <div class="form-group">
+                            <label for="secSpace">Dead Load</label>
+                            <input type="text" name="" id="dead" class="form-control" value="1.5" required>
+                        </div>
+
+                        <div class="form-group">
+                            <label for="secSpace">Live Load</label>
+                            <input type="text" name="" id="live" class="form-control" value="2.5" required>
+                        </div>-->
+                    </div>
+
+                </div>
+
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+                    <button type="button" class="btn btn-primary" id="createGrids">Create Grids</button>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    @* Scripts *@
+    
+    <script src="~/lib/jquery/dist/jquery.min.js"></script>
+    <script src="~/lib/bootstrap/dist/js/bootstrap.min.js"></script>
+    <script src="~/lib/three.js/three.js"></script>
+    <script src="~/lib/three.js/BufferGeometryUtils.js"></script>
+    <script src="~/lib/three.js/OrbitControls.js"></script>
+    <script src="~/lib/three.js/threex.domevents.js"></script>
+    <script src="~/js/Editor/picker.js"></script>
+    <script src="~/js/Editor/Load.js"></script>
+    <script src="~/js/Editor/Node.js"></script>
+    <script src="~/js/Editor/Grid.js"></script>
+    <script src="~/js/Editor/FrameElement.js"></script>
+    <script src="~/js/Editor/Beam.js"></script>
+    <script src="~/js/Editor/Column.js"></script>
+    <script src="~/js/Editor/Editor.js"></script>
+    <script src="~/js/Editor/main.js"></script>
+    <script src="~/js/Editor/ui/Modal.js"></script>
+    <script src="~/js/Editor/ui/Sidebar.js"></script>
+
+
+    <script src="https://kit.fontawesome.com/a076d05399.js"></script>
+
+</body>
+
+</html>

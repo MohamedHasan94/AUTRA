@@ -33,6 +33,7 @@ namespace AUTRA.Design
         public List<LoadCombination> Combos { get; set; }
         public List<Group> SecondaryGroups { get; set; }
         public List<Group> MainGroups { get; set; }
+        public Group ColumnsGroup { get; set; }
         public List<LoadPattern> Patterns { get; set; }
         public List<Connection> Connections { get; set; }
         public Bolt Bolt { get; set; }
@@ -74,11 +75,11 @@ namespace AUTRA.Design
                 Analysis.LinearAddCombineReactions(support, Combos);
             }
         }
-        public void Design(List<EqualAngle> angles)
+        public void Design()
         {
             //TODO:The following two Functions basically ca run in different threads
             SecondaryGroups = Analysis.InitBeamsForDesign(Project.SecondaryBeams);
-            DesignLimitState designValues = Analysis.InitColumnsForDesign(Project.Columns);
+            ColumnsGroup = Analysis.InitColumnsForDesign(Project.Columns);
             Stopwatch watch = new Stopwatch();
             watch.Start();
             foreach (var group in SecondaryGroups)
@@ -121,11 +122,11 @@ namespace AUTRA.Design
                 }
             }
             watch.Stop();
-            Section colSection = designValues.CriticalElement.Section;
+            Section colSection = ColumnsGroup.DesignValues.CriticalElement.Section;
             bool columnResult = false;
             while (!columnResult)
             {
-                columnResult = DesignCode.DesignColumn( colSection, designValues.CriticalElement.Length, BracingCondition.BRACED, designValues.Nd,new DesignResult());
+                columnResult = DesignCode.DesignColumn( ColumnsGroup, BracingCondition.BRACED);
                 if (!columnResult)
                 {
                     if(!GetNextSection(ref colSection))
@@ -137,18 +138,15 @@ namespace AUTRA.Design
                 }
             }
 
-            //DesignConnections(angles);
 
             Project.SecondaryBeams.Sort(FrameElement.SortByID<Beam>());
-            //SecondaryBeams.ForEach(b => b.CombinedSA.ForEach(sa => sa.Stations.Sort(Station.SortByX())));//Very very bad
             Project.MainBeams.Sort(FrameElement.SortByID<Beam>());
-            //MainBeams.ForEach(b => b.CombinedSA.ForEach(sa => sa.Stations.Sort(Station.SortByX())));//Very very bad
             Project.Columns.Sort(FrameElement.SortByID<Column>());
         }
         public void CreateReports(string folderPath)
         {
             Report report = new Report(folderPath);
-            report.Create("Secondary Beams.pdf", SecondaryGroups,MainGroups);
+            report.Create("Design Calculation Sheet.pdf", SecondaryGroups,MainGroups,ColumnsGroup);
         }
         #endregion
         #region Helper Methods
@@ -191,20 +189,30 @@ namespace AUTRA.Design
         #endregion
         #endregion
         #region Connections
-        private void DesignConnections( List<EqualAngle> angles)
+        public List<Connection> DesignConnections()
         {
+            int weldSize = 6; 
+            int plateThickness = 10;
             SecondaryGroups.ForEach(g =>
             {
-                SimpleConnection(g, angles);
+                SimpleConnection(g,ref weldSize ,ref plateThickness );
             });
             MainGroups.ForEach(g =>
             {
-                SimpleConnection(g, angles);
+                SimpleConnection(g,ref weldSize , ref plateThickness);
+            });
+            Connections.ForEach(c => {
+                //make sure that plate thickness and weld size are same for project
+                c.SimpleConnection.Tp = plateThickness; 
+                c.SimpleConnection.Sw = weldSize;
             });
             GetMainPart();
-            ManageConnections();
+            SecondaryGroups.AssignSectionToElement();
+            MainGroups.AssignSectionToElement();
+            ColumnsGroup.AssignSectionToElement();
+            return Connections;
         }
-        private void SimpleConnection(Group group,List<EqualAngle> angles)
+        private void SimpleConnection(Group group , ref int weldSize ,ref int plateThickness )
         {
             //This method will be done for all secondary beams and main beams
             Section section;
@@ -212,11 +220,11 @@ namespace AUTRA.Design
             //As Long as Connection is null (Pitch is less than 3*Dia) => Go and Get the bigger section and check again
             do
             {
-             conn= DesignCode.DesignSimpleConnection(group.DesignValues.Vd, BoltedConnectionCategory.BEARING_NON_PRETENSIONED, Bolt, group.Section,angles);
+                conn = DesignCode.DesignSimpleConnection(group.DesignValues.Vd, Bolt, group.Section,ref weldSize ,ref plateThickness);
                 if (conn == null)
                 {
                     section = group.Section;
-                    if(!GetNextSection(ref section))
+                    if (!GetNextSection(ref section))
                     {
                         throw new Exception("No bigger Section for this in connection");
                     }
@@ -227,20 +235,19 @@ namespace AUTRA.Design
                     break;
                 }
             } while (true);
-            group.Beams.ForEach(b =>
+            group.Connection = conn;
+            group.Elements.ForEach(b =>
             {
-                b.Section = group.Section; //Change the section of the beam as we don't change it
-
                 var startConnection = new Connection();
                 startConnection.SimpleConnection = conn;
-                startConnection.SecondaryPart=b;
+                startConnection.SecondaryPart = b;
                 startConnection.Position = b.StartNode.Position;
                 Connections.Add(startConnection);
 
                 var endConnection = new Connection();
-                startConnection.SimpleConnection = conn;
-                startConnection.SecondaryPart=b;
-                startConnection.Position = b.EndNode.Position;
+                endConnection.SimpleConnection = conn;
+                endConnection.SecondaryPart = b;
+                endConnection.Position = b.EndNode.Position;
                 Connections.Add(endConnection);
             });
         }
@@ -252,63 +259,14 @@ namespace AUTRA.Design
             {
                 p = c.Position;
                 c.MainPart = null;
-                c.MainPart= Project.MainBeams.FirstOrDefault(b => p.IsOnLine(b));
+                c.MainPart = Project.Columns.FirstOrDefault(col => p.IsOnLine(col));
                 if (c.MainPart == null)
-                    c.MainPart = Project.Columns.FirstOrDefault(col => p.IsOnLine(col));
-            }
-        }
-        private void ManageConnections()
-        {
-            /*Note: The following Logic depends on tekla if it facilitates drawing on tekla then ok else not ok
-             * Logic: for each node Get connections at that node => Check scenarios
-             *      scenario 1: edge connection not at column => number of connections == 1 =>add list as it is in nodes
-             *      scenario 2: Corner connection => number of connection == 2 => add list as it is in nodes
-             *      scenario 3: edge connection at column with one secondary beam & two main beams => number of connections == 3 => add list as it is in node
-             *      scenario 4: edge connection at column with two secondary beam & one main beam => number of connections == 3 => merge secondary beam as secondary part in one of the connections then remove the other
-             *      scenario 5: Inner connection between secondary beams and Main beam => number of connections == 2 => merge then add
-             *      scenario 6: Inner connection at column => number of connections == 4 merge secondary then add three
-             * Handle each scenario 
-             */
-            Project.Nodes.ForEach(n =>
-            {
-               var conns= Connections.Where(c => c.Position == n.Position).ToList();
-               int count = conns.Count;
-                n.Connections = conns;
-                //switch (count)
+                    c.MainPart = Project.MainBeams.FirstOrDefault(b => p.IsOnLine(b));
+                //if (c.MainPart != null)
                 //{
-                //    case 1:
-                //        //edge connection not at column (one secondary beam connecting with one main beam)
-                //        n.Connections = conns;
-                //        break;
-                //    case 2:
-                //        //it is either corner connection or inner connection not at column
-                //        /*
-                //         * Logic: if the secondary part in each connection on the same direction => inner connection not at column
-                //         * else => corner connection
-                //         */
-                //        var beam1 = conns[0].SecondaryPart;
-                //        var beam2 = conns[1].SecondaryPart;
-                //        Point vec1 = beam1.GetVector();
-                //        Point vec2 = beam2.GetVector();
-                //        if(vec1.Cross(vec2)==new Point())
-                //        {
-                //            //inner Connection not at column
-                            
-                           
-                //        }
-                //        else
-                //        {
-                //            //corner connection
-                //            n.Connections = conns;
-                //        }
-                //        break;
-                //    case 3:
-                //        break;
-                //    case 4:
-                //        break;
-
+                //    c.MainPart = c.MainPart == c.SecondaryPart ? null : c.MainPart;
                 //}
-            });
+            }
         }
         #endregion
     }

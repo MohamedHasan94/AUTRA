@@ -1,11 +1,12 @@
-﻿using System;
+﻿using Newtonsoft.Json;
+using System;
 using System.Collections.Generic;
-using System.Text;
-using System.Linq;
 using System.IO;
-using Newtonsoft.Json;
+using System.Linq;
+using System.Text;
+using System.Threading.Tasks;
 
-namespace AUTRA.Design
+namespace TeklaAPIHandler
 {
    public static class Reader
     {
@@ -18,7 +19,7 @@ namespace AUTRA.Design
             }
             return jsonFromFile;
         }
-        public static List<T> Read<T>(string filePath)=> JsonConvert.DeserializeObject<List<T>>(Read(filePath));
-
+        public static List<T> ReadList<T>(string filePath) => JsonConvert.DeserializeObject<List<T>>(Read(filePath));
+        public static T Read<T>(string filePath) => JsonConvert.DeserializeObject<T>(Read(filePath));
     }
 }

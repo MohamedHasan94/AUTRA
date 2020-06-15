@@ -7,6 +7,10 @@ Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "AUTRA", "AUTRA\AUTRA.csproj
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "AUTRA.Design", "AUTRA.Design\AUTRA.Design.csproj", "{84BD86CC-2152-4B19-B0F0-9BB09A79E8F1}"
 EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "AUTRA.Tekla", "TeklaAPI\AUTRA.Tekla.csproj", "{EAE26426-69CC-4DF2-A732-55FD64561A6E}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "TeklaAPIHandler", "TeklaAPIHandler\TeklaAPIHandler.csproj", "{A88426FD-BBFA-4048-9E84-11A0BDDA0F07}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -21,6 +25,14 @@ Global
 		{84BD86CC-2152-4B19-B0F0-9BB09A79E8F1}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{84BD86CC-2152-4B19-B0F0-9BB09A79E8F1}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{84BD86CC-2152-4B19-B0F0-9BB09A79E8F1}.Release|Any CPU.Build.0 = Release|Any CPU
+		{EAE26426-69CC-4DF2-A732-55FD64561A6E}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{EAE26426-69CC-4DF2-A732-55FD64561A6E}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{EAE26426-69CC-4DF2-A732-55FD64561A6E}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{EAE26426-69CC-4DF2-A732-55FD64561A6E}.Release|Any CPU.Build.0 = Release|Any CPU
+		{A88426FD-BBFA-4048-9E84-11A0BDDA0F07}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{A88426FD-BBFA-4048-9E84-11A0BDDA0F07}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{A88426FD-BBFA-4048-9E84-11A0BDDA0F07}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{A88426FD-BBFA-4048-9E84-11A0BDDA0F07}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE

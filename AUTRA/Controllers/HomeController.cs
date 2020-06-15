@@ -29,7 +29,7 @@ namespace AUTRA.Controllers
 
         public IActionResult Privacy()
         {
-            string path = "../AUTRA/wwwroot/Inputs/Test01.json";
+            string path = "../AUTRA/wwwroot/Inputs/Model.json";
 
             string js;
 
@@ -42,11 +42,11 @@ namespace AUTRA.Controllers
                 new JsonSerializerSettings { PreserveReferencesHandling = PreserveReferencesHandling.Objects });
 
             model.Nodes.ModifyCoordinates();
-            model.MainBeams.ModifyInnerNodes(model.Nodes);
+           // model.MainBeams.ModifyInnerNodes(model.Nodes);
             Stopwatch stopwatch = new Stopwatch();
 
             stopwatch.Start();
-            AUTRA.Design.AUTRA.Init(model);
+            AUTRA.Init(model, @"D:\ITI\GraduationPoject\AUTRA\AUTRA\wwwroot\Inputs\ToTekla01.json");
             stopwatch.Stop();
             ViewData["Design"] = stopwatch.ElapsedMilliseconds / 1000.0;
 

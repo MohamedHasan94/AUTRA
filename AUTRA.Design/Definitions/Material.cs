@@ -13,6 +13,22 @@ namespace AUTRA.Design
         public double Fu { get; set; }
         public double Density { get; set; }
         #endregion
-       
+        public override string ToString()
+        {
+            string result = "";
+            switch (Name)
+            {
+                case SteelType.ST_37:
+                    result = "St-37";
+                    break;
+                case SteelType.ST_44:
+                    result = "St-44";
+                    break;
+                case SteelType.ST_52:
+                    result = "St-52";
+                    break;
+            }
+            return result;
+        }
     }
 }

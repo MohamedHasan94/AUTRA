@@ -1,35 +1,35 @@
 [{
-    "Name": "G4.6",
+    "Name": "4.6",
     "Fyb": 2.4,
     "Fub": 4,
     "ShearFactor": 0.25
 }, {
-    "Name": "G4.8",
+    "Name": "4.8",
     "Fyb": 3.2,
     "Fub": 4,
     "ShearFactor": 0.2
 }, {
-    "Name": "G5.6",
+    "Name": "5.6",
     "Fyb": 3,
     "Fub": 5,
     "ShearFactor": 0.25
 }, {
-    "Name": "G5.8",
+    "Name": "5.8",
     "Fyb": 4,
     "Fub": 5,
     "ShearFactor": 0.2
 }, {
-    "Name": "G6.8",
+    "Name": "6.8",
     "Fyb": 4.8,
     "Fub": 6,
     "ShearFactor": 0.2
 }, {
-    "Name": "G8.8",
+    "Name": "8.8",
     "Fyb": 6.4,
     "Fub": 8,
     "ShearFactor": 0.25
 }, {
-    "Name": "G10.9",
+    "Name": "10.9",
     "Fyb": 9,
     "Fub": 10,
     "ShearFactor": 0.2

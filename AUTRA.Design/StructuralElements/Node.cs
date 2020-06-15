@@ -65,6 +65,5 @@ namespace AUTRA.Design
    {
         public Point Position { get; set; }
         public List<PointLoad> PointLoads { get; set; }
-        public List<Connection> Connections { get; set; }
     }
 }

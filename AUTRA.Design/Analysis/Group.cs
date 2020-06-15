@@ -8,13 +8,17 @@ namespace AUTRA.Design
     {
         public Group()
         {
-            Beams = new List<Beam>();
+            Elements = new List<FrameElement>();
             DesignResult = new DesignResult();
         }
-        public List<Beam> Beams { get; set; }
+        public List<FrameElement> Elements { get; set; }
         public DesignLimitState DesignValues { get; set; }
         public ServiceabilityLimitState ServiceValue { get; set; }
         public Section Section { get; set; }
         public DesignResult DesignResult { get; set; }
+        public SimpleConnection Connection { get; set; }
+
+        public void AssignSectionToElement() => Elements.ForEach(e => e.Section = Section);
+        
     }
 }

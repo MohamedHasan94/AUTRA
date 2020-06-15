@@ -30,6 +30,7 @@ namespace AUTRA.Design
             double Rb = alpha * fu * dia * tmin;
             return Rb;
         }
+        public double GetAllowableWeldStress(double fu) => 0.2 * fu;
         public Compactness CheckLocalBuckling( Section section,DesignResult designResult ,StressType stress)
         {
             //check whether section is compact or not
@@ -56,7 +57,7 @@ namespace AUTRA.Design
             if (ctfsq < flangeLowerLimitSq)
             {
                 flange = Compactness.COMPACT;
-                designResult.FlangeLocalBuckling = String.Format($"c/tf= {Math.Sqrt(ctfsq)} < {Math.Sqrt(flangeLowerLimitSq)} => Compact Flange");
+                designResult.FlangeLocalBuckling = String.Format($"c/tf= {Math.Sqrt(ctfsq).Round()} < {Math.Sqrt(flangeLowerLimitSq).Round()} => Compact Flange");
             }
             else if (ctfsq > flangeUpperLimitSq)
             {
@@ -67,13 +68,13 @@ namespace AUTRA.Design
             else
             {
                 flange = Compactness.NONCOMPACT;
-                designResult.FlangeLocalBuckling = String.Format($"{Math.Sqrt(flangeUpperLimitSq)} > c/tf= {Math.Sqrt(ctfsq)} > {Math.Sqrt(flangeLowerLimitSq)} => Non-Compact Flange");
+                designResult.FlangeLocalBuckling = String.Format($"{Math.Sqrt(flangeUpperLimitSq).Round()} > c/tf= {Math.Sqrt(ctfsq).Round()} > {Math.Sqrt(flangeLowerLimitSq).Round()} => Non-Compact Flange");
             }
             //2-Check Compactness for Web
             if (dwtwsq < webLowerLimitSq)
             {
                 web = Compactness.COMPACT;
-                designResult.WebLocalBuckling = String.Format($"dw/tw= {Math.Sqrt(dwtwsq)} < {Math.Sqrt(webLowerLimitSq)} => Compact Web");
+                designResult.WebLocalBuckling = String.Format($"dw/tw= {Math.Sqrt(dwtwsq).Round()} < {Math.Sqrt(webLowerLimitSq).Round()} => Compact Web");
             }
             else if (dwtwsq > webUpperLimitSq)
             {
@@ -84,7 +85,7 @@ namespace AUTRA.Design
             else
             {
                 web = Compactness.NONCOMPACT;
-                designResult.WebLocalBuckling = String.Format($"{Math.Sqrt(webUpperLimitSq)} > c/tf= {Math.Sqrt(dwtwsq)} > {Math.Sqrt(webLowerLimitSq)} => Non-Compact Web");
+                designResult.WebLocalBuckling = String.Format($"{Math.Sqrt(webUpperLimitSq).Round()} > c/tf= {Math.Sqrt(dwtwsq).Round()} > {Math.Sqrt(webLowerLimitSq).Round()} => Non-Compact Web");
             }
             return web == Compactness.COMPACT && flange == Compactness.COMPACT ? Compactness.COMPACT : Compactness.NONCOMPACT;
         }
@@ -100,16 +101,15 @@ namespace AUTRA.Design
             double lumaxsq2 = (20 * bf * 20 * bf) / fy;
             double lumaxsq = Math.Min(lumaxsq1, lumaxsq2);
             if (lusq < lumaxsq) {
-                designResult.Lu = string.Format($"Luact= {luact} m < Lumax= {Math.Sqrt(lumaxsq)} m => Supported (No LTB)");
+                designResult.Lu = string.Format($"Luact= {luact.Round()} m < Lumax= {Math.Sqrt(lumaxsq).Round()} m => Supported (No LTB)");
                 return UnSupportedLength.SUPPORTED;
             }
             else 
             {
-                designResult.Lu = string.Format($"Luact= {luact} m > Lumax= {Math.Sqrt(lumaxsq)} m => Un-Supported (LTB Occurs)");
+                designResult.Lu = string.Format($"Luact= {luact.Round()} m > Lumax= {Math.Sqrt(lumaxsq).Round()} m => Un-Supported (LTB Occurs)");
                 return UnSupportedLength.UNSUPPORTED;
             }  
         }
-
         public double GetAllowableBendingstress( Section section, Compactness compactness, UnSupportedLength lu, double luact)
         {
             double Fb = 0.58 * section.Material.Fy; //unit:t/cm^2
@@ -166,7 +166,6 @@ namespace AUTRA.Design
             }
             return Fb;
         }
-
         public double GetAllowableDeflection(double span, BeamType type)
         {
             //span (meter) => *100 => (cm)
@@ -186,13 +185,13 @@ namespace AUTRA.Design
             }
             return dall;
         }
-
         public double GetAllowableShearStress(Section section) => 0.35 * section.Material.Fy;
-        public double GetAllowableCompressionStress(double lambda,SteelType steel)
+        public double GetAllowableCompressionStress(double lambda,SteelType steel,DesignResult result)
         {
             double FC;
             if (lambda < 100)
             {
+                result.Lambda = String.Format($"lambda = {lambda.Round()} < 100");
                 switch (steel)
                 {
                     case SteelType.ST_44:
@@ -210,11 +209,11 @@ namespace AUTRA.Design
             }
             else
             {
+                result.Lambda = String.Format($"lambda = {lambda.Round()} > 100");
                 FC = 7500 / (lambda * lambda);
             }
             return FC;
         }
-
         public double CalcShearStress( Section section, double Vd)
         {
             double q; //actual shear stress
@@ -222,7 +221,6 @@ namespace AUTRA.Design
             q = Vd / Aw; //unit: t/cm^2
             return q;
         }
-
         public double CalcBendingStress( Section section, double Md)
         {
             //Md=> t.m => *100 => t.cm
@@ -230,7 +228,7 @@ namespace AUTRA.Design
             fbact = (Md*100) / section.Sx;
             return fbact;
         }
-
+        public double CalcEquivalentStress(double normal, double shear) => Math.Sqrt(normal * normal + 3 * shear * shear);
         public double CalcDeflection( Section section, double span, double WLL)
         {
             //5*wll*span^4/384*EI
@@ -243,9 +241,7 @@ namespace AUTRA.Design
             dact = (5 * Math.Abs(WLL) * Math.Pow(span, 4)) / (384 * E * I);
             return dact;
         }
-
         public double CalcAxialStress(  Section section, double Nd) => Nd / section.Area;
-
         public double CalcBucklingLength(double length, BracingCondition bracing)
         {
             double k=1;
@@ -308,78 +304,174 @@ namespace AUTRA.Design
                 double KL = CalcBucklingLength(length, bracing);
                 double iy = section.Ry;
                 double lambda = KL / iy;
-                double Fc = GetAllowableCompressionStress(lambda, section.Material.Name);
+                double Fc = GetAllowableCompressionStress(lambda, section.Material.Name,result);
                 double fc = CalcAxialStress(section, Nd);
+                result.Fcact = fc;
+                result.Fcall = Fc;
                 return fc < Fc;
             }
             return false;
         }
-
         public bool DesignBeam(Group group, BeamType beamType) => DesignBeam(group.Section, group.ServiceValue.CriticalBeam.Length, 0, beamType, group.ServiceValue.WLL, group.DesignValues.Vd, group.DesignValues.Md, group.DesignResult);
-        
-        public SimpleConnection DesignSimpleConnection(double vd ,BoltedConnectionCategory cat ,Bolt bolt , Section section,List<EqualAngle> angles)
-        {
-            /*TODO:
-             * 1-N1 Group (Shop Bolted)=> Number , Grade(most likely will be same for project) , Diameter 
-             * 2-N2 Group (Field Bolted => Their number will be increased by 15%)=> same requirments as N1 Group
-             * 3-Angle => Section , Length , Layout of bolts in it
-             */
-            /*Resources Needed:
-             * 1-Design shear Force
-             * 2-Isections that will be connected => Note:Basically There are two types of simple connections according to type(Name) of connecting members
-             *      a-Secondary beam & Main Beam (Web & Web)
-             *      b-Main Beam & Column (Web & Flange)
-             *   So, Conservatively the parameter section will be the Secondary beam section for 'a' & Main beam section for 'b' and bearing strength will be determined based on it 
-             * 3-Bolts we are going to use for this connection
-             */
+        public bool DesignColumn(Group group, BracingCondition bracing) => DesignColumn(group.Section, group.DesignValues.CriticalElement.Length, bracing, group.DesignValues.Nd, group.DesignResult);
+        #region To be Removed
+        //public SimpleConnection DesignSimpleConnection(double vd ,BoltedConnectionCategory cat ,Bolt bolt , Section section,List<EqualAngle> angles)
+        //{
+        //    /*TODO:
+        //     * 1-N1 Group (Shop Bolted)=> Number , Grade(most likely will be same for project) , Diameter 
+        //     * 2-N2 Group (Field Bolted => Their number will be increased by 15%)=> same requirments as N1 Group
+        //     * 3-Angle => Section , Length , Layout of bolts in it
+        //     */
+        //    /*Resources Needed:
+        //     * 1-Design shear Force
+        //     * 2-Isections that will be connected => Note:Basically There are two types of simple connections according to type(Name) of connecting members
+        //     *      a-Secondary beam & Main Beam (Web & Web)
+        //     *      b-Main Beam & Column (Web & Flange)
+        //     *   So, Conservatively the parameter section will be the Secondary beam section for 'a' & Main beam section for 'b' and bearing strength will be determined based on it 
+        //     * 3-Bolts we are going to use for this connection
+        //     */
 
-            //For N1 Group(Shop group , Double shear plane)
-            double Rleast1 = Math.Min(GetAllowableBoltShear(cat,bolt,2), GetAllowableBoltBearing(bolt.Dia,section.Tw,section.Material.Fu));
-            int n1 =Math.Max((int) Math.Ceiling(vd / Rleast1),3); //minimum in code is 2. However, It is more safer to use min as 3 or 4
-            //For N2 Group(Field group , single shear plane)
-            double Rleast2 = Math.Min(GetAllowableBoltShear(cat, bolt, 1), GetAllowableBoltBearing(bolt.Dia, section.Tw, section.Material.Fu));
-            double vdRow = ((vd / 2) * 1.15);
-            int n2= Math.Max((int)Math.Ceiling(vdRow / Rleast2), 3);
-            //For Angle
-            double a = 3 * bolt.Dia * 1.2; //(3*dia + t)
-            //Get equal angle with leg greater than 'a'
-            EqualAngle angle = angles.GetEqualAngle(a);
-            //To get length of the angle => L <= 0.8 h => we have to swicth from 'cm' to 'mm' and deal with integer values
-            int l = (int)(section.H * 10 * 0.8);
-            int p1 = l/n1;
-            int p2 = l/n2;
-            int largerPitch = Math.Max(p1, p2); //check not exceeding 6*Dia
-            int smallerPitch = Math.Min(p1, p2);//check not less than 3*Dia
-            //Three scenarios can occur:(1-Pitch less than 3*Dia)(2-Pitch Greater Than 6*Dia)(3-Picth between 3-6 *Dia)
-            //Case1 => Increase Section (rarley will occur but must be implemented), Increase bolt diameter , increase grade
-            //Case2 => Take pitch with value equal to 4*Dia and recalculate the length again
-            //Case3 => Ok
-            int minPitch =(int)(3 * bolt.Dia * 10); //unit is mm
-            int maxPitch = minPitch * 2;
-            if (smallerPitch < minPitch)
+        //    //For N1 Group(Shop group , Double shear plane)
+        //    double Rleast1 = Math.Min(GetAllowableBoltShear(cat,bolt,2), GetAllowableBoltBearing(bolt.Dia,section.Tw,section.Material.Fu));
+        //    int n1 =Math.Max((int) Math.Ceiling(vd / Rleast1),3); //minimum in code is 2. However, It is more safer to use min as 3 or 4
+        //    //For N2 Group(Field group , single shear plane)
+        //    double Rleast2 = Math.Min(GetAllowableBoltShear(cat, bolt, 1), GetAllowableBoltBearing(bolt.Dia, section.Tw, section.Material.Fu));
+        //    double vdRow = ((vd / 2) * 1.15);
+        //    int n2= Math.Max((int)Math.Ceiling(vdRow / Rleast2), 3);
+        //    //For Angle
+        //    double a = 3 * bolt.Dia * 1.2; //(3*dia + t)
+        //    //Get equal angle with leg greater than 'a'
+        //    EqualAngle angle = angles.GetEqualAngle(a);
+        //    //To get length of the angle => L <= 0.8 h => we have to swicth from 'cm' to 'mm' and deal with integer values
+        //    int l = (int)(section.H * 10 * 0.8);
+        //    int p1 = l/n1;
+        //    int p2 = l/n2;
+        //    int largerPitch = Math.Max(p1, p2); //check not exceeding 6*Dia
+        //    int smallerPitch = Math.Min(p1, p2);//check not less than 3*Dia
+        //    //Three scenarios can occur:(1-Pitch less than 3*Dia)(2-Pitch Greater Than 6*Dia)(3-Picth between 3-6 *Dia)
+        //    //Case1 => Increase Section (rarley will occur but must be implemented), Increase bolt diameter , increase grade
+        //    //Case2 => Take pitch with value equal to 4*Dia and recalculate the length again
+        //    //Case3 => Ok
+        //    int minPitch =(int)(3 * bolt.Dia * 10); //unit is mm
+        //    int maxPitch = minPitch * 2;
+        //    if (smallerPitch < minPitch)
+        //    {
+        //        //case1
+        //        return null;
+        //    }
+        //    else if (largerPitch > maxPitch)
+        //    {
+        //        //case2
+        //        p1 = 4 * (int)bolt.Dia * 10;
+        //        p2 = 4 * (int)bolt.Dia * 10;
+        //        int l1 = n1 * p1;
+        //        int l2 = n2 * p2;
+        //        l = Math.Max(l1, l2);
+        //        //Note: frist edge distance will be equal = p/2 & last edge distance will be equal = L-(n-0.5)*p
+        //       //case2 now it is changed to be case3
+        //    }
+        //    SimpleConnection connection = new SimpleConnection();
+        //    connection.N1 = n1;
+        //    connection.N2 = n2;
+        //    connection.Pitch1 = p1;
+        //    connection.Pitch2 = p2;
+        //    connection.Length = l;
+        //    connection.ConnectingAngle = angle;
+        //    return connection;
+        //}
+
+        #endregion
+        public SimpleConnection DesignSimpleConnection(double vd , Bolt bolt , Section section,ref int weldSize ,ref int plateThickness)
+        {
+            //This method is used to design simple shear plate connection 
+            /*
+             * Logic:
+             * Get number of field bolts => check pitch
+             * check weld size at plane 1-1   => Note weld size is per project
+             * check weld size at plane 2-2
+             * chec thickness of plate        => Plate thickness is per project
+             */
+             //Note: Units we are going to use are in mm
+            double Rleast = Math.Min(GetAllowableBoltShear(BoltedConnectionCategory.BEARING_NON_PRETENSIONED,bolt,1), GetAllowableBoltBearing(bolt.Dia,section.Tw,section.Material.Fu));
+            int n = Math.Max((int)Math.Ceiling(vd / Rleast),3); //number of bolts required
+            int length = (int)(0.7 * 10 * section.H);
+            int pitch = length / n;
+            /*check pitch aganist the following scenarios:
+             * 1-pitch is less than 3*Dia => return null
+             * 2-pitch is greater than 6*Dia => choose pitch = 4*Dia and then recalculate
+             * 3-pitch is between 3 -> 6 => Okay
+             */
+            int minPitch =(int)(3 * 10 * bolt.Dia);
+            int maxPitch = 2 * minPitch;
+            if (pitch < minPitch)
             {
-                //case1
+                //scenario 1
                 return null;
-            }
-            else if (largerPitch > maxPitch)
+            }else if(pitch > maxPitch)
             {
-                //case2
-                p1 = 4 * (int)bolt.Dia * 10;
-                p2 = 4 * (int)bolt.Dia * 10;
-                int l1 = n1 * p1;
-                int l2 = n2 * p2;
-                l = Math.Max(l1, l2);
-                //Note: frist edge distance will be equal = p/2 & last edge distance will be equal = L-(n-0.5)*p
-               //case2 now it is changed to be case3
+                //scenario 2
+                n += 1;
+                pitch =(int)( 4 * 10 * bolt.Dia);
+                length = n * pitch;
+                //scenario 2 will now convert to scenario 3
             }
-            SimpleConnection connection = new SimpleConnection();
-            connection.N1 = n1;
-            connection.N2 = n2;
-            connection.Pitch1 = p1;
-            connection.Pitch2 = p2;
-            connection.Length = l;
-            connection.ConnectingAngle = angle;
-            return connection;
+            //scenario 3
+            //Check Weld
+            //First Plane 1-1
+            int e = 50; // distance between bolts and end of the plate (mm)
+            SimpleConnection conn = new SimpleConnection();
+            conn.Rleast = Rleast;
+            double feqall = 1.1 * GetAllowableWeldStress(section.Material.Fu);
+            do
+            {
+                double f = (3 * vd * (e / 10)) / ((length * length * weldSize) / 1000); //units are in t/cm^2
+                double q = vd / ((2 * length * weldSize) / 100);
+                double feq = CalcEquivalentStress(f, q);
+                if (feq <feqall )
+                {
+                    conn.Plane11Check = String.Format($"f = {f.Round()} t/cm^2 & q = {q.Round()} t/cm^2 => feq = (f^2 + 3q^2)^0.5 = {feq.Round()} t/cm^2 < 1.1 * 0.2Fu = {feqall.Round()} t/cm^2 => OK");
+                    break;
+                }
+                weldSize += 2; //assumption that weld will be increment of two and no 5 (6,8,10,12,14,16,....etc)
+            } while (true);
+            double qall = GetAllowableWeldStress(section.Material.Fu);
+            do
+            {
+                double qmt = (3 * vd * (e / 10)) / ((length * length * weldSize) / 1000); //units are in t/cm^2
+                double qp = vd / ((2 * length * weldSize) / 100);
+                double qr = Math.Sqrt(qp * qp + qmt * qmt);
+                if (qr <  qall)
+                {
+                    conn.Plane22Check = String.Format($"q = {qp.Round()} t/cm^2 & qmt = {qmt.Round()} t/cm^2 => qres = (q^2 + qmt^2)^0.5 = {qr.Round()} t/cm^2 <  0.2Fu = {qall.Round()} t/cm^2 => OK");
+                    break;
+                }
+                weldSize += 2; //assumption that weld will be increment of two and no 5 (6,8,10,12,14,16,....etc)
+            } while (true);
+            //Check plate thickness
+            if (plateThickness < section.Tw)
+            {
+                plateThickness = (section.Tw * 10).GetNextEvenInt(); //units are in mm
+            }
+            do
+            {
+                double f = (6 * vd * (e / 10)) / ((length * length * plateThickness) / 1000); //units are in t/cm^2
+                if (f < 0.72 * section.Material.Fy)
+                {
+                    conn.PlateThicknessCheck = String.Format($"f = (6*Vd*e)/(tp*L^2) = {f.Round()} t/cm^2  <  0.72*Fy = {(0.72 * section.Material.Fy).Round()} t/cm^2 => OK {section.Name}");
+                    break;
+                }
+                plateThickness += 2;
+            } while (true);
+
+            conn.N = n;
+            conn.Pitch = pitch;
+            conn.Length = length;
+            conn.Sw = weldSize;
+            conn.Tp = plateThickness;
+            conn.Bolt = bolt;
+            
+            
+            return conn;
         }
     }
 }

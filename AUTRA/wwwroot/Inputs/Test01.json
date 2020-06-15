@@ -1,6 +1,5 @@
 {
-  "nodes": [
-    {
+  "nodes": [{
       "$id": "1",
       "support": "Hinge",
       "position": {
@@ -515,31 +514,29 @@
     "$id": "m",
     "name": "ST_37"
   },
-  "sections": [
-    {
+  "sections": [{
       "$id": "s1",
-      "name": "IPE 200",
+      "name": "IPE200",
       "material": {
         "$ref": "m"
       }
     },
     {
       "$id": "s2",
-      "name": "IPE 270",
+      "name": "IPE270",
       "material": {
         "$ref": "m"
       }
     },
     {
       "$id": "s3",
-      "name": "IPE 360",
+      "name": "IPE360",
       "material": {
         "$ref": "m"
       }
     }
   ],
-  "secondaryBeams": [
-    {
+  "secondaryBeams": [{
       "section": {
         "$ref": "s1"
       },
@@ -549,8 +546,7 @@
       "endNode": {
         "$ref": "17"
       },
-      "lineLoads": [
-        {
+      "lineLoads": [{
           "magnitude": -0.5,
           "pattern": "live"
         },
@@ -572,8 +568,7 @@
       "endNode": {
         "$ref": "21"
       },
-      "lineLoads": [
-        {
+      "lineLoads": [{
           "magnitude": -0.5,
           "pattern": "live"
         },
@@ -595,8 +590,7 @@
       "endNode": {
         "$ref": "26"
       },
-      "lineLoads": [
-        {
+      "lineLoads": [{
           "magnitude": -0.5,
           "pattern": "dead"
         },
@@ -618,8 +612,7 @@
       "endNode": {
         "$ref": "27"
       },
-      "lineLoads": [
-        {
+      "lineLoads": [{
           "magnitude": -0.5,
           "pattern": "dead"
         },
@@ -641,8 +634,7 @@
       "endNode": {
         "$ref": "29"
       },
-      "lineLoads": [
-        {
+      "lineLoads": [{
           "magnitude": -0.5,
           "pattern": "dead"
         },
@@ -664,8 +656,7 @@
       "endNode": {
         "$ref": "30"
       },
-      "lineLoads": [
-        {
+      "lineLoads": [{
           "magnitude": -0.5,
           "pattern": "dead"
         },
@@ -687,8 +678,7 @@
       "endNode": {
         "$ref": "32"
       },
-      "lineLoads": [
-        {
+      "lineLoads": [{
           "magnitude": -0.5,
           "pattern": "dead"
         },
@@ -710,8 +700,7 @@
       "endNode": {
         "$ref": "33"
       },
-      "lineLoads": [
-        {
+      "lineLoads": [{
           "magnitude": -0.5,
           "pattern": "dead"
         },
@@ -733,8 +722,7 @@
       "endNode": {
         "$ref": "35"
       },
-      "lineLoads": [
-        {
+      "lineLoads": [{
           "magnitude": -0.5,
           "pattern": "dead"
         },
@@ -756,8 +744,7 @@
       "endNode": {
         "$ref": "36"
       },
-      "lineLoads": [
-        {
+      "lineLoads": [{
           "magnitude": -0.5,
           "pattern": "dead"
         },
@@ -779,8 +766,7 @@
       "endNode": {
         "$ref": "38"
       },
-      "lineLoads": [
-        {
+      "lineLoads": [{
           "magnitude": -0.5,
           "pattern": "dead"
         },
@@ -802,8 +788,7 @@
       "endNode": {
         "$ref": "39"
       },
-      "lineLoads": [
-        {
+      "lineLoads": [{
           "magnitude": -0.5,
           "pattern": "dead"
         },
@@ -825,8 +810,7 @@
       "endNode": {
         "$ref": "41"
       },
-      "lineLoads": [
-        {
+      "lineLoads": [{
           "magnitude": -0.5,
           "pattern": "dead"
         },
@@ -848,8 +832,7 @@
       "endNode": {
         "$ref": "42"
       },
-      "lineLoads": [
-        {
+      "lineLoads": [{
           "magnitude": -0.5,
           "pattern": "dead"
         },
@@ -871,8 +854,7 @@
       "endNode": {
         "$ref": "44"
       },
-      "lineLoads": [
-        {
+      "lineLoads": [{
           "magnitude": -0.5,
           "pattern": "dead"
         },
@@ -894,8 +876,7 @@
       "endNode": {
         "$ref": "45"
       },
-      "lineLoads": [
-        {
+      "lineLoads": [{
           "magnitude": -0.5,
           "pattern": "dead"
         },
@@ -917,8 +898,7 @@
       "endNode": {
         "$ref": "47"
       },
-      "lineLoads": [
-        {
+      "lineLoads": [{
           "magnitude": -0.5,
           "pattern": "dead"
         },
@@ -940,8 +920,7 @@
       "endNode": {
         "$ref": "48"
       },
-      "lineLoads": [
-        {
+      "lineLoads": [{
           "magnitude": -0.5,
           "pattern": "dead"
         },
@@ -963,8 +942,7 @@
       "endNode": {
         "$ref": "50"
       },
-      "lineLoads": [
-        {
+      "lineLoads": [{
           "magnitude": -0.5,
           "pattern": "dead"
         },
@@ -986,8 +964,7 @@
       "endNode": {
         "$ref": "51"
       },
-      "lineLoads": [
-        {
+      "lineLoads": [{
           "magnitude": -0.5,
           "pattern": "dead"
         },
@@ -1009,8 +986,7 @@
       "endNode": {
         "$ref": "18"
       },
-      "lineLoads": [
-        {
+      "lineLoads": [{
           "magnitude": -0.5,
           "pattern": "live"
         },
@@ -1032,8 +1008,7 @@
       "endNode": {
         "$ref": "22"
       },
-      "lineLoads": [
-        {
+      "lineLoads": [{
           "magnitude": -0.5,
           "pattern": "live"
         },
@@ -1046,8 +1021,7 @@
       "innerNodes": []
     }
   ],
-  "mainBeams": [
-    {
+  "mainBeams": [{
       "section": {
         "$ref": "s2"
       },
@@ -1059,8 +1033,7 @@
       },
       "lineLoads": [],
       "length": 6,
-      "innerNodes": [
-        {
+      "innerNodes": [{
           "$ref": "25"
         },
         {
@@ -1129,8 +1102,7 @@
       },
       "lineLoads": [],
       "length": 6,
-      "innerNodes": [
-        {
+      "innerNodes": [{
           "$ref": "26"
         },
         {
@@ -1199,8 +1171,7 @@
       },
       "lineLoads": [],
       "length": 6,
-      "innerNodes": [
-        {
+      "innerNodes": [{
           "$ref": "27"
         },
         {
@@ -1258,8 +1229,7 @@
       "innerNodes": []
     }
   ],
-  "columns": [
-    {
+  "columns": [{
       "section": {
         "$ref": "s3"
       },
@@ -1418,8 +1388,8 @@
   ],
   "projectProperties": {
     "Number": "1",
-    "Name": "AUTRA2",
-    "Designer": "AUTRA2",
+    "Name": "AUTRA14",
+    "Designer": "AUTRA14",
     "Location": "Smart Village",
     "City": "Giza",
     "Country": "Egypt"

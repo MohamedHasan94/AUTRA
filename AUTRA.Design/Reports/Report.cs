@@ -10,6 +10,7 @@ using iText.Layout.Properties;
 using iText.IO.Image;
 using iText.Kernel.Colors;
 using iText.Kernel.Pdf.Action;
+using System.Reflection;
 
 namespace AUTRA.Design
 {
@@ -22,7 +23,7 @@ namespace AUTRA.Design
             FolderPath = folderPath;
         }
 
-        public void Create(string fileName,List<Group> secGroups,List<Group> mainGroups)
+        public void Create(string fileName,List<Group> secGroups,List<Group> mainGroups,Group columnGroups)
         {
             string fullpath = Path.Combine(FolderPath, fileName);
 
@@ -33,13 +34,50 @@ namespace AUTRA.Design
                     Document doc = new Document(pdf);
                     ReportForBeams("Secondary Beams", secGroups, doc);
                     ReportForBeams("Main Beams", mainGroups, doc);
+                    ReportForColumns("Columns", columnGroups, doc);
                 }
             }
         }
-        public void ReportForBeams(string title,List<Group> groups, Document doc)
+        private void ReportForColumns(string title , Group group , Document doc)
+        {
+            CreateHeader(doc, title);
+            CreateTableFromColumnGroup(group, doc);
+        }
+        private void CreateTableFromColumnGroup(Group group , Document doc)
+        {
+            doc.AddParagraph("");
+            Table table = new Table(5);
+            table.AddCell().AddHeader("Column ID");
+            table.AddCell().AddHeader("Start Point");
+            table.AddCell().AddHeader("End Point");
+            table.AddCell().AddHeader("Height (m)");
+            table.AddCell().AddHeader("Nmax (ton)");
+            foreach (var col in group.Elements)
+            {
+                table.AddCell().AddParagraph(col.Id.ToString());
+                table.AddCell().AddParagraph(col.StartNode.Position.ToString());
+                table.AddCell().AddParagraph(col.EndNode.Position.ToString());
+                table.AddCell().AddParagraph(col.Length.Round().ToString());
+                table.AddCell().AddParagraph(col.CombinedSA.GetMaxCompression().Round().ToString());
+            }
+            table.SetHorizontalAlignment(HorizontalAlignment.CENTER);
+            doc.Add(table);
+            CreateHeader(doc, "Design Limit state:", 12, TextAlignment.LEFT);
+            doc.AddParagraph($"Combo: {group.DesignValues.Combo}");
+            doc.AddParagraph($"Nd: {group.DesignValues.Nd.Round().ToString()} ton");
+            CreateHeader(doc, "1-Check Local Buckling", 10, TextAlignment.LEFT, false);
+            doc.AddParagraph($"{group.DesignResult.WebLocalBuckling}");
+            doc.AddParagraph($"{group.DesignResult.FlangeLocalBuckling}");
+            CreateHeader(doc, "2-Check Normal Stress", 10, TextAlignment.LEFT, false);
+            doc.AddParagraph($"Section: {group.Section.Name}");
+            doc.AddParagraph(group.DesignResult.Lambda);
+            doc.AddParagraph($"fc= {Math.Abs(group.DesignResult.Fcact.Round())} t/cm^2 < Fc= {group.DesignResult.Fcall.Round()} t/cm^2");
+            doc.AddLineSeparator();
+        }
+        private void ReportForBeams(string title,List<Group> groups, Document doc)
         {
             CreateHeader( doc,title);
-            CreateTableFromGroups(groups,doc);
+            CreateTableFromBeamGroups(groups,doc);
         }
         private void CreateHeader( Document doc,string title,float fontSize=20,TextAlignment textAlignment = TextAlignment.CENTER,bool isSepartorExist = true)
         {
@@ -54,91 +92,75 @@ namespace AUTRA.Design
                 doc.Add(ls);
             }
         }
-        private void CreateTableFromGroups(List<Group> groups,Document doc)
+        private void CreateTableFromBeamGroups(List<Group> groups,Document doc)
         {
             foreach (var group in groups)
             {
-                CreateTableFromGroup(group, doc);
+                CreateTableFromBeamGroup(group, doc);
             }
         }
-        
-        private void CreateTableFromGroup(Group group , Document doc)
+        private void CreateTableFromBeamGroup(Group group , Document doc)
         {
-            //Create a table consists of three Columns(ID , Start Point , End Point)
             Paragraph empty = new Paragraph("");
             doc.Add(empty);
             Table table = new Table(6);
-            Cell cell11 = new Cell(1, 1).AddHeaderCell("Beam ID");
-            Cell cell12 = new Cell(1, 1).AddHeaderCell("Start Point");
-            Cell cell13 = new Cell(1, 1).AddHeaderCell("End Point");
-            Cell cell14 = new Cell(1, 1).AddHeaderCell("Span");
-            Cell cell15 = new Cell(1, 1).AddHeaderCell("Mmax");
-            Cell cell16 = new Cell(1, 1).AddHeaderCell("Vmax");
-            List<Cell> cells = new List<Cell>();
-            foreach (var beam in group.Beams)
+            table.AddCell().AddHeader("Beam ID");
+            table.AddCell().AddHeader("Start Point");
+            table.AddCell().AddHeader("End Point");
+            table.AddCell().AddHeader("Span (m)");
+            table.AddCell().AddHeader("Mmax (t.m)");
+            table.AddCell().AddHeader("Vmax (ton)");
+            foreach (var beam in group.Elements)
             {
-                Cell cell1 = new Cell(1, 1).AddOrdinaryCell(beam.Id.ToString());
-                Cell cell2 = new Cell(1, 1).AddOrdinaryCell(beam.StartNode.Position.ToString());
-                Cell cell3 = new Cell(1, 1).AddOrdinaryCell(beam.EndNode.Position.ToString());
-                Cell cell4 = new Cell(1, 1).AddOrdinaryCell(beam.Length.ToString());
-                Cell cell5 = new Cell(1, 1).AddOrdinaryCell(beam.CombinedSA.GetMaxMoment().ToString());
-                Cell cell6 = new Cell(1, 1).AddOrdinaryCell(beam.CombinedSA.GetMaxShear().ToString());
-                cells.Add(cell1);
-                cells.Add(cell2);
-                cells.Add(cell3);
-                cells.Add(cell4);
-                cells.Add(cell5);
-                cells.Add(cell6);
-
+                table.AddCell().AddParagraph(beam.Id.ToString());
+                table.AddCell().AddParagraph(beam.StartNode.Position.ToString());
+                table.AddCell().AddParagraph(beam.EndNode.Position.ToString());
+                table.AddCell().AddParagraph(beam.Length.Round().ToString());
+                table.AddCell().AddParagraph(beam.CombinedSA.GetMaxMoment().Round().ToString());
+                table.AddCell().AddParagraph(beam.CombinedSA.GetMaxShear().Round().ToString());
             }
-            table.AddCell(cell11);
-            table.AddCell(cell12);
-            table.AddCell(cell13);
-            table.AddCell(cell14);
-            table.AddCell(cell15);
-            table.AddCell(cell16);
-            foreach (var cell in cells)
-            {
-                table.AddCell(cell);
-            }
+            table.SetHorizontalAlignment(HorizontalAlignment.CENTER);
             doc.Add(table);
             CreateHeader(doc, "Design Limit state:", 12, TextAlignment.LEFT);
-            Paragraph combo = new Paragraph($"Combo: {group.DesignValues.Combo}");
-            Paragraph moment = new Paragraph($"Md: {group.DesignValues.Md.ToString()} t.m");
-            Paragraph shear = new Paragraph($"Vd: {group.DesignValues.Vd.ToString()} ton");
-            doc.Add(combo);
-            doc.Add(moment);
-            doc.Add(shear);
+            doc.AddParagraph($"Combo: {group.DesignValues.Combo}");
+            doc.AddParagraph($"Md: {group.DesignValues.Md.Round().ToString()} t.m");
+            doc.AddParagraph($"Vd: {group.DesignValues.Vd.Round().ToString()} ton");
             CreateHeader(doc, "Service Limit State", 12, TextAlignment.LEFT);
-            Paragraph serviceCombo = new Paragraph($"Combo: {group.ServiceValue.Combo}");
-            Paragraph span = new Paragraph($"Span: {group.ServiceValue.CriticalBeam.Length.ToString()} m");
-            Paragraph wll = new Paragraph($"Load: {group.ServiceValue.WLL.ToString()} t/m'");
-            doc.Add(serviceCombo);
-            doc.Add(span);
-            doc.Add(wll);
+            doc.AddParagraph($"Combo: {group.ServiceValue.Combo}");
+            doc.AddParagraph($"Span: {group.ServiceValue.CriticalBeam.Length.Round().ToString()} m");
+            doc.AddParagraph($"Load: {group.ServiceValue.WLL.Round().ToString()} t/m'");
             CreateHeader(doc, "Design Checks", 12, TextAlignment.LEFT);
             CreateHeader(doc, "1-Check Local Buckling", 10, TextAlignment.LEFT, false);
-            Paragraph webLocalBuckling = new Paragraph($"{group.DesignResult.WebLocalBuckling}");
-            Paragraph flangeLocalBuckling = new Paragraph($"{group.DesignResult.FlangeLocalBuckling}");
-            doc.Add(webLocalBuckling);
-            doc.Add(flangeLocalBuckling);
+            doc.AddParagraph($"{group.DesignResult.WebLocalBuckling}");
+            doc.AddParagraph($"{group.DesignResult.FlangeLocalBuckling}");
             CreateHeader(doc, "2-Check Lateral Torsional Buckling", 10, TextAlignment.LEFT, false);
-            Paragraph ltb = new Paragraph($"{group.DesignResult.Lu}");
-            doc.Add(ltb);
+            doc.AddParagraph($"{group.DesignResult.Lu}");
             CreateHeader(doc, "3-Check Bending Stress", 10, TextAlignment.LEFT, false);
-            Paragraph section = new Paragraph($"Section: {group.Section.Name}");
-            Paragraph bending = new Paragraph($"fact= {group.DesignResult.Fbact} t/cm^2 < Fb= {group.DesignResult.Fball} t/cm^2");
-            doc.Add(section);
-            doc.Add(bending);
+            doc.AddParagraph($"Section: {group.Section.Name}");
+            doc.AddParagraph($"fact= {group.DesignResult.Fbact.Round()} t/cm^2 < Fb= {group.DesignResult.Fball.Round()} t/cm^2");
             CreateHeader(doc, "4-Check Shear Stress", 10, TextAlignment.LEFT, false);
-            Paragraph shearStress = new Paragraph($"qact= {group.DesignResult.Qact} t/cm^2 < qall= {group.DesignResult.Qall} t/cm^2");
-            doc.Add(shearStress);
+            doc.AddParagraph($"qact= {group.DesignResult.Qact.Round()} t/cm^2 < qall= {group.DesignResult.Qall.Round()} t/cm^2");
             CreateHeader(doc, "5-Check Deflection", 10, TextAlignment.LEFT, false);
-            Paragraph deflection = new Paragraph($"dact= {group.DesignResult.Dact} cm < dall= {group.DesignResult.Dall} cm");
-            doc.Add(deflection);
-            LineSeparator ls = new LineSeparator(new SolidLine());
-            doc.Add(ls);
+            doc.AddParagraph($"dact= {group.DesignResult.Dact.Round()} cm < dall= {group.DesignResult.Dall.Round()} cm");
+            CreateConnectionReportForBeamGroup(group, doc);
+            doc.AddLineSeparator();
         }
-
+        private void CreateConnectionReportForBeamGroup(Group group, Document doc)
+        {
+            CreateHeader(doc, "Group Connection Design (Simple Shear Plate Connection)", 12, TextAlignment.LEFT);
+            doc.AddImage(Assembly.GetExecutingAssembly().GoToPath(@"Resources\Images\shearPlate Connection.jpg"));
+            CreateHeader(doc, "1-Bolts Design", 10, TextAlignment.LEFT, false);
+            doc.AddParagraph($"Bolts: M{group.Connection.Bolt.Dia*10} of Grade {group.Connection.Bolt.Grade.Name}");
+            doc.AddParagraph($"Vd= {group.DesignValues.Vd.Round()} ton");
+            doc.AddParagraph($"Rleast= {group.Connection.Rleast.Round()} ton");
+            doc.AddParagraph($"N= {group.Connection.N} with Pitch= {group.Connection.Pitch} mm & Full Layout: ({group.Connection.ToString()})");
+            CreateHeader(doc, "2-Stresses Induced in Fillet Weld Lines at Plane(1-1)", 10, TextAlignment.LEFT, false);
+            doc.AddParagraph($"{group.Connection.Plane11Check}");
+            CreateHeader(doc, "3-Stresses Induced in Fillet Weld Lines at Plane(2-2)", 10, TextAlignment.LEFT, false);
+            doc.AddParagraph($"{group.Connection.Plane22Check}");
+            CreateHeader(doc, "4-Check Thickness of Plate", 10, TextAlignment.LEFT, false);
+            doc.AddParagraph($"{group.Connection.PlateThicknessCheck}");
+            doc.AddParagraph($"Plate Layout => L = {group.Connection.Length} mm & tp = {group.Connection.Tp} mm & Sw = {group.Connection.Sw} mm");
+        }
     }
 }

@@ -8,6 +8,8 @@ namespace AUTRA.Design
 {
    public static class ExtenionMethods
     {
+        public static int GetNextEvenInt(this double num) => (int)Math.Ceiling(num / 2) * 2;
+        public static double Round(this double num) => Math.Round(num, 2);
         public static void AssignGrade(this List<Bolt> bolts, BoltGrade grade) => bolts.ForEach(b => b.Grade = grade); //Note: Not Used At all
         public static EqualAngle GetEqualAngle(this List<EqualAngle> angles , double a)=> angles.Find(ea => (a - ea.A) < 0);
         public static void AssignMaterialValues(this List<Material> materials ,  Material material)
@@ -46,12 +48,13 @@ namespace AUTRA.Design
             assemblyPath = assemblyPath.Substring(0, index + 1);
             return string.Format($"{assemblyPath}{fileRelativePath}");
         }
-        public static void AssignID<T>(this List<T> elements) where T:FrameElement
+        public static void AssignID<T>(this List<T> elements,string prefix) where T:FrameElement
         {
             int id = 1;
             elements.ForEach(e=>
             {
                 e.Id = id;
+                e.Prefix = prefix;
                 id++;
             });
         }
@@ -64,5 +67,6 @@ namespace AUTRA.Design
         public static double GetMaxCompression(this List<Station> stations) => stations.Min(s => s.No);
         public static double GetMaxCompression(this List<StrainingAction> sas) => sas.Min(sa => sa.Stations.GetMaxCompression());
         public static double GetMaxCompression<T>(this List<T> eles) where T : FrameElement => eles.Min(b => b.CombinedSA.GetMaxCompression());
+        public static void AssignSectionToElement(this List<Group> groups) => groups.ForEach(g => g.AssignSectionToElement());
     }
 }

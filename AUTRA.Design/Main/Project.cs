@@ -1,4 +1,5 @@
-﻿using System;
+﻿using AUTRA.Tekla;
+using System;
 using System.Collections.Generic;
 using System.Text;
 
@@ -16,18 +17,6 @@ namespace AUTRA.Design
         public List<Column> Columns { get; set; }
         public List<Support> Supports { get; set; }
         public Grids Grids { get; set; }
-    }
-
-
-    public struct ProjectProperties
-    {
-        public string Number { get; set; }
-        public string Name { get; set; }
-        public string Designer { get; set; }
-        public string Location { get; set; }
-        public string City { get; set; }
-        public string Country { get; set; }
-        public string Owner { get; set; }
     }
 
     public struct Grids

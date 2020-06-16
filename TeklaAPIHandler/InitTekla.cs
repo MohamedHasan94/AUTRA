@@ -10,7 +10,8 @@ namespace TeklaAPIHandler
     {
         static void Main(string[] args)
         {
-            //string path = @"D:\ITI\GraduationPoject\AUTRA\AUTRA\wwwroot\Inputs\ToTekla01.json";
+            string path = @"C:\Users\Dell\Desktop\june15\AUTRA\AUTRA\wwwroot\Inputs\ToTekla01.json";
+            Console.WriteLine(path);
             //var data = Reader.Read<TeklaModelData>(path/*args[0]*/);
             //AUTRATekla.InitTekla(data);
             if (args.Length > 0)
@@ -18,8 +19,12 @@ namespace TeklaAPIHandler
                 Console.WriteLine(args[0]);
                 try
                 {
+                    Console.WriteLine("before reader");
                     var data = Reader.Read<TeklaModelData>(args[0]);
+                    Console.WriteLine("before init tekla");
                     AUTRATekla.InitTekla(data);
+                    Console.WriteLine("after init tekla");
+
 
                 }
                 catch (Exception e)
@@ -31,4 +36,4 @@ namespace TeklaAPIHandler
             }
         }
     }
-}
+    }

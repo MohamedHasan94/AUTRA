@@ -12,6 +12,8 @@ using AUTRA.Data;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
+using AUTRA.Models;
+using Microsoft.AspNetCore.Mvc;
 
 namespace AUTRA
 {
@@ -30,13 +32,16 @@ namespace AUTRA
             services.AddDbContext<ApplicationDbContext>(options =>
                 options.UseSqlServer(
                     Configuration.GetConnectionString("DefaultConnection")));
-            services.AddDefaultIdentity<IdentityUser>(options => options.SignIn.RequireConfirmedAccount = true)
+
+            services.AddDefaultIdentity<ApplicationUser>(options => options.SignIn.RequireConfirmedAccount = true)
                 .AddEntityFrameworkStores<ApplicationDbContext>();
+
             services.AddControllersWithViews().AddNewtonsoftJson(options =>
             {
                 options.SerializerSettings.PreserveReferencesHandling = Newtonsoft.Json.PreserveReferencesHandling.All;
 
             });
+
             services.AddRazorPages();
 
             /*services.Configure<KestrelServerOptions>(options =>
@@ -48,6 +53,8 @@ namespace AUTRA
             {
                 options.AllowSynchronousIO = true;
             });
+
+            //services.AddMvcCore().SetCompatibilityVersion(CompatibilityVersion.Latest);
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.

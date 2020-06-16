@@ -98,7 +98,7 @@ namespace AUTRA
         public static void InitTekla(string path)
         {
             var p = new Process();
-            p.StartInfo = new ProcessStartInfo(@"D:\ITI\GraduationPoject\AUTRA\TeklaAPIHandler\bin\Debug\TeklaAPIHandler.exe",path)
+            p.StartInfo = new ProcessStartInfo(@"C:\Users\Dell\Desktop\june15\AUTRA\TeklaAPIHandler\bin\Debug\TeklaAPIHandler.exe", path)
             {
                 UseShellExecute = true
             };

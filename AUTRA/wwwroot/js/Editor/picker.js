@@ -111,8 +111,8 @@ class GPUPickHelper {
                     $('#beamSection').val(element.visual.sectionName);
                     $('#beamStart').val(`${object.position.x},${object.position.z},${object.position.y}`);
                     $('#beamEnd').val(`${element.visual.endPoint.x},${element.visual.endPoint.z},${element.visual.endPoint.y}`);
-                    $('#beamDead').val(object.userData.element.data.lineLoads[0] ? object.userData.element.data.lineLoads[0].magnitude * -1 : 0);
-                    $('#beamLive').val(object.userData.element.data.lineLoads[1] ? object.userData.element.data.lineLoads[1].magnitude * -1 : 0);
+                    $('#beamDead').val(object.userData.element.data.lineLoads[0] ? `${object.userData.element.data.lineLoads[0].magnitude * -1} t/m` : 0);
+                    $('#beamLive').val(object.userData.element.data.lineLoads[1] ? `${ object.userData.element.data.lineLoads[1].magnitude * -1 } t/m` : 0);
                 }
             }
             else {

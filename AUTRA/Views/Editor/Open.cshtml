@@ -29,27 +29,27 @@
                 </a>
                 <ul class="feat-show">
                     @*<li>
-                            <a href="#" onclick="editGrids()">
-                                Grids
-                                <table class="table table-borderless table-dark">
-                                    <tbody>
-                                        <tr>
-                                            <th>X</th>
-                                            <td><input type="text" id="x" value="0" size="5"></td>
-                                        </tr>
-                                        <tr>
-                                            <th>Y</th>
-                                            <td><input type="text" id="y" value="0" size="5"></td>
-                                        </tr>
-                                        <tr>
-                                            <th>Z</th>
-                                            <td><input type="text" id="z" value="0" size="5"></td>
-                                        </tr>
-                                    <tbody>
-                                </table>
+                    <a href="#" onclick="editGrids()">
+                        Grids
+                        <table class="table table-borderless table-dark">
+                            <tbody>
+                                <tr>
+                                    <th>X</th>
+                                    <td><input type="text" id="x" value="0" size="5"></td>
+                                </tr>
+                                <tr>
+                                    <th>Y</th>
+                                    <td><input type="text" id="y" value="0" size="5"></td>
+                                </tr>
+                                <tr>
+                                    <th>Z</th>
+                                    <td><input type="text" id="z" value="0" size="5"></td>
+                                </tr>
+                            <tbody>
+                        </table>
 
-                            </a>
-                        </li>*@
+                    </a>
+                </li>*@
                     <li>
                         <a href="#" id="elementSec" data-toggle="popover" data-placement="right" data-content="1)select a member from the drawing canvas 2)specify the new section">
                             <!-- changeSection handles both beams & columns-->
@@ -288,8 +288,8 @@
                     </li>
 
                     @*<li>
-                            <input type="file" id="reactions" />
-                        </li>*@
+                    <input type="file" id="reactions" />
+                </li>*@
 
                     <li>
                         <select id="resultPattern">
@@ -317,23 +317,23 @@
                     Select
                     <span class="fas fa-caret-down fifth"></span>
                     @*<div class="form-group" id="selmodes">
-                            <label for="areaMode" style="font-weight: bold;">Area Selection Mode</label>
+                    <label for="areaMode" style="font-weight: bold;">Area Selection Mode</label>
 
-                            <div class="radio form-group">
-                                <label>
-                                    <input type="radio" name="areaSelMode" id="areaModeOn" value="areaModeOn">On
-                                </label>
-                            </div>
-                            <div class="radio form-group">
-                                <label><input type="radio" name="areaSelMode" id="areaModeOff" value="areaModeOff" checked>Off</label>
-                            </div>
-                        </div>*@
+                    <div class="radio form-group">
+                        <label>
+                            <input type="radio" name="areaSelMode" id="areaModeOn" value="areaModeOn">On
+                        </label>
+                    </div>
+                    <div class="radio form-group">
+                        <label><input type="radio" name="areaSelMode" id="areaModeOff" value="areaModeOff" checked>Off</label>
+                    </div>
+                </div>*@
                 </a>
                 <ul class="mySelect-show" id="mySelectShow">
 
                     @*<li>
-                            hi
-                        </li>*@
+                    hi
+                </li>*@
                 </ul>
             </li>
 
@@ -360,6 +360,17 @@
                 </a>
             </li>
 
+            <li>
+                <a href="#" onclick="hideDimensions()" id="hideDimensions">
+                    Hide Dimensions
+                </a>
+            </li>
+
+            <li>
+                <a href="#" onclick="showDimensions()" id="showDimensions">
+                    Show Dimensions
+                </a>
+            </li>
         </ul>
     </nav>
 

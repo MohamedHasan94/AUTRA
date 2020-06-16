@@ -6,14 +6,14 @@ using System.Threading.Tasks;
 using System.Collections; // Tekla Use Old DataStructure
 //Tekla API Refrences
 using Tekla.Structures;
-using TSM = Tekla.Structures.Model;
+using TSM=Tekla.Structures.Model;
 using T3D = Tekla.Structures.Geometry3d;
 using TSD = Tekla.Structures.Drawing;
 using System.IO;
 
 namespace AUTRA.Tekla
 {
-    public class Project
+    public  class Project
     {
         #region Private Fields
         //contains helper methods for drawings & reports
@@ -43,16 +43,7 @@ namespace AUTRA.Tekla
             Data = data;
             if (Init())
             {
-                try
-                {
-                    Model = new TSM.Model();
-                }
-                catch (Exception e)
-                {
-                    Console.WriteLine("Error in new Model");
-                    Console.WriteLine(e.Message);
-                    Console.ReadLine();
-                }
+                Model = new TSM.Model();
                 _drawings = new TeklaDrawings(Model);
                 TSM.ModelObjectEnumerator.AutoFetch = true;
                 MainBeams = new List<TSM.Beam>();
@@ -61,32 +52,22 @@ namespace AUTRA.Tekla
                 //intializing somthings in project such as(Grids,Directories,Project Properties,.....)
                 SettingUpProject();
             }
-
+           
         }
         #endregion
         #region Init
         public bool Init()
         {
-            string modelfolder = @"D:\ITI\GraduationProject\AUTRA\AUTRA\wwwroot\Outputs\Tekla\";//TODO:To be changed
-            try
-            {
-                _modelHandler = new TSM.ModelHandler();
-                _modelHandler.Save();
-
-            }
-            catch (Exception e)
-            {
-                Console.WriteLine("error in model handler");
-                Console.WriteLine(e.Message);
-                Console.ReadLine();
-            }
-            if (_modelHandler.CreateNewSingleUserModel(Data.ProjectProperties.Name, modelfolder) &&
+            string modelfolder = @"C:\Users\Dell\Desktop\";//TODO:To be changed
+            _modelHandler = new TSM.ModelHandler();
+            _modelHandler.Save();
+            if(_modelHandler.CreateNewSingleUserModel(Data.ProjectProperties.Name, modelfolder) &&
                 _modelHandler.Save())
             {
                 return true;
             }
             return false;
-
+            
         }
         private void SettingUpProject()
         {
@@ -113,7 +94,7 @@ namespace AUTRA.Tekla
             Model.CreateModelFolderDirectory("PlotFiles");
             Model.CreateModelFolderDirectory("Reports");
             Helper.GetFiles(Model); //get attributes files
-
+            
         }
         #endregion
         #region Main Methods for Modeling
@@ -124,33 +105,33 @@ namespace AUTRA.Tekla
             foreach (var f in Data.Model.Footings)
             {
                 Model.CreatePadFooting(f.Point.X, f.Point.Y, f.Point.Z, f.Depth, TSM.Position.RotationEnum.TOP, f.Name, f.Profile, f.Material);//Create RC Footings
-                Model.CreatePadFooting(f.Point.X, f.Point.Y, f.Point.Z - f.Depth, pcDepth, TSM.Position.RotationEnum.TOP, "PC Footing", $"{f.Length + 2 * pcDepth}X{f.Width + 2 * pcDepth}", f.Material, "5"); //Create PC Footings
+                Model.CreatePadFooting(f.Point.X, f.Point.Y, f.Point.Z - f.Depth, pcDepth, TSM.Position.RotationEnum.TOP, "PC Footing", $"{f.Length+2*pcDepth}X{f.Width+2*pcDepth}", f.Material, "5"); //Create PC Footings
             }
             Model.CommitChanges();
         }
-        public void CreateColumns()
+        public void CreateColumns( )
         {
             Model.SetPlaneToGlobal();
-            var rotation = MainBeams.GetColumnDirection();
+            var rotation= MainBeams.GetColumnDirection();
             TSM.Beam column;
             foreach (var c in Data.Model.Columns)
             {
                 string id = string.Format($"{c.AssemblyPrefix}{c.Id}");
-                column = Model.CreateColumn(c.Point.X, c.Point.Y, c.Point.Z, c.Height, rotation, c.Name, c.Profile, c.AssemblyPrefix, c.Material) as TSM.Beam;
+                column = Model.CreateColumn(c.Point.X, c.Point.Y, c.Point.Z, c.Height, rotation, c.Name, c.Profile,c.AssemblyPrefix ,c.Material) as TSM.Beam;
                 Columns.Add(column);
-                Data.Model.Connections.Where(conn => conn.MainPartId == id).ToList().ForEach(conn => conn.Main = column);
+                Data.Model.Connections.Where(conn => conn.MainPartId == id).ToList().ForEach(conn=>conn.Main=column);
             }
             Model.CommitChanges();
         }
-        private List<TSM.Beam> CreateBeams(List<Beam> beams, TSM.Position.DepthEnum depth)
+        private List<TSM.Beam> CreateBeams(List<Beam> beams , TSM.Position.DepthEnum depth)
         {
             var beamList = new List<TSM.Beam>();
             Model.SetPlaneToGlobal();
             foreach (var b in beams)
             {
                 string id = string.Format($"{b.AssemblyPrefix}{b.Id}");
-                var beam = Model.CreateBeam(b.StartPoint.X, b.StartPoint.Y, b.StartPoint.Z, b.EndPoint.X, b.EndPoint.Y, b.EndPoint.Z, depth, b.Name, b.AssemblyPrefix, b.Profile, b.Material, b.Class);
-                Data.Model.Connections.Where(c => c.MainPartId == id).ToList().ForEach(c => c.Main = beam);
+               var beam= Model.CreateBeam(b.StartPoint.X, b.StartPoint.Y, b.StartPoint.Z, b.EndPoint.X, b.EndPoint.Y, b.EndPoint.Z, depth, b.Name, b.AssemblyPrefix, b.Profile, b.Material,b.Class);
+                Data.Model.Connections.Where(c => c.MainPartId == id).ToList().ForEach(c=>c.Main=beam);
                 Data.Model.Connections.Where(c => c.SecondaryPartId == id).ToList().ForEach(c => c.Secondary = beam);
                 beamList.Add(beam);
             }
@@ -158,9 +139,9 @@ namespace AUTRA.Tekla
             return beamList;
         }
         //Create Main Beams in the project 
-        public void CreateMainBeams(TSM.Position.DepthEnum depth) => MainBeams = CreateBeams(Data.Model.MainBeams, depth);
+        public void CreateMainBeams(TSM.Position.DepthEnum depth) =>MainBeams= CreateBeams(Data.Model.MainBeams, depth);
         //Create Secondary Beams in the project 
-        public void CreateSecondaryBeams(TSM.Position.DepthEnum depth) => SecondaryBeams = CreateBeams(Data.Model.SecondaryBeams, depth);
+        public void CreateSecondaryBeams(TSM.Position.DepthEnum depth)=>SecondaryBeams= CreateBeams(Data.Model.SecondaryBeams, depth);
         public void CreateBaseConnections()//TODO: to be revisted
         {
             foreach (var column in Columns)
@@ -185,15 +166,15 @@ namespace AUTRA.Tekla
         }
         #endregion
 
-
+        
 
         #region Main Methods for Drawings
         public void CreateAssemblyDWGS()
         {
-            TSM.NumberingSeries numberingSeries = new TSM.NumberingSeries("S", 1);
+            TSM.NumberingSeries numberingSeries = new TSM.NumberingSeries("S",1);
             Model.CommitChanges();
             List<TSM.Assembly> assemblies = Model.GetModelObjectSelector().GetAllObjectsWithType(TSM.ModelObject.ModelObjectEnum.ASSEMBLY).ToList().OfType<TSM.Assembly>()
-                .Where(a => a.Name == "Secondary Beam").ToList();
+                .Where(a=>a.Name== "Secondary Beam").ToList();
             foreach (var assembly in assemblies)
             {
                 assembly.AssemblyNumber = numberingSeries;
@@ -202,7 +183,7 @@ namespace AUTRA.Tekla
             }
         }
 
-        private TSD.Drawing CreatePlanDWG(string name, double minHeight, double maxHeight)
+        private TSD.Drawing CreatePlanDWG(string name , double minHeight , double maxHeight)
         {
             Model.SetPlaneToGlobal();
             T3D.Point max = new T3D.Point(TotalX + 2000, TotalY + 2000, maxHeight);
@@ -210,32 +191,32 @@ namespace AUTRA.Tekla
 
             T3D.AABB box = new T3D.AABB(min, max);
 
-            TSD.Drawing drawing = _drawings.CreateGADrawing(name, 0.02, new T3D.CoordinateSystem(), box);
+            TSD.Drawing drawing= _drawings.CreateGADrawing(name, 0.02, new T3D.CoordinateSystem(), box);
             _drawings.CreateDimsAlongGrids(drawing);
             return drawing;
         }
-
-        private void CreateElevationAlongX(string name, double xCoord)
+       
+        private void CreateElevationAlongX(string name , double xCoord)
         {
             Model.SetPlaneToGlobal();
             //Moving the transformation plane at each Grid in X-direction (Note: X-Axis beacomes Y-Axis & Y-Axis bracomes Z-Axis)
             T3D.CoordinateSystem coords = new T3D.CoordinateSystem(new T3D.Point(xCoord, 0, 0), new T3D.Vector(0, 1, 0), new T3D.Vector(0, 0, 1));
             Model.SetPlane(coords);
 
-            double minHeight = Data.Model.Grids.CZS[0] - 1000;
+            double minHeight = Data.Model.Grids.CZS[0]-1000;
             double maxHeight = Data.Model.Grids.CZS[Data.Model.Grids.CZS.Count - 1] + 1000;
 
-            T3D.Point max = new T3D.Point(TotalY + 2000, maxHeight, 500);
-            T3D.Point min = new T3D.Point(-2000, minHeight, -500);
+            T3D.Point max = new T3D.Point(TotalY+2000, maxHeight,500 );
+            T3D.Point min = new T3D.Point(-2000, minHeight,-500 );
 
             T3D.AABB box = new T3D.AABB(min, max);
 
-            TSD.Drawing drawing = _drawings.CreateGADrawing(name, 0.02, coords, box);
+            TSD.Drawing drawing =  _drawings.CreateGADrawing(name, 0.02,coords , box);
             _drawings.CreateHatch(drawing);
             _drawings.CreateDimsAlongGrids(drawing);
 
         }
-
+      
         private void CreateElevationAlongY(string name, double yCoord)
         {
             Model.SetPlaneToGlobal();
@@ -264,13 +245,13 @@ namespace AUTRA.Tekla
             string[] labels;
             if (Grids != null)
             {
-                labels = Grids.LabelX.Split(' ');
+               labels= Grids.LabelX.Split(' ');
                 for (int i = 0; i < Data.Model.Grids.CXS.Count; i++)
                 {
                     CreateElevationAlongX($"Elev at Grid {labels[i]}", Data.Model.Grids.CXS[i]);
                 }
             }
-
+            
         }
         /// <summary>
         /// Create all Eleveation Drawings Along Y-Axis
@@ -292,7 +273,7 @@ namespace AUTRA.Tekla
         {
             double minHeight = Columns[0].StartPoint.Z + 500; // or: Columns[0].EndPoint.Z - 500; //TODO:
             double maxHeight = Data.Model.Grids.CZS[Data.Model.Grids.CZS.Count - 1] + 1000;
-            TSD.Drawing drawing = CreatePlanDWG("Plan", minHeight, maxHeight);
+             TSD.Drawing drawing= CreatePlanDWG("Plan", minHeight, maxHeight);
             _drawings.CreateDimsAlongSecBeams(drawing, Data.Model.SecondaryBeams[0].AssemblyPrefix);
 
         }
@@ -311,7 +292,7 @@ namespace AUTRA.Tekla
         #region Main Methods for Reports
         public bool CreateReports()
         {
-            return _drawings.CreateReportFromAll("350   Material list.pdf", "BOM.pdf", "BOM");
+           return _drawings.CreateReportFromAll("350   Material list.pdf", "BOM.pdf", "BOM");
         }
         #endregion
 

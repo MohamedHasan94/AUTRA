@@ -27,14 +27,14 @@
         levels = getCoords($('#spaceY').val()); //Get Y-coordinates from Y-spacings
         secSpacing = $('#secSpace').val().split(' ').map(s => parseFloat(s)); //Spacing between secondary beams
 
-        grids = new Grid(coordX, coordZ, 3, levels);
+        grids = new Grid(coordX, coordZ, 4.5, levels);
 
         editor.init(coordX[coordX.length - 1], coordZ[coordZ.length - 1]); //Setup editor
 
-        editor.addToGroup(grids.linesInX, 'grids'); //Add x-grids to scene (as a group)this.meshInX
-        editor.addToGroup(grids.linesInZ, 'grids'); //Add z-grids to scene (as a group)
-        editor.addToGroup(grids.letters, 'grids'); //Add z-grids to scene (as a group)
+        editor.addToGroup(grids.gridLines, 'grids'); //Add x-grids to scene (as a group)this.meshInX
+        editor.addToGroup(grids.gridNames, 'grids'); //Add z-grids to scene (as a group)
         editor.addToGroup(grids.axes, 'grids'); //Add z-grids to scene (as a group)
+        editor.addToGroup(grids.dimensions, 'dimensions');
 
         if (!document.getElementById("autoMode").checked) {
             nodes = createNodesZ(editor, coordX, coordZ);
@@ -360,6 +360,27 @@
         editor.toggleBeams();
     }
 
+    window.measure = () => {
+        let points = [];
+        if (editor.picker.selectedObject.size == 2) {
+            for (let item of editor.picker.selectedObject) {
+                if (item.userData.node)
+                    points.push(item.userData.node.data.position);
+                else {
+                    alert('Please select two nodes before running the command')
+                    return
+                }
+            }
+            let input = document.getElementById('distance');
+            input.value=`${points[0].distanceTo(points[1])} m`;
+            setTimeout(() => input.value = '', 5000);
+        }
+        else
+            alert('Please select two nodes before running the command')
+
+    }
+
+
     window.addFloorLoad = function () {
         let load = new LineLoad($('#floorLoadCase').val(), this.parseFloat($('#floorLoad').val()));
         editor.clearGroup('loads');
@@ -495,7 +516,7 @@
             "Location": "Smart Village",
             "City": "Giza",
             "Country": "Egypt",
-            "Owner" : "AUTRA"
+            "Owner": "AUTRA"
         }
         for (var i = 0; i < nodes.length; i++) {
             model.nodes.push(nodes[i].data);
@@ -536,7 +557,7 @@
             success: function (res) {
                 if (domEvents)
                     domEvents.destroy();//Clear old events (if existing)
-                domEvents = new THREEx.DomEvents(editor.camera, canvas); 
+                domEvents = new THREEx.DomEvents(editor.camera, canvas);
 
                 res = JSON.parse(res);
                 editor.clearGroup('results');
@@ -621,6 +642,18 @@
     window.lightTheme = () => editor.lightTheme();
 
     window.screenshot = () => editor.screenshot();
+
+    window.hideDimensions = () => {
+        editor.hideGroup('dimensions');
+        $('#hideDimensions').css('display', 'none');
+        $('#showDimensions').css('display', 'block');
+    }
+
+    window.showDimensions = () => {
+        editor.showGroup('dimensions');
+        $('#showDimensions').css('display', 'none');
+        $('#hideDimensions').css('display', 'block');
+    }
 
     window.result = () => {
         editor.clearGroup('results'); //Clear displayed results(if any)

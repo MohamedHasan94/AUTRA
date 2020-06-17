@@ -64,11 +64,13 @@
     }
     function init() {
         editor = new Editor(); //Instantiate editor
-        canvas = editor.renderer.domElement;
+        debugger
+        canvas = editor.renderer.domElement;        
         return $.ajax({
             url: '/Outputs/Saved/Model.json',
             success: function (data) {
-                retrocycle(data)
+                debugger
+                retrocycle(data);
                 buildModel(data);
             },
             error: function (x, y, err) {
@@ -83,13 +85,13 @@
     function buildModel(model) {
         editor.init(model.grids.coordX[model.grids.coordX.length - 1], model.grids.coordZ[model.grids.coordZ.length - 1]); //Setup editor
 
-        grids = new Grid(model.grids.coordX, model.grids.coordZ, 3, model.grids.levels);
+        grids = new Grid(model.grids.coordX, model.grids.coordZ, 4.5, model.grids.levels);
 
         levels = grids.levels;
-        editor.addToGroup(grids.linesInX, 'grids'); //Add x-grids to scene (as a group)this.meshInX
-        editor.addToGroup(grids.linesInZ, 'grids'); //Add z-grids to scene (as a group)
-        editor.addToGroup(grids.letters, 'grids'); //Add z-grids to scene (as a group)
+        editor.addToGroup(grids.gridLines, 'grids'); //Add x-grids to scene (as a group)this.meshInX
+        editor.addToGroup(grids.gridNames, 'grids'); //Add z-grids to scene (as a group)
         editor.addToGroup(grids.axes, 'grids'); //Add z-grids to scene (as a group)
+        editor.addToGroup(grids.dimensions, 'dimensions');
 
         sections = model.sections;
         sectionId = parseInt(model.sections[model.sections.length - 1].$id);
@@ -625,6 +627,17 @@
 
     window.screenshot = () => editor.screenshot();
 
+    window.hideDimensions = () => {
+        editor.hideGroup('dimensions');
+        $('#hideDimensions').css('display', 'none');
+        $('#showDimensions').css('display', 'block');
+    }
+
+    window.showDimensions = () => {
+        editor.showGroup('dimensions');
+        $('#showDimensions').css('display', 'none');
+        $('#hideDimensions').css('display', 'block');
+    }
     window.result = () => {
         editor.clearGroup('results');
         editor.hideGroup('nodes'); //Temporarily hide nodes (for clearer display of stations)

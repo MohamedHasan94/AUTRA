@@ -60,7 +60,7 @@ namespace AUTRA.Tekla
         #region Init
         public bool Init()
         {
-            string modelfolder = @"D:\ITI\GraduationPoject\Tekla api\";//TODO:To be changed
+            string modelfolder = @"C:\Users\Dell\Desktop\";//TODO:To be changed
             _modelHandler = new TSM.ModelHandler();
             _modelHandler.Save();
             if(_modelHandler.CreateNewSingleUserModel(Data.ProjectProperties.Name, modelfolder) &&

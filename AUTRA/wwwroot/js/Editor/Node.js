@@ -39,7 +39,7 @@ class Node {
         let position = this.visual.mesh.position.clone();
         let scale = 0.11 * reaction.rv + 0.39; //(1t --> 0.5),(15t --> 2)
         scale = scale > 2 ? 2 : scale < 0.5 ? 0.5 : scale;
-        position.y -= scale + 0.15;
+        position.y -= scale - 0.15;
 
         let arrow = new THREE.ArrowHelper(new THREE.Vector3(0, 1, 0), position, scale, 0xcc00ff);
 

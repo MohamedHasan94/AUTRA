@@ -21,7 +21,7 @@ class Editor {
     }
     init(coordX, coordZ) {
         //#region Creating camera
-        this.camera.position.set(0.5 * coordX, 15, 2 * coordZ);
+        this.camera.position.set(0.5 * coordX, 20, 2 * coordZ);
         this.camera.lookAt(new THREE.Vector3(0.5 * coordX, 0, 0.5 * coordZ)); //looks at the middle of the model
         //#endregion
 

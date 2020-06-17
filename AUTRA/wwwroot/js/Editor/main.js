@@ -11,13 +11,11 @@
     let sectionId = 0;
     //#endregion
 
-    
     function init() {
         editor = new Editor(); //Instantiate editor
-        //editor.init(sections); //Setup editor
         canvas = editor.renderer.domElement;
         let path = $('#projectName').val();
-        $('#projectName').remove();       
+        $('#projectName').remove();
 
         if (path) {
             $.ajax({
@@ -35,7 +33,7 @@
             });
         }
         else
-        $('#exampleModal').modal('show'); //Temporary data input
+            $('#exampleModal').modal('show'); //Temporary data input
     }
     function buildModel(model) {
         editor.init(model.grids.coordX[model.grids.coordX.length - 1], model.grids.coordZ[model.grids.coordZ.length - 1]); //Setup editor
@@ -48,23 +46,17 @@
         editor.addToGroup(grids.axes, 'grids'); //Add z-grids to scene (as a group)
         editor.addToGroup(grids.dimensions, 'dimensions');
 
+        material = model.material
         sections = model.sections;
+        for (let i = 0; i < sections.length; i++) {
+            sections[i].material = { $ref: "m" };
+        }
         sectionId = parseInt(sections[sections.length - 1].$id);
-        generateNodes(model.nodes, nodes);
 
+        Node.generate(nodes, model.nodes, editor);
         secondaryBeams.push(Beam.generate(model.secondaryBeams, editor));
         mainBeams.push(Beam.generate(model.mainBeams, editor));
         columns.push(Column.generate(model.columns, editor));
-    }
-
-    function generateNodes(modelNodes, nodes) {
-        for (let i = 0; i < modelNodes.length; i++) {
-            let node = Node.create(modelNodes[i].position.x, modelNodes[i].position.y, modelNodes[i].position.z, modelNodes[i].support, editor, nodes, modelNodes[i].$id);
-            for (let j = 0; j < modelNodes[i].pointLoads.length; j++) {
-                node.addPointLoad(new PointLoad(modelNodes[i].pointLoads[j].magnitude, modelNodes[i].pointLoads[j].pattern))
-            }
-            modelNodes[i].data = node.data; //switch modelNodes position to Vector3
-        }
     }
 
     $('#createGrids').click(function () {
@@ -119,7 +111,6 @@
                 }
             }
             else {
-
                 //creating and adding the Hinged-Nodes to MainNodes Array
                 lowerNodesIntial = createNodesX(editor, coordX, coordZ);
                 mainNodes.push(lowerNodesIntial);
@@ -237,7 +228,8 @@
         let sectionObject = sections.find(s => s.name === sectionName); //Check if section already exists
         if (!sectionObject) { //If not existing , create one
             sectionObject = {
-                $id: `${sectionId += 1000}`, name: sectionName, material: { $ref: 'm' } };
+                $id: `${sectionId += 1000}`, name: sectionName, material: { $ref: 'm' }
+            };
             sections.push(sectionObject);
         }
         let start = drawingPoints[0], end = drawingPoints[1];
@@ -289,7 +281,7 @@
             if (item.userData.element instanceof Beam) {
                 editor.removeFromGroup(item, 'elements');
                 let found = false;
-                for (var i = 0; i < secondaryBeams.length; i++) {
+                for (var i = 0; i < secondaryBeams.length; i++) { //Search for the beam in secondary beams
                     index = secondaryBeams[i].indexOf(item.userData.element);
                     if (index > -1) {
                         secondaryBeams[i].splice(index, 1);
@@ -298,7 +290,7 @@
                     }
                 }
                 if (!found) {
-                    for (var i = 0; i < mainBeams.length; i++) {
+                    for (var i = 0; i < mainBeams.length; i++) { //Search for the beam in main beams(if not found in secondary)
                         let index = mainBeams[i].indexOf(item.userData.element);
                         if (index > -1) {
                             mainBeams[i].splice(index, 1);
@@ -307,7 +299,7 @@
                     }
                 }
             }
-            else if (item.userData.element instanceof Column) {
+            else if (item.userData.element instanceof Column) {//Search for the column in columns
                 editor.removeFromGroup(item, 'elements');
                 for (var i = 0; i < columns.length; i++) {
                     let index = columns[i].indexOf(item.userData.element);
@@ -358,12 +350,9 @@
                     element.move(displacement);
 
                     let levelIndex = levels.indexOf(element.visual.endPoint.y) - 1;
-
                     if (levelIndex > -1) {
                         //Check if nodes already exist at the new position or create new ones.
                         getElementNodes(element.visual.mesh.position, element.visual.endPoint, element, levelIndex);
-
-
                         if (element instanceof Beam)
                             secondaryBeams[levelIndex].push(element);
                         else
@@ -389,23 +378,21 @@
         if (!newStartNode) { //If it doesn't exist create one
             newStartNode = Node.create(newStartPosition.x, newStartPosition.y, newStartPosition.z,
                 null, editor, nodes);
-        }
-
-        let beam = editor.getIntersected(newStartNode.data.position.clone());
-        if (beam) {
-            Beam.switchType(beam.userData.element, secondaryBeams[levelIndex], mainBeams[levelIndex]);
-            beam.userData.element.data.innerNodes.push({ '$ref': newStartNode.data.$id });
+            let beam = editor.getIntersected(newStartNode.data.position.clone());
+            if (beam) {
+                Beam.switchType(beam.userData.element, secondaryBeams[levelIndex], mainBeams[levelIndex]);
+                beam.userData.element.data.innerNodes.push({ '$ref': newStartNode.data.$id });
+            }
         }
 
         if (!newEndNode) {//If it doesn't exist create one
             newEndNode = Node.create(newEndPosition.x, newEndPosition.y, newEndPosition.z, null, editor, nodes);
+            beam = editor.getIntersected(newEndNode.data.position.clone());
+            if (beam) {
+                Beam.switchType(beam.userData.element, secondaryBeams[levelIndex], mainBeams[levelIndex]);
+                beam.userData.element.data.innerNodes.push({ '$ref': newEndNode.data.$id });
+            }
         }
-        beam = editor.getIntersected(newEndNode.data.position.clone());
-        if (beam) {
-            Beam.switchType(beam.userData.element, secondaryBeams[levelIndex], mainBeams[levelIndex]);
-            beam.userData.element.data.innerNodes.push({ '$ref': newEndNode.data.$id });
-        }
-
         element.data.startNode = { "$ref": newStartNode.data.$id };
         element.data.endNode = { "$ref": newEndNode.data.$id };
     }
@@ -426,7 +413,7 @@
                 }
             }
             let input = document.getElementById('distance');
-            input.value=`${points[0].distanceTo(points[1])} m`;
+            input.value = `${points[0].distanceTo(points[1])} m`;
             setTimeout(() => input.value = '', 5000);
         }
         else
@@ -435,14 +422,14 @@
     }
 
 
-    window.addFloorLoad = function () {
-        let load = new LineLoad($('#floorLoadCase').val(), this.parseFloat($('#floorLoad').val()));
-        editor.clearGroup('loads');
-        for (let i = 0; i < secondaryBeams.length; i++) { //(for) is faster than (forEach)
-            let index = secondaryBeams[i].addLoad(load, true);
-            editor.addToGroup(secondaryBeams[i].data.loads[index].render(secondaryBeams[i]), 'loads');
-        }
-    }
+    //window.addFloorLoad = function () {
+    //    let load = new LineLoad($('#floorLoadCase').val(), this.parseFloat($('#floorLoad').val()));
+    //    editor.clearGroup('loads');
+    //    for (let i = 0; i < secondaryBeams.length; i++) { //(for) is faster than (forEach)
+    //        let index = secondaryBeams[i].addLoad(load, true);
+    //        editor.addToGroup(secondaryBeams[i].data.loads[index].render(secondaryBeams[i]), 'loads');
+    //    }
+    //}
 
     window.addLineLoad = function () { //Adds a LineLoad to the selected beam
         editor.clearGroup('loads');
@@ -457,7 +444,6 @@
             }
         }
     }
-
 
     window.addPointLoad = function () { //Adds a PointLoad to the selected node
         editor.clearGroup('loads');
@@ -509,7 +495,7 @@
         let sectionName = $('#section').val();
         let existingSection = sections.find(s => s.name == sectionName);//Check if the section already exists
         if (!existingSection) {//if not create a new one
-            existingSection = { $id: `${sectionId += 1000}`, name: sectionName, material :{ $ref: 'm' }};
+            existingSection = { $id: `${sectionId += 1000}`, name: sectionName, material: { $ref: 'm' } };
             sections.push(existingSection);
         }
         for (let item of editor.picker.selectedObject) {
@@ -576,7 +562,6 @@
             model.nodes.push(nodes[i].data);
         }
 
-
         for (var i = 0; i < secondaryBeams[0].length; i++) {
             model.secondaryBeams.push(secondaryBeams[0][i].data);
         }
@@ -588,6 +573,8 @@
         for (var i = 0; i < columns[0].length; i++) {
             model.columns.push(columns[0][i].data);
         }
+        model.grids.cxs = grids.cxs;
+        model.grids.cys = grids.cys;
         model.grids.coordX = grids.coordX;
         model.grids.coordZ = grids.coordZ;
         model.grids.levels = grids.levels;
@@ -611,22 +598,14 @@
                 res = JSON.parse(res);
                 editor.clearGroup('results');
                 editor.hideGroup('nodes');
-                for (let i = 0; i < mainBeams[0].length; i++) {
-                    mainBeams[0][i].visual.strainingActions = res.mainBeams[i].strainingActions;
-                    mainBeams[0][i].visual.strainingActions.push(res.mainBeams[i].combinedSA[0]);
-                    editor.addToGroup(mainBeams[0][i].showMoment('dead', 0, domEvents), 'results');
-                }
+                debugger;
+                FrameElement.assignResults(mainBeams[0], res.mainBeams); //MainBeams
+                Beam.showResults(mainBeams[0], 'dead', 'showMoment', 0, domEvents, editor);
 
-                for (let i = 0; i < secondaryBeams[0].length; i++) {
-                    secondaryBeams[0][i].visual.strainingActions = res.secondaryBeams[i].strainingActions;
-                    secondaryBeams[0][i].visual.strainingActions.push(res.secondaryBeams[i].combinedSA[0]);
-                    editor.addToGroup(secondaryBeams[0][i].showMoment('dead', 0, domEvents), 'results');
-                }
+                FrameElement.assignResults(secondaryBeams[0], res.secondaryBeams); //SecondaryBeams
+                Beam.showResults(secondaryBeams[0], 'dead', 'showMoment', 0, domEvents, editor);
 
-                for (let i = 0; i < columns[0].length; i++) {
-                    columns[0][i].visual.strainingActions = res.columns[i].strainingActions;
-                    columns[0][i].visual.strainingActions.push(res.columns[i].combinedSA[0]);
-                }
+                FrameElement.assignResults(columns[0], res.columns); //Columns
 
                 for (let i = 0; i < columns[0].length; i++) {
                     nodes[i].visual.reactions = res.supports[i].reactions;
@@ -720,34 +699,16 @@
         domEvents = new THREEx.DomEvents(editor.camera, canvas);
         switch (strainingAction) {
             case 'Mo':
-                for (var i = 0; i < mainBeams.length; i++) {
-                    for (var j = 0; j < mainBeams[i].length; j++) {
-                        editor.addToGroup(mainBeams[i][j].showMoment(pattern, display, domEvents), 'results');
-                    }
-                }
-                for (var i = 0; i < secondaryBeams.length; i++) {
-                    for (var j = 0; j < secondaryBeams[i].length; j++) {
-                        editor.addToGroup(secondaryBeams[i][j].showMoment(pattern, display, domEvents), 'results');
-                    }
-                }
+                Beam.showResults(mainBeams[0], pattern, 'showMoment', display, domEvents, editor);
+                Beam.showResults(secondaryBeams[0], pattern, 'showMoment', display, domEvents, editor);
                 break;
             case 'V':
-                for (var i = 0; i < secondaryBeams.length; i++) {
-                    for (var j = 0; j < secondaryBeams[i].length; j++) {
-                        editor.addToGroup(secondaryBeams[i][j].showShear(pattern, display, domEvents), 'results');
-                    }
-                }
-                for (var i = 0; i < mainBeams.length; i++) {
-                    for (var j = 0; j < mainBeams[i].length; j++) {
-                        editor.addToGroup(mainBeams[i][j].showShear(pattern, display, domEvents), 'results');
-                    }
-                }
+                Beam.showResults(mainBeams[0], pattern, 'showShear', display, domEvents, editor);
+                Beam.showResults(secondaryBeams[0], pattern, 'showShear', display, domEvents, editor);
                 break;
             case 'No':
-                for (var i = 0; i < columns.length; i++) {
-                    for (var j = 0; j < columns[i].length; j++) {
-                        editor.addToGroup(columns[i][j].showNormal(pattern, display, domEvents), 'results');
-                    }
+                for (var j = 0; j < columns[0].length; j++) {
+                    editor.addToGroup(columns[0][j].showNormal(pattern, display, domEvents), 'results');
                 }
                 break;
             case 'rv':

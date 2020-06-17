@@ -61,6 +61,15 @@ class Node {
         editor.createPickingObject(node);
         return node;
     }
+    static generate(nodes, modelNodes, editor) {
+        for (let i = 0; i < modelNodes.length; i++) {
+            let node = Node.create(modelNodes[i].position.x, modelNodes[i].position.y, modelNodes[i].position.z, modelNodes[i].support, editor, nodes, modelNodes[i].$id);
+            for (let j = 0; j < modelNodes[i].pointLoads.length; j++) {
+                node.addPointLoad(new PointLoad(modelNodes[i].pointLoads[j].magnitude, modelNodes[i].pointLoads[j].pattern))
+            }
+            modelNodes[i].data = node.data; //switch modelNodes position to Vector3
+        }
+    }
 }
 
 //Naming with X or Z denotes the outer loop

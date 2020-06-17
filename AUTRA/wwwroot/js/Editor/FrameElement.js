@@ -122,4 +122,10 @@ class FrameElement {
             parent.add(point);
         }
     }
+    static assignResults(elements, resultElements) {
+        for (let i = 0; i < elements.length; i++) {
+            elements[i].visual.strainingActions = resultElements[i].strainingActions;
+            elements[i].visual.strainingActions.push(resultElements[i].combinedSA[0]);
+        }
+    }
 }

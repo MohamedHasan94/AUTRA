@@ -1,16 +1,26 @@
-function Grid(spaceX, spaceZ, shift, levels) {
+function Grid(coordX, coordZ, shift, levels) {
     //coordinates in x-direction
-    this.coordX = spaceX;
+    this.coordX = coordX;
     //coordinates in z-direction
-    this.coordZ = spaceZ;
+    this.coordZ = coordZ;
     //levels
     this.levels = levels;
+
+    this.cxs = [0];
+    this.cys = [0];
 
     let numberInX = this.coordX.length;
     let numberInZ = this.coordZ.length;
 
-    let xLength = spaceX[numberInX - 1];
-    let zLength = spaceZ[numberInZ - 1];    
+    for (let i = 1; i < numberInX; i++) {
+        this.cxs[i] = coordX[i] - coordX[i - 1];
+    }
+
+    for (let i = 1; i < numberInZ; i++) {
+        this.cys[i] = coordZ[i] - coordZ[i - 1];
+    }
+    let xLength = coordX[numberInX - 1];
+    let zLength = coordZ[numberInZ - 1];    
 
     //#region Creating Grids
     //#region Grid Lines
@@ -23,18 +33,18 @@ function Grid(spaceX, spaceZ, shift, levels) {
         scale: 1
     });
     //Fill the vertical Group
-    let gridGeometry = new THREE.BufferGeometry().setFromPoints([new THREE.Vector3(spaceX[0], 0, -shift),
-        new THREE.Vector3(spaceX[0], 0, zLength + shift)]);
+    let gridGeometry = new THREE.BufferGeometry().setFromPoints([new THREE.Vector3(coordX[0], 0, -shift),
+        new THREE.Vector3(coordX[0], 0, zLength + shift)]);
 
     for (let i = 1; i < numberInX; i++) {
-        let geometry = new THREE.BufferGeometry().setFromPoints([new THREE.Vector3(spaceX[i], 0, -shift),
-            new THREE.Vector3(spaceX[i], 0, zLength + shift)]);
+        let geometry = new THREE.BufferGeometry().setFromPoints([new THREE.Vector3(coordX[i], 0, -shift),
+            new THREE.Vector3(coordX[i], 0, zLength + shift)]);
         gridGeometry = THREE.BufferGeometryUtils.mergeBufferGeometries([gridGeometry, geometry]);
     }
     //Fill the horizontal Group
     for (let i = 0; i < numberInZ; i++) {
-        let geometry = new THREE.BufferGeometry().setFromPoints([new THREE.Vector3(-shift, 0, spaceZ[i]),
-        new THREE.Vector3(xLength + shift, 0, spaceZ[i])]);
+        let geometry = new THREE.BufferGeometry().setFromPoints([new THREE.Vector3(-shift, 0, coordZ[i]),
+        new THREE.Vector3(xLength + shift, 0, coordZ[i])]);
         gridGeometry = THREE.BufferGeometryUtils.mergeBufferGeometries([gridGeometry, geometry]);
     }
 
@@ -55,20 +65,20 @@ function Grid(spaceX, spaceZ, shift, levels) {
     for (let i = 0; i < numberInX; i++) {//Vertical grids (letters)
         let geometry = new THREE.TextBufferGeometry(`${String.fromCharCode(i + 65)}`, geoProperties);
         let geometry2 = geometry.clone();
-        geometry.applyMatrix4(matrix.makeRotationX(-Math.PI / 2)).applyMatrix4(matrix.makeTranslation(spaceX[i], 0, -shift - geoProperties.size));
+        geometry.applyMatrix4(matrix.makeRotationX(-Math.PI / 2)).applyMatrix4(matrix.makeTranslation(coordX[i], 0, -shift - geoProperties.size));
         gridNamesGeometry = THREE.BufferGeometryUtils.mergeBufferGeometries([gridNamesGeometry, geometry]);
 
-        geometry2.applyMatrix4(matrix.makeRotationX(-Math.PI / 2)).applyMatrix4(matrix.makeTranslation(spaceX[i], 0, zLength + shift + geoProperties.size));
+        geometry2.applyMatrix4(matrix.makeRotationX(-Math.PI / 2)).applyMatrix4(matrix.makeTranslation(coordX[i], 0, zLength + shift + geoProperties.size));
         gridNamesGeometry = THREE.BufferGeometryUtils.mergeBufferGeometries([gridNamesGeometry, geometry2]);
     }
 
     for (let i = 0; i < numberInZ; i++) {//Horizontal grids (Numbers)
         let geometry = new THREE.TextBufferGeometry(`${i + 1}`, geoProperties);
         let geometry2 = geometry.clone();
-        geometry.applyMatrix4(matrix.makeRotationX(-Math.PI / 2)).applyMatrix4(matrix.makeTranslation(-shift - 1, 0, spaceZ[i]));
+        geometry.applyMatrix4(matrix.makeRotationX(-Math.PI / 2)).applyMatrix4(matrix.makeTranslation(-shift - 1, 0, coordZ[i]));
         gridNamesGeometry = THREE.BufferGeometryUtils.mergeBufferGeometries([gridNamesGeometry, geometry]);
 
-        geometry2.applyMatrix4(matrix.makeRotationX(-Math.PI / 2)).applyMatrix4(matrix.makeTranslation(xLength + shift, 0, spaceZ[i]));
+        geometry2.applyMatrix4(matrix.makeRotationX(-Math.PI / 2)).applyMatrix4(matrix.makeTranslation(xLength + shift, 0, coordZ[i]));
         gridNamesGeometry = THREE.BufferGeometryUtils.mergeBufferGeometries([gridNamesGeometry, geometry2]);
     }
     let textMaterial = new THREE.MeshBasicMaterial({ color: 0x333333, opacity: 0.3, transparent: true });
@@ -117,12 +127,12 @@ function Grid(spaceX, spaceZ, shift, levels) {
 
     let sideGeometry;
     for (let i = 0; i < numberInX; i++) {//Side lines of inner x-dimensions
-        sideGeometry = new THREE.BufferGeometry().setFromPoints([new THREE.Vector3(spaceX[i], 0, zLength + offset - 0.3), new THREE.Vector3(spaceX[i], 0, zLength + offset + 0.3)])
+        sideGeometry = new THREE.BufferGeometry().setFromPoints([new THREE.Vector3(coordX[i], 0, zLength + offset - 0.3), new THREE.Vector3(coordX[i], 0, zLength + offset + 0.3)])
         dimLineGeometry = THREE.BufferGeometryUtils.mergeBufferGeometries([dimLineGeometry, sideGeometry]);
     }
 
     for (let i = 0; i < numberInZ; i++) {//Side lines of inner z-dimensions
-        sideGeometry = new THREE.BufferGeometry().setFromPoints([new THREE.Vector3(xLength + offset - 0.3, 0, spaceZ[i]), new THREE.Vector3(xLength + offset + 0.3, 0, spaceZ[i])])
+        sideGeometry = new THREE.BufferGeometry().setFromPoints([new THREE.Vector3(xLength + offset - 0.3, 0, coordZ[i]), new THREE.Vector3(xLength + offset + 0.3, 0, coordZ[i])])
         dimLineGeometry = THREE.BufferGeometryUtils.mergeBufferGeometries([dimLineGeometry, sideGeometry]);
     }
 
@@ -154,14 +164,14 @@ function Grid(spaceX, spaceZ, shift, levels) {
 
     ///////////////////Dimensions text
     geoProperties.size = 0.5;
-    let dimTextGeo = new THREE.TextBufferGeometry(`${spaceX[1]} m`, geoProperties);
+    let dimTextGeo = new THREE.TextBufferGeometry(`${coordX[1]} m`, geoProperties);
     dimTextGeo.applyMatrix4(matrix.makeRotationX(-Math.PI / 2))
-        .applyMatrix4(matrix.makeTranslation(0.5 * spaceX[1] - geoProperties.size, 0, zLength + offset - 0.5 * geoProperties.size));
+        .applyMatrix4(matrix.makeTranslation(0.5 * coordX[1] - geoProperties.size, 0, zLength + offset - 0.5 * geoProperties.size));
 
     for (let i = 2; i < numberInX; i++) {
-        let geo = new THREE.TextBufferGeometry(`${(10 * spaceX[i] - 10 * spaceX[i - 1]) / 10} m`, geoProperties);
+        let geo = new THREE.TextBufferGeometry(`${(10 * coordX[i] - 10 * coordX[i - 1]) / 10} m`, geoProperties);
         geo.applyMatrix4(matrix.makeRotationX(-Math.PI / 2))
-            .applyMatrix4(matrix.makeTranslation(0.5 * (spaceX[i] + spaceX[i - 1]) - geoProperties.size, 0, zLength + offset - 0.5 * geoProperties.size));
+            .applyMatrix4(matrix.makeTranslation(0.5 * (coordX[i] + coordX[i - 1]) - geoProperties.size, 0, zLength + offset - 0.5 * geoProperties.size));
         dimTextGeo = THREE.BufferGeometryUtils.mergeBufferGeometries([dimTextGeo, geo]);
     }
 
@@ -171,9 +181,9 @@ function Grid(spaceX, spaceZ, shift, levels) {
     dimTextGeo = THREE.BufferGeometryUtils.mergeBufferGeometries([dimTextGeo, xTotalGeo]);
 
     for (let i = 1; i < numberInZ; i++) {
-        let geo = new THREE.TextBufferGeometry(`${(10 * spaceZ[i] - 10 * spaceZ[i - 1]) / 10} m`, geoProperties);
+        let geo = new THREE.TextBufferGeometry(`${(10 * coordZ[i] - 10 * coordZ[i - 1]) / 10} m`, geoProperties);
         geo.applyMatrix4(matrix.makeRotationY(Math.PI / 2)).applyMatrix4(matrix.makeRotationZ(Math.PI / 2))
-            .applyMatrix4(matrix.makeTranslation(xLength + offset - 0.5 * geoProperties.size, 0, 0.5 * (spaceZ[i] + spaceZ[i - 1]) + geoProperties.size));
+            .applyMatrix4(matrix.makeTranslation(xLength + offset - 0.5 * geoProperties.size, 0, 0.5 * (coordZ[i] + coordZ[i - 1]) + geoProperties.size));
         dimTextGeo = THREE.BufferGeometryUtils.mergeBufferGeometries([dimTextGeo, geo]);
     }
 

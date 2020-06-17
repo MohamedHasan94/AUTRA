@@ -21,8 +21,12 @@ namespace AUTRA.Design
 
     public struct Grids
     {
+        public double[] CXS { get; set; }
+        public double[] CYS { get; set; }
+        public double[] Levels { get; set; }
+
+        //For model reading from json in openning
         public double[] CoordX { get; set; }
         public double[] CoordZ { get; set; }
-        public double[] Levels { get; set; }
     }
 }

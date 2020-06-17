@@ -6,17 +6,65 @@
     let nodes = new Array(), grids;
     let columns = new Array(), mainBeams = new Array(), secondaryBeams = new Array(), sections = new Array();
     let canvas, domEvents;
-    let levels;
+    let levels, material;
     let draw = false, drawingPoints = [];
     let sectionId = 0;
     //#endregion
 
+    
     function init() {
         editor = new Editor(); //Instantiate editor
         //editor.init(sections); //Setup editor
         canvas = editor.renderer.domElement;
+        let path = $('#projectName').val();
+        $('#projectName').remove();       
 
+        if (path) {
+            $.ajax({
+                url: `/Users/${path}`,
+                success: function (data) {
+                    debugger
+                    retrocycle(data);
+                    buildModel(data);
+                    //console.clear();
+                },
+                error: function (x, y, err) {
+                    debugger
+                    console.log(err)
+                }
+            });
+        }
+        else
         $('#exampleModal').modal('show'); //Temporary data input
+    }
+    function buildModel(model) {
+        editor.init(model.grids.coordX[model.grids.coordX.length - 1], model.grids.coordZ[model.grids.coordZ.length - 1]); //Setup editor
+
+        grids = new Grid(model.grids.coordX, model.grids.coordZ, 4.5, model.grids.levels);
+
+        levels = grids.levels;
+        editor.addToGroup(grids.gridLines, 'grids'); //Add x-grids to scene (as a group)this.meshInX
+        editor.addToGroup(grids.gridNames, 'grids'); //Add z-grids to scene (as a group)
+        editor.addToGroup(grids.axes, 'grids'); //Add z-grids to scene (as a group)
+        editor.addToGroup(grids.dimensions, 'dimensions');
+
+        sections = model.sections;
+        sectionId = parseInt(sections[sections.length - 1].$id);
+        generateNodes(model.nodes, nodes);
+
+        secondaryBeams.push(Beam.generate(model.secondaryBeams, editor));
+        mainBeams.push(Beam.generate(model.mainBeams, editor));
+        columns.push(Column.generate(model.columns, editor));
+    }
+
+    function generateNodes(modelNodes, nodes) {
+        for (let i = 0; i < modelNodes.length; i++) {
+            let node = Node.create(modelNodes[i].position.x, modelNodes[i].position.y, modelNodes[i].position.z, modelNodes[i].support, editor, nodes, modelNodes[i].$id);
+            for (let j = 0; j < modelNodes[i].pointLoads.length; j++) {
+                node.addPointLoad(new PointLoad(modelNodes[i].pointLoads[j].magnitude, modelNodes[i].pointLoads[j].pattern))
+            }
+            modelNodes[i].data = node.data; //switch modelNodes position to Vector3
+        }
     }
 
     $('#createGrids').click(function () {
@@ -40,7 +88,12 @@
             nodes = createNodesZ(editor, coordX, coordZ);
         }
         else {
-            sections.push({ $id: `${sectionId += 1000}`, name: 'IPE200' }, { $id: `${sectionId += 1000}`, name: 'IPE270' }, { $id: `${sectionId += 1000}`, name: 'IPE360' });
+            material = { $id: 'm', name: $('#material').val() };
+            sections.push({ $id: `${sectionId += 1000}`, name: $('#secSection').val(), material: { $ref: 'm' } },
+                { $id: `${sectionId += 1000}`, name: $('#mainSection').val(), material: { $ref: 'm' } },
+                { $id: `${sectionId += 1000}`, name: $('#colSection').val(), material: { $ref: 'm' } });
+
+
             let mainNodes = new Array(), mainBeamsLoop, secondaryBeamsLoop, mainNodesLoop, secNodesLoop, nodesLoop;
             if (document.getElementById("xOrient").checked) { //Draw main beams on X-axis
 
@@ -183,7 +236,8 @@
         let sectionName = $('#drawSection').val();
         let sectionObject = sections.find(s => s.name === sectionName); //Check if section already exists
         if (!sectionObject) { //If not existing , create one
-            sectionObject = { $id: `${sectionId += 1000}`, name: sectionName };
+            sectionObject = {
+                $id: `${sectionId += 1000}`, name: sectionName, material: { $ref: 'm' } };
             sections.push(sectionObject);
         }
         let start = drawingPoints[0], end = drawingPoints[1];
@@ -455,7 +509,7 @@
         let sectionName = $('#section').val();
         let existingSection = sections.find(s => s.name == sectionName);//Check if the section already exists
         if (!existingSection) {//if not create a new one
-            existingSection = { $id: `${sectionId += 1000}`, name: sectionName };
+            existingSection = { $id: `${sectionId += 1000}`, name: sectionName, material :{ $ref: 'm' }};
             sections.push(existingSection);
         }
         for (let item of editor.picker.selectedObject) {
@@ -505,7 +559,7 @@
 
     function createModel() { //Serialize model components to JSON
         let model = {
-            nodes: [], material: { '$id': 'm', name: 'ST_37' }, sections: [],
+            nodes: [], material: material, sections: sections,
             secondaryBeams: [], mainBeams: [], columns: [], grids: {}
         };
 
@@ -522,11 +576,6 @@
             model.nodes.push(nodes[i].data);
         }
 
-        model.sections = sections;
-
-        for (var i = 0; i < sections.length; i++) {
-            sections[i].material = { $ref: "m" };
-        }
 
         for (var i = 0; i < secondaryBeams[0].length; i++) {
             model.secondaryBeams.push(secondaryBeams[0][i].data);
@@ -590,13 +639,17 @@
     }
 
     window.save = function () { // Save data on the server
+        let name = $('#projectName').val();
         $.ajax({
-            url: `/Editor/Save`,
+            url: `/Editor/Save/${name}`,
             type: "POST",
             contentType: 'text/plain',
             data: createModel(),
             success: function (res) {
-                console.log(res)
+                if (res)
+                    alert('Project saved successfully')
+                else
+                    alert('Something went wrong. Please try again');
             },
             error: function (x, y, res) {
                 console.log(res)

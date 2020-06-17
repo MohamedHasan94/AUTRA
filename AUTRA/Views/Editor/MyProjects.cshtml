@@ -1,0 +1,15 @@
+﻿@model List<Project>
+@{
+    ViewData["Title"] = "MyProjects";
+}
+
+<h1>MyProjects</h1>
+
+<ul>
+    @foreach (var item in Model)
+    {
+        <li>
+            <a href="~/Editor/Open/@item.Name"><h2>@item.Name</h2></a>
+        </li>
+    }
+</ul>

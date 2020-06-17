@@ -17,6 +17,7 @@ namespace AUTRA.Tekla
     {
         #region Private Fields
         //contains helper methods for drawings & reports
+        private TSD.DrawingHandler _drawingHandler;
         private TeklaDrawings _drawings;
         private TSM.ModelHandler _modelHandler; //is used to (open , save & create new model)
         #endregion
@@ -44,6 +45,7 @@ namespace AUTRA.Tekla
             if (Init())
             {
                 Model = new TSM.Model();
+                _drawingHandler = new TSD.DrawingHandler();
                 _drawings = new TeklaDrawings(Model);
                 TSM.ModelObjectEnumerator.AutoFetch = true;
                 MainBeams = new List<TSM.Beam>();
@@ -182,7 +184,6 @@ namespace AUTRA.Tekla
                 _drawings.CreateAssemblyDrawings(assembly.Identifier);
             }
         }
-
         private TSD.Drawing CreatePlanDWG(string name , double minHeight , double maxHeight)
         {
             Model.SetPlaneToGlobal();
@@ -190,12 +191,11 @@ namespace AUTRA.Tekla
             T3D.Point min = new T3D.Point(-2000, -2000, minHeight);
 
             T3D.AABB box = new T3D.AABB(min, max);
-
+            _drawingHandler.CloseActiveDrawing(true);
             TSD.Drawing drawing= _drawings.CreateGADrawing(name, 0.02, new T3D.CoordinateSystem(), box);
             _drawings.CreateDimsAlongGrids(drawing);
             return drawing;
         }
-       
         private void CreateElevationAlongX(string name , double xCoord)
         {
             Model.SetPlaneToGlobal();
@@ -210,13 +210,10 @@ namespace AUTRA.Tekla
             T3D.Point min = new T3D.Point(-2000, minHeight,-500 );
 
             T3D.AABB box = new T3D.AABB(min, max);
-
             TSD.Drawing drawing =  _drawings.CreateGADrawing(name, 0.02,coords , box);
             _drawings.CreateHatch(drawing);
             _drawings.CreateDimsAlongGrids(drawing);
-
         }
-      
         private void CreateElevationAlongY(string name, double yCoord)
         {
             Model.SetPlaneToGlobal();
@@ -235,11 +232,8 @@ namespace AUTRA.Tekla
             TSD.Drawing drawing = _drawings.CreateGADrawing(name, 0.02, coords, box);
             _drawings.CreateHatch(drawing);
             _drawings.CreateDimsAlongGrids(drawing);
-        }
 
-        /// <summary>
-        /// Create all Elevation Drawings along X-Axis
-        /// </summary>
+        }
         public void CreateElevationDWGSAlongX()
         {
             string[] labels;
@@ -253,9 +247,6 @@ namespace AUTRA.Tekla
             }
             
         }
-        /// <summary>
-        /// Create all Eleveation Drawings Along Y-Axis
-        /// </summary>
         public void CreateElevationDWGSAlongY()
         {
             string[] labels;
@@ -271,11 +262,14 @@ namespace AUTRA.Tekla
         }
         public void CreatePlanDWG()
         {
-            double minHeight = Columns[0].StartPoint.Z + 500; // or: Columns[0].EndPoint.Z - 500; //TODO:
+            double minHeight =Columns[0].EndPoint.Z - 500; //TODO:
             double maxHeight = Data.Model.Grids.CZS[Data.Model.Grids.CZS.Count - 1] + 1000;
              TSD.Drawing drawing= CreatePlanDWG("Plan", minHeight, maxHeight);
-            _drawings.CreateDimsAlongSecBeams(drawing, Data.Model.SecondaryBeams[0].AssemblyPrefix);
-
+            var rects = Data.Model.Grids.CreateRectangles().ToList();
+            _drawings.CreateDimsAlongBeams(drawing, Data.Model.SecondaryBeams[0].AssemblyPrefix,TotalX,TotalY,rects);
+            _drawings.CreateDimsAlongBeams(drawing, Data.Model.MainBeams[0].AssemblyPrefix, TotalX, TotalY, rects,true);
+            _drawingHandler.CloseActiveDrawing(true);
+            Model.SetPlaneToGlobal();
         }
         public void CreateBasePlateDWG()
         {

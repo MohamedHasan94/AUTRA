@@ -11,6 +11,7 @@ using iText.IO.Image;
 using iText.Kernel.Colors;
 using iText.Kernel.Pdf.Action;
 using System.Reflection;
+using iText.Kernel.Events;
 
 namespace AUTRA.Design
 {
@@ -32,6 +33,9 @@ namespace AUTRA.Design
                 using (var pdf = new PdfDocument(writer))
                 {
                     Document doc = new Document(pdf);
+                    doc.SetMargins(50, 40, 50, 40);
+                    pdf.AddEventHandler(PdfDocumentEvent.START_PAGE, new Header(doc));
+                    pdf.AddEventHandler(PdfDocumentEvent.END_PAGE, new Footer(doc));
                     ReportForBeams("Secondary Beams", secGroups, doc);
                     ReportForBeams("Main Beams", mainGroups, doc);
                     ReportForColumns("Columns", columnGroups, doc);
@@ -60,7 +64,7 @@ namespace AUTRA.Design
                 table.AddCell().AddParagraph(col.Length.Round().ToString());
                 table.AddCell().AddParagraph(col.CombinedSA.GetMaxCompression().Round().ToString());
             }
-            table.SetHorizontalAlignment(HorizontalAlignment.CENTER);
+            table.SetHorizontalAlignment(HorizontalAlignment.LEFT);
             doc.Add(table);
             CreateHeader(doc, "Design Limit state:", 12, TextAlignment.LEFT);
             doc.AddParagraph($"Combo: {group.DesignValues.Combo}");
@@ -81,16 +85,17 @@ namespace AUTRA.Design
         }
         private void CreateHeader( Document doc,string title,float fontSize=20,TextAlignment textAlignment = TextAlignment.CENTER,bool isSepartorExist = true)
         {
-            Paragraph header= new Paragraph(title)
+            Paragraph header = new Paragraph(title)
                 .SetTextAlignment(textAlignment)
                 .SetFontSize(fontSize)
+                .SetUnderline()
                 .SetBold();
             doc.Add(header);
-            if (isSepartorExist)
-            {
-                LineSeparator ls = new LineSeparator(new SolidLine());
-                doc.Add(ls);
-            }
+            //if (isSepartorExist)
+            //{
+            //    LineSeparator ls = new LineSeparator(new SolidLine());
+            //    doc.Add(ls);
+            //}
         }
         private void CreateTableFromBeamGroups(List<Group> groups,Document doc)
         {
@@ -119,7 +124,7 @@ namespace AUTRA.Design
                 table.AddCell().AddParagraph(beam.CombinedSA.GetMaxMoment().Round().ToString());
                 table.AddCell().AddParagraph(beam.CombinedSA.GetMaxShear().Round().ToString());
             }
-            table.SetHorizontalAlignment(HorizontalAlignment.CENTER);
+            table.SetHorizontalAlignment(HorizontalAlignment.LEFT);
             doc.Add(table);
             CreateHeader(doc, "Design Limit state:", 12, TextAlignment.LEFT);
             doc.AddParagraph($"Combo: {group.DesignValues.Combo}");

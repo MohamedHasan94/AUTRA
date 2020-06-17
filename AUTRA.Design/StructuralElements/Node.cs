@@ -41,6 +41,7 @@ namespace AUTRA.Design
                 Z= a.X*b.Y-b.X*a.Y
             };
         }
+        public double Dot(Point other) => X * other.X + Y * other.Y + Z * other.Z;
         public bool IsOnLine(FrameElement ele)
         {
             Point start = ele.StartNode.Position;

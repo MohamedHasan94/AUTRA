@@ -44,6 +44,10 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="AUTRATekla.cs" />
+    <Compile Include="DataStructure\QuadTree.cs" />
+    <Compile Include="DataStructure\Rectangle.cs" />
+    <Compile Include="ExtensionsLibrary\Drawing.cs" />
+    <Compile Include="ExtensionsLibrary\Geometry.cs" />
     <Compile Include="ExtensionsLibrary\Model.cs" />
     <Compile Include="Helper.cs" />
     <Compile Include="ModelObjectPicker.cs" />
@@ -66,9 +70,6 @@
     <PackageReference Include="TeklaOpenAPI">
       <Version>2020.0.2</Version>
     </PackageReference>
-  </ItemGroup>
-  <ItemGroup>
-    <None Include="used_custom_colors.clr" />
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
 </Project>

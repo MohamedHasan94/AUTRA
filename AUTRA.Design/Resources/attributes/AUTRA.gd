@@ -32,8 +32,8 @@ DetailLabel_en 1
 dd_en 1
 Dimensioning_en 1
 PourBreaks_en 1
-description "Trial03"
-title_1 "Scale 1:100"
+description "Plan"
+title_1 "Plan"
 title_2 " "
 title_3 " "
 StyleName "AUTRA"
@@ -43,16 +43,16 @@ DrawingWeld_en 1
 PourObjects_en 1
 PourMark_en 1
 dc_en 1
-dl.in_file ""
-dl.out_file ""
-dl.layout "GA_Drawings"
+dl.in_file "standard"
+dl.out_file "standard"
+dl.layout "AUTRA"
 dl.size_searching_mode 1
 dl.take_fixed 1
 dl.take_calc 0
-dl.width 889.000000
-dl.height 584.200000
-dl.sheet 32601
-dl.size 0
+dl.width 841.000000
+dl.height 594.000000
+dl.sheet 3
+dl.size 2
 dl.projection_type 0
 dl.side_view_beside 0
 dl.CutViewsInLineWithMain 0

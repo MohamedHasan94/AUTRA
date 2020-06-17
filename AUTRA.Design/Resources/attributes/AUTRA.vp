@@ -1,5 +1,5 @@
 encoding 1252
-in_file " "
+in_file "AUTRA"
 out_file "AUTRA"
 draw_as 1
 inner_contours 1
@@ -33,7 +33,7 @@ np_collect_by 0
 np_which 0
 np_use_skew 0
 np_use_bolts 0
-connecting_side_mark 1
+connecting_side_mark 0
 AddPopMarks 0
 AddChamfers 0
 FilletEdges 0
@@ -86,19 +86,19 @@ PartHatch.HatchAutomaticOrCustom_enable 1
 PartHatch.HatchAutomaticOrCustom 1
 PartHatch.HatchBackgroundColor_enable 1
 PartHatch.HatchBackgroundColor 0
-SectionHatch.hatch_type 1
+SectionHatch.hatch_type 0
 SectionHatch.hatch_name_en 1
-SectionHatch.hatch_name "hardware_SOLID"
+SectionHatch.hatch_name "SOLID"
 SectionHatch.hatch_color_en 1
-SectionHatch.hatch_color 155
+SectionHatch.hatch_color 153
 SectionHatch.hatch_angle_en 1
-SectionHatch.hatch_angle 0.000000
+SectionHatch.hatch_angle 270.000000
 SectionHatch.hatch_factor_type_en 1
 SectionHatch.hatch_factor_type 1
 SectionHatch.hatch_scale_x_en 1
-SectionHatch.hatch_scale_x 2.000000
+SectionHatch.hatch_scale_x 1.000000
 SectionHatch.hatch_scale_y_en 1
-SectionHatch.hatch_scale_y 1.000000
+SectionHatch.hatch_scale_y 0.500000
 SectionHatch.HatchAutomaticOrCustom_enable 1
 SectionHatch.HatchAutomaticOrCustom 1
 SectionHatch.HatchBackgroundColor_enable 1

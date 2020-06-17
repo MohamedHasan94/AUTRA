@@ -32,20 +32,10 @@ namespace AUTRA.Tekla
         }
         #endregion
         #region Methods
-        /// <summary>
-        /// Create Report from all objects in the model depending on type of the template used
-        /// </summary>
-        /// <param name="templateName"></param>
-        /// <param name="fileName"></param>
-        /// <param name="title1"></param>
-        /// <param name="title2"></param>
-        /// <param name="title3"></param>
-        /// <returns></returns>
         public bool  CreateReportFromAll(string templateName,string fileName,string title1,string title2="",string title3="")
         {
           return  Operation.CreateReportFromAll(templateName, $"{_model.GetInfo().ModelPath}/Reports/{fileName}" ,title1, title2, title3);
         }
-
         public TSD.Drawing CreateAssemblyDrawings(Identifier assemblyId)
         {
             //save & close any active drawings
@@ -56,64 +46,26 @@ namespace AUTRA.Tekla
             _handler.CloseActiveDrawing(true);
             return assembly;
         }
-
         public TSD.Drawing CreateGADrawing(string name, double scale, T3D.CoordinateSystem coords, T3D.AABB boundingBox)
         {
-            //get width & height of view
-            double width = Math.Abs((boundingBox.MaxPoint.X - boundingBox.MinPoint.X)*scale);
-            double height = Math.Abs((boundingBox.MaxPoint.Y - boundingBox.MinPoint.Y)*scale);
-            //Closes any active drawing if exists after saving it.
-            _handler.CloseActiveDrawing(true);
-            //create an empty GA Drawing with predifined name and predifined attribute file
-            TSD.GADrawing drawing = new TSD.GADrawing(name, "AUTRA");
-            //insert drawing in DB
-            drawing.Insert();
-            //make the drawing active
-            _handler.SetActiveDrawing(drawing);
-            //craeting a view by a bounding box
-            TSD.View view = new TSD.View(drawing.GetSheet(), coords, coords, boundingBox);
-            //setting origin of View
-            view.Origin = new T3D.Point((drawing.Layout.SheetSize.Width / 2) - width/2, (drawing.Layout.SheetSize.Height / 2) /*- height/2*/);//to be revisted
-            view.Name = name;
-            //setting view attributes
-            TSD.View.ViewAttributes viewAttributes = new TSD.View.ViewAttributes("AUTRA");
-            viewAttributes.Scale = scale;
-            view.Attributes = viewAttributes;
-            //insert view in DB
-            view.Insert();
-            //insert view in drawings
+            var drawing = _handler.CreateGASheet(name, "AUTRA");
+            var view = drawing.CreateView(coords, boundingBox, scale, drawing.Name, "AUTRA");
             if (drawing.PlaceViews())
                 _drawings.Add(drawing);
-            _handler.CloseActiveDrawing(true);
             return drawing;
         }
-       
-        /// <summary>
-        /// Create Dimension lines along beams of predefined assembly prefix
-        /// </summary>
-        /// <param name="drawing"></param>
-        /// <param name="assemblyPrefix"></param>
         public void CreateDimsAlongSecBeams(TSD.Drawing drawing , string assemblyPrefix)
         {
             //close and save any open drawing
             _handler.CloseActiveDrawing(true);
             if (_handler.SetActiveDrawing(drawing))
             {
-                //Get Parts from the sheet
-                List<TSD.Part> parts = drawing.GetSheet().GetAllObjects(typeof(TSD.Part)).ToList().OfType<TSD.Part>().ToList(); //TODO:to be optimized using filter expressions
-                List<SecondaryBeam> secBeams = new List<SecondaryBeam>();
-                //get all secondary beams in the sheet in a list
-                foreach (TSD.Part part in parts)
-                {
-                    SecondaryBeam temp = new SecondaryBeam(part,_model);
-                    if (temp.ModelBeam != null && temp.ModelBeam.AssemblyNumber.Prefix == assemblyPrefix)
-                    {   
-                        temp.ModelBeam.Select();
-                        secBeams.Add(temp);
-                    }
-                }
+                //Get Drawing Parts from the sheet
+                List<TSD.Part> parts = drawing.GetSheet().GetAllObjects(typeof(TSD.Part)).ToIEnumerable().OfType<TSD.Part>().ToList(); //TODO:to be optimized using filter expressions
+                //get all secondary beams(Drawing + Model) in the sheet in a list
+                List<SecondaryBeam> secBeams = parts.GetModelBeams(_model, assemblyPrefix).ToList();
                 //Get the first beam
-               SecondaryBeam orgBeam= secBeams.FirstOrDefault(b => b.ModelBeam.StartPoint.X == 0 && b.ModelBeam.StartPoint.Y == 0); //TODO: to be revisted (not robust)
+                SecondaryBeam orgBeam= secBeams.FirstOrDefault(b => b.ModelBeam.StartPoint.X == 0 && b.ModelBeam.StartPoint.Y == 0); //TODO: to be revisted (not robust)
                 _model.SetPlane(orgBeam?.ModelBeam.GetCoordinateSystem());
                 secBeams.ForEach(b => {
                     b.ModelBeam.Select(); //get points relative to the new coordinate system
@@ -121,7 +73,6 @@ namespace AUTRA.Tekla
                     });
                 //sort list by x
                 secBeams.Sort(SecondaryBeam.SortByX());
-
                 TSD.ViewBase viewBase = null;
                 TSD.View view = null;
                 TSD.PointList pointList = null;
@@ -178,27 +129,20 @@ namespace AUTRA.Tekla
             }
           
         }
-
-        /// <summary>
-        /// Create Dimension Line among Grids
-        /// </summary>
-        /// <param name="drawing"></param>
         public void CreateDimsAlongGrids(TSD.Drawing drawing)
         {
             _handler.CloseActiveDrawing(true);
             if (_handler.SetActiveDrawing(drawing))
             {
-                //Get the Grid Entity in the sheet
-                TSD.Grid grid = drawing.GetSheet().GetAllObjects(typeof(TSD.Grid)).ToList().FirstOrDefault() as TSD.Grid; //to be optimized
-                List<TSD.GridLine> gridLines = grid.GetObjects().ToList().OfType<TSD.GridLine>().ToList();
+                TSD.Grid grid = drawing.GetGrid(); //Get Grid Entity From Drawing sheet
+                List<TSD.GridLine> gridLines = grid.GetGridLines();
                 //Get The view which the grid is in
                 TSD.View view = grid.GetView() as TSD.View;
-
                 //transform from whatever coordinate system to the view coordinate system
+                _model.SetPlaneToGlobal();
                 _model.SetPlane(view.DisplayCoordinateSystem);
                 //list of points to store points to draw Dimension Lines
                 TSD.PointList pointList = null;
-
                 //To draw a Dimension Line between the first gridLine and Last gridLine => define firstPoint and lastPoint
                 T3D.Point firstPoint = null;
                 T3D.Point lastPoint = null;
@@ -234,6 +178,7 @@ namespace AUTRA.Tekla
                         {
                             //if not equal to zero length vector =>
                             //change in direction occurs
+                            //Create Dimension from first grid to last grid
                             lastPoint = previousPoint;
                             distance += 250;
                             pointList = new TSD.PointList();
@@ -250,6 +195,7 @@ namespace AUTRA.Tekla
                         }
                         else
                         {
+                            //Same Direction
                             pointList = new TSD.PointList();
                             pointList.Add(previousPoint);
                             pointList.Add(currentPoint);
@@ -269,11 +215,50 @@ namespace AUTRA.Tekla
                 new TSD.StraightDimensionSetHandler().CreateDimensionSet(grid.GetView(), pointList, up, distance, attr);
                 drawing.CommitChanges();
                 //TSD.StraightDimensionSet xDims = new TSD.StraightDimensionSetHandler().CreateDimensionSet(grid.GetView(), pointList, new T3D.Vector(0, 1, 0), 100, attr);
-                _handler.CloseActiveDrawing(true);
             }
         }
-
-
+        public void CreateDimsAlongBeams(TSD.Drawing drawing,string assemblyPrefix,double totalX , double totalY , List<Rectangle> rects,bool isMain =false )
+        {
+            /*
+             * Logic:
+             * 1- Get all secondary beams and insert them in quadtree 
+             * 2-every intersection between two grids in X and two Grids in Y are rectangle 
+             * 3-Get all beams in each rectangle
+             * 4-get beams in x and beams in y
+             * 5-Draw dimensions for beams in X and beams in Y
+             */
+            _handler.CloseActiveDrawing(true);
+            if (_handler.SetActiveDrawing(drawing))
+            {
+                var beams = drawing.GetSheet().GetAllObjects(typeof(TSD.Part))
+                    .ToIEnumerable()
+                    .OfType<TSD.Part>()
+                    .ToList()
+                    .GetModelBeams(_model,assemblyPrefix).ToList();
+                var quadTree = new QuadTree(new Rectangle(totalX,totalY), 4);
+                beams.ForEach(b => quadTree.Insert(b)); //insert each beam in beams in quad tree
+                rects.ForEach(rect =>
+                {
+                    var bs = quadTree.Query(rect); //Get List of Beams in each rectangle
+                    var tuple = bs.GetParallelXY();
+                    if(tuple.ParallelX!= null)
+                    {
+                        var psX = tuple.ParallelX.GetPointList().CheckYBoundaries(rect);
+                        var viewBase = tuple.ParallelX[0].DrawingBeam.GetView();
+                        TSD.StraightDimensionSet.StraightDimensionSetAttributes attr = new TSD.StraightDimensionSet.StraightDimensionSetAttributes(tuple.ParallelX[0].DrawingBeam, "AUTRA");
+                        TSD.StraightDimensionSet XDimensions = new TSD.StraightDimensionSetHandler().CreateDimensionSet(viewBase, psX,new T3D.Vector(1,0,0), isMain?300:100, attr);
+                    }
+                    if (tuple.ParallelY != null)
+                    {
+                        var psY = tuple.ParallelY.GetPointList().CheckXBoundaries(rect);
+                        var viewBase = tuple.ParallelY[0].DrawingBeam.GetView();
+                        TSD.StraightDimensionSet.StraightDimensionSetAttributes attr = new TSD.StraightDimensionSet.StraightDimensionSetAttributes(tuple.ParallelY[0].DrawingBeam, "AUTRA");
+                        TSD.StraightDimensionSet XDimensions = new TSD.StraightDimensionSetHandler().CreateDimensionSet(viewBase, psY, new T3D.Vector(0, 1, 0), isMain ? 300 : 100, attr);
+                    }
+                });
+                 drawing.CommitChanges();
+            }
+        }
         public void CreateHatch(TSD.Drawing drawing)
         {
             //this method is used to create PC & RC & Steel Hatch
@@ -281,7 +266,7 @@ namespace AUTRA.Tekla
             if (_handler.SetActiveDrawing(drawing))
             {
                 List<TSD.Part> dparts = drawing.GetSheet().GetAllObjects() //TODO: to be optimized using Filter expressions
-                      .ToList()
+                      .ToIEnumerable()
                       .OfType<TSD.Part>()
                       .ToList();
                 foreach (var dpart in dparts)
@@ -310,12 +295,10 @@ namespace AUTRA.Tekla
             }
 
             drawing.Modify();
-            _handler.CloseActiveDrawing(true);
         }
-
         private bool PrintActiveDrawing( TSD.Drawing drawing,  TSD.DotPrintPaperSize paperSize)
         {
-            bool result = false; ;
+            bool result = false; 
             _handler.CloseActiveDrawing(true);
             if (_handler.SetActiveDrawing(drawing))
             {
@@ -330,16 +313,17 @@ namespace AUTRA.Tekla
                     ScaleFactor = 1.0,                                                                       //scale factor          
                     NumberOfCopies = 1,                                                                      //Number of Copies              
                     OutputFileName = $"{_model.GetInfo().ModelPath}/PlotFiles/{drawing.Name}.pdf",                    //Output File Name 
-                    OpenFileWhenFinished = true                                                              //Open file when printing is finished 
+                    OpenFileWhenFinished = false                                                              //Open file when printing is finished 
                 };
                 result = _handler.PrintDrawing(drawing, attrs);
             }
-            _handler.CloseActiveDrawing(true);
             return result;
         }
         public void PrintDrawings(TSD.DotPrintPaperSize paperSize)
         {
-            _drawings.ForEach(d => PrintActiveDrawing(d, paperSize));
+            _drawings.ForEach(d => {
+                PrintActiveDrawing(d, paperSize);
+            });
         }
         #endregion
     }

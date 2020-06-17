@@ -37,23 +37,8 @@ namespace AUTRA.Tekla
         }
         
 
-        /// <summary>
-        /// extended method to change from 'DrawingObjectenumerator' to 'List'
-        /// </summary>
-        /// <param name="enumerator"></param>
-        /// <returns></returns>
-        public static List<TSD.DrawingObject> ToList(this TSD.DrawingObjectEnumerator enumerator)
-        {
-            List<TSD.DrawingObject> drawingObjs = new List<TSD.DrawingObject>();
-            while (enumerator.MoveNext())
-            {
-                var drawingObject = enumerator.Current;
-                if (drawingObject == null)
-                    continue;
-                drawingObjs.Add(drawingObject);
-            }
-            return drawingObjs;
-        }
+        
+       
 
         #region Part
         public static Hashtable GetStringProperties(this TSM.Part part, ArrayList list)
@@ -87,19 +72,7 @@ namespace AUTRA.Tekla
         #endregion
 
         #region  Beam
-        public static bool InZDirection(this TSM.Beam beam) => beam.GetVector().Cross(new T3D.Vector(0, 0, 1)) == new T3D.Vector();
-        /// <summary>
-        /// Get square of length of given beam
-        /// </summary>
-        /// <param name="beam"></param>
-        /// <returns></returns>
-        public static double GetLengthSquared(this TSM.Beam beam) => ((beam.StartPoint.X - beam.EndPoint.X) * (beam.StartPoint.X - beam.EndPoint.X)) + ((beam.StartPoint.Y - beam.EndPoint.Y) * (beam.StartPoint.Y - beam.EndPoint.Y)) + ((beam.StartPoint.Z - beam.EndPoint.Z) * (beam.StartPoint.Z - beam.EndPoint.Z));
-        /// <summary>
-        /// Get vector from beam object
-        /// </summary>
-        /// <param name="beam"></param>
-        /// <returns></returns>
-        public static T3D.Vector GetVector(this TSM.Beam beam) => new T3D.Vector(beam.EndPoint - beam.StartPoint);
+       
         #endregion
 
 

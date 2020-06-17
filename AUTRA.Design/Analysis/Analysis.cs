@@ -318,7 +318,6 @@ namespace AUTRA.Design
 
             }
         }
-
         #region Methods For Grouping
         /*
          * 1-Order beams by descending order based on their moment

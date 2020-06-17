@@ -22,8 +22,6 @@ namespace AUTRA.Tekla
                 Project project = new Project(data);
                 if (project.Model.GetConnectionStatus())
                 {
-                    Stopwatch stopwatch = new Stopwatch();
-                    stopwatch.Start();
                     project.CreateFootings();
                     project.CreateMainBeams(TSM.Position.DepthEnum.BEHIND);
                     project.CreateColumns();
@@ -31,13 +29,12 @@ namespace AUTRA.Tekla
                     project.CreateSecondaryBeams(TSM.Position.DepthEnum.BEHIND);
                     project.CreateConnections();
                     //project.CreateAssemblyDWGS();
-                    //project.CreatePlanDWG();
+                    project.CreatePlanDWG();
                     //project.CreateBasePlateDWG();
                     //project.CreateElevationDWGSAlongX();
-                    //project.CreateElevationDWGSAlongY();
-                    //project.PrintDrawings();
+                   // project.CreateElevationDWGSAlongY();
+                   // project.PrintDrawings();
                     //bool res=  project.CreateReports();
-                    stopwatch.Stop();
                     result = true;
                 }
             }

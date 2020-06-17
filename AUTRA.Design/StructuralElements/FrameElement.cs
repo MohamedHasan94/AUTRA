@@ -46,7 +46,7 @@ namespace AUTRA.Design
                 Z=end.Z-start.Z
             };
         }
-
+        public bool IsPrependicular(FrameElement other) => Math.Abs(this.GetVector().Dot(other.GetVector())) < Tolerance.DIST_TOL;
     }
     public class Beam:FrameElement
     {

@@ -10,13 +10,13 @@ using TSD = Tekla.Structures.Drawing;
 
 namespace AUTRA.Tekla
 {
-    class SecondaryBeam
+  public  class SecondaryBeam
     {
         //beam in model
         public TSM.Beam ModelBeam { get; set; } 
         //beam in drawing
         public TSD.Part DrawingBeam { get; set; }
-
+        public T3D.Point Point { get; set; }
         public double X { get; set; }
 
         public SecondaryBeam(TSD.Part part, TSM.Model model)
@@ -24,7 +24,9 @@ namespace AUTRA.Tekla
             DrawingBeam = part;
             Identifier id = part.ModelIdentifier;
             ModelBeam=   model.SelectModelObject(id) as TSM.Beam;
+            Point = ModelBeam.GetMidPoint();
         }
+        public bool IsEqual(SecondaryBeam other) => Point.IsEqual(other.Point);
         public static IComparer<SecondaryBeam> SortByX()
         {
             return new CompareByX();

@@ -260,11 +260,22 @@ namespace AUTRA.Design
                 c.MainPart = null;
                 c.MainPart = Project.Columns.FirstOrDefault(col => p.IsOnLine(col));
                 if (c.MainPart == null)
-                    c.MainPart = Project.MainBeams.FirstOrDefault(b => p.IsOnLine(b));
-                //if (c.MainPart != null)
-                //{
-                //    c.MainPart = c.MainPart == c.SecondaryPart ? null : c.MainPart;
-                //}
+                {
+                    /*
+                     * Logic=> Get main beams that share this point
+                     * remove the main beam that is in the secondary part of the connection if exists
+                     *  if count ==1 => mainpart is the first
+                     *  if count > 1 get main part that is prependicular to the secondary part
+                     */
+                    var mains = Project.MainBeams.Where(b => p.IsOnLine(b)).Where(b=>b!=c.SecondaryPart).ToList(); //return list of main beams that p is on them
+                    if(mains != null)
+                    {
+                        if (mains.Count == 1)
+                            c.MainPart = mains[0];
+                        else
+                           c.MainPart=mains.FirstOrDefault(m => c.SecondaryPart.IsPrependicular(m));
+                    }
+                }
             }
         }
         #endregion

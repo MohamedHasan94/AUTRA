@@ -64,12 +64,10 @@
     }
     function init() {
         editor = new Editor(); //Instantiate editor
-        debugger
         canvas = editor.renderer.domElement;
         return $.ajax({
             url: '/Outputs/Saved/Model.json',
             success: function (data) {
-                debugger
                 retrocycle(data)
                 buildModel(data);
             },

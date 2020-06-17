@@ -13,6 +13,14 @@ namespace AUTRA.Tekla
 {
    public static class Model
     {
+        public static double GetLengthSquared(this TSM.Beam beam) => ((beam.StartPoint.X - beam.EndPoint.X) * (beam.StartPoint.X - beam.EndPoint.X)) + ((beam.StartPoint.Y - beam.EndPoint.Y) * (beam.StartPoint.Y - beam.EndPoint.Y)) + ((beam.StartPoint.Z - beam.EndPoint.Z) * (beam.StartPoint.Z - beam.EndPoint.Z));
+        public static T3D.Vector GetVector(this TSM.Beam beam) => new T3D.Vector(beam.EndPoint - beam.StartPoint);
+        public static bool InDirection(this TSM.Beam beam, T3D.Vector vec) => beam.GetVector().Cross(vec) == new T3D.Vector();
+        public static bool InX(this TSM.Beam beam) => beam.InDirection(new T3D.Vector(1, 0, 0));
+        public static bool InY(this TSM.Beam beam) => beam.InDirection(new T3D.Vector(0, 1, 0));
+        public static bool InZ(this TSM.Beam beam) => beam.InDirection(new T3D.Vector(0, 0, 1));
+        public static bool IsEqual(this T3D.Point p1 , T3D.Point p2)=> Math.Abs(p1.X - p2.X) < 0.1 && Math.Abs(p1.Y - p2.Y) < 0.1 && Math.Abs(p1.Z - p2.Z) < 0.1;
+        public static T3D.Point GetMidPoint(this TSM.Beam beam)=>new T3D.Point((beam.StartPoint.X+beam.EndPoint.X)/2, (beam.StartPoint.Y + beam.EndPoint.Y) / 2, (beam.StartPoint.Z + beam.EndPoint.Z) / 2);
         public static void CreateModelFolderDirectory(this TSM.Model model,string dirName)
         {
             string dirPath = $"{model.GetInfo().ModelPath}/{dirName}";
@@ -83,7 +91,8 @@ namespace AUTRA.Tekla
                 Name = name,
                 AssemblyNumber = new TSM.NumberingSeries
                 {
-                    Prefix = assemblyPrefix
+                    Prefix = assemblyPrefix,
+                    StartNumber=1
                 },
                 Profile = new TSM.Profile { ProfileString = profile },
                 Material = new TSM.Material { MaterialString = material },
@@ -152,7 +161,8 @@ namespace AUTRA.Tekla
                 Name = name,
                 AssemblyNumber = new TSM.NumberingSeries
                 {
-                    Prefix = prefix
+                    Prefix = prefix,
+                    StartNumber = 1
                 },
                 Profile = new TSM.Profile { ProfileString = profile },
                 Material = new TSM.Material { MaterialString = material },
@@ -292,7 +302,7 @@ namespace AUTRA.Tekla
                     model.SetPlane(column.GetCoordinateSystem()); //move the current work plane to column
                     secondaries.ForEach(s => {
                         s.Select();
-                        switch (s.InZDirection())
+                        switch (s.InZ())
                         {
                             case true:
                                 inWeak.Add(s);
@@ -359,7 +369,7 @@ namespace AUTRA.Tekla
                     parts.ForEach(p =>
                     {
                         p.Select();
-                        if (p.InZDirection())
+                        if (p.InZ())
                             inZ.Add(p);
                         else notInZ.Add(p);
                     });
@@ -438,7 +448,7 @@ namespace AUTRA.Tekla
                     parts.ForEach(p =>
                     {
                         p.Select();
-                        if (p.InZDirection())
+                        if (p.InZ())
                             inZ.Add(p);
                         else notInZ.Add(p);
                     });

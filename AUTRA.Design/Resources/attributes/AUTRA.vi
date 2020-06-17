@@ -2,7 +2,7 @@ encoding 1252
 in_file "AUTRA"
 out_file "AUTRA"
 view_scale 50.000000
-cut_on 1
+cut_on 0
 cut_length 0.200000
 cut_min_dist 915.000000
 cut_skew_parts 0
@@ -87,7 +87,7 @@ ViewLabelMarkA3_en 1
 ViewLabelMarkA4_en 1
 ViewLabelMarkA5_en 1
 ViewLabelMarkSymbolIndex_en 1
-ViewLabelMarkSymbolPosition_en 1
+ViewLabelMarkSymbolPosition_en 0
 ViewLabelMarkSymbolSize_en 1
 DimensionCreationMethod_en 1
 ViewPlace_en 1
@@ -130,7 +130,7 @@ vp.np_collect_by 0
 vp.np_which 0
 vp.np_use_skew 0
 vp.np_use_bolts 0
-vp.connecting_side_mark 1
+vp.connecting_side_mark 0
 vp.AddPopMarks 0
 vp.AddChamfers 0
 vp.FilletEdges 0
@@ -336,7 +336,7 @@ vpm.line_colour 153
 vpm.background_mask -1
 vpm.Alignment 1
 vpm.Angle 0.000000
-vpm.ArrowType 16
+vpm.ArrowType 0
 vpm.ArrowHeight 2.000000
 vpm.ArrowLength 2.500000
 vpm.height 2.400000
@@ -469,7 +469,7 @@ vnpm.ChamferContentString ""
 vnpm.PourContentString "<?xml version="1.0" encoding="UTF-8" standalone="no"?><!DOCTYPE Mark><Mark><MarkPart groupid="0"><Element name="MATERIAL" value="" subType="10"><Format font="Arial" color="155" height="2.500" hidden="0"/></Element></MarkPart></Mark>"
 vnpm.PourBreakContentString "<?xml version="1.0" encoding="UTF-8" standalone="no"?><!DOCTYPE Mark><Mark><MarkPart groupid="0"><UserText>POUR BREAK<Format font="Arial" color="155" height="2.500" hidden="0"/></UserText></MarkPart></Mark>"
 vnpm.ReferenceObjectContentString ""
-vnpm.leader_line_type 0
+vnpm.leader_line_type 4
 vnpm.merge_dir 1
 vnpm.MergeMarks 0
 vnpm.CurrentContentTableNumber 0
@@ -556,7 +556,7 @@ vnpm.RebarGroupMarkAttributes.Type_en 1
 vsm.in_file " "
 vsm.out_file ""
 vsm.create 1
-vsm.for_main 1
+vsm.for_main 2
 vsm.for_sec 1
 vsm.for_which_parts 0
 vsm.in_all_views 3
@@ -568,7 +568,7 @@ vsm.line_colour 153
 vsm.background_mask 150
 vsm.Alignment 0
 vsm.Angle 0.000000
-vsm.ArrowType 17
+vsm.ArrowType 0
 vsm.ArrowHeight 2.000000
 vsm.ArrowLength 2.500000
 vsm.height 2.400000
@@ -684,7 +684,7 @@ vjm.line_colour 153
 vjm.background_mask 150
 vjm.Alignment 0
 vjm.Angle 0.000000
-vjm.ArrowType 17
+vjm.ArrowType 0
 vjm.ArrowHeight 2.000000
 vjm.ArrowLength 2.500000
 vjm.height 2.400000
@@ -1152,9 +1152,9 @@ vrebar.BarAttr.in_file ""
 vrebar.BarAttr.out_file ""
 vrebar.BarAttr.visibility 0
 vrebar.BarAttr.representation 0
-vrebar.BarAttr.straight_symbol 0
-vrebar.BarAttr.hooked_symbol 0
-vrebar.BarAttr.visibility_in_groups 0
+vrebar.BarAttr.straight_symbol 1
+vrebar.BarAttr.hooked_symbol 1
+vrebar.BarAttr.visibility_in_groups 1
 vrebar.BarAttr.line_colour 152
 vrebar.BarAttr.line_type 0
 vrebar.BarAttr.HiddenLineColour 152
@@ -1180,8 +1180,8 @@ vrebar.MeshAttr.visibility 0
 vrebar.MeshAttr.representation 0
 vrebar.MeshAttr.symbol_number 0
 vrebar.MeshAttr.symbol_size 0.000000
-vrebar.MeshAttr.visibility_longitudinal 0
-vrebar.MeshAttr.visibility_crossing 0
+vrebar.MeshAttr.visibility_longitudinal 1
+vrebar.MeshAttr.visibility_crossing 1
 vrebar.MeshAttr.line_colour 152
 vrebar.MeshAttr.line_type 0
 vrebar.MeshAttr.HiddenLineColour 152
@@ -1801,9 +1801,9 @@ ViewWeld.Subassembly 0
 ViewWeld.SizeLimit 6.500000
 ViewWeld.DrawAs 2
 ViewWeld.Colour 155
-ViewWeld.PresentationType 0
+ViewWeld.PresentationType 1
 ViewWeld.HiddenLinesColour 155
-ViewWeld.HiddenLinesType 3
+ViewWeld.HiddenLinesType 2
 ViewWeld.DrawHiddenLines 1
 ViewWeld.DrawOwnHiddenLines 1
 ViewWeld.Create_en 1
@@ -1820,7 +1820,7 @@ ViewWeld.CustomPresentation_en 1
 ViewWeld.aCustomPresentation ""
 PourView_en 1
 PourView 0
-PourObjects_en 1
+PourObjects_en 0
 PourObjects.in_file ""
 PourObjects.out_file ""
 PourObjects.draw_as 1
@@ -1925,7 +1925,7 @@ PourObjects.SectionHatch.HatchAutomaticOrCustom_enable 1
 PourObjects.SectionHatch.HatchAutomaticOrCustom 1
 PourObjects.SectionHatch.HatchBackgroundColor_enable 1
 PourObjects.SectionHatch.HatchBackgroundColor 0
-PourMark_en 1
+PourMark_en 0
 PourMark.in_file ""
 PourMark.out_file ""
 PourMark.create 1

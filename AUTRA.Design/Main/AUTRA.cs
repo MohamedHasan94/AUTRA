@@ -73,9 +73,9 @@ namespace AUTRA
             
             designer.CreateReports("./wwwroot/Outputs/Reports");//To be changed
             #endregion
-            var teklaModel= ToTekla(model, connections);
-            Writer.Write(teklaModel, teklaModelPath);
-            InitTekla(teklaModelPath);
+            //var teklaModel= ToTekla(model, connections);
+            //Writer.Write(teklaModel, teklaModelPath);
+            //InitTekla(teklaModelPath);
         }
         public static T.TeklaModelData ToTekla(Project model , List<Connection> connections)
         {
@@ -90,7 +90,7 @@ namespace AUTRA
             T.Grids grids = new T.Grids();
             grids.CXS= new List<double>() { 0, 6000, 8000, 6000 };
             grids.CYS = new List<double>() { 0, 4000, 4000 };
-            grids.CZS = new List<double>() { -950 - 700, 0, 3000, 6000 };
+            grids.CZS = new List<double>() { -950 ,- 700, 0, 3000, 6000 };
             teklaModel.Model.Grids= grids;
             
             return teklaModel;

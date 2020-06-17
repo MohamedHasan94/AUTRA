@@ -73,9 +73,9 @@ namespace AUTRA
             
             designer.CreateReports("./wwwroot/Outputs/Reports");//To be changed
             #endregion
-            //var teklaModel= ToTekla(model, connections);
-            //Writer.Write(teklaModel, teklaModelPath);
-            //InitTekla(teklaModelPath);
+            var teklaModel= ToTekla(model, connections);
+            Writer.Write(teklaModel, teklaModelPath);
+            InitTekla(teklaModelPath);
         }
         public static T.TeklaModelData ToTekla(Project model , List<Connection> connections)
         {

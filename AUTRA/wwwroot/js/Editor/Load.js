@@ -1,7 +1,7 @@
 let loader = new THREE.FontLoader();
 let myFont;
 
-loader.load('../lib/three.js/helvetiker_regular.typeface.json', function (font) {
+loader.load('/lib/three.js/helvetiker_regular.typeface.json', function (font) {
     myFont = font;
     loader = null;
 });

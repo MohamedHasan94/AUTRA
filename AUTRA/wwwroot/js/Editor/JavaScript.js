@@ -1,77 +1,74 @@
 ﻿//https://threejsfundamentals.org/threejs/lessons/threejs-picking.html
+function retrocycle(o) {
+    var self = this;
+    self.identifiers = [];
+    self.refs = [];
 
-(function () {
-    //#region  Shared variables
-    let editor;
-    let nodes = new Array(), grids;
-    let columns = new Array(), mainBeams = new Array(), secondaryBeams = new Array(), sections = new Array();
-    let canvas, domEvents;
-    let levels;
-    let draw = false, drawingPoints = [];
-    let sectionId = 0;
-    //#endregion
-    function retrocycle(o) {
-        var self = this;
-        self.identifiers = [];
-        self.refs = [];
+    self.rez = function (value) {
 
-        self.rez = function (value) {
+        // The rez function walks recursively through the object looking for $ref
+        // properties. When it finds one that has a value that is a path, then it
+        // replaces the $ref object with a reference to the value that is found by
+        // the path.
 
-            // The rez function walks recursively through the object looking for $ref
-            // properties. When it finds one that has a value that is a path, then it
-            // replaces the $ref object with a reference to the value that is found by
-            // the path.
+        var i, item, name, path;
 
-            var i, item, name, path;
+        if (value && typeof value === 'object') {
+            if (Object.prototype.toString.apply(value) === '[object Array]') {
+                for (i = 0; i < value.length; i += 1) {
+                    item = value[i];
+                    if (item && typeof item === 'object') {
+                        path = item.$ref;
+                        if (typeof path === 'string' && path != null) {
+                            //self.refs[parseInt(path)] = {};
 
-            if (value && typeof value === 'object') {
-                if (Object.prototype.toString.apply(value) === '[object Array]') {
-                    for (i = 0; i < value.length; i += 1) {
-                        item = value[i];
-                        if (item && typeof item === 'object') {
+                            value[i] = self.identifiers[parseInt(path)]
+                        } else {
+                            self.identifiers[parseInt(item.$id)] = item;
+                            self.rez(item);
+                        }
+                    }
+                }
+            } else {
+                for (name in value) {
+                    if (typeof value[name] === 'object') {
+                        item = value[name];
+                        if (item) {
                             path = item.$ref;
                             if (typeof path === 'string' && path != null) {
-                                //self.refs[parseInt(path)] = {};
-
-                                value[i] = self.identifiers[parseInt(path)]
+                                value[name] = self.identifiers[parseInt(path)]
                             } else {
                                 self.identifiers[parseInt(item.$id)] = item;
                                 self.rez(item);
                             }
                         }
                     }
-                } else {
-                    for (name in value) {
-                        if (typeof value[name] === 'object') {
-                            item = value[name];
-                            if (item) {
-                                path = item.$ref;
-                                if (typeof path === 'string' && path != null) {
-                                    value[name] = self.identifiers[parseInt(path)]
-                                } else {
-                                    self.identifiers[parseInt(item.$id)] = item;
-                                    self.rez(item);
-                                }
-                            }
-                        }
-                    }
                 }
             }
+        }
 
-        };
-        self.rez(o);
-        self.identifiers = [];
-    }
+    };
+    self.rez(o);
+    self.identifiers = [];
+}
+/*function generateModel(editor, nodes, grids, sections, secondaryBeams, mainBeams, columns, levels) {
+    //#region  Shared variables    
+    let canvas, domEvents;
+    //let draw = false, drawingPoints = [];
+    //#endregion
+    
     function init() {
-        editor = new Editor(); //Instantiate editor
         debugger
-        canvas = editor.renderer.domElement;        
-        return $.ajax({
-            url: '/Outputs/Saved/Model.json',
+        //canvas = editor.renderer.domElement;
+        let path = $('#projectName').val();
+        $('#projectName').remove();
+        $.ajax({
+            url: `/Users/${path}`,
             success: function (data) {
                 debugger
                 retrocycle(data);
                 buildModel(data);
+                //console.clear();
             },
             error: function (x, y, err) {
                 debugger
@@ -79,7 +76,6 @@
             }
         });
 
-        //$('#exampleModal').modal('show'); //Temporary data input
     }
 
     function buildModel(model) {
@@ -87,22 +83,22 @@
 
         grids = new Grid(model.grids.coordX, model.grids.coordZ, 4.5, model.grids.levels);
 
-        levels = grids.levels;
+        levels.push(...grids.levels);
         editor.addToGroup(grids.gridLines, 'grids'); //Add x-grids to scene (as a group)this.meshInX
         editor.addToGroup(grids.gridNames, 'grids'); //Add z-grids to scene (as a group)
         editor.addToGroup(grids.axes, 'grids'); //Add z-grids to scene (as a group)
         editor.addToGroup(grids.dimensions, 'dimensions');
 
-        sections = model.sections;
+        sections.push(...model.sections);
         sectionId = parseInt(model.sections[model.sections.length - 1].$id);
         generateNodes(model.nodes, nodes);
 
         secondaryBeams.push(Beam.generate(model.secondaryBeams, editor));
         mainBeams.push(Beam.generate(model.mainBeams, editor));
-        columns.push(Column.generate(model.columns, editor));     
+        columns.push(Column.generate(model.columns, editor));
     }
 
-    function generateNodes(modelNodes, nodes) {        
+    function generateNodes(modelNodes, nodes) {
         for (let i = 0; i < modelNodes.length; i++) {
             let node = Node.create(modelNodes[i].position.x, modelNodes[i].position.y, modelNodes[i].position.z, modelNodes[i].support, editor, nodes, modelNodes[i].$id);
             for (let j = 0; j < modelNodes[i].pointLoads.length; j++) {
@@ -111,10 +107,10 @@
             modelNodes[i].data = node.data; //switch modelNodes position to Vector3
         }
     }
-
-    init();
-
-    canvas.addEventListener('mousemove', function (event) {
+        
+    init();*/
+    //return parseInt(sections[sections.length - 1].$id);
+    /*canvas.addEventListener('mousemove', function (event) {
         editor.pick(event);
     });
 
@@ -621,7 +617,7 @@
     });*/
 
     //used to toggle between dark and light themes
-    window.darkTheme = () => editor.darkTheme();
+    /*window.darkTheme = () => editor.darkTheme();
 
     window.lightTheme = () => editor.lightTheme();
 
@@ -697,5 +693,5 @@
 
         editor.clearGroup('results'); //Clear diplayed results
         editor.showGroup('nodes'); //Display nodes again
-    }
-})();
+    }*/
+//};

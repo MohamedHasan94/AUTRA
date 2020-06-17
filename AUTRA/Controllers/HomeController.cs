@@ -27,31 +27,31 @@ namespace AUTRA.Controllers
             return View();
         }
 
-        public IActionResult Privacy()
-        {
-            string path = "../AUTRA/wwwroot/Inputs/Model.json";
+        //public IActionResult Privacy()
+        //{
+        //    string path = "../AUTRA/wwwroot/Inputs/Model.json";
 
-            string js;
+        //    string js;
 
-            using (StreamReader reader = new StreamReader(path))
-            {
-                js = reader.ReadToEnd();
-            }
+        //    using (StreamReader reader = new StreamReader(path))
+        //    {
+        //        js = reader.ReadToEnd();
+        //    }
 
-            var model = JsonConvert.DeserializeObject<Project>(js,
-                new JsonSerializerSettings { PreserveReferencesHandling = PreserveReferencesHandling.Objects });
+        //    var model = JsonConvert.DeserializeObject<Project>(js,
+        //        new JsonSerializerSettings { PreserveReferencesHandling = PreserveReferencesHandling.Objects });
 
-            model.Nodes.ModifyCoordinates();
-           // model.MainBeams.ModifyInnerNodes(model.Nodes);
-            Stopwatch stopwatch = new Stopwatch();
+        //    model.Nodes.ModifyCoordinates();
+        //   // model.MainBeams.ModifyInnerNodes(model.Nodes);
+        //    Stopwatch stopwatch = new Stopwatch();
 
-            stopwatch.Start();
-            AUTRA.Init(model, @"D:\ITI\GraduationPoject\AUTRA\AUTRA\wwwroot\Inputs\ToTekla01.json");
-            stopwatch.Stop();
-            ViewData["Design"] = stopwatch.ElapsedMilliseconds / 1000.0;
+        //    stopwatch.Start();
+        //    AUTRA.Init(model, @"D:\ITI\GraduationPoject\AUTRA\AUTRA\wwwroot\Inputs\ToTekla01.json");
+        //    stopwatch.Stop();
+        //    ViewData["Design"] = stopwatch.ElapsedMilliseconds / 1000.0;
 
-            return View();
-        }
+        //    return View();
+        //}
 
         //[ResponseCache(Duration = 0, Location = ResponseCacheLocation.None, NoStore = true)]
         //public IActionResult Error()

@@ -14,6 +14,7 @@ using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.RazorPages;
 using Microsoft.AspNetCore.WebUtilities;
 using Microsoft.Extensions.Logging;
+using System.IO;
 
 namespace AUTRA.Areas.Identity.Pages.Account
 {
@@ -46,6 +47,11 @@ namespace AUTRA.Areas.Identity.Pages.Account
 
         public class InputModel
         {
+            [Required]
+            [MaxLength(50)]
+            [Display(Name = "Username")]
+            public string Username { get; set; }
+
             [Required]
             [MaxLength(50)]
             [Display(Name = "First name")]
@@ -87,7 +93,7 @@ namespace AUTRA.Areas.Identity.Pages.Account
             ExternalLogins = (await _signInManager.GetExternalAuthenticationSchemesAsync()).ToList();
             if (ModelState.IsValid)
             {
-                var user = new ApplicationUser { UserName = Input.Email, Email = Input.Email , FirstName=Input.FirstName,LastName=Input.LastName};
+                var user = new ApplicationUser { UserName = Input.Username, Email = Input.Email , FirstName=Input.FirstName,LastName=Input.LastName};
                 var result = await _userManager.CreateAsync(user, Input.Password);
                 if (result.Succeeded)
                 {
@@ -103,6 +109,9 @@ namespace AUTRA.Areas.Identity.Pages.Account
 
                     await _emailSender.SendEmailAsync(Input.Email, "Confirm your email",
                         $"Please confirm your account by <a href='{HtmlEncoder.Default.Encode(callbackUrl)}'>clicking here</a>.");
+                    
+                    //Create a folder for every user on register
+                    Directory.CreateDirectory($"./wwwroot/Users/{user.Id}");
 
                     if (_userManager.Options.SignIn.RequireConfirmedAccount)
                     {

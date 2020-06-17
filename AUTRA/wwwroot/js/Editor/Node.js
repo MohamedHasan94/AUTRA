@@ -41,7 +41,7 @@ class Node {
         scale = scale > 2 ? 2 : scale < 0.5 ? 0.5 : scale;
         position.y -= scale - 0.15;
 
-        let arrow = new THREE.ArrowHelper(new THREE.Vector3(0, 1, 0), position, scale, 0xcc00ff);
+        let arrow = new THREE.ArrowHelper(new THREE.Vector3(0, 1, 0), position, scale, 0xcc00ff, 0.4*scale);
 
         let textGeometry = new THREE.TextBufferGeometry(`${reaction.rv.toFixed(2)} t`, {
             font: myFont,

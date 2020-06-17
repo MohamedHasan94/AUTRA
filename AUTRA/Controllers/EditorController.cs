@@ -3,10 +3,13 @@ using System.Collections.Generic;
 using System.Diagnostics;
 using System.IO;
 using System.Linq;
+using System.Security.Claims;
 using System.Text;
 using System.Threading.Tasks;
+using AUTRA.Data;
 using AUTRA.Design;
 using AUTRA.Helper;
+using AUTRA.Models;
 using Microsoft.AspNetCore.Mvc;
 using Newtonsoft.Json;
 using Newtonsoft.Json.Converters;
@@ -16,25 +19,38 @@ namespace AUTRA.Controllers
 {
     public class EditorController : Controller
     {
+        private readonly ApplicationDbContext _context;
+        public EditorController(ApplicationDbContext context)
+        {
+            _context = context;
+        }
         public IActionResult New()
         {
             return View("Editor");
         }
 
-        public IActionResult Open(/*string path*/)
+        public IActionResult MyProjects()
         {
-            return View("Open");
+            string userId = User.FindFirst(ClaimTypes.NameIdentifier).Value;
+            List<Models.Project> projects = _context.Projects.Where(p => p.Fk_UserId == userId).ToList();
+            return View(projects);
+        }
+        public IActionResult Open(string id)
+        {
+            string userId = User.FindFirst(ClaimTypes.NameIdentifier).Value;
+            ViewData["projectName"] = $"{userId}/{id}/{id}.json";
+            return View("Editor");
         }
 
 
         [HttpPost]
-        public string Solve([FromBody] Project project)
+        public string Solve([FromBody] Design.Project project)
         {
             project.Nodes.ModifyCoordinates();
             Stopwatch stopwatch = new Stopwatch();
 
             stopwatch.Start();
-            AUTRA.Init(project, @"C:\Users\Dell\Desktop\june15\AUTRA\AUTRA\wwwroot\Inputs\ToTekla01.json"); //Harded coded path and where tekla save also hardcoded=> in AUTRA.Tekla=>Project=>project=> Init
+            AUTRA.Init(project, @"D:\ITI\GraduationProject\AUTRA\AUTRA\wwwroot\Inputs\ToTekla01.json"); //Harded coded path and where tekla save also hardcoded=> in AUTRA.Tekla=>Project=>project=> Init
             stopwatch.Stop();
             string response = JsonConvert.SerializeObject(project,new JsonSerializerSettings
             {
@@ -46,17 +62,22 @@ namespace AUTRA.Controllers
         }
 
         [HttpPost]
-        public string Save()
+        public bool Save([FromRoute] string id)//id is projectName (for routing to bind the parameter)
         {
+            string userId = User.FindFirst(ClaimTypes.NameIdentifier).Value;
+            string path = $"./wwwroot/Users/{userId}/{id}";
+            Directory.CreateDirectory(path); //if the folder exists it will continue
             using (var reader = new StreamReader(Request.Body, Encoding.UTF8))
             {
-                using (var writer = new StreamWriter("./wwwroot/Outputs/Saved/Model.json"))
+                using (var writer = new StreamWriter(Path.Combine(path, $"{id}.json")))
                 {
                     writer.Write(reader.ReadToEnd());
                 }
             }
-
-            return "Model saved successfully";
+            Models.Project project = new Models.Project { Fk_UserId = userId, Name = id};
+            _context.Projects.Add(project);
+            
+            return _context.SaveChanges() > 0;
         }
 
         //public IActionResult Model() //Model on Tekla

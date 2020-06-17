@@ -13,6 +13,7 @@
     <title>Editor</title>
 </head>
 <body>
+    <input type="text" hidden disabled id="projectName" value='@ViewData["projectName"]'/>
     <canvas id="canvas" style="position:absolute"></canvas>
     <div class="btn" id="sidebarBtn">
         <span class="fas fa-bars"></span>
@@ -29,27 +30,27 @@
                 </a>
                 <ul class="feat-show">
                     @*<li>
-                    <a href="#" onclick="editGrids()">
-                        Grids
-                        <table class="table table-borderless table-dark">
-                            <tbody>
-                                <tr>
-                                    <th>X</th>
-                                    <td><input type="text" id="x" value="0" size="5"></td>
-                                </tr>
-                                <tr>
-                                    <th>Y</th>
-                                    <td><input type="text" id="y" value="0" size="5"></td>
-                                </tr>
-                                <tr>
-                                    <th>Z</th>
-                                    <td><input type="text" id="z" value="0" size="5"></td>
-                                </tr>
-                            <tbody>
-                        </table>
+                            <a href="#" onclick="editGrids()">
+                                Grids
+                                <table class="table table-borderless table-dark">
+                                    <tbody>
+                                        <tr>
+                                            <th>X</th>
+                                            <td><input type="text" id="x" value="0" size="5"></td>
+                                        </tr>
+                                        <tr>
+                                            <th>Y</th>
+                                            <td><input type="text" id="y" value="0" size="5"></td>
+                                        </tr>
+                                        <tr>
+                                            <th>Z</th>
+                                            <td><input type="text" id="z" value="0" size="5"></td>
+                                        </tr>
+                                    <tbody>
+                                </table>
 
-                    </a>
-                </li>*@
+                            </a>
+                        </li>*@
                     <li>
                         <a href="#" id="elementSec" data-toggle="popover" data-placement="right" data-content="1)select a member from the drawing canvas 2)specify the new section">
                             <!-- changeSection handles both beams & columns-->
@@ -106,24 +107,24 @@
                         <a href="#" id="drawElement"> Draw element </a>
                         <div id="drawElementDetails">
                             <select id="drawSection">
-                                <option value="IPE 80">IPE80</option>
-                                <option value="IPE 100">IPE100</option>
-                                <option value="IPE 120">IPE120</option>
-                                <option value="IPE 140">IPE140</option>
-                                <option value="IPE 160">IPE160</option>
-                                <option value="IPE 180">IPE180</option>
-                                <option value="IPE 200">IPE200</option>
-                                <option value="IPE 220">IPE220</option>
-                                <option value="IPE 240">IPE240</option>
-                                <option value="IPE 270">IPE270</option>
-                                <option value="IPE 300">IPE300</option>
-                                <option value="IPE 330">IPE330</option>
-                                <option value="IPE 360">IPE360</option>
-                                <option value="IPE 400">IPE400</option>
-                                <option value="IPE 450">IPE450</option>
-                                <option value="IPE 500">IPE500</option>
-                                <option value="IPE 550">IPE550</option>
-                                <option value="IPE 600">IPE600</option>
+                                <option value="IPE80">IPE80</option>
+                                <option value="IPE100">IPE100</option>
+                                <option value="IPE120">IPE120</option>
+                                <option value="IPE140">IPE140</option>
+                                <option value="IPE160">IPE160</option>
+                                <option value="IPE180">IPE180</option>
+                                <option value="IPE200">IPE200</option>
+                                <option value="IPE220">IPE220</option>
+                                <option value="IPE240">IPE240</option>
+                                <option value="IPE270">IPE270</option>
+                                <option value="IPE300">IPE300</option>
+                                <option value="IPE330">IPE330</option>
+                                <option value="IPE360">IPE360</option>
+                                <option value="IPE400">IPE400</option>
+                                <option value="IPE450">IPE450</option>
+                                <option value="IPE500">IPE500</option>
+                                <option value="IPE550">IPE550</option>
+                                <option value="IPE600">IPE600</option>
                             </select>
                             <a onclick="startDrawMode()">start Draw Mode</a>
                             <a onclick="endDrawMode()">end Draw Mode</a>
@@ -270,6 +271,7 @@
                         </a>
                     </li>
                     <li>
+                        <input type="text" placeholder="Project Name" id="projectName" />
                         <a href="#" onclick="save()">
                             Save
                         </a>
@@ -288,8 +290,8 @@
                     </li>
 
                     @*<li>
-                    <input type="file" id="reactions" />
-                </li>*@
+                            <input type="file" id="reactions" />
+                        </li>*@
 
                     <li>
                         <select id="resultPattern">
@@ -321,23 +323,23 @@
                     Select
                     <span class="fas fa-caret-down fifth"></span>
                     @*<div class="form-group" id="selmodes">
-                    <label for="areaMode" style="font-weight: bold;">Area Selection Mode</label>
+                            <label for="areaMode" style="font-weight: bold;">Area Selection Mode</label>
 
-                    <div class="radio form-group">
-                        <label>
-                            <input type="radio" name="areaSelMode" id="areaModeOn" value="areaModeOn">On
-                        </label>
-                    </div>
-                    <div class="radio form-group">
-                        <label><input type="radio" name="areaSelMode" id="areaModeOff" value="areaModeOff" checked>Off</label>
-                    </div>
-                </div>*@
+                            <div class="radio form-group">
+                                <label>
+                                    <input type="radio" name="areaSelMode" id="areaModeOn" value="areaModeOn">On
+                                </label>
+                            </div>
+                            <div class="radio form-group">
+                                <label><input type="radio" name="areaSelMode" id="areaModeOff" value="areaModeOff" checked>Off</label>
+                            </div>
+                        </div>*@
                 </a>
                 <ul class="mySelect-show" id="mySelectShow">
 
                     @*<li>
-                    hi
-                </li>*@
+                            hi
+                        </li>*@
                 </ul>
             </li>
 
@@ -460,19 +462,97 @@
                             <label for="secSpace">Seccondary beams spacing</label>
                             <input type="text" name="" id="secSpace" class="form-control" value="2" required>
                         </div>
+                        <div class="form-group">
+                            <label for="material">Material</label>
+                            <select class="form-control" id="material">
+                                <option value="ST_37">Steel 37</option>
+                                <option value="ST_44">Steel 44</option>
+                                <option value="ST_52">Steel 52</option>
+                            </select>
+                        </div>
+
+                        <div class="form-group">
+                            <label for="secSection">Secondary Section</label>
+                            <select id="secSection">
+                                <option value="IPE80">IPE80</option>
+                                <option value="IPE100">IPE100</option>
+                                <option value="IPE120">IPE120</option>
+                                <option value="IPE140">IPE140</option>
+                                <option value="IPE160">IPE160</option>
+                                <option value="IPE180">IPE180</option>
+                                <option value="IPE200">IPE200</option>
+                                <option value="IPE220">IPE220</option>
+                                <option value="IPE240">IPE240</option>
+                                <option value="IPE270">IPE270</option>
+                                <option value="IPE300">IPE300</option>
+                                <option value="IPE330">IPE330</option>
+                                <option value="IPE360">IPE360</option>
+                                <option value="IPE400">IPE400</option>
+                                <option value="IPE450">IPE450</option>
+                                <option value="IPE500">IPE500</option>
+                                <option value="IPE550">IPE550</option>
+                                <option value="IPE600">IPE600</option>
+                            </select>
+                        </div>
+
+                        <label for="mainSection">Main Section</label>
+                        <select id="mainSection">
+                            <option value="IPE80">IPE80</option>
+                            <option value="IPE100">IPE100</option>
+                            <option value="IPE120">IPE120</option>
+                            <option value="IPE140">IPE140</option>
+                            <option value="IPE160">IPE160</option>
+                            <option value="IPE180">IPE180</option>
+                            <option value="IPE200">IPE200</option>
+                            <option value="IPE220">IPE220</option>
+                            <option value="IPE240">IPE240</option>
+                            <option value="IPE270">IPE270</option>
+                            <option value="IPE300">IPE300</option>
+                            <option value="IPE330">IPE330</option>
+                            <option value="IPE360">IPE360</option>
+                            <option value="IPE400">IPE400</option>
+                            <option value="IPE450">IPE450</option>
+                            <option value="IPE500">IPE500</option>
+                            <option value="IPE550">IPE550</option>
+                            <option value="IPE600">IPE600</option>
+                        </select>
+                    </div>
+
+                    <label for="colSection">Column Section</label>
+                    <select id="colSection">
+                        <option value="IPE80">IPE80</option>
+                        <option value="IPE100">IPE100</option>
+                        <option value="IPE120">IPE120</option>
+                        <option value="IPE140">IPE140</option>
+                        <option value="IPE160">IPE160</option>
+                        <option value="IPE180">IPE180</option>
+                        <option value="IPE200">IPE200</option>
+                        <option value="IPE220">IPE220</option>
+                        <option value="IPE240">IPE240</option>
+                        <option value="IPE270">IPE270</option>
+                        <option value="IPE300">IPE300</option>
+                        <option value="IPE330">IPE330</option>
+                        <option value="IPE360">IPE360</option>
+                        <option value="IPE400">IPE400</option>
+                        <option value="IPE450">IPE450</option>
+                        <option value="IPE500">IPE500</option>
+                        <option value="IPE550">IPE550</option>
+                        <option value="IPE600">IPE600</option>
+                    </select>
+                </div>
                         <!-- <div class="form-group">
-                            <label class="subtitle" style="font-weight: bold;">Loads</label>
-                        </div>
+        <label class="subtitle" style="font-weight: bold;">Loads</label>
+    </div>
 
-                        <div class="form-group">
-                            <label for="secSpace">Dead Load</label>
-                            <input type="text" name="" id="dead" class="form-control" value="1.5" required>
-                        </div>
+    <div class="form-group">
+        <label for="secSpace">Dead Load</label>
+        <input type="text" name="" id="dead" class="form-control" value="1.5" required>
+    </div>
 
-                        <div class="form-group">
-                            <label for="secSpace">Live Load</label>
-                            <input type="text" name="" id="live" class="form-control" value="2.5" required>
-                        </div>-->
+    <div class="form-group">
+        <label for="secSpace">Live Load</label>
+        <input type="text" name="" id="live" class="form-control" value="2.5" required>
+    </div>-->
                     </div>
 
                 </div>
@@ -486,7 +566,7 @@
     </div>
 
     @* Scripts *@
-    
+
     <script src="~/lib/jquery/dist/jquery.min.js"></script>
     <script src="~/lib/bootstrap/dist/js/bootstrap.min.js"></script>
     <script src="~/lib/three.js/three.js"></script>
@@ -501,6 +581,7 @@
     <script src="~/js/Editor/Beam.js"></script>
     <script src="~/js/Editor/Column.js"></script>
     <script src="~/js/Editor/Editor.js"></script>
+    <script src="~/js/Editor/JavaScript.js"></script>
     <script src="~/js/Editor/main.js"></script>
     <script src="~/js/Editor/ui/Modal.js"></script>
     <script src="~/js/Editor/ui/Sidebar.js"></script>

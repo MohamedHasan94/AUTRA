@@ -19,7 +19,7 @@
 
         if (path) {
             $.ajax({
-                url: `/Users/${path}`,
+                url: `${path}`,
                 success: function (data) {
                     debugger
                     retrocycle(data);

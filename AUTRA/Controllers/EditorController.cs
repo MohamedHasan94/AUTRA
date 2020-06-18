@@ -38,7 +38,7 @@ namespace AUTRA.Controllers
         public IActionResult Open(string id)
         {
             string userId = User.FindFirst(ClaimTypes.NameIdentifier).Value;
-            ViewData["projectName"] = $"{userId}/{id}/{id}.json";
+            ViewData["projectName"] = $"/Users/{userId}/{id}/{id}.json";
             return View("Editor");
         }
 

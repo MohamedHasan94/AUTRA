@@ -116,7 +116,7 @@ function Grid(coordX, coordZ, shift, levels) {
     //#region Create Dimensions
     let offset = shift / 3;
     this.dimensions = new THREE.Group();
-    let dimMaterial = new THREE.LineBasicMaterial({ color: 0x11bb00 });
+    let dimMaterial = new THREE.LineBasicMaterial({ color: 0x0000ff });
 
     //Inner z-dimension line
     let dimLineGeometry = new THREE.BufferGeometry().setFromPoints([new THREE.Vector3(this.xLength + offset, 0, 0), new THREE.Vector3(this.xLength + offset, 0, this.zLength)]);
@@ -192,6 +192,6 @@ function Grid(coordX, coordZ, shift, levels) {
         .applyMatrix4(matrix.makeTranslation(this.xLength + 2 * offset - 0.5 * geoProperties.size, 0, 0.5 * this.zLength + geoProperties.size));
     dimTextGeo = THREE.BufferGeometryUtils.mergeBufferGeometries([dimTextGeo, zTotalGeo]);
 
-    this.dimensions.add(new THREE.Mesh(dimTextGeo, new THREE.MeshBasicMaterial({ color: 0x11bb00, opacity: 0.7, transparent: true })))
+    this.dimensions.add(new THREE.Mesh(dimTextGeo, new THREE.MeshBasicMaterial({ color: 0x0000ff, opacity: 0.7, transparent: true })))
     //#endregion
 }

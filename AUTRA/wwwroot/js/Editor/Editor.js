@@ -216,7 +216,8 @@ class Editor {
         let newCameraLookAt;
         if (view == '3D') {
             this.renderedCamera = this.perspectiveCamera;
-            newCameraLookAt = new THREE.Vector3(0, 0, -1).applyQuaternion(this.renderedCamera.quaternion).add(this.renderedCamera.position);
+            this.perspectiveCamera.position.set(0.5 * grids.xLength, 20, 2.5 * grids.zLength);
+            newCameraLookAt = new THREE.Vector3(0.5 * grids.xLength, 0, 0.5 * grids.zLength);
         }
         else {
             this.renderedCamera = this.orthoCamera;
@@ -244,10 +245,10 @@ class Editor {
                     newCameraLookAt = new THREE.Vector3(0.5 * grids.xLength, 0.5 * grids.levels[grids.levels.length - 1], 0.5 * grids.zLength);
                     break;
             }
-            this.renderedCamera.lookAt(newCameraLookAt);
             this.renderedCamera.zoom = zoom;
-            this.renderedCamera.updateProjectionMatrix();
         }
+        this.renderedCamera.lookAt(newCameraLookAt);
+        this.renderedCamera.updateProjectionMatrix();
         this.orbitControls.object = this.renderedCamera; //Set the target object (camera) to the new camera
         this.orbitControls.target.copy(newCameraLookAt); //Set the target to the camera lookAt
         this.orbitControls.update(); //Update controls to apply changes

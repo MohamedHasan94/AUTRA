@@ -50,7 +50,7 @@ namespace AUTRA.Controllers
             Stopwatch stopwatch = new Stopwatch();
 
             stopwatch.Start();
-            AUTRA.Init(project, @"D:\ITI\GraduationProject\AUTRA\AUTRA\wwwroot\Inputs\ToTekla01.json"); //Harded coded path and where tekla save also hardcoded=> in AUTRA.Tekla=>Project=>project=> Init
+            AUTRA.Init(project, @"D:\ITI\GraduationPoject\AUTRA\AUTRA\wwwroot\Inputs\ToTekla02.json"); //Harded coded path and where tekla save also hardcoded=> in AUTRA.Tekla=>Project=>project=> Init
             stopwatch.Stop();
             string response = JsonConvert.SerializeObject(project,new JsonSerializerSettings
             {

@@ -88,8 +88,8 @@ namespace AUTRA
             teklaModel.Model.Connections = GetTeklaConnectionsFromDesign(connections);
             //Hard Coded will be Removed when merging with the final project
             T.Grids grids = new T.Grids();
-            grids.CXS= new List<double>() { 0, 6000, 8000, 6000 };
-            grids.CYS = new List<double>() { 0, 4000, 4000 };
+            grids.CYS= new List<double>() { 0, 6000, 8000, 6000 };
+            grids.CXS = new List<double>() { 0, 4000, 4000 };
             grids.CZS = new List<double>() { -950 ,- 700, 0, 3000, 6000 };
             teklaModel.Model.Grids= grids;
             

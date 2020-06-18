@@ -14,17 +14,19 @@ class Editor {
         this.pickingScene = new THREE.Scene();
         this.picker = new GPUPickHelper();
         this.pickingScene.background = new THREE.Color(0);
-        this.camera = new THREE.PerspectiveCamera(45, window.innerWidth / window.innerHeight, 0.1, 5000);
+        let width = window.innerWidth, height = window.innerHeight;
+        this.perspectiveCamera = new THREE.PerspectiveCamera(45, width / height, 0.1, 5000);
+        this.orthoCamera = new THREE.OrthographicCamera(width / - 2, width / 2, height / 2, height / - 2, 1, 1000);
         this.renderer = new THREE.WebGLRenderer({ antialias: true, canvas: document.getElementById('canvas') });
         this.currentId = 0; //to match objects with correspondents in picking scene
         this.canvas;
     }
     init(coordX, coordZ) {
         //#region Creating camera
-        this.camera.position.set(0.5 * coordX, 20, 2 * coordZ);
-        this.camera.lookAt(new THREE.Vector3(0.5 * coordX, 0, 0.5 * coordZ)); //looks at the middle of the model
+        this.perspectiveCamera.position.set(0.5 * coordX, 20, 2.5 * coordZ);
+        this.perspectiveCamera.lookAt(new THREE.Vector3(0.5 * coordX, 0, 0.5 * coordZ)); //looks at the middle of the model
         //#endregion
-
+        this.renderedCamera = this.perspectiveCamera;
         //#region Renderer
         this.renderer.setClearColor(0xdddddd); //setting color of canvas
         this.canvas = this.renderer.domElement;
@@ -32,14 +34,14 @@ class Editor {
         //#endregion
 
         //#region Controls
-        let orbitControls = new THREE.OrbitControls(this.camera, this.renderer.domElement);
-        orbitControls.mouseButtons = { // Set the functions of mouse buttons
+        this.orbitControls = new THREE.OrbitControls(this.renderedCamera, this.renderer.domElement);
+        this.orbitControls.mouseButtons = { // Set the functions of mouse buttons
             LEFT: THREE.MOUSE.ROTATE,
             MIDDLE: THREE.MOUSE.PAN,
             RIGHT: THREE.MOUSE.ROTATE
         };
-        orbitControls.target.set(0.5 * coordX, 0, 0.5 * coordZ); //Set the target to the camera lookAt
-        orbitControls.update();
+        this.orbitControls.target.set(0.5 * coordX, 0, 0.5 * coordZ); //Set the target to the camera lookAt
+        this.orbitControls.update();
         //#endregion
 
         //#region Light
@@ -65,7 +67,7 @@ class Editor {
         this.loop();
     }
     loop() {
-        this.renderer.render(this.scene, this.camera);
+        this.renderer.render(this.scene, this.renderedCamera);
         requestAnimationFrame(() => this.loop());
     }
     addToGroup(object, type) { //add object to one of the created groups(elements,nodes.....)
@@ -119,13 +121,13 @@ class Editor {
         };
     }
     pick(event) { //Highlights object on hover
-        this.picker.pick(this.setPickPosition(event), this.renderer, this.pickingScene, this.camera);
+        this.picker.pick(this.setPickPosition(event), this.renderer, this.pickingScene, this.renderedCamera);
     }
     select(event, multiple) { //Select single object on click
-        this.picker.select(this.setPickPosition(event), multiple, this.renderer, this.pickingScene, this.camera);
+        this.picker.select(this.setPickPosition(event), multiple, this.renderer, this.pickingScene, this.renderedCamera);
     }
     selectByArea(initialPosition, rectWidth, rectHeight, multiple) {//Select multiple objects by area (hold and drag mouse)
-        this.picker.selectByArea(initialPosition, rectWidth, rectHeight, multiple, this.renderer, this.pickingScene, this.camera)
+        this.picker.selectByArea(initialPosition, rectWidth, rectHeight, multiple, this.renderer, this.pickingScene, this.renderedCamera)
     }
     clearGroup(group) { //Clear the components of a group
         group = this.scene.userData[group];
@@ -181,16 +183,9 @@ class Editor {
         }
     }
     screenshot() { //Take a screenshot to the view
-        let imgData;
-        try {
-            this.renderer.render(this.scene, this.camera);
-            imgData = this.canvas.toDataURL("image/jpg");
-            imgData.replace("image/jpg", "image/octet-stream");
-
-        } catch (e) {
-            console.log(e);
-            return;
-        }
+        this.renderer.render(this.scene, this.camera);
+        let imgData = this.canvas.toDataURL("image/jpg");
+        imgData.replace("image/jpg", "image/octet-stream");
 
         let link = document.createElement('a'); //Create HTML link to download the file on client machine
         link.setAttribute('download', 'screen.jpg');
@@ -216,5 +211,45 @@ class Editor {
         let pickeckedMesh = this.picker.getObject(position, this.renderer, this.pickingScene, this.camera);
         this.pickingScene.children = temp;
         return pickeckedMesh;
+    }
+    changeView(grids, view) {
+        let newCameraLookAt;
+        if (view == '3D') {
+            this.renderedCamera = this.perspectiveCamera;
+            newCameraLookAt = new THREE.Vector3(0, 0, -1).applyQuaternion(this.renderedCamera.quaternion).add(this.renderedCamera.position);
+        }
+        else {
+            this.renderedCamera = this.orthoCamera;
+            let zoom = 30;
+            switch (view) {
+                case 'top':
+                    zoom = 52.8 - 1.792 * grids.zLength + 0.023 * grids.zLength * grids.zLength;
+                    this.renderedCamera.position.set(0.5 * grids.xLength, 2 * grids.levels[grids.levels.length - 1], 0.5 * grids.zLength);
+                    newCameraLookAt = new THREE.Vector3(0.5 * grids.xLength, 0, 0.5 * grids.zLength);
+                    break;
+                case 'front':
+                    this.renderedCamera.position.set(0.5 * grids.xLength, 0.5 * grids.levels[grids.levels.length - 1], 2 * grids.zLength);
+                    newCameraLookAt = new THREE.Vector3(0.5 * grids.xLength, 0.5 * grids.levels[grids.levels.length - 1], 0.5 * grids.zLength);
+                    break;
+                case 'back':
+                    this.renderedCamera.position.set(0.5 * grids.xLength, 0.5 * grids.levels[grids.levels.length - 1], -1 * grids.zLength);
+                    newCameraLookAt = new THREE.Vector3(0.5 * grids.xLength, 0.5 * grids.levels[grids.levels.length - 1], 0.5 * grids.zLength);
+                    break;
+                case 'right':
+                    this.renderedCamera.position.set(2 * grids.xLength, 0.5 * grids.levels[grids.levels.length - 1], 0.5 * grids.zLength);
+                    newCameraLookAt = new THREE.Vector3(0.5 * grids.xLength, 0.5 * grids.levels[grids.levels.length - 1], 0.5 * grids.zLength);
+                    break;
+                case 'left':
+                    this.renderedCamera.position.set(-1 * grids.xLength, 0.5 * grids.levels[grids.levels.length - 1], 0.5 * grids.zLength);
+                    newCameraLookAt = new THREE.Vector3(0.5 * grids.xLength, 0.5 * grids.levels[grids.levels.length - 1], 0.5 * grids.zLength);
+                    break;
+            }
+            this.renderedCamera.lookAt(newCameraLookAt);
+            this.renderedCamera.zoom = zoom;
+            this.renderedCamera.updateProjectionMatrix();
+        }
+        this.orbitControls.object = this.renderedCamera; //Set the target object (camera) to the new camera
+        this.orbitControls.target.copy(newCameraLookAt); //Set the target to the camera lookAt
+        this.orbitControls.update(); //Update controls to apply changes
     }
 }

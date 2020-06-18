@@ -19,8 +19,8 @@ function Grid(coordX, coordZ, shift, levels) {
     for (let i = 1; i < numberInZ; i++) {
         this.cys[i] = coordZ[i] - coordZ[i - 1];
     }
-    let xLength = coordX[numberInX - 1];
-    let zLength = coordZ[numberInZ - 1];    
+    this.xLength = coordX[numberInX - 1];
+    this.zLength = coordZ[numberInZ - 1];    
 
     //#region Creating Grids
     //#region Grid Lines
@@ -34,17 +34,17 @@ function Grid(coordX, coordZ, shift, levels) {
     });
     //Fill the vertical Group
     let gridGeometry = new THREE.BufferGeometry().setFromPoints([new THREE.Vector3(coordX[0], 0, -shift),
-        new THREE.Vector3(coordX[0], 0, zLength + shift)]);
+        new THREE.Vector3(coordX[0], 0, this.zLength + shift)]);
 
     for (let i = 1; i < numberInX; i++) {
         let geometry = new THREE.BufferGeometry().setFromPoints([new THREE.Vector3(coordX[i], 0, -shift),
-            new THREE.Vector3(coordX[i], 0, zLength + shift)]);
+            new THREE.Vector3(coordX[i], 0, this.zLength + shift)]);
         gridGeometry = THREE.BufferGeometryUtils.mergeBufferGeometries([gridGeometry, geometry]);
     }
     //Fill the horizontal Group
     for (let i = 0; i < numberInZ; i++) {
         let geometry = new THREE.BufferGeometry().setFromPoints([new THREE.Vector3(-shift, 0, coordZ[i]),
-        new THREE.Vector3(xLength + shift, 0, coordZ[i])]);
+        new THREE.Vector3(this.xLength + shift, 0, coordZ[i])]);
         gridGeometry = THREE.BufferGeometryUtils.mergeBufferGeometries([gridGeometry, geometry]);
     }
 
@@ -68,7 +68,7 @@ function Grid(coordX, coordZ, shift, levels) {
         geometry.applyMatrix4(matrix.makeRotationX(-Math.PI / 2)).applyMatrix4(matrix.makeTranslation(coordX[i], 0, -shift - geoProperties.size));
         gridNamesGeometry = THREE.BufferGeometryUtils.mergeBufferGeometries([gridNamesGeometry, geometry]);
 
-        geometry2.applyMatrix4(matrix.makeRotationX(-Math.PI / 2)).applyMatrix4(matrix.makeTranslation(coordX[i], 0, zLength + shift + geoProperties.size));
+        geometry2.applyMatrix4(matrix.makeRotationX(-Math.PI / 2)).applyMatrix4(matrix.makeTranslation(coordX[i], 0, this.zLength + shift + geoProperties.size));
         gridNamesGeometry = THREE.BufferGeometryUtils.mergeBufferGeometries([gridNamesGeometry, geometry2]);
     }
 
@@ -78,7 +78,7 @@ function Grid(coordX, coordZ, shift, levels) {
         geometry.applyMatrix4(matrix.makeRotationX(-Math.PI / 2)).applyMatrix4(matrix.makeTranslation(-shift - 1, 0, coordZ[i]));
         gridNamesGeometry = THREE.BufferGeometryUtils.mergeBufferGeometries([gridNamesGeometry, geometry]);
 
-        geometry2.applyMatrix4(matrix.makeRotationX(-Math.PI / 2)).applyMatrix4(matrix.makeTranslation(xLength + shift, 0, coordZ[i]));
+        geometry2.applyMatrix4(matrix.makeRotationX(-Math.PI / 2)).applyMatrix4(matrix.makeTranslation(this.xLength + shift, 0, coordZ[i]));
         gridNamesGeometry = THREE.BufferGeometryUtils.mergeBufferGeometries([gridNamesGeometry, geometry2]);
     }
     let textMaterial = new THREE.MeshBasicMaterial({ color: 0x333333, opacity: 0.3, transparent: true });
@@ -119,45 +119,45 @@ function Grid(coordX, coordZ, shift, levels) {
     let dimMaterial = new THREE.LineBasicMaterial({ color: 0x11bb00 });
 
     //Inner z-dimension line
-    let dimLineGeometry = new THREE.BufferGeometry().setFromPoints([new THREE.Vector3(xLength + offset, 0, 0), new THREE.Vector3(xLength + offset, 0, zLength)]);
+    let dimLineGeometry = new THREE.BufferGeometry().setFromPoints([new THREE.Vector3(this.xLength + offset, 0, 0), new THREE.Vector3(this.xLength + offset, 0, this.zLength)]);
 
     //Toatl z-dimension line
-    let dimLineGeometry1 = new THREE.BufferGeometry().setFromPoints([new THREE.Vector3(xLength + 2 * offset, 0, 0), new THREE.Vector3(xLength + 2 * offset, 0, zLength)]);
+    let dimLineGeometry1 = new THREE.BufferGeometry().setFromPoints([new THREE.Vector3(this.xLength + 2 * offset, 0, 0), new THREE.Vector3(this.xLength + 2 * offset, 0, this.zLength)]);
     dimLineGeometry = THREE.BufferGeometryUtils.mergeBufferGeometries([dimLineGeometry, dimLineGeometry1]);
 
     let sideGeometry;
     for (let i = 0; i < numberInX; i++) {//Side lines of inner x-dimensions
-        sideGeometry = new THREE.BufferGeometry().setFromPoints([new THREE.Vector3(coordX[i], 0, zLength + offset - 0.3), new THREE.Vector3(coordX[i], 0, zLength + offset + 0.3)])
+        sideGeometry = new THREE.BufferGeometry().setFromPoints([new THREE.Vector3(coordX[i], 0, this.zLength + offset - 0.3), new THREE.Vector3(coordX[i], 0, this.zLength + offset + 0.3)])
         dimLineGeometry = THREE.BufferGeometryUtils.mergeBufferGeometries([dimLineGeometry, sideGeometry]);
     }
 
     for (let i = 0; i < numberInZ; i++) {//Side lines of inner z-dimensions
-        sideGeometry = new THREE.BufferGeometry().setFromPoints([new THREE.Vector3(xLength + offset - 0.3, 0, coordZ[i]), new THREE.Vector3(xLength + offset + 0.3, 0, coordZ[i])])
+        sideGeometry = new THREE.BufferGeometry().setFromPoints([new THREE.Vector3(this.xLength + offset - 0.3, 0, coordZ[i]), new THREE.Vector3(this.xLength + offset + 0.3, 0, coordZ[i])])
         dimLineGeometry = THREE.BufferGeometryUtils.mergeBufferGeometries([dimLineGeometry, sideGeometry]);
     }
 
     //Left side line of toatl x-dimension
-    sideGeometry = new THREE.BufferGeometry().setFromPoints([new THREE.Vector3(0, 0, zLength + 2*offset - 0.3), new THREE.Vector3(0, 0, zLength + 2*offset + 0.3)])
+    sideGeometry = new THREE.BufferGeometry().setFromPoints([new THREE.Vector3(0, 0, this.zLength + 2*offset - 0.3), new THREE.Vector3(0, 0, this.zLength + 2*offset + 0.3)])
     dimLineGeometry = THREE.BufferGeometryUtils.mergeBufferGeometries([dimLineGeometry, sideGeometry]);
 
     //Right side line of toatl x-dimension
-    sideGeometry = new THREE.BufferGeometry().setFromPoints([new THREE.Vector3(xLength, 0, zLength + 2*offset - 0.3), new THREE.Vector3(xLength, 0, zLength + 2*offset + 0.3)])
+    sideGeometry = new THREE.BufferGeometry().setFromPoints([new THREE.Vector3(this.xLength, 0, this.zLength + 2*offset - 0.3), new THREE.Vector3(this.xLength, 0, this.zLength + 2*offset + 0.3)])
     dimLineGeometry = THREE.BufferGeometryUtils.mergeBufferGeometries([dimLineGeometry, sideGeometry]);
 
     //Left side line of toatl x-dimension
-    sideGeometry = new THREE.BufferGeometry().setFromPoints([new THREE.Vector3(xLength + 2 * offset - 0.3, 0, 0), new THREE.Vector3(xLength + 2 * offset + 0.3,0, 0)])
+    sideGeometry = new THREE.BufferGeometry().setFromPoints([new THREE.Vector3(this.xLength + 2 * offset - 0.3, 0, 0), new THREE.Vector3(this.xLength + 2 * offset + 0.3,0, 0)])
     dimLineGeometry = THREE.BufferGeometryUtils.mergeBufferGeometries([dimLineGeometry, sideGeometry]);
 
     //Left side line of toatl x-dimension
-    sideGeometry = new THREE.BufferGeometry().setFromPoints([new THREE.Vector3(xLength + 2 * offset - 0.3, 0, zLength), new THREE.Vector3(xLength + 2 * offset + 0.3, 0, zLength)])
+    sideGeometry = new THREE.BufferGeometry().setFromPoints([new THREE.Vector3(this.xLength + 2 * offset - 0.3, 0, this.zLength), new THREE.Vector3(this.xLength + 2 * offset + 0.3, 0, this.zLength)])
     dimLineGeometry = THREE.BufferGeometryUtils.mergeBufferGeometries([dimLineGeometry, sideGeometry]);
 
     //Inner x-dimension line
-    dimLineGeometry1 = new THREE.BufferGeometry().setFromPoints([new THREE.Vector3(0, 0, zLength + offset), new THREE.Vector3(xLength, 0, zLength + offset)]);
+    dimLineGeometry1 = new THREE.BufferGeometry().setFromPoints([new THREE.Vector3(0, 0, this.zLength + offset), new THREE.Vector3(this.xLength, 0, this.zLength + offset)]);
     dimLineGeometry = THREE.BufferGeometryUtils.mergeBufferGeometries([dimLineGeometry, dimLineGeometry1]);
 
     //Total x-dimension line
-    dimLineGeometry1 = new THREE.BufferGeometry().setFromPoints([new THREE.Vector3(0, 0, zLength + 2 * offset), new THREE.Vector3(xLength, 0, zLength + 2 * offset)]);
+    dimLineGeometry1 = new THREE.BufferGeometry().setFromPoints([new THREE.Vector3(0, 0, this.zLength + 2 * offset), new THREE.Vector3(this.xLength, 0, this.zLength + 2 * offset)]);
     dimLineGeometry = THREE.BufferGeometryUtils.mergeBufferGeometries([dimLineGeometry, dimLineGeometry1]);
 
     this.dimensions = new THREE.LineSegments(dimLineGeometry, dimMaterial);   
@@ -166,30 +166,30 @@ function Grid(coordX, coordZ, shift, levels) {
     geoProperties.size = 0.5;
     let dimTextGeo = new THREE.TextBufferGeometry(`${coordX[1]} m`, geoProperties);
     dimTextGeo.applyMatrix4(matrix.makeRotationX(-Math.PI / 2))
-        .applyMatrix4(matrix.makeTranslation(0.5 * coordX[1] - geoProperties.size, 0, zLength + offset - 0.5 * geoProperties.size));
+        .applyMatrix4(matrix.makeTranslation(0.5 * coordX[1] - geoProperties.size, 0, this.zLength + offset - 0.5 * geoProperties.size));
 
     for (let i = 2; i < numberInX; i++) {
         let geo = new THREE.TextBufferGeometry(`${(10 * coordX[i] - 10 * coordX[i - 1]) / 10} m`, geoProperties);
         geo.applyMatrix4(matrix.makeRotationX(-Math.PI / 2))
-            .applyMatrix4(matrix.makeTranslation(0.5 * (coordX[i] + coordX[i - 1]) - geoProperties.size, 0, zLength + offset - 0.5 * geoProperties.size));
+            .applyMatrix4(matrix.makeTranslation(0.5 * (coordX[i] + coordX[i - 1]) - geoProperties.size, 0, this.zLength + offset - 0.5 * geoProperties.size));
         dimTextGeo = THREE.BufferGeometryUtils.mergeBufferGeometries([dimTextGeo, geo]);
     }
 
-    let xTotalGeo = new THREE.TextBufferGeometry(`${xLength} m`, geoProperties);
+    let xTotalGeo = new THREE.TextBufferGeometry(`${this.xLength} m`, geoProperties);
     xTotalGeo.applyMatrix4(matrix.makeRotationX(-Math.PI / 2))
-        .applyMatrix4(matrix.makeTranslation(0.5 * xLength - geoProperties.size, 0, zLength + 2 * offset - 0.5 * geoProperties.size));
+        .applyMatrix4(matrix.makeTranslation(0.5 * this.xLength - geoProperties.size, 0, this.zLength + 2 * offset - 0.5 * geoProperties.size));
     dimTextGeo = THREE.BufferGeometryUtils.mergeBufferGeometries([dimTextGeo, xTotalGeo]);
 
     for (let i = 1; i < numberInZ; i++) {
         let geo = new THREE.TextBufferGeometry(`${(10 * coordZ[i] - 10 * coordZ[i - 1]) / 10} m`, geoProperties);
         geo.applyMatrix4(matrix.makeRotationY(Math.PI / 2)).applyMatrix4(matrix.makeRotationZ(Math.PI / 2))
-            .applyMatrix4(matrix.makeTranslation(xLength + offset - 0.5 * geoProperties.size, 0, 0.5 * (coordZ[i] + coordZ[i - 1]) + geoProperties.size));
+            .applyMatrix4(matrix.makeTranslation(this.xLength + offset - 0.5 * geoProperties.size, 0, 0.5 * (coordZ[i] + coordZ[i - 1]) + geoProperties.size));
         dimTextGeo = THREE.BufferGeometryUtils.mergeBufferGeometries([dimTextGeo, geo]);
     }
 
-    let zTotalGeo = new THREE.TextBufferGeometry(`${zLength} m`, geoProperties);
+    let zTotalGeo = new THREE.TextBufferGeometry(`${this.zLength} m`, geoProperties);
     zTotalGeo.applyMatrix4(matrix.makeRotationY(Math.PI / 2)).applyMatrix4(matrix.makeRotationZ(Math.PI / 2))
-        .applyMatrix4(matrix.makeTranslation(xLength + 2 * offset - 0.5 * geoProperties.size, 0, 0.5 * zLength + geoProperties.size));
+        .applyMatrix4(matrix.makeTranslation(this.xLength + 2 * offset - 0.5 * geoProperties.size, 0, 0.5 * this.zLength + geoProperties.size));
     dimTextGeo = THREE.BufferGeometryUtils.mergeBufferGeometries([dimTextGeo, zTotalGeo]);
 
     this.dimensions.add(new THREE.Mesh(dimTextGeo, new THREE.MeshBasicMaterial({ color: 0x11bb00, opacity: 0.7, transparent: true })))

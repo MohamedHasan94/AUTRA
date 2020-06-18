@@ -13,7 +13,7 @@
     <title>Editor</title>
 </head>
 <body>
-    <input type="text" hidden disabled id="projectName" value='@ViewData["projectName"]'/>
+    <input type="text" hidden disabled id="projectName" value='@ViewData["projectName"]' />
     <canvas id="canvas" style="position:absolute"></canvas>
     <div class="btn" id="sidebarBtn">
         <span class="fas fa-bars"></span>
@@ -171,7 +171,7 @@
                                 <tbody>
                                     <tr>
                                         <th>Distances from beam start</th>
-                                        <br>
+                                        <br />
                                         <td><input type="text" id="nodeToBeam" value="0" size="5"></td>
                                     </tr>
                                     <tr>
@@ -289,10 +289,6 @@
                         </a>
                     </li>
 
-                    @*<li>
-                            <input type="file" id="reactions" />
-                        </li>*@
-
                     <li>
                         <select id="resultPattern">
                             <option value="dead">Dead</option>
@@ -383,6 +379,18 @@
                     Measure Distance
                 </a>
             </li>
+
+            <li>
+                <select id="view" onchange="changeView()">
+                    <option>Select view</option>
+                    <option value="top">Top</option>
+                    <option value="front">Front</option>
+                    <option value="back">Back</option>
+                    <option value="right">Right</option>
+                    <option value="left">Left</option>
+                    <option value="3D">3D</option>
+                </select>
+            </li>
         </ul>
     </nav>
 
@@ -449,10 +457,10 @@
                             <label for="mainOrient">Main Beams Orientation</label>
 
 
-                            <div class="radio" class="form-group">
+                            <div class="radio form-group">
                                 <label><input type="radio" name="optradio" id="xOrient" value="X" checked>X Axis</label>
                             </div>
-                            <div class="radio" class="form-group">
+                            <div class="radio form-group">
                                 <label><input type="radio" name="optradio" id="yOrient" value="Y">Y Axis</label>
                             </div>
 
@@ -540,28 +548,26 @@
                         <option value="IPE600">IPE600</option>
                     </select>
                 </div>
-                        <!-- <div class="form-group">
-        <label class="subtitle" style="font-weight: bold;">Loads</label>
-    </div>
-
-    <div class="form-group">
-        <label for="secSpace">Dead Load</label>
-        <input type="text" name="" id="dead" class="form-control" value="1.5" required>
-    </div>
-
-    <div class="form-group">
-        <label for="secSpace">Live Load</label>
-        <input type="text" name="" id="live" class="form-control" value="2.5" required>
-    </div>-->
-                    </div>
-
+                <!-- <div class="form-group">
+                    <label class="subtitle" style="font-weight: bold;">Loads</label>
                 </div>
 
-                <div class="modal-footer">
-                    <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
-                    <button type="button" class="btn btn-primary" id="createGrids">Create Grids</button>
+                <div class="form-group">
+                    <label for="secSpace">Dead Load</label>
+                    <input type="text" name="" id="dead" class="form-control" value="1.5" required>
                 </div>
+
+                <div class="form-group">
+                    <label for="secSpace">Live Load</label>
+                    <input type="text" name="" id="live" class="form-control" value="2.5" required>
+                </div>-->
             </div>
+
+        </div>
+
+        <div class="modal-footer">
+            <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+            <button type="button" class="btn btn-primary" id="createGrids">Create Grids</button>
         </div>
     </div>
 

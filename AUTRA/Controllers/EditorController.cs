@@ -51,8 +51,8 @@ namespace AUTRA.Controllers
         {
             project.Nodes.ModifyCoordinates();
             Stopwatch stopwatch = new Stopwatch();
-            var id = _context.Users.Find(User.Identity.Name).Id;
-            var owner = _context.Projects.Find(id, project.ProjectProperties.Name).Owner;
+            string userId = User.FindFirst(ClaimTypes.NameIdentifier).Value;
+            var owner = _context.Projects.Find(userId, project.ProjectProperties.Name).Owner;
             stopwatch.Start();
             AUTRA.Init(project, @"D:\ITI\GraduationProject\AUTRA\AUTRA\wwwroot\Inputs\ToTekla02.json",owner); //Harded coded path and where tekla save also hardcoded=> in AUTRA.Tekla=>Project=>project=> Init
             stopwatch.Stop();

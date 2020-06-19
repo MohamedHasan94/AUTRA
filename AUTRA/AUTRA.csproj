@@ -201,16 +201,9 @@
     <None Include="wwwroot\assets\js\vendor\jquery-1.12.4.min.js" />
     <None Include="wwwroot\assets\js\vendor\modernizr-3.5.0.min.js" />
     <None Include="wwwroot\assets\js\wow.min.js" />
-    <None Include="wwwroot\assets\my-icons-collection\backup.txt" />
-    <None Include="wwwroot\assets\my-icons-collection\font\flaticon.css" />
-    <None Include="wwwroot\assets\my-icons-collection\font\Flaticon.eot" />
-    <None Include="wwwroot\assets\my-icons-collection\font\flaticon.html" />
     <None Include="wwwroot\assets\my-icons-collection\font\Flaticon.svg" />
-    <None Include="wwwroot\assets\my-icons-collection\font\Flaticon.ttf" />
-    <None Include="wwwroot\assets\my-icons-collection\font\Flaticon.woff" />
     <None Include="wwwroot\assets\my-icons-collection\font\Flaticon.woff2" />
     <None Include="wwwroot\assets\my-icons-collection\font\_flaticon.scss" />
-    <None Include="wwwroot\assets\my-icons-collection\license\license.html" />
     <None Include="wwwroot\assets\scss\style.scss" />
     <None Include="wwwroot\assets\scss\_about-details.scss" />
     <None Include="wwwroot\assets\scss\_all_startups.scss" />

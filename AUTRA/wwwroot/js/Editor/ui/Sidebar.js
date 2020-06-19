@@ -1,87 +1,101 @@
 var dark=document.getElementById("dark");
-var light=document.getElementById("light");
-light.style.display='none';
+var light = document.getElementById("light");
+var analysisResult = document.getElementById("analysisResult");
 
-//$(function () {
-//    $('[data-toggle="popover"]').popover()
-//  })
 
 $('#sidebarBtn').click(function () {
     $(this).toggleClass("click");
     $('.sidebar').toggleClass("show");
 });
-$('.feat-btn').click(function () {
-    $('nav ul .feat-show').toggleClass("show");
-    $('nav ul .first').toggleClass("rotate");
+
+function flipDiv(id) {
+    $('.activeDiv').fadeOut();
+    $('.activeDiv').removeClass("activeDiv");
+    $(id).addClass("activeDiv");
+    $(id).fadeIn();
+}
+
+$('#drawElement').click(function () {
+    flipDiv('#drawElementDetails');
+});
+$(' #addNodeCoord ').click(function () {
+    flipDiv('#addNodeCoordDetails');
+});
+$(' #addNodeBeam ').click(function () {
+    flipDiv('#addNodeBeamDetails');
+});
+$(' #elementSection ').click(function () {
+    flipDiv('#elementSectionDetails');
+});
+$(' #moveSection ').click(function () {
+    flipDiv('#moveSectionDetails');
+});
+$(' #copySection ').click(function () {
+    flipDiv('#copySectionDetails');
+});
+$(' #floorLoadIcon ').click(function () {
+    flipDiv('#floorLoadDetails');
+});
+$(' #lineLoadIcon ').click(function () {
+    flipDiv('#lineLoadDetails');
+});
+$(' #pointLoadIcon ').click(function () {
+    flipDiv('#pointLoadDetails');
+});
+$(' #showLoadIcon ').click(function () {
+    flipDiv('#showLoadDetails');
+});
+$(' #analysisResult ').click(function () {
+    flipDiv('#analysisResultDetails');
 });
 
-            $('#elementSec').click(function () {
-                $('#elementSecDetails').fadeToggle();
-            });
-
-    
-            // $('#elementSec').popover({
-            //     trigger: 'hover'
-            // })
-    
-            $('#elementMove').click(function () {
-                $('#elementMoveDetails').fadeToggle();
-            });
-
-            $('#elementCopy').click(function () {
-                $('#elementCopyDetails').fadeToggle();
-            });
-
-$('.serv-btn').click(function () {
-    $('nav ul .serv-show').toggleClass("show1");
-    $('nav ul .second').toggleClass("rotate");
+$(' #viewsIcon ').click(function () {
+    flipDiv('#viewsDetails');
+});
+$(' #measureIcon ').click(function () {
+    flipDiv('#measureDetails');
 });
 
-            $('#drawElement').click(function () {
-                $('#drawElementDetails').fadeToggle();
-            });
 
-            $('#addNodeCoord').click(function () {
-                $('#addNodeCoordDetails').fadeToggle();
-            });
-
-            $('#addNodeBeam').click(function () {
-            $('#addNodeBeamDetails').fadeToggle();
-            });
-
-
-$('.loads-btn').click(function () {
-    $('nav ul .loads-show').toggleClass("show2");
-    $('nav ul .third').toggleClass("rotate");
+$('#analysisResultBtn').click(function () {
+    $('#analysisResultDetails').fadeOut();
 });
-            $('#addFloorLoad').click(function () {
-                $('#addFloorLoadDetails').fadeToggle();
-            });
-
-            $('#addLineLoad').click(function () {
-                $('#addLineLoadDetails').fadeToggle();
-            });
-
-            $('#addPointLoad').click(function () {
-                $('#addPointLoadDetails').fadeToggle();
-            });
-
-
-$('.myModel-btn').click(function () {
-    $('nav ul .myModel-show').toggleClass("show3");
-    $('nav ul .fourth').toggleClass("rotate");
+$('#drawElementBtn').click(function () {
+    $('#drawElementDetails').fadeOut();
 });
-
-//$('#mySelectBtn').click(function () {
-//    $('#mySelectShow').fadeToggle();
-//});
-
-//$('.mySelect-btn').click(function () {
-//    console.log("jqworking");
-//    $('nav ul .mySelect-show').toggleClass("show5");
-//    $('nav ul .fifth').toggleClass("rotate");
-//});
-
-$('nav ul li').click(function () {
-    $(this).addClass("active").siblings().removeClass("active");
+$(' #addNodeCoordBtn ').click(function () {
+    $('#addNodeCoordDetails').fadeOut();
+});
+$(' #addNodeBeamBtn ').click(function () {
+    $('#addNodeBeamDetails').fadeOut();
+});
+$(' #elementSectionBtn ').click(function () {
+    $('#elementSectionDetails').fadeOut();
+});
+$(' #moveSectionBtn ').click(function () {
+    $('#moveSectionDetails').fadeOut();
+});
+$(' #copySectionBtn ').click(function () {
+    $('#copySectionDetails').fadeOut();
+});
+$(' #floorLoadBtn ').click(function () {
+    $('#floorLoadDetails').fadeOut();
+});
+$(' #lineLoadBtn ').click(function () {
+    $('#lineLoadDetails').fadeOut();
+});
+$(' #pointLoadBtn ').click(function () {
+    $('#pointLoadDetails').fadeOut();
+});
+$(' #showLoadBtn ').click(function () {
+    $('#showLoadDetails').fadeOut();
+});
+$(' #analysisResultBtn ').click(function () {
+    $('#analysisResultDetails').fadeOut();
+});
+$(' #viewsBtn ').click(function () {
+    $('#viewsDetails').fadeOut();
+});
+$(' #measureBtn ').click(function () {
+    $('#measureDetails').fadeOut();
 });

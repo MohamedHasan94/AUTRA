@@ -572,6 +572,7 @@
                 res = JSON.parse(res);
                 editor.clearGroup('results');
                 editor.hideGroup('nodes');
+                analysisResult.style.display = 'block';
                 FrameElement.assignResults(mainBeams[0], res.mainBeams); //MainBeams
                 Beam.showResults(mainBeams[0], 'dead', 'showMoment', 0, domEvents, editor);
 

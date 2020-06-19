@@ -16,7 +16,7 @@ function flipDiv(id) {
     $(id).fadeIn();
 }
 
-//#region Show option divs
+//#region Show and hide option divs
 $('#drawElement').click(function () {
     flipDiv('#drawElementDetails');
 });
@@ -59,7 +59,7 @@ $(' #measureIcon ').click(function () {
 });
 //#endregion
 
-//#region show/hide dropdowns
+//#region activation of the closing Btns 
 $('#analysisResultBtn').click(function () {
     $('#analysisResultDetails').fadeOut();
 });
@@ -101,6 +101,9 @@ $(' #viewsBtn ').click(function () {
 });
 $(' #measureBtn ').click(function () {
     $('#measureDetails').fadeOut();
+});
+$(' #createGrids ').click(function () {
+    $('#modalDivDetails').fadeOut(500);
 });
 //#endregion
 

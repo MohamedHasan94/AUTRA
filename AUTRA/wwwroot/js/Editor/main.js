@@ -6,9 +6,9 @@
     let nodes = new Array(), grids;
     let columns = new Array(), mainBeams = new Array(), secondaryBeams = new Array(), sections = new Array();
     let canvas, domEvents;
-    let levels, material;
+    let levels, material, projectProperties;
     let draw = false, drawingPoints = [];
-    let sectionId = 0;
+    let sectionId = 0; 
     //#endregion
 
     function init() {
@@ -46,7 +46,7 @@
         editor.addToGroup(grids.gridNames, 'grids'); //Add z-grids to scene (as a group)
         editor.addToGroup(grids.axes, 'grids'); //Add z-grids to scene (as a group)
         editor.addToGroup(grids.dimensions, 'dimensions');
-
+        projectProperties = model.projectProperties;
         material = model.material
         sections = model.sections;
         for (let i = 0; i < sections.length; i++) {
@@ -74,7 +74,15 @@
         editor.addToGroup(grids.gridNames, 'grids'); //Add z-grids to scene (as a group)
         editor.addToGroup(grids.axes, 'grids'); //Add z-grids to scene (as a group)
         editor.addToGroup(grids.dimensions, 'dimensions');
-
+        projectProperties = {
+            number: "1",
+            name: $('#projectName').val(),
+            designer: $('#projectDesigner').val(),
+            location: $('#projectLocation').val(),
+            city: $('#projectCity').val(),
+            Country: $('#projectCountry').val(),
+            owner: $('#projectOwner').val()
+        }
         if (!document.getElementById("autoMode").checked) {
             nodes = createNodesZ(editor, coordX, coordZ);
         }
@@ -519,15 +527,7 @@
             nodes: [], material: material, sections: sections,
             secondaryBeams: [], mainBeams: [], columns: [], grids: {}
         };
-        model.projectProperties = {
-            "Number": "1",
-            "Name": "AUTRA2",
-            "Designer": "AUTRA2",
-            "Location": "Smart Village",
-            "City": "Giza",
-            "Country": "Egypt",
-            "Owner": "AUTRA"
-        }
+        model.projectProperties = projectProperties;
         for (var i = 0; i < nodes.length; i++) {
             model.nodes.push(nodes[i].data);
         }
@@ -591,10 +591,12 @@
         editor.renderer.render(editor.scene, editor.renderedCamera);
         editor.canvas.toBlob(img => {
             let form = new this.FormData();
-            form.append('name', 'AUTRA2')
-            form.append('designer', 'AUTRA')
-            form.append('owner', 'AUTRA')
-            form.append('location', 'Smart Village')
+            form.append('name', projectProperties.name)
+            form.append('designer', projectProperties.deigner)
+            form.append('owner', projectProperties.owner)
+            form.append('location', projectProperties.location)
+            form.append('city', projectProperties.city)
+            form.append('country', projectProperties.country)
             form.append('image', img);
             form.append('jsonFile', createModel());
             $.ajax({

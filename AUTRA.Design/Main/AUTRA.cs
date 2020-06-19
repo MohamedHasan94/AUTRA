@@ -86,13 +86,7 @@ namespace AUTRA
             teklaModel.Model.Columns = GetTeklaColumnsFromDesign(model.Columns, "Column", "Paint", "4");
             teklaModel.Model.Footings = GetTeklaFootingsFromDesign(model.Columns, "RC Footing", "C30", "1500*1500",700);
             teklaModel.Model.Connections = GetTeklaConnectionsFromDesign(connections);
-            //Hard Coded will be Removed when merging with the final project
-            T.Grids grids = new T.Grids();
-            grids.CYS= new List<double>() { 0, 6000, 8000, 6000 };
-            grids.CXS = new List<double>() { 0, 4000, 4000 };
-            grids.CZS = new List<double>() { -950 ,- 700, 0, 3000, 6000 };
-            teklaModel.Model.Grids= grids;
-            
+            teklaModel.Model.Grids = GetTeklaGridsFromEditor(model.Grids);
             return teklaModel;
         }
         public static void InitTekla(string path)
@@ -178,8 +172,24 @@ namespace AUTRA
             });
             return teklaConns;
         }
+        private static T.Grids GetTeklaGridsFromEditor(Grids grids)
+        {
+            T.Grids teklaGrids = new T.Grids();
+            grids.CXS.ToList().ForEach(x=>x=x*1000);
+            grids.CYS.ToList().ForEach(y => y = y * 1000);
+            teklaGrids.CXS = grids.CXS.ToList();
+            teklaGrids.CYS = grids.CYS.ToList();
+            teklaGrids.CZS = new List<double>();
+            teklaGrids.CZS.Add(-950);
+            teklaGrids.CZS.Add(-700);
+            foreach (var z in grids.Levels)
+            {
+                teklaGrids.CZS.Add(z);
+            }
+            return teklaGrids;
+        }
         #endregion
 
-        
+
     }
 }

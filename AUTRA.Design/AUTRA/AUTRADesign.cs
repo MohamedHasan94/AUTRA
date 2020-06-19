@@ -106,7 +106,7 @@ namespace AUTRA.Design
         public void CreateReports(string folderPath,string userName)
         {
             Report report = new Report(folderPath ,  userName,Project.ProjectProperties);
-            report.Create("Design Calculation Sheet.pdf", SecondaryGroups,MainGroups,ColumnsGroup);
+            report.Create($"Design Calculation Sheet for {Project.ProjectProperties.Name}.pdf", SecondaryGroups,MainGroups,ColumnsGroup);
         }
         #endregion
 

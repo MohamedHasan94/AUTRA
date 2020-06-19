@@ -14,7 +14,7 @@ namespace AUTRA
    public static class AUTRA
     {
         //Entry point for AUTRADesign & AUTRA_TEKLA
-        public static void Init(Project model,string teklaModelPath)
+        public static void Init(Project model,string teklaModelPath,string userName)
         {
             /*
              * Main Goal For this function is: 
@@ -65,13 +65,13 @@ namespace AUTRA
            
             #region AUTRA Design Module
             AUTRADesign designer = new AUTRADesign(model,egASDCode, sections,patterns,bolt);
-            designer.CreateCombo("1.2D+1.4L", new FactoredPattern() { Pattern = LoadPattern.DEAD, ScaleFactor = 1.2 }, new FactoredPattern() { Pattern = LoadPattern.LIVE, ScaleFactor = 1.4 });
+            designer.CreateCombo("D+L", new FactoredPattern() { Pattern = LoadPattern.DEAD, ScaleFactor = 1.0 }, new FactoredPattern() { Pattern = LoadPattern.LIVE, ScaleFactor = 1.0 });
             //designer.CreateCombo("1.2D+1.4L", new FactoredPattern() { Pattern = LoadPattern.DEAD, ScaleFactor = 1.2 }, new FactoredPattern() { Pattern = LoadPattern.LIVE, ScaleFactor = 1.4 });
             designer.RunAnalysis();
             designer.Design();
             var connections= designer.DesignConnections();
             
-            designer.CreateReports("./wwwroot/Outputs/Reports");//To be changed
+            designer.CreateReports("./wwwroot/Outputs/Reports",userName);//To be changed
             #endregion
             var teklaModel= ToTekla(model, connections);
             Writer.Write(teklaModel, teklaModelPath);

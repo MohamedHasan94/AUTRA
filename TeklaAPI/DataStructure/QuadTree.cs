@@ -11,7 +11,7 @@ namespace AUTRA.Tekla
     {
         public Rectangle Boundary { get; }
         public int Capacity { get; }
-        public List<SecondaryBeam> Beams { get; }
+        public List<ContainerBeam> Beams { get; }
         public bool IsDivided { get; set; }
         public QuadTree NorthEast { get; set; }
         public QuadTree NorthWest { get; set; }
@@ -21,7 +21,7 @@ namespace AUTRA.Tekla
         {
             Boundary = boundary;
             Capacity = capacity;
-            Beams = new List<SecondaryBeam>();
+            Beams = new List<ContainerBeam>();
             IsDivided = false; ;
         }
         public void Subdivide()
@@ -40,7 +40,7 @@ namespace AUTRA.Tekla
             SouthWest = new QuadTree(sw, Capacity);
             IsDivided = true;
         }
-        public bool Insert(SecondaryBeam beam)
+        public bool Insert(ContainerBeam beam)
         {
             if (!Boundary.InsertContains(beam.Point))
             {
@@ -71,7 +71,7 @@ namespace AUTRA.Tekla
                 return true;
             }
         }
-        private void Query(Rectangle range, QuadTree qtree, ref List<SecondaryBeam> result)
+        private void Query(Rectangle range, QuadTree qtree, ref List<ContainerBeam> result)
         {
             if (qtree != null)
             {
@@ -89,10 +89,10 @@ namespace AUTRA.Tekla
             }
             
         }
-        public List<SecondaryBeam> Query(Rectangle range)
+        public List<ContainerBeam> Query(Rectangle range)
         {
             if (!Boundary.Intersects(range)) return null;
-            List<SecondaryBeam> beams = new List<SecondaryBeam>();
+            List<ContainerBeam> beams = new List<ContainerBeam>();
             Query(range, this, ref beams);
             return beams;
         }

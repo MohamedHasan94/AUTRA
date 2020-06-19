@@ -48,9 +48,9 @@ namespace AUTRA.Controllers
         {
             project.Nodes.ModifyCoordinates();
             Stopwatch stopwatch = new Stopwatch();
-
             stopwatch.Start();
-            AUTRA.Init(project, @"D:\ITI\GraduationPoject\AUTRA\AUTRA\wwwroot\Inputs\ToTekla02.json"); //Harded coded path and where tekla save also hardcoded=> in AUTRA.Tekla=>Project=>project=> Init
+            string userName = User.Identity.Name; //TODO:which name will be put on the right top corner of the design report
+            AUTRA.Init(project, @"D:\ITI\GraduationPoject\AUTRA\AUTRA\wwwroot\Inputs\ToTekla04.json",userName); //Harded coded path and where tekla save also hardcoded=> in AUTRA.Tekla=>Project=>project=> Init
             stopwatch.Stop();
             string response = JsonConvert.SerializeObject(project,new JsonSerializerSettings
             {

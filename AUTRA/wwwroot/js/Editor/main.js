@@ -448,7 +448,6 @@
         editor.clearGroup('loads');
         let replace = $('#replaceLineLoad').prop('checked'); //Wether to replace the existing load (if any) or add to it
         let load = new LineLoad(parseFloat($('#lineLoad').val()), $('#lineLoadCase').val());
-        debugger
         for (let element of editor.picker.selectedObject) {
             if (element.userData.element instanceof Beam) {
                 let beam = element.userData.element;

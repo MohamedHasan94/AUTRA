@@ -11,10 +11,10 @@ namespace AUTRA.Design
 	{
 		public const double DIST_TOL = 0.001;
 	}
-	//public enum Support
-	//{
-	//	HINGE,ROLLER,FIXED,FREE
-	//}
+	public enum BeamDesignStatus
+	{
+		SAFE,VERY_SAFE ,UNSAFE
+	}
 	public enum BoltedConnectionCategory
 	{
 		BEARING_NON_PRETENSIONED,SLIP_PRETENSIONED,BEARING_PRETENSIONED

@@ -27,6 +27,11 @@ namespace AUTRA.Design
         //helper properties
         public double DwTw  { get; set; } //dw/tw
         public double CTf { get; set; }   //c/tf
+
+        public bool GreaterThan(Section other) => H > other.H;
+        public bool LessThan(Section other) => H < other.H;
+        public static bool operator > (Section s1, Section s2) => s1.GreaterThan(s2);
+        public static bool operator <(Section s1, Section s2) => s1.LessThan(s2);
     }
 }
 

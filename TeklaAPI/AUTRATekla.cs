@@ -30,11 +30,13 @@ namespace AUTRA.Tekla
                     project.CreateConnections();
                     //project.CreateAssemblyDWGS();
                     project.CreatePlanDWG();
-                    //project.CreateBasePlateDWG();
-                    //project.CreateElevationDWGSAlongX();
-                   // project.CreateElevationDWGSAlongY();
-                   // project.PrintDrawings();
-                    //bool res=  project.CreateReports();
+                    project.CreateBasePlateDWG();
+                    project.CreateElevationDWGSAlongX();
+                    project.CreateElevationDWGSAlongY();
+                    project.PrintDrawings();
+                    bool res = project.CreateReports();
+                    //project.ExportIFC();//not working
+                    project.CompressFolder();
                     result = true;
                 }
             }

@@ -48,6 +48,6 @@ namespace AUTRA.Tekla
         }
         public (T3D.Point Left, T3D.Point Right) GetXBoundaries(double z) => (new T3D.Point(X - Width, Y, z), new T3D.Point(X + Width, Y, z));
         public (T3D.Point Down, T3D.Point Up) GetYBoundaries(double z) => (new T3D.Point(X, Y-Height, z), new T3D.Point(X, Y+Height, z));
-
+       
     }
 }

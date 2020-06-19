@@ -255,13 +255,13 @@ namespace AUTRA.Tekla
             connection.Insert();
             return connection;
         }
-        public static List<T> SelectByBoundingBox<T>(this TSM.Model model,T3D.Point origin) where T : TSM.ModelObject
+        public static List<T> SelectByBoundingBox<T>(this TSM.Model model,T3D.Point origin,T3D.Point maxPoint , T3D.Point minPoint) where T : TSM.ModelObject
         {
             model.SetPlaneToGlobal(); //transform the plane to global
             var xVec = new T3D.Vector(1, 0, 0);
             var yVec = new T3D.Vector(0, 1, 0);
             model.SetPlane(new T3D.CoordinateSystem(origin, xVec, yVec)); //Move work plane handler to this point
-            List<T> objs = model.GetModelObjectSelector().GetObjectsByBoundingBox(new T3D.Point(-100, -100, -100), new T3D.Point(100, 100, 100)).ToList().OfType<T>().ToList();
+            List<T> objs = model.GetModelObjectSelector().GetObjectsByBoundingBox(minPoint, maxPoint).ToList().OfType<T>().ToList();
             return objs;
         }
         public static void CreateFramingConnectionAtNode(this TSM.Model model, List<TSM.Beam> parts)

@@ -257,7 +257,7 @@ namespace AUTRA.Design
             }
             return k*length;
         }
-        public bool DesignBeam( Section section, double span, double luact, BeamType beamType, double WLL, double Vd, double Md,DesignResult result)
+        public BeamDesignStatus DesignBeam( Section section, double span, double luact, BeamType beamType, double WLL, double Vd, double Md,DesignResult result)
         {
             /*
              * Check Local Buckling
@@ -266,6 +266,9 @@ namespace AUTRA.Design
              * check bending stress
              * check deflection
              */
+            BeamDesignStatus shearStatus;
+            BeamDesignStatus bendingStatus;
+            BeamDesignStatus deflectionStatus;
             Compactness compactness = CheckLocalBuckling( section, result,StressType.FLEXURAL);
             if (compactness != Compactness.SLENDER)
             {
@@ -274,22 +277,34 @@ namespace AUTRA.Design
                 double fbact, qact, dact;
                 qall = GetAllowableShearStress(section);
                 qact = CalcShearStress(section, Vd);
-                if (qact > qall) return false;
+                shearStatus = qact > qall ? BeamDesignStatus.UNSAFE : BeamDesignStatus.SAFE;
                 Fb = GetAllowableBendingstress(section, compactness, unSupported, luact);
                 fbact = CalcBendingStress(section, Md);
-                if (fbact > Fb) return false;
+                if (fbact > Fb)
+                {
+                    bendingStatus = BeamDesignStatus.UNSAFE;
+                }else if((fbact/Fb)<0.7)
+                {
+                    //Very safe
+                    bendingStatus = BeamDesignStatus.VERY_SAFE;
+                }
+                else
+                {
+                    //safe
+                    bendingStatus = BeamDesignStatus.SAFE;
+                }
                 dall = GetAllowableDeflection(span, beamType);
                 dact = CalcDeflection(section, span, WLL);
-                if (dact > dall) return false;
+                deflectionStatus = dact > dall ? BeamDesignStatus.UNSAFE : BeamDesignStatus.SAFE;
                 result.Fbact = fbact;
                 result.Fball = Fb;
                 result.Qall = qall;
                 result.Qact = qact;
                 result.Dact = dact;
                 result.Dall = dall;
-                return true;
+                return (BeamDesignStatus)Math.Max((int)Math.Max((int)bendingStatus,(int)shearStatus),(int)deflectionStatus);
             }
-            return false;
+            return BeamDesignStatus.UNSAFE;
         }
         public bool DesignColumn(Section section,double length,BracingCondition bracing,double Nd,DesignResult result)
         {
@@ -312,7 +327,7 @@ namespace AUTRA.Design
             }
             return false;
         }
-        public bool DesignBeam(Group group, BeamType beamType) => DesignBeam(group.Section, group.ServiceValue.CriticalBeam.Length, 0, beamType, group.ServiceValue.WLL, group.DesignValues.Vd, group.DesignValues.Md, group.DesignResult);
+        public BeamDesignStatus DesignBeam(Section section,Group group, BeamType beamType) => DesignBeam(section, group.ServiceValue.CriticalBeam.Length, 0, beamType, group.ServiceValue.WLL, group.DesignValues.Vd, group.DesignValues.Md, group.DesignResult);
         public bool DesignColumn(Group group, BracingCondition bracing) => DesignColumn(group.Section, group.DesignValues.CriticalElement.Length, bracing, group.DesignValues.Nd, group.DesignResult);
         #region To be Removed
         //public SimpleConnection DesignSimpleConnection(double vd ,BoltedConnectionCategory cat ,Bolt bolt , Section section,List<EqualAngle> angles)
@@ -457,7 +472,7 @@ namespace AUTRA.Design
                 double f = (6 * vd * (e / 10)) / ((length * length * plateThickness) / 1000); //units are in t/cm^2
                 if (f < 0.72 * section.Material.Fy)
                 {
-                    conn.PlateThicknessCheck = String.Format($"f = (6*Vd*e)/(tp*L^2) = {f.Round()} t/cm^2  <  0.72*Fy = {(0.72 * section.Material.Fy).Round()} t/cm^2 => OK {section.Name}");
+                    conn.PlateThicknessCheck = String.Format($"f = (6*Vd*e)/(tp*L^2) = {f.Round()} t/cm^2  <  0.72*Fy = {(0.72 * section.Material.Fy).Round()} t/cm^2 => OK ");
                     break;
                 }
                 plateThickness += 2;

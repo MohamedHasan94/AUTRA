@@ -54,7 +54,7 @@ namespace AUTRA.Tekla
                 _drawings.Add(drawing);
             return drawing;
         }
-        public void CreateDimsAlongSecBeams(TSD.Drawing drawing , string assemblyPrefix)
+        public void CreateDimsAlongSecBeams(TSD.Drawing drawing , string mainAssembly,string secondaryAssembly)
         {
             //close and save any open drawing
             _handler.CloseActiveDrawing(true);
@@ -63,22 +63,22 @@ namespace AUTRA.Tekla
                 //Get Drawing Parts from the sheet
                 List<TSD.Part> parts = drawing.GetSheet().GetAllObjects(typeof(TSD.Part)).ToIEnumerable().OfType<TSD.Part>().ToList(); //TODO:to be optimized using filter expressions
                 //get all secondary beams(Drawing + Model) in the sheet in a list
-                List<SecondaryBeam> secBeams = parts.GetModelBeams(_model, assemblyPrefix).ToList();
+                List<ContainerBeam> secBeams = parts.GetModelBeams(_model, mainAssembly,secondaryAssembly).ToList();
                 //Get the first beam
-                SecondaryBeam orgBeam= secBeams.FirstOrDefault(b => b.ModelBeam.StartPoint.X == 0 && b.ModelBeam.StartPoint.Y == 0); //TODO: to be revisted (not robust)
+                ContainerBeam orgBeam= secBeams.FirstOrDefault(b => b.ModelBeam.StartPoint.X == 0 && b.ModelBeam.StartPoint.Y == 0); //TODO: to be revisted (not robust)
                 _model.SetPlane(orgBeam?.ModelBeam.GetCoordinateSystem());
                 secBeams.ForEach(b => {
                     b.ModelBeam.Select(); //get points relative to the new coordinate system
                     b.X = b.ModelBeam.StartPoint.X; //clone X-Value
                     });
                 //sort list by x
-                secBeams.Sort(SecondaryBeam.SortByX());
+                secBeams.Sort(ContainerBeam.SortByX());
                 TSD.ViewBase viewBase = null;
                 TSD.View view = null;
                 TSD.PointList pointList = null;
                 T3D.Point previousPoint = null;
                 T3D.Point currentPoint = null;
-                SecondaryBeam previousBeam = null;
+                ContainerBeam previousBeam = null;
                 T3D.Vector up= null;
                 T3D.Vector z = new T3D.Vector(0,0,1);
                 foreach (var beam in secBeams)
@@ -217,7 +217,7 @@ namespace AUTRA.Tekla
                 //TSD.StraightDimensionSet xDims = new TSD.StraightDimensionSetHandler().CreateDimensionSet(grid.GetView(), pointList, new T3D.Vector(0, 1, 0), 100, attr);
             }
         }
-        public void CreateDimsAlongBeams(TSD.Drawing drawing,string assemblyPrefix,double totalX , double totalY , List<Rectangle> rects,bool isMain =false )
+        public void CreateDimsAlongBeams(TSD.Drawing drawing,string mainAssembly , string secondaryAssembly,double totalX , double totalY , List<Rectangle> rects )
         {
             /*
              * Logic:
@@ -234,7 +234,7 @@ namespace AUTRA.Tekla
                     .ToIEnumerable()
                     .OfType<TSD.Part>()
                     .ToList()
-                    .GetModelBeams(_model,assemblyPrefix).ToList();
+                    .GetModelBeams(_model,mainAssembly,secondaryAssembly).ToList();
                 var quadTree = new QuadTree(new Rectangle(totalX,totalY), 4);
                 beams.ForEach(b => quadTree.Insert(b)); //insert each beam in beams in quad tree
                 rects.ForEach(rect =>
@@ -243,17 +243,26 @@ namespace AUTRA.Tekla
                     var tuple = bs.GetParallelXY();
                     if(tuple.ParallelX!= null)
                     {
-                        var psX = tuple.ParallelX.GetPointList().CheckYBoundaries(rect);
-                        var viewBase = tuple.ParallelX[0].DrawingBeam.GetView();
-                        TSD.StraightDimensionSet.StraightDimensionSetAttributes attr = new TSD.StraightDimensionSet.StraightDimensionSetAttributes(tuple.ParallelX[0].DrawingBeam, "AUTRA");
-                        TSD.StraightDimensionSet XDimensions = new TSD.StraightDimensionSetHandler().CreateDimensionSet(viewBase, psX,new T3D.Vector(1,0,0), isMain?300:100, attr);
+                        var lstlst = FilterBeamsInX(tuple.ParallelX);
+                        lstlst.ForEach(lst =>
+                        {
+                           var psX = lst.GetPointList().CheckYBoundaries(rect);
+                           var viewBase = tuple.ParallelX[0].DrawingBeam.GetView();
+                           TSD.StraightDimensionSet.StraightDimensionSetAttributes attr = new TSD.StraightDimensionSet.StraightDimensionSetAttributes(tuple.ParallelX[0].DrawingBeam, "AUTRA");
+                           TSD.StraightDimensionSet XDimensions = new TSD.StraightDimensionSetHandler().CreateDimensionSet(viewBase, psX, new T3D.Vector(1, 0, 0), -400, attr);
+                            
+                        });
                     }
                     if (tuple.ParallelY != null)
                     {
-                        var psY = tuple.ParallelY.GetPointList().CheckXBoundaries(rect);
-                        var viewBase = tuple.ParallelY[0].DrawingBeam.GetView();
-                        TSD.StraightDimensionSet.StraightDimensionSetAttributes attr = new TSD.StraightDimensionSet.StraightDimensionSetAttributes(tuple.ParallelY[0].DrawingBeam, "AUTRA");
-                        TSD.StraightDimensionSet XDimensions = new TSD.StraightDimensionSetHandler().CreateDimensionSet(viewBase, psY, new T3D.Vector(0, 1, 0), isMain ? 300 : 100, attr);
+                        var lstlst = FilterBeamsInY(tuple.ParallelY);
+                        lstlst.ForEach(lst =>
+                        {
+                            var psY = lst.GetPointList().CheckXBoundaries(rect);
+                            var viewBase = tuple.ParallelY[0].DrawingBeam.GetView();
+                            TSD.StraightDimensionSet.StraightDimensionSetAttributes attr = new TSD.StraightDimensionSet.StraightDimensionSetAttributes(tuple.ParallelY[0].DrawingBeam, "AUTRA");
+                            TSD.StraightDimensionSet XDimensions = new TSD.StraightDimensionSetHandler().CreateDimensionSet(viewBase, psY, new T3D.Vector(0, 1, 0),400, attr);
+                        });
                     }
                 });
                  drawing.CommitChanges();
@@ -326,5 +335,47 @@ namespace AUTRA.Tekla
             });
         }
         #endregion
+
+        private List<List<ContainerBeam>> FilterBeamsInX(List<ContainerBeam> beams)
+        {
+            List<List<ContainerBeam>> bigLst = new List<List<ContainerBeam>>();
+            beams = beams.OrderByDescending(b => b.ModelBeam.GetLengthSquared()).ToList(); //Beams are ordered descendingly according to their length
+            var placeHolder = beams[0];
+            List<ContainerBeam> small = new List<ContainerBeam>();
+            bigLst.Add(small);
+            foreach (var beam in beams)
+            {
+                if (placeHolder.XIsBetween(beam)) small.Add(beam);
+                else
+                {
+                    placeHolder = beam;
+                    small = new List<ContainerBeam>();
+                    small.Add(beam);
+                    bigLst.Add(small);
+                }
+            }
+            return bigLst;
+        }
+        private List<List<ContainerBeam>> FilterBeamsInY(List<ContainerBeam> beams)
+        {
+            List<List<ContainerBeam>> bigLst = new List<List<ContainerBeam>>();
+            beams = beams.OrderByDescending(b => b.ModelBeam.GetLengthSquared()).ToList(); //Beams are ordered descendingly according to their length
+            var placeHolder = beams[0];
+            List<ContainerBeam> small = new List<ContainerBeam>();
+            bigLst.Add(small);
+            foreach (var beam in beams)
+            {
+                if (placeHolder.YIsBetween(beam)) small.Add(beam);
+                else
+                {
+                    placeHolder = beam;
+                    small = new List<ContainerBeam>();
+                    small.Add(beam);
+                    bigLst.Add(small);
+                }
+            }
+            return bigLst;
+        }
     }
+    
 }

@@ -10,7 +10,7 @@ using TSD = Tekla.Structures.Drawing;
 
 namespace AUTRA.Tekla
 {
-  public  class SecondaryBeam
+  public  class ContainerBeam
     {
         //beam in model
         public TSM.Beam ModelBeam { get; set; } 
@@ -19,29 +19,43 @@ namespace AUTRA.Tekla
         public T3D.Point Point { get; set; }
         public double X { get; set; }
 
-        public SecondaryBeam(TSD.Part part, TSM.Model model)
+        public ContainerBeam(TSD.Part part, TSM.Model model)
         {
             DrawingBeam = part;
             Identifier id = part.ModelIdentifier;
             ModelBeam=   model.SelectModelObject(id) as TSM.Beam;
             Point = ModelBeam.GetMidPoint();
         }
-        public bool IsEqual(SecondaryBeam other) => Point.IsEqual(other.Point);
-        public static IComparer<SecondaryBeam> SortByX()
+        public bool XIsBetween(ContainerBeam other)
+        {
+            double x = ModelBeam.GetMidPoint().X;
+            double xs = Math.Min(other.ModelBeam.StartPoint.X, other.ModelBeam.EndPoint.X);
+            double xe = Math.Max(other.ModelBeam.StartPoint.X, other.ModelBeam.EndPoint.X);
+            return (x > xs && x < xe);
+        }
+        public bool YIsBetween(ContainerBeam other)
+        {
+            double y = ModelBeam.GetMidPoint().Y;
+            double ys = Math.Min(other.ModelBeam.StartPoint.Y, other.ModelBeam.EndPoint.Y);
+            double ye = Math.Max(other.ModelBeam.StartPoint.Y, other.ModelBeam.EndPoint.Y);
+            return (y > ys && y < ye);
+        }
+        public bool IsEqual(ContainerBeam other) => Point.IsEqual(other.Point);
+        public static IComparer<ContainerBeam> SortByX()
         {
             return new CompareByX();
         }
-        public static IComparer<SecondaryBeam> SortByY()
+        public static IComparer<ContainerBeam> SortByY()
         {
             return new CompareByY();
         }
-        public static IComparer<SecondaryBeam> SortByZ()
+        public static IComparer<ContainerBeam> SortByZ()
         {
             return new CompareByZ();
         }
-        class CompareByX : IComparer<SecondaryBeam>
+        class CompareByX : IComparer<ContainerBeam>
         {
-            public int Compare(SecondaryBeam a, SecondaryBeam b)
+            public int Compare(ContainerBeam a, ContainerBeam b)
             {
                 int result;
                 if (a?.ModelBeam?.StartPoint.X > b?.ModelBeam?.StartPoint.X)
@@ -70,9 +84,9 @@ namespace AUTRA.Tekla
                 return result;
             }
         }
-        class CompareByY : IComparer<SecondaryBeam>
+        class CompareByY : IComparer<ContainerBeam>
         {
-            public int Compare(SecondaryBeam a, SecondaryBeam b)
+            public int Compare(ContainerBeam a, ContainerBeam b)
             {
                 int result;
                 if (a?.ModelBeam?.StartPoint.Y > b?.ModelBeam?.StartPoint.Y)
@@ -101,9 +115,9 @@ namespace AUTRA.Tekla
                 return result;
             }
         }
-        class CompareByZ : IComparer<SecondaryBeam>
+        class CompareByZ : IComparer<ContainerBeam>
         {
-            public int Compare(SecondaryBeam a, SecondaryBeam b)
+            public int Compare(ContainerBeam a, ContainerBeam b)
             {
                 int result;
                 if (a?.ModelBeam?.StartPoint.Z > b?.ModelBeam?.StartPoint.Z)

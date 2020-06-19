@@ -79,48 +79,9 @@ namespace AUTRA.Design
             //TODO:The following two Functions basically ca run in different threads
             SecondaryGroups = Analysis.InitBeamsForDesign(Project.SecondaryBeams);
             ColumnsGroup = Analysis.InitColumnsForDesign(Project.Columns);
-            Stopwatch watch = new Stopwatch();
-            watch.Start();
-            foreach (var group in SecondaryGroups)
-            {
-                bool beamGroupResult = false;
-                Section section = group.Section;
-                while (!beamGroupResult)
-                {
-                    beamGroupResult = DesignCode.DesignBeam(group, BeamType.FLOOR);
-                    if (!beamGroupResult)
-                    {
-                        if (!GetNextSection(ref section))
-                        {
-                            Console.WriteLine("No bigger Section");
-                            throw new Exception("No bigger section");
-                        }
-                    }
-                    group.Section = section;
-                }
-            }
-            
-            Console.WriteLine(watch.ElapsedMilliseconds);
+            SecondaryGroups.ForEach(g => DesignGroup(g));
             MainGroups = Analysis.InitBeamsForDesign(Project.MainBeams);
-            foreach (var group in MainGroups)
-            {
-                bool beamGroupResult = false;
-                Section section = group.Section;
-                while (!beamGroupResult)
-                {
-                    beamGroupResult = DesignCode.DesignBeam(group, BeamType.FLOOR);
-                    if (!beamGroupResult)
-                    {
-                        if (!GetNextSection(ref section))
-                        {
-                            Console.WriteLine("No bigger Section");
-                            throw new Exception("No bigger section");
-                        }
-                    }
-                    group.Section = section;
-                }
-            }
-            watch.Stop();
+            MainGroups.ForEach(g => DesignGroup(g));
             Section colSection = ColumnsGroup.DesignValues.CriticalElement.Section;
             bool columnResult = false;
             while (!columnResult)
@@ -142,16 +103,54 @@ namespace AUTRA.Design
             Project.MainBeams.Sort(FrameElement.SortByID<Beam>());
             Project.Columns.Sort(FrameElement.SortByID<Column>());
         }
-        public void CreateReports(string folderPath)
+        public void CreateReports(string folderPath,string userName)
         {
-            Report report = new Report(folderPath);
+            Report report = new Report(folderPath ,  userName,Project.ProjectProperties);
             report.Create("Design Calculation Sheet.pdf", SecondaryGroups,MainGroups,ColumnsGroup);
         }
         #endregion
-        #region Helper Methods
-        #region Methods For Section Selection
-        private Section GetSectionById(int id) => Sections.FirstOrDefault(s => s.Id == id);
 
+        
+
+        #region Helper Methods
+        private void DesignGroup(Group group)
+        {
+            bool stopFlag = false;
+            bool isSmallerUnsafe = false;
+            BeamDesignStatus result;
+            Section section = group.Section;
+            while (!stopFlag)
+            {
+                result = DesignCode.DesignBeam(section,group, BeamType.FLOOR);
+                switch (result)
+                {
+                    case BeamDesignStatus.VERY_SAFE:
+                        //if smallerisChecked => break
+                        //is smaller is not checked => get smaller section
+                        if (isSmallerUnsafe) stopFlag=true;
+                        else
+                        {
+                            if (!GetPreviousSection(ref section)) isSmallerUnsafe = true;
+                        }
+                        break;
+                    case BeamDesignStatus.SAFE:
+                        stopFlag = true;
+                        break;
+                    case BeamDesignStatus.UNSAFE:
+                        //get larger section
+                        //if you cant get larger section throw exception
+                        isSmallerUnsafe = true;
+                        if (!GetNextSection(ref section))
+                        {
+                            throw new Exception("No bigger section");
+                        }
+                        break;
+                }
+            }
+            if (section.H < 20) group.Section = Sections.FirstOrDefault(s => s.Name == "IPE200");
+            else group.Section = section;
+        }
+        private Section GetSectionById(int id) => Sections.FirstOrDefault(s => s.Id == id);
         private bool GetNextSection(ref Section section)
         {
             var material = section.Material;
@@ -174,7 +173,7 @@ namespace AUTRA.Design
 
             int id = section.Id;
             bool result = true;
-            if ((id - 1) < Sections.Count)
+            if ((id - 1) < Sections.Count && (id-1)>0)
             {
                 section = GetSectionById(id - 1);
                 section.Material = material;
@@ -186,7 +185,7 @@ namespace AUTRA.Design
             return result;
         }
         #endregion
-        #endregion
+        
         #region Connections
         public List<Connection> DesignConnections()
         {
@@ -205,10 +204,10 @@ namespace AUTRA.Design
                 c.SimpleConnection.Tp = plateThickness; 
                 c.SimpleConnection.Sw = weldSize;
             });
-            GetMainPart();
             SecondaryGroups.AssignSectionToElement();
             MainGroups.AssignSectionToElement();
             ColumnsGroup.AssignSectionToElement();
+            GetMainPart();
             return Connections;
         }
         private void SimpleConnection(Group group , ref int weldSize ,ref int plateThickness )
@@ -274,6 +273,8 @@ namespace AUTRA.Design
                             c.MainPart = mains[0];
                         else
                            c.MainPart=mains.FirstOrDefault(m => c.SecondaryPart.IsPrependicular(m));
+                        //check that main beam is greater or equal the secondary beam
+                        if (c.MainPart.Section < c.SecondaryPart.Section) c.MainPart.Section = c.SecondaryPart.Section;
                     }
                 }
             }

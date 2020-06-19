@@ -50,7 +50,7 @@ namespace AUTRA.Tekla
             points.ForEach(p => ps.Add(p));
             return ps;
         }
-        public static TSD.PointList GetPointList(this List<SecondaryBeam> beams)
+        public static TSD.PointList GetPointList(this List<ContainerBeam> beams)
         {
             TSD.PointList ps = new TSD.PointList();
             beams.ForEach(b => ps.Add(b.ModelBeam.GetMidPoint()));
@@ -58,12 +58,12 @@ namespace AUTRA.Tekla
         }
         public static TSD.Grid GetGrid(this TSD.Drawing drawing) => drawing.GetSheet().GetAllObjects(typeof(TSD.Grid)).ToIEnumerable().OfType<TSD.Grid>().FirstOrDefault();
         public static List<TSD.GridLine> GetGridLines(this TSD.Grid grid) => grid.GetObjects().ToIEnumerable().OfType<TSD.GridLine>().ToList();
-        public static IEnumerable<SecondaryBeam> GetModelBeams(this List<TSD.Part> parts ,TSM.Model model ,string assemblyPrefix)
+        public static IEnumerable<ContainerBeam> GetModelBeams(this List<TSD.Part> parts ,TSM.Model model ,string mainAssembly , string secondaryAssembly)
         {
             foreach (TSD.Part part in parts)
             {
-                SecondaryBeam temp = new SecondaryBeam(part, model);
-                if (temp.ModelBeam != null && temp.ModelBeam.AssemblyNumber.Prefix == assemblyPrefix)
+                ContainerBeam temp = new ContainerBeam(part, model);
+                if (temp.ModelBeam != null && (temp.ModelBeam.AssemblyNumber.Prefix == mainAssembly|| temp.ModelBeam.AssemblyNumber.Prefix==secondaryAssembly))
                 {
                     temp.ModelBeam.Select();
                     yield return temp;
@@ -94,7 +94,7 @@ namespace AUTRA.Tekla
         public static TSD.View CreateView(this TSD.Drawing drawing , T3D.CoordinateSystem coords , T3D.AABB box,double scale ,string viewName , string attributeFile)
         {
             var view = new TSD.View(drawing.GetSheet(), coords, coords, box);
-            view.Origin = new T3D.Point((drawing.Layout.SheetSize.Width / 2) - box.GetLWH().Length*scale / 2, (drawing.Layout.SheetSize.Height / 2) - box.GetLWH().Width * scale / 2);//TODO:To be revisted
+            view.Origin = new T3D.Point((drawing.Layout.SheetSize.Width / 2) - box.GetLWH().Length*scale / 2+2000*scale, (drawing.Layout.SheetSize.Height / 2) - box.GetLWH().Width * scale / 2+2000*scale);//TODO:To be revisted
             view.Name = viewName;
             //setting view attributes
             TSD.View.ViewAttributes viewAttributes = new TSD.View.ViewAttributes(attributeFile);

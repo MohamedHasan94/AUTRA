@@ -9,7 +9,8 @@ using Tekla.Structures;
 using TSM=Tekla.Structures.Model;
 using T3D = Tekla.Structures.Geometry3d;
 using TSD = Tekla.Structures.Drawing;
-using System.IO;
+using TSMUI = Tekla.Structures.Model.UI;
+using System.IO.Compression;
 
 namespace AUTRA.Tekla
 {
@@ -148,7 +149,7 @@ namespace AUTRA.Tekla
         {
             foreach (var column in Columns)
             {
-                TSM.Beam footing = Model.SelectByBoundingBox<TSM.Beam>(column.StartPoint).Where(b => b.GetLengthSquared() < column.GetLengthSquared()).FirstOrDefault();
+                TSM.Beam footing = Model.SelectByBoundingBox<TSM.Beam>(column.StartPoint,new T3D.Point(100,100,100),new T3D.Point(-100,-100,-100)).Where(b => b.GetLengthSquared() < column.GetLengthSquared()).FirstOrDefault();
                 if (footing != null)
                 {
                     Model.createBasePlate(column, footing);
@@ -196,44 +197,6 @@ namespace AUTRA.Tekla
             _drawings.CreateDimsAlongGrids(drawing);
             return drawing;
         }
-        private void CreateElevationAlongX(string name , double xCoord)
-        {
-            Model.SetPlaneToGlobal();
-            //Moving the transformation plane at each Grid in X-direction (Note: X-Axis beacomes Y-Axis & Y-Axis bracomes Z-Axis)
-            T3D.CoordinateSystem coords = new T3D.CoordinateSystem(new T3D.Point(xCoord, 0, 0), new T3D.Vector(0, 1, 0), new T3D.Vector(0, 0, 1));
-            Model.SetPlane(coords);
-
-            double minHeight = Data.Model.Grids.CZS[0]-1000;
-            double maxHeight = Data.Model.Grids.CZS[Data.Model.Grids.CZS.Count - 1] + 1000;
-
-            T3D.Point max = new T3D.Point(TotalY+2000, maxHeight,500 );
-            T3D.Point min = new T3D.Point(-2000, minHeight,-500 );
-
-            T3D.AABB box = new T3D.AABB(min, max);
-            TSD.Drawing drawing =  _drawings.CreateGADrawing(name, 0.02,coords , box);
-            _drawings.CreateHatch(drawing);
-            _drawings.CreateDimsAlongGrids(drawing);
-        }
-        private void CreateElevationAlongY(string name, double yCoord)
-        {
-            Model.SetPlaneToGlobal();
-            //Moving the transformation plane at each Grid in X-direction (Note: X-Axis beacomes X-Axis & Y-Axis becomes Z-Axis)
-            T3D.CoordinateSystem coords = new T3D.CoordinateSystem(new T3D.Point(0, yCoord, 0), new T3D.Vector(1, 0, 0), new T3D.Vector(0, 0, 1));
-            Model.SetPlane(coords);
-
-            double minHeight = Data.Model.Grids.CZS[0] - 1000;
-            double maxHeight = Data.Model.Grids.CZS[Data.Model.Grids.CZS.Count - 1] + 1000;
-
-            T3D.Point max = new T3D.Point(TotalX + 2000, maxHeight, 500);
-            T3D.Point min = new T3D.Point(-2000, minHeight, -500);
-
-            T3D.AABB box = new T3D.AABB(min, max);
-
-            TSD.Drawing drawing = _drawings.CreateGADrawing(name, 0.02, coords, box);
-            _drawings.CreateHatch(drawing);
-            _drawings.CreateDimsAlongGrids(drawing);
-
-        }
         public void CreateElevationDWGSAlongX()
         {
             string[] labels;
@@ -266,8 +229,7 @@ namespace AUTRA.Tekla
             double maxHeight = Data.Model.Grids.CZS[Data.Model.Grids.CZS.Count - 1] + 1000;
              TSD.Drawing drawing= CreatePlanDWG("Plan", minHeight, maxHeight);
             var rects = Data.Model.Grids.CreateRectangles().ToList();
-            _drawings.CreateDimsAlongBeams(drawing, Data.Model.SecondaryBeams[0].AssemblyPrefix,TotalX,TotalY,rects);
-            _drawings.CreateDimsAlongBeams(drawing, Data.Model.MainBeams[0].AssemblyPrefix, TotalX, TotalY, rects,true);
+            _drawings.CreateDimsAlongBeams(drawing, Data.Model.MainBeams[0].AssemblyPrefix, Data.Model.SecondaryBeams[0].AssemblyPrefix,TotalX,TotalY,rects);
             _drawingHandler.CloseActiveDrawing(true);
             Model.SetPlaneToGlobal();
         }
@@ -281,6 +243,89 @@ namespace AUTRA.Tekla
         {
             _drawings.PrintDrawings(TSD.DotPrintPaperSize.A3);
         }
+        public void ExportIFC()
+        {
+           var objs= Model.GetModelObjectSelector().GetAllObjects().ToList();
+            var selector =new TSMUI.ModelObjectSelector();
+            selector.Select(new ArrayList(objs),false);
+            var modelPath = Model.GetInfo().ModelPath;
+            string outputFile=$"{modelPath}\\IFC\\OUT_{Data.ProjectProperties.Name}";
+
+            var compInput = new TSM.ComponentInput();
+            compInput.AddOneInputPosition(new T3D.Point(0, 0, 0));
+            var comp = new TSM.Component(compInput)
+            {
+                Name = "ExportIFC", //Name of dll that contains the plugin
+                Number = TSM.BaseComponent.PLUGIN_OBJECT_NUMBER
+            };
+            // Parameters
+            comp.SetAttribute("OutputFile", outputFile);
+            comp.SetAttribute("Format", 0);
+            comp.SetAttribute("ExportType", 1);
+            //comp.SetAttribute("AdditionalPSets", "");
+            comp.SetAttribute("CreateAll", 1);  // 0 to export only selected objects
+
+            // Advanced
+            comp.SetAttribute("Assemblies", 1);
+            comp.SetAttribute("Bolts", 1);
+            comp.SetAttribute("Welds", 0);
+            comp.SetAttribute("SurfaceTreatments", 1);
+
+            comp.SetAttribute("BaseQuantities", 1);
+            comp.SetAttribute("GridExport", 1);
+            comp.SetAttribute("ReinforcingBars", 1);
+            comp.SetAttribute("PourObjects", 1);
+
+            comp.SetAttribute("LayersNameAsPart", 1);
+            comp.SetAttribute("PLprofileToPlate", 0);
+            comp.SetAttribute("ExcludeSnglPrtAsmb", 0);
+
+            comp.SetAttribute("LocsFromOrganizer", 0);
+
+            comp.Insert();
+        }
+        #endregion
+
+        #region Helper Private Methods
+       
+        private void CreateElevationAlongX(string name, double xCoord)
+        {
+            Model.SetPlaneToGlobal();
+            //Moving the transformation plane at each Grid in X-direction (Note: X-Axis beacomes Y-Axis & Y-Axis bracomes Z-Axis)
+            T3D.CoordinateSystem coords = new T3D.CoordinateSystem(new T3D.Point(xCoord, 0, 0), new T3D.Vector(0, 1, 0), new T3D.Vector(0, 0, 1));
+            Model.SetPlane(coords);
+
+            double minHeight = Data.Model.Grids.CZS[0] - 1000;
+            double maxHeight = Data.Model.Grids.CZS[Data.Model.Grids.CZS.Count - 1] + 1000;
+
+            T3D.Point max = new T3D.Point(TotalY + 2000, maxHeight, 500);
+            T3D.Point min = new T3D.Point(-2000, minHeight, -500);
+
+            T3D.AABB box = new T3D.AABB(min, max);
+            TSD.Drawing drawing = _drawings.CreateGADrawing(name, 0.02, coords, box);
+            _drawings.CreateHatch(drawing);
+            _drawings.CreateDimsAlongGrids(drawing);
+        }
+        private void CreateElevationAlongY(string name, double yCoord)
+        {
+            Model.SetPlaneToGlobal();
+            //Moving the transformation plane at each Grid in X-direction (Note: X-Axis beacomes X-Axis & Y-Axis becomes Z-Axis)
+            T3D.CoordinateSystem coords = new T3D.CoordinateSystem(new T3D.Point(0, yCoord, 0), new T3D.Vector(1, 0, 0), new T3D.Vector(0, 0, 1));
+            Model.SetPlane(coords);
+
+            double minHeight = Data.Model.Grids.CZS[0] - 1000;
+            double maxHeight = Data.Model.Grids.CZS[Data.Model.Grids.CZS.Count - 1] + 1000;
+
+            T3D.Point max = new T3D.Point(TotalX + 2000, maxHeight, 500);
+            T3D.Point min = new T3D.Point(-2000, minHeight, -500);
+
+            T3D.AABB box = new T3D.AABB(min, max);
+
+            TSD.Drawing drawing = _drawings.CreateGADrawing(name, 0.02, coords, box);
+            _drawings.CreateHatch(drawing);
+            _drawings.CreateDimsAlongGrids(drawing);
+
+        }
         #endregion
 
         #region Main Methods for Reports
@@ -290,5 +335,9 @@ namespace AUTRA.Tekla
         }
         #endregion
 
+        public void CompressFolder()
+        {
+            ZipFile.CreateFromDirectory(Model.GetInfo().ModelPath, $"{Model.GetInfo().ModelPath}.zip");
+        }
     }
 }

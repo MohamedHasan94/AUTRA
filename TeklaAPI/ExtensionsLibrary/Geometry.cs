@@ -9,10 +9,10 @@ namespace AUTRA.Tekla
 {
    public static class Geometry
     {
-        public static (List<SecondaryBeam> ParallelX , List<SecondaryBeam> ParallelY ) GetParallelXY(this List<SecondaryBeam> beams)
+        public static (List<ContainerBeam> ParallelX , List<ContainerBeam> ParallelY ) GetParallelXY(this List<ContainerBeam> beams)
         {
-            List<SecondaryBeam> px = new List<SecondaryBeam>();
-            List<SecondaryBeam> py = new List<SecondaryBeam>();
+            List<ContainerBeam> px = new List<ContainerBeam>();
+            List<ContainerBeam> py = new List<ContainerBeam>();
             beams.ForEach(b =>
             {
                 if (b.ModelBeam.InX()) px.Add(b);

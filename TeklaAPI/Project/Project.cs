@@ -11,6 +11,7 @@ using T3D = Tekla.Structures.Geometry3d;
 using TSD = Tekla.Structures.Drawing;
 using TSMUI = Tekla.Structures.Model.UI;
 using System.IO.Compression;
+using System.IO;
 
 namespace AUTRA.Tekla
 {
@@ -337,7 +338,27 @@ namespace AUTRA.Tekla
 
         public void CompressFolder()
         {
-            ZipFile.CreateFromDirectory(Model.GetInfo().ModelPath, $"{Model.GetInfo().ModelPath}.zip");
+            var path = Model.GetInfo().ModelPath.GetFolderPath();
+            var newfolderName = string.Format($"{Data.ProjectProperties.Name}_User");
+            string[] filePaths = Directory.GetFiles(Model.GetInfo().ModelPath);
+            string newFolderPath = $@"{path}\{newfolderName}";
+            Directory.CreateDirectory(newFolderPath);
+            foreach (var filename in filePaths)
+            {
+                int index = filename.LastIndexOf('\\');
+                string file = filename.Substring(index);
+                //Do your job with "file"  
+                if(file!= "logs")
+                {
+                    {
+                        File.Copy(filename,string.Format($"{newFolderPath}\\{file}"),false);
+                    }
+                }
+            }
+            ZipFile.CreateFromDirectory(path, $"{path}{newfolderName}.zip");
+                
+                
+            
         }
     }
 }

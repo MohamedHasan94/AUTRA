@@ -43,6 +43,7 @@ namespace AUTRA
             materials.AssignMaterialValues(model.Material);
             //for every section used in the model get its value from the sections file and assign its value
             model.Sections.ForEach(s => sections.AssignSectionValues(s));
+            sections.ForEach(s => s.Material = model.Material);
             model.Columns.AssignID("C");
             model.MainBeams.AssignID("MB");
             model.SecondaryBeams.AssignID("SB");
@@ -92,7 +93,7 @@ namespace AUTRA
         public static void InitTekla(string path)
         {
             var p = new Process();
-            p.StartInfo = new ProcessStartInfo(@"D:\ITI\GraduationProject\AUTRA\TeklaAPIHandler\bin\Debug\TeklaAPIHandler.exe", path)
+            p.StartInfo = new ProcessStartInfo(@"D:\ITI\GraduationPoject\AUTRA\TeklaAPIHandler\bin\Debug\TeklaAPIHandler.exe", path)
             {
                 UseShellExecute = true
             };

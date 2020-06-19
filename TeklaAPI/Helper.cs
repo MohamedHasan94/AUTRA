@@ -20,6 +20,11 @@ namespace AUTRA.Tekla
             assemblyPath = assemblyPath.Substring(0, index + 1);
             return string.Format($"{assemblyPath}{fileRelativePath}");
         }
+        public static string GetFolderPath(this string path)
+        {
+            int index = path.LastIndexOf('\\');
+            return path.Substring(0, index + 1);
+        }
         internal static string StringFromArray<T>(T[] arr) where T : struct
         {
             StringBuilder sb = new StringBuilder();
@@ -68,6 +73,7 @@ namespace AUTRA.Tekla
             }
             return sb.ToString();
         }
+        
         internal static void GetFiles(TSM.Model model)
         {
             var assembly = Assembly.GetExecutingAssembly();

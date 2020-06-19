@@ -5,6 +5,7 @@ using System.Text;
 using System.Threading.Tasks;
 using System.Diagnostics;
 using AUTRA.Tekla;
+using System.IO.Compression;
 
 namespace TeklaAPIHandler
 {
@@ -14,7 +15,7 @@ namespace TeklaAPIHandler
         {
             Stopwatch stopwatch = new Stopwatch();
             stopwatch.Start();
-            //string path = @"D:\ITI\GraduationProject\AUTRA\AUTRA\wwwroot\Inputs\ToTekla02.json";
+            //string path = @"D:\ITI\GraduationPoject\AUTRA\AUTRA\wwwroot\Inputs\ToTekla04.json";
             //var data = Reader.Read<TeklaModelData>(path/*args[0]*/);
             //AUTRATekla.InitTekla(data);
             if (args.Length > 0)

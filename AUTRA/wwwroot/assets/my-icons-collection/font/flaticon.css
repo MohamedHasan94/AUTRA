@@ -1,6 +1,6 @@
 	/*
   	Flaticon icon font: Flaticon
-  	Creation date: 14/06/2020 15:46
+  	Creation date: 19/06/2020 07:35
   	*/
 
 @font-face {
@@ -27,7 +27,7 @@
   font-family: Flaticon;
         font-size: 100px;
 font-style: normal;
-margin-left:0px;
+margin-left: 20px;
 }
 
 .flaticon-modeling:before { content: "\f100"; }
@@ -35,6 +35,37 @@ margin-left:0px;
 .flaticon-3d-modeling:before { content: "\f102"; }
 .flaticon-model:before { content: "\f103"; }
 .flaticon-floor-plan:before { content: "\f104"; }
-.flaticon-beam:before { content: "\f105"; }
-.flaticon-calculator:before { content: "\f106"; }
-.flaticon-graphs:before { content: "\f107"; }
+.flaticon-graphs:before { content: "\f105"; }
+.flaticon-beam:before { content: "\f106"; }
+.flaticon-calculator:before { content: "\f107"; }
+.flaticon-axis:before { content: "\f108"; }
+.flaticon-axis-1:before { content: "\f109"; }
+.flaticon-cube:before { content: "\f10a"; }
+.flaticon-download:before { content: "\f10b"; }
+.flaticon-business:before { content: "\f10c"; }
+.flaticon-download-1:before { content: "\f10d"; }
+.flaticon-arrow:before { content: "\f10e"; }
+.flaticon-drawing:before { content: "\f10f"; }
+.flaticon-drawing-1:before { content: "\f110"; }
+.flaticon-architect-1:before { content: "\f111"; }
+.flaticon-architect-2:before { content: "\f112"; }
+.flaticon-moon:before { content: "\f113"; }
+.flaticon-sun:before { content: "\f114"; }
+.flaticon-play-button:before { content: "\f115"; }
+.flaticon-floppy-disk:before { content: "\f116"; }
+.flaticon-floppy-disk-1:before { content: "\f117"; }
+.flaticon-play-button-1:before { content: "\f118"; }
+.flaticon-sun-1:before { content: "\f119"; }
+.flaticon-moon-phase-outline:before { content: "\f11a"; }
+.flaticon-save:before { content: "\f11b"; }
+.flaticon-cube-1:before { content: "\f11c"; }
+.flaticon-beam-1:before { content: "\f11d"; }
+.flaticon-business-1:before { content: "\f11e"; }
+.flaticon-add:before { content: "\f11f"; }
+.flaticon-add-1:before { content: "\f120"; }
+.flaticon-add-2:before { content: "\f121"; }
+.flaticon-browser:before { content: "\f122"; }
+.flaticon-browser-1:before { content: "\f123"; }
+.flaticon-axis-2:before { content: "\f124"; }
+.flaticon-ruler:before { content: "\f125"; }
+.flaticon-dimension:before { content: "\f126"; }

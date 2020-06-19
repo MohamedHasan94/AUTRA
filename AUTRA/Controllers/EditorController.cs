@@ -10,6 +10,8 @@ using AUTRA.Data;
 using AUTRA.Design;
 using AUTRA.Helper;
 using AUTRA.Models;
+using Microsoft.AspNetCore.Authorization;
+using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 using Newtonsoft.Json;
 using Newtonsoft.Json.Converters;
@@ -17,6 +19,7 @@ using Newtonsoft.Json.Serialization;
 
 namespace AUTRA.Controllers
 {
+    [Authorize]
     public class EditorController : Controller
     {
         private readonly ApplicationDbContext _context;
@@ -38,7 +41,7 @@ namespace AUTRA.Controllers
         public IActionResult Open(string id)
         {
             string userId = User.FindFirst(ClaimTypes.NameIdentifier).Value;
-            ViewData["projectName"] = $"{userId}/{id}/{id}.json";
+            ViewData["projectName"] = $"/Users/{userId}/{id}/{id}.json";
             return View("Editor");
         }
 
@@ -48,36 +51,46 @@ namespace AUTRA.Controllers
         {
             project.Nodes.ModifyCoordinates();
             Stopwatch stopwatch = new Stopwatch();
+
             stopwatch.Start();
-            string userName = User.Identity.Name; //TODO:which name will be put on the right top corner of the design report
-            AUTRA.Init(project, @"D:\ITI\GraduationPoject\AUTRA\AUTRA\wwwroot\Inputs\ToTekla04.json",userName); //Harded coded path and where tekla save also hardcoded=> in AUTRA.Tekla=>Project=>project=> Init
+            AUTRA.Init(project, @"D:\ITI\GraduationProject\AUTRA\AUTRA\wwwroot\Inputs\ToTekla02.json"); //Harded coded path and where tekla save also hardcoded=> in AUTRA.Tekla=>Project=>project=> Init
             stopwatch.Stop();
-            string response = JsonConvert.SerializeObject(project,new JsonSerializerSettings
+            string response = JsonConvert.SerializeObject(project, new JsonSerializerSettings
             {
                 ContractResolver = new DefaultContractResolver { NamingStrategy = new CamelCaseNamingStrategy() },
                 Converters = new List<JsonConverter> { new StringEnumConverter(new CamelCaseNamingStrategy()) }
-            }); 
+            });
 
             return response;
         }
 
         [HttpPost]
-        public bool Save([FromRoute] string id)//id is projectName (for routing to bind the parameter)
+        public bool Save(Models.Project project, string jsonFile, IFormFile image)//id is projectName (for routing to bind the parameter)
         {
             string userId = User.FindFirst(ClaimTypes.NameIdentifier).Value;
-            string path = $"./wwwroot/Users/{userId}/{id}";
+
+            string path = $"./wwwroot/Users/{userId}/{project.Name}";
             Directory.CreateDirectory(path); //if the folder exists it will continue
-            using (var reader = new StreamReader(Request.Body, Encoding.UTF8))
+            using (var writer = new StreamWriter(Path.Combine(path, $"{project.Name}.json")))
             {
-                using (var writer = new StreamWriter(Path.Combine(path, $"{id}.json")))
-                {
-                    writer.Write(reader.ReadToEnd());
-                }
+                writer.Write(jsonFile);
             }
-            Models.Project project = new Models.Project { Fk_UserId = userId, Name = id};
-            _context.Projects.Add(project);
-            
-            return _context.SaveChanges() > 0;
+            using (var stream = System.IO.File.Create(Path.Combine(path, $"{project.Name}.png")))
+            {
+                image.CopyTo(stream);
+            }
+            project.Fk_UserId = userId;
+            project.LastModefied = DateTime.Now;
+            try
+            {
+                _context.Projects.Add(project);
+                return _context.SaveChanges() > 0;
+            }
+            catch (Microsoft.EntityFrameworkCore.DbUpdateException)
+            {
+                _context.Projects.Update(project);
+                return _context.SaveChanges() > 0;
+            }
         }
 
         //public IActionResult Model() //Model on Tekla

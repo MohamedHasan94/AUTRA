@@ -99,6 +99,7 @@ class GPUPickHelper {
         // restore the color if there is a picked object
         if (!multiple)
             this.unselect();
+        //debugger
         let object = this.getObject(cssPosition, renderer, pickingScene, camera, this.objectIds);
 
         if (object) {

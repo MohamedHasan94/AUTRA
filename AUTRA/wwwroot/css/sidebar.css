@@ -6,186 +6,211 @@
   box-sizing: border-box;
   font-family: 'Poppins', sans-serif;
 }
-#sidebarBtn{
-  position: absolute;
-  top: 5px;
-  left: 45px;
-  height: 45px;
-  width: 45px;
-  text-align: center;
-  background: #1b1b1b;
-  border-radius: 3px;
-  cursor: pointer;
-  transition: left 0.4s ease;
+#sidebarBtn {
+    position: absolute;
+    top: 15px;
+    right: 20px;
+    height: 48px;
+    width: 48px;
+    text-align: center;
+    background: #000D20;
+    border-radius: 5px;
+    cursor: pointer;
+    transition: top 0.4s ease;
 }
 #sidebarBtn.click{
-  left: 360px;
+  top: 75px;
 }
 #sidebarBtn span{
   color: white;
   font-size: 28px;
-  line-height: 45px;
+  line-height: 35px;
 }
 #sidebarBtn.click span:before{
   content: '\f00d';
 }
-.sidebar{
-  position: fixed;
-  width:350px;
-  height: 100%;
-  left: -350px;
-  background: #1b1b1b;
-  transition: left 0.4s ease;
+.sidebar {
+    position: fixed;
+    width: 100%;
+    height: 55px;
+    top: -55px;
+    background: #000D20;
+    transition: top 0.4s ease;
 }
 .sidebar.show{
-  left: 0px;
-}
-.sidebar .text{
-  color: white;
-  font-size: 18px;
-  font-weight: 500;
-  line-height: 65px;
-  text-align: center;
-  background: #1e1e1e;
-  letter-spacing: 1px;
-}
-nav ul{
-  background: #1b1b1b;
-  height: 100%;
-  width: 100%;
-  list-style: none;
-}
-nav ul li{
-  line-height: 60px;
-  border-top: 1px solid rgba(255,255,255,0.1);
-}
-nav ul li:last-child{
-  border-bottom: 1px solid rgba(255,255,255,0.05);
-}
-nav ul li a{
-  position: relative;
-  color: white;
-  text-decoration: none;
-  font-size: 18px;
-  padding-left: 20px;
-  font-weight: 500;
-  display: block;
-  width: 100%;
-  border-left: 3px solid transparent;
+  top: 0px;
 }
 
-nav ul li div{
-  position: relative;
-  color: white;
-  text-decoration: none;
-  font-size: 18px;
-  padding-left: 40px;
-  font-weight: 500;
-  display: block;
-  width: 100%;
-  border-left: 3px solid transparent;
+.sidebar .List {
+color: white;
+text-align: center;
 }
 
-nav ul li.active a{
-  color: cyan;
-  background: #1e1e1e;
-  border-left-color: cyan;
+.taskbarIcon {
+    display: inline-flex;
 }
-nav ul li a:hover{
-  background: #1e1e1e;
-}
-nav ul ul{
-/*  position: static;
-*/  display: none;
-}
-nav ul .feat-show.show{
-  display: block;
-}
-nav ul .serv-show.show1{
-  display: block;
-}
-nav ul .loads-show.show2{
-  display: block;
-}
-nav ul .myModel-show.show3{
-  display: block;
-}
-/*nav ul .mySelect-show.show5 {
+
+.taskbarIconBlock {
     display: block;
-}*/
-nav ul ul li{
-  line-height: 42px;
-  border-top: none;
 }
-nav ul ul li a{
-  font-size: 17px;
-  color: #e6e6e6;
-  padding-left: 40px;
+
+.taskbarIcon .taskbarIconBlock .taskbarIconLabel {
+    font-size: 10px;
 }
-nav ul li.active ul li a{
-  color: #e6e6e6;
-  background: #1b1b1b;
-  border-left-color: transparent;
+
+.taskbarIcon div .icon {
+    width: 90px;
+    height: 55px;
 }
-nav ul ul li a:hover{
-  color: cyan!important;
-  background: #1e1e1e!important;
+
+.taskbarIcon div:before {
+    font-size: 25px;
+    margin-left: 0px;
+    color: #fff;
 }
-nav ul li a span{
-  position: absolute;
-  top: 50%;
-  right: 20px;
-  transform: translateY(-50%);
-  font-size: 22px;
-  transition: transform 0.4s;
+
+.taskbarIcon div:hover:before,
+.taskbarIcon div:hover {
+    color: #04DBEC;
 }
-nav ul li a span.rotate{
-  transform: translateY(-50%) rotate(-180deg);
+
+.ddList {
+display:none;
+list-style-type:none;
 }
-.content{
-  position: absolute;
-  top: 50%;
-  left: 50%;
-  transform: translate(-50%,-50%);
-  color: #202020;
-  z-index: -1;
-  text-align: center;
+
+    .ddList .ddListItem {
+        text-align: left;
+        font-size: 15px;
+        background-color: #000D20;
+        padding: 0px;
+        margin-left: 7px;
+        margin-top: 5px;
+        margin-right: 28px;
+    }
+
+.taskbarIcon .ddList ul {
+    list-style: none
 }
-.content .header{
-  font-size: 45px;
-  font-weight: 600;
+.taskbarIcon :hover .ddList {
+    display: block;
+    position: absolute;
+    background-color: #000D20;
+    border-bottom-left-radius: 4px;
+    border-bottom-right-radius: 4px;
 }
-.content p{
-  font-size: 30px;
-  font-weight: 500;
+
+    .taskbarIcon :hover .ddList ul li {
+        text-align: left;
+        font-size: 12px;
+        background-color: #000D20;
+        color: white;
+    }
+
+.taskbarIcon .ddList ul li:hover {
+    color:#04DBEC;
+}
+
+.meduimDivSize {
+    height: 120px;
+    width: 215px;
+}
+
+.meduimLongDivSize {
+    height: 140px;
+    width: 200px;
+}
+
+.largeDivSize {
+    height: 210px;
+    width: 220px;
+}
+
+.large2DivSize {
+    height: 145px;
+    width: 230px;
+}
+
+.large3DivSize {
+    height: 90px;
+    width: 230px;
+}
+.small2DivSize {
+    height: 90px;
+    width: 160px;
+}
+.myBtn6 {
+    left: 130px;
+}
+    .innerDiv {
+    margin: 10px;
+    margin-top: -2px;
+}
+
+.myBtn {
+    color: #01173b;
+    align-self: center;
+    border-color: transparent;
+    border-radius: 3px;
+    background-color: #04DBEC;
+padding-left:3px;
+padding-right:3px;
+border:none;
+line-height:15px;
 }
 
 
-#elementSecDetails {
-  display: none;
-}
-#elementMoveDetails {
-  display: none;
-}
-#elementCopyDetails {
-    display: none;
-}
-#drawElementDetails {
-    display: none;
-}
-#addNodeCoordDetails {
-    display: none;
-}
-#addNodeBeamDetails {
-    display: none;
+.myBtn2 {
+    left: 190px;
 }
 
-#addPointLoadDetails {
-    display: none;
+.myBtn22 {
+    left: 200px;
 }
-#addLineLoadDetails {
-    display: none;
+
+
+.myBtn3 {
+    left: 185px;
 }
-#addFloorLoadDetails {
+
+.popupDiv {
     display: none;
+    position: absolute;
+    top: 75px;
+    left: 20px;
+    border-radius: 5px;
+    background-color: #000D20;
+    font-size: 12px;
+    color: white;
+}
+
+.popupBtn {
+    color: #fff;
+    background-color: transparent;
+    border-color: transparent;
+    position: relative;
+    top: 4px;
+    margin-bottom: 3px;
+    line-height: 14px;
+    border-radius: 50%;
+}
+.narrowShortDivSize {
+    height: 145px;
+    width: 175px;
+}
+.narrowLongDivSize {
+    height: 163px;
+    width: 190px;
+}
+.myBtn4 {
+    left: 160px;
+}
+
+.narrow2DivSize {
+    height: 90px;
+    width: 220px;
+}
+
+.myBtn5 {
+    left: 190px;
 }

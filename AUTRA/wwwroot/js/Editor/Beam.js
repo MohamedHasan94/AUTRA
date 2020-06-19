@@ -9,7 +9,6 @@ class Beam extends FrameElement {
         let direction = (vector.clone().subVectors(endPoint, startPoint)).normalize();
         let rotation = new THREE.Euler(0, direction.angleTo(zVector), 0);
         super(section, startPoint, endPoint, shape, lineMaterial, meshMaterial, startNode, endNode, direction, rotation);
-        //this.data.span = endPoint.distanceTo(startPoint);
         this.data.innerNodes = [];
         this.visual.mesh.userData.element = this;
     }
@@ -137,6 +136,11 @@ class Beam extends FrameElement {
             editor.createPickingObject(beam);
         }
         return generatedBeams;
+    }
+    static showResults(beams, pattern, action, display, domEvents, editor) {
+        for (let i = 0; i < beams.length; i++) {
+            editor.addToGroup(beams[i][action](pattern, display, domEvents), 'results');
+        }
     }
 }
 

@@ -100,6 +100,18 @@ namespace AUTRA.Data.Migrations
                     b.Property<string>("Name")
                         .HasColumnType("nvarchar(450)");
 
+                    b.Property<string>("Designer")
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<DateTime>("LastModefied")
+                        .HasColumnType("datetime2");
+
+                    b.Property<string>("Location")
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<string>("Owner")
+                        .HasColumnType("nvarchar(max)");
+
                     b.HasKey("Fk_UserId", "Name");
 
                     b.ToTable("Project");

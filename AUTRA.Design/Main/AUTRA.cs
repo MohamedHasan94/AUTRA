@@ -73,7 +73,7 @@ namespace AUTRA
             
             designer.CreateReports("./wwwroot/Outputs/Reports",userName);//To be changed
             #endregion
-            var teklaModel= ToTekla(model, connections);
+            var teklaModel = ToTekla(model, connections);
             Writer.Write(teklaModel, teklaModelPath);
             InitTekla(teklaModelPath);
         }
@@ -98,7 +98,7 @@ namespace AUTRA
         public static void InitTekla(string path)
         {
             var p = new Process();
-            p.StartInfo = new ProcessStartInfo(@"D:\ITI\GraduationPoject\AUTRA\TeklaAPIHandler\bin\Debug\TeklaAPIHandler.exe",path)
+            p.StartInfo = new ProcessStartInfo(@"D:\ITI\GraduationProject\AUTRA\TeklaAPIHandler\bin\Debug\TeklaAPIHandler.exe", path)
             {
                 UseShellExecute = true
             };

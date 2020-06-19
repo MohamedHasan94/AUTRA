@@ -27,6 +27,7 @@ namespace AUTRA.Design
         {
             FolderPath = folderPath;
             Project = project;
+            Owner = owner;
         }
         public void Create(string fileName,List<Group> secGroups,List<Group> mainGroups,Group columnGroups)
         {

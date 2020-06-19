@@ -2,12 +2,13 @@ var dark=document.getElementById("dark");
 var light = document.getElementById("light");
 var analysisResult = document.getElementById("analysisResult");
 
-
+//Show/Hide the side bar
 $('#sidebarBtn').click(function () {
     $(this).toggleClass("click");
     $('.sidebar').toggleClass("show");
 });
 
+//Show/Hide the option divs
 function flipDiv(id) {
     $('.activeDiv').fadeOut();
     $('.activeDiv').removeClass("activeDiv");
@@ -15,6 +16,7 @@ function flipDiv(id) {
     $(id).fadeIn();
 }
 
+//#region Show option divs
 $('#drawElement').click(function () {
     flipDiv('#drawElementDetails');
 });
@@ -55,8 +57,9 @@ $(' #viewsIcon ').click(function () {
 $(' #measureIcon ').click(function () {
     flipDiv('#measureDetails');
 });
+//#endregion
 
-
+//#region show/hide dropdowns
 $('#analysisResultBtn').click(function () {
     $('#analysisResultDetails').fadeOut();
 });
@@ -99,3 +102,18 @@ $(' #viewsBtn ').click(function () {
 $(' #measureBtn ').click(function () {
     $('#measureDetails').fadeOut();
 });
+//#endregion
+
+//#region Show info modal
+function showInfoModal(message) {
+    $('#info').text(message);
+    $('#infoModal').modal('show');
+}
+//#endregion
+
+//#region prevent closing window
+window.onbeforeunload = (e) => {
+    e.preventDefault();
+    return true;
+}
+//#endregion

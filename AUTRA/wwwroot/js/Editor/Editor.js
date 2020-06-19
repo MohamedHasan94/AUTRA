@@ -183,6 +183,7 @@ class Editor {
         }
     }
     screenshot() { //Take a screenshot to the view
+        $('#staticBackdrop').modal('show');
         this.renderer.render(this.scene, this.renderedCamera);
         let imgData = this.canvas.toDataURL("image/jpg");
         imgData.replace("image/jpg", "image/octet-stream");
@@ -195,6 +196,7 @@ class Editor {
         setTimeout(function () { // domElement takes some time to be added to the document
             link.click(); //Fire the click event of the link
             document.body.removeChild(link); //The link is no longer needed
+            $('#staticBackdrop').modal('hide');
         }, 1000);
     }
     getIntersected(position) { //get the object at the given position (world position)

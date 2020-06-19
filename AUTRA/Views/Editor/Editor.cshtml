@@ -32,7 +32,7 @@
                     </div>
                 </section>
                 <section>
-                    <div class="taskbarIconBlock" id="measureIcon" >
+                    <div class="taskbarIconBlock" id="measureIcon">
                         <div class="flaticon-ruler icon">
                             <div class="taskbarIconLabel">Measure</div>
                         </div>
@@ -47,7 +47,7 @@
                 </section>
 
                 <section>
-                    <div class="taskbarIconBlock"  onclick="showDimensions()" id="showDimensions" style="display:none">
+                    <div class="taskbarIconBlock" onclick="showDimensions()" id="showDimensions" style="display:none">
                         <div class="flaticon-dimension icon">
                             <div class="taskbarIconLabel">Show Dimentions</div>
                         </div>
@@ -528,8 +528,8 @@
                 <button class="myBtn" onclick="result()">Show Result</button>
                 <button class="myBtn" onclick="hideResults()">Hide Result</button>
                 <br>
-                <input type="text" id="station" disabled size="15">
-                <input type="text" id="action" disabled size="15">
+                Value &nbsp;&nbsp;&nbsp;<input type="text" id="station" disabled size="10"> <br />
+                Station <input type="text" id="action" disabled size="10">
             </div>
         </div>
         <div id="viewsDetails" class="popupDiv large3DivSize">
@@ -559,7 +559,7 @@
                     </tbody>
                 </table>
             </div>
-        </div>        
+        </div>
         <div id="measureDetails" class="popupDiv small2DivSize">
             <div class="innerDiv">
                 <button class="popupBtn myBtn6" id="measureBtn"><i class="fas fa-times"></i></button>
@@ -756,19 +756,13 @@
     </div>
 
     <!-- Notifaiction Modal -->
-    <div class="modal" id="infoModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalCenterTitle" aria-hidden="true">
-        <div class="modal-dialog modal-dialog-centered" role="document">
+    <div class="modal" id="infoModal" tabindex="-1" role="dialog" data-backdrop="static" aria-labelledby="exampleModalCenterTitle" aria-hidden="true">
+        <div class="modal-dialog modal-dialog-centered modal-sm" role="document">
             <div class="modal-content" style="background-color:#000D20">
-                <div class="modal-header">
-                    <button type="button" class="close" data-dismiss="modal" aria-label="Close">
-                        <span aria-hidden="true">&times;</span>
-                    </button>
-                </div>
                 <div class="modal-body" id="info" style="color:white">
-
                 </div>
                 <div class="modal-footer">
-                    <button type="button" class="btn btn-secondary" data-dismiss="modal">Ok</button>
+                    <button type="button" class="btn btn-sm btn-primary" data-dismiss="modal">Ok</button>
                 </div>
             </div>
         </div>
@@ -776,7 +770,7 @@
 
     <!-- Loading Modal -->
     <div class="modal" id="staticBackdrop" data-backdrop="static" tabindex="-1" role="dialog" aria-labelledby="staticBackdropLabel" aria-hidden="true">
-        <div class="modal-dialog staticBackdrop modal-dialog-centered" role="document">
+        <div class="modal-dialog modal-dialog-centered" role="document">
             <div class="modal-content" style="background-color:#000D20">
                 <div class="modal-header">
                     <h5 class="modal-title" id="staticBackdropLabel" style="color:white">Processing ....</h5>
@@ -810,6 +804,23 @@
             </div>
         </div>
     </div>
+
+    <!-- Closing Modal -->
+    <div class="modal" id="closingModal" data-backdrop="static" tabindex="-1" role="dialog" aria-labelledby="staticBackdropLabel" aria-hidden="true">
+        <div class="modal-dialog modal-dialog-centered" role="document">
+            <div class="modal-content" style="background-color:#000D20">                
+                <div class="modal-body" style="color:white">
+                    Do you want to save the changes made to the model?
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-primary" id="save">Save</button>
+                    <button type="button" class="btn btn-danger" id="dontSave">Don't Save</button>
+                    <button type="button" class="btn btn-secondary" data-dismiss="modal">Cancel</button>
+                </div>
+            </div>
+        </div>
+    </div>
+
     @* Scripts *@
 
     <script src="~/lib/jquery/dist/jquery.min.js"></script>

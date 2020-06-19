@@ -16,7 +16,6 @@
         canvas = editor.renderer.domElement;
         let path = $('#projectName').val();
         $('#projectName').remove();
-
         if (path) {
             $('#staticBackdrop').modal('show');
             $.ajax({
@@ -26,12 +25,11 @@
                     retrocycle(data);
                     buildModel(data);
                     $('#staticBackdrop').modal('hide');
-
                     //console.clear();
                 },
                 error: function (x, y, err) {
                     debugger
-                    console.log(err)
+                    showInfoModal('Something went wrong, please try again');
                 }
             });
         }
@@ -238,8 +236,7 @@
         let index = levels.indexOf(end.data.position.y) - 1;
         if (index < 0) {
             drawingPoints = [];
-            $('#info').text('please use one of the predefined levels');
-            $('#infoModal').modal('show');
+            showInfoModal('please use one of the predefined levels');
             return;
         }
         else {
@@ -326,8 +323,7 @@
                 }
                 else {
                     item.userData.element.move(displacement.multiplyScalar(-1));
-                    $('#info').text('please move elements to one of the predefined levels');
-                    $('#infoModal').modal('show');
+                    showInfoModal('please move elements to one of the predefined levels');
                 }
             }
         }
@@ -357,8 +353,7 @@
                     }
                     else {
                         element.move(displacement.multiplyScalar(-1));
-                        $('#info').text('please move elements to one of the predefined levels');
-                        $('#infoModal').modal('show');
+                        showInfoModal('please move elements to one of the predefined levels');
                     }
                 }
             }
@@ -401,8 +396,7 @@
                 if (item.userData.node)
                     points.push(item.userData.node.data.position);
                 else {
-                    $('#info').text('Please select two nodes before running the command');
-                    $('#infoModal').modal('show');
+                    showInfoModal('Please select two nodes before running the command');
                     return
                 }
             }
@@ -411,8 +405,7 @@
             setTimeout(() => input.value = '', 5000);
         }
         else {
-            $('#info').text('Please select two nodes before running the command');
-            $('#infoModal').modal('show');
+            showInfoModal('Please select two nodes before running the command');
         }
     }
 
@@ -587,7 +580,8 @@
                 $('#staticBackdrop').modal('hide')
             },
             error: function (x, y, res) {
-                console.log(res)
+                $('#staticBackdrop').modal('hide')
+                showInfoModal('Something went wrong. Please try again');
             }
         });
     }
@@ -612,23 +606,20 @@
                 success: function (res) {
                     $('#staticBackdrop').modal('hide');
                     if (res)
-                        $('#info').text('Project saved successfully');
+                        showInfoModal('Project saved successfully');
                     else
-                        $('#info').text('Something went wrong. Please try again');
-
-                    $('#infoModal').modal('show');
+                        showInfoModal('Something went wrong. Please try again');
                 },
                 error: function (x, y, res) {
                     $('#staticBackdrop').modal('hide');
-                    $('#info').text('Something went wrong. Please try again');
-
-                    $('#infoModal').modal('show');
+                    showInfoModal('Something went wrong. Please try again');
                 }
             });
         })
     }
 
     window.downloadFile = function () {
+        $('#staticBackdrop').modal('show');
         let model = createModel();
         //this.localStorage.setItem('Model', model); //Save data to localStorage ??!! Option #1
         //Save data on client machine if no internet connection Option #2
@@ -642,6 +633,7 @@
             link.click(); //Fire the click event of the link
             document.body.removeChild(link); //The link is no longer needed
             URL.revokeObjectURL(textFile); // Dispose the URL Object
+            $('#staticBackdrop').modal('hide');
         }, 1000);
     }
 
@@ -719,5 +711,5 @@
         let view = $('#view').val();
         if (view)
             editor.changeView(grids, view);
-    }
+    }    
 })();

@@ -10,6 +10,7 @@ using AUTRA.Data;
 using AUTRA.Design;
 using AUTRA.Helper;
 using AUTRA.Models;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 using Newtonsoft.Json;
@@ -18,6 +19,7 @@ using Newtonsoft.Json.Serialization;
 
 namespace AUTRA.Controllers
 {
+    [Authorize]
     public class EditorController : Controller
     {
         private readonly ApplicationDbContext _context;
@@ -78,6 +80,7 @@ namespace AUTRA.Controllers
                 image.CopyTo(stream);
             }
             project.Fk_UserId = userId;
+            project.LastModefied = DateTime.Now;
             try
             {
                 _context.Projects.Add(project);

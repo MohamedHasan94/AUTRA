@@ -214,3 +214,36 @@ line-height:15px;
 .myBtn5 {
     left: 190px;
 }
+
+.modelDivSize {
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    z-index: 1000;
+    border-radius: 5px;
+    background-color: #000D20;
+    font-size: 15px;
+    color: white;
+    background-image: url("../assets/img/hero/h1_hero.jpg");
+}
+
+
+.myModalInput {
+    color: black;
+    text-align: left;
+    border-color: transparent;
+    border-radius: 3px;
+    background-color: #fff;
+    border: none;
+    line-height: 15px;
+    padding: 2px;
+    width: 80%;
+    outline: none;
+}
+
+    .myModalInput:focus {
+        background-color: #b3edf5;
+    }
+

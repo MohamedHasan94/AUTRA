@@ -7,6 +7,7 @@
 <head>
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <link rel="icon" href="~/assets/img/AutraLogo/8.png">
     <link href="~/lib/bootstrap/dist/css/bootstrap.min.css" rel="stylesheet" />
     <link href="~/css/style.css" rel="stylesheet" />
     <link rel="stylesheet" href="~/assets/my-icons-collection/font/flaticon.css">
@@ -17,6 +18,235 @@
 <body>
     <input type="text" hidden disabled id="projectName" value='@ViewData["projectName"]' />
     <canvas id="canvas" style="position:absolute"></canvas>
+    <!--Start-up window-->
+    <div class="modelDivSize" id="modalDivDetails">
+        <div class="container mt-3">
+            <div class="row">
+                <div class="col-8"><h1>New Project</h1></div>
+                <div class="col-4" style="align-content:end;">
+                    <img src="/assets/img/AutraLogo/7.png" alt="AUTRA"
+                         style="width: 100%;padding-left: 130px; padding-right: 5px; padding-top: 5px;" />
+                </div>
+            </div>
+            <div class="row mt-3">
+                <div class="col">
+                    <h3> Mezzanine Structure Layout</h3>
+                    <div class="border-white mt-4">
+                        <table style="display:table; width:110%;">
+
+                            <tr class="form-group">
+                                <td><h6 class="subtitle" style=" color: #04DBEC;">Grids</h6></td>
+                            </tr>
+                            <tr class="form-group">
+                                <td><label for="spaceX">Spacing in X-direction</label></td>
+                                <td> <input type="text" name="" id="spaceX" class=" myModalInput" value="3*6" required></td>
+                            </tr>
+                            <tr class="form-group">
+                                <td><label for="spaceZ">Spacing in Y-direction</label></td>
+                                <td> <input type="text" name="" id="spaceZ" class=" myModalInput" value="2*8" required></td>
+                            </tr>
+                            <tr class="form-group">
+                                <td><label for="height">Levels</label></td>
+                                <td><input type="text" name="" id="spaceY" class=" myModalInput" value="3" required></td>
+                            </tr>
+                            <tr style="display:none;">
+                                <td><h6 class="subtitle" style=" color: #04DBEC;">Drawing Mode &nbsp; &nbsp; &nbsp; &nbsp;&nbsp; &nbsp; &nbsp; </h6></td>
+                                <td>
+                                    <input class="radio form-group" type="radio" name="modegrp" id="autoMode" value="autoMode" checked>Automated
+                                    &nbsp; &nbsp;  <input class="radio form-group" type="radio" name="modegrp" id="manMode" value="manMode">Manual
+                                </td>
+                            </tr>
+                            <tr class="mt-4">
+                                <td> <h6 for="material" style=" color: #04DBEC;">Material &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp;  &nbsp; &nbsp; </h6></td>
+
+                                <td>
+                                    <select id="material" style="width:80%;">
+                                        <option value="ST_37">Steel 37</option>
+                                        <option value="ST_44">Steel 44</option>
+                                        <option value="ST_52">Steel 52</option>
+                                    </select>
+                                </td>
+                            </tr>
+
+                        </table>
+                    </div>
+
+                    <div class="border-white mt-4" id="autoModeData">
+                        <table style="display:table; width:110%;">
+                            <tr class="form-group">
+                                <td> <h6 class="subtitle" style=" color: #04DBEC;">Main Beams</h6></td>
+                            </tr>
+                            <tr class="form-group">
+                                <td> <label for="mainOrient">Orientation :</label></td>
+                                <td>
+                                    <input class="radio form-group" type="radio" name="optradio" id="xOrient" value="X" checked>X Axis &nbsp; &nbsp;
+                                    <input class="radio form-group" type="radio" name="optradio" id="yOrient" value="Y">Y Axis
+                                </td>
+                            </tr>
+                            <tr class="form-group">
+                                <td><label for="mainSection"> Section</label></td>
+
+                                <td>
+                                    <select id="mainSection" style="width:80%;">
+                                        <option value="IPE80">IPE80</option>
+                                        <option value="IPE100">IPE100</option>
+                                        <option value="IPE120">IPE120</option>
+                                        <option value="IPE140">IPE140</option>
+                                        <option value="IPE160">IPE160</option>
+                                        <option value="IPE180">IPE180</option>
+                                        <option value="IPE200">IPE200</option>
+                                        <option value="IPE220">IPE220</option>
+                                        <option value="IPE240">IPE240</option>
+                                        <option value="IPE270">IPE270</option>
+                                        <option value="IPE300">IPE300</option>
+                                        <option value="IPE330">IPE330</option>
+                                        <option value="IPE360">IPE360</option>
+                                        <option value="IPE400">IPE400</option>
+                                        <option value="IPE450">IPE450</option>
+                                        <option value="IPE500">IPE500</option>
+                                        <option value="IPE550">IPE550</option>
+                                        <option value="IPE600">IPE600</option>
+                                    </select>
+                                </td>
+                            </tr>
+                            <tr class="form-group">
+                                <td> <h6 class="subtitle mt-4" style=" color: #04DBEC;">Secondary Beams</h6></td>
+                            </tr>
+                            <tr class="form-group">
+                                <td><label for="secSpace">Beams spacing&nbsp; &nbsp;&nbsp; &nbsp;&nbsp; &nbsp;  &nbsp; &nbsp; </label></td>
+
+                                <td><input type="text" name="" id="secSpace" class="myModalInput" value="2" required></td>
+                            </tr>
+                            <tr class="form-group">
+
+                                <td><label for="secSection">Section</label></td>
+                                <td>
+                                    <select id="secSection" style="width:80%;">
+                                        <option value="IPE80">IPE80</option>
+                                        <option value="IPE100">IPE100</option>
+                                        <option value="IPE120">IPE120</option>
+                                        <option value="IPE140">IPE140</option>
+                                        <option value="IPE160">IPE160</option>
+                                        <option value="IPE180">IPE180</option>
+                                        <option value="IPE200">IPE200</option>
+                                        <option value="IPE220">IPE220</option>
+                                        <option value="IPE240">IPE240</option>
+                                        <option value="IPE270">IPE270</option>
+                                        <option value="IPE300">IPE300</option>
+                                        <option value="IPE330">IPE330</option>
+                                        <option value="IPE360">IPE360</option>
+                                        <option value="IPE400">IPE400</option>
+                                        <option value="IPE450">IPE450</option>
+                                        <option value="IPE500">IPE500</option>
+                                        <option value="IPE550">IPE550</option>
+                                        <option value="IPE600">IPE600</option>
+                                    </select>
+                                </td>
+                            </tr>
+                            <tr class="form-group">
+                                <td> <h6 class="subtitle mt-4" style=" color: #04DBEC;">Columns</h6></td>
+                            </tr>
+                            <tr class="form-group">
+                                <td><label for="colSection"> Section</label></td>
+                                <td>
+                                    <select id="colSection" style="width:80%;">
+                                        <option value="IPE80">IPE80</option>
+                                        <option value="IPE100">IPE100</option>
+                                        <option value="IPE120">IPE120</option>
+                                        <option value="IPE140">IPE140</option>
+                                        <option value="IPE160">IPE160</option>
+                                        <option value="IPE180">IPE180</option>
+                                        <option value="IPE200">IPE200</option>
+                                        <option value="IPE220">IPE220</option>
+                                        <option value="IPE240">IPE240</option>
+                                        <option value="IPE270">IPE270</option>
+                                        <option value="IPE300">IPE300</option>
+                                        <option value="IPE330">IPE330</option>
+                                        <option value="IPE360">IPE360</option>
+                                        <option value="IPE400">IPE400</option>
+                                        <option value="IPE450">IPE450</option>
+                                        <option value="IPE500">IPE500</option>
+                                        <option value="IPE550">IPE550</option>
+                                        <option value="IPE600">IPE600</option>
+                                    </select>
+                                </td>
+                            </tr>
+                        </table>
+
+                    </div>
+
+                </div>
+                <div class="col">
+                    <h3 style="display:none;"> Loads</h3>
+                    <div style="display:none;" class="border-white mt-4">
+                        <table style="display:table; width:110%;">
+                            <tr class="form-group">
+                                <td>
+                                    <label for="secSpace">Dead Load&nbsp; &nbsp;&nbsp; &nbsp;&nbsp; &nbsp;  &nbsp;  &nbsp;  &nbsp;  &nbsp;  &nbsp;  &nbsp;  &nbsp;  &nbsp;  &nbsp; &nbsp; </label>
+                                </td>
+                                <td><input type="text" name="" id="dead" class="myModalInput" value="1.5" required></td>
+                            </tr>
+
+                            <tr class="form-group">
+                                <td>
+                                    <label for="secSpace">Live Load</label>
+                                </td>
+                                <td> <input type="text" name="" id="live" class="myModalInput" value="2.5" required></td>
+                            </tr>
+                        </table>
+                    </div>
+
+                    <h3> Project Information</h3>
+                    <div class="border-white mt-4">
+                        <table style="display:table; width:110%;">
+                            <tr class="form-group">
+                                <td><label for="">Project title&nbsp; &nbsp;&nbsp; &nbsp;&nbsp; &nbsp;  &nbsp;  &nbsp;  &nbsp;  &nbsp;  &nbsp;  &nbsp;  &nbsp;  &nbsp;  &nbsp; &nbsp; </label></td>
+
+                                <td><input type="text" name="" id="" class="myModalInput" value="2" required></td>
+                            </tr>
+                            <tr class="form-group">
+                                <td><label for="">Designer </label></td>
+
+                                <td><input type="text" name="" id="" class="myModalInput" value="2" required></td>
+                            </tr>
+                            <tr class="form-group">
+                                <td><label for="">Location</label></td>
+
+                                <td><input type="text" name="" id="" class="myModalInput" value="2" required></td>
+                            </tr>
+                            <tr class="form-group">
+                                <td><label for="">City</label></td>
+
+                                <td><input type="text" name="" id="" class="myModalInput" value="2" required></td>
+                            </tr>
+                            <tr class="form-group">
+                                <td><label for="">Country</label></td>
+
+                                <td><input type="text" name="" id="" class="myModalInput" value="2" required></td>
+                            </tr>
+                            <tr class="form-group">
+                                <td><label for="">Owner</label></td>
+
+                                <td><input type="text" name="" id="" class="myModalInput" value="2" required></td>
+                            </tr>
+                        </table>
+                        <br>
+                        <br>
+                        <a asp-area="" asp-controller="Home" asp-action="Index" class="btn btn-secondary">Close</a>
+
+                        <button type="button" class="btn btn-primary"
+                                style="background-color: #04DBEC !important;
+                                    color: #000D20 !important;"
+                                id="createGrids">
+                            Create Model
+                        </button>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+
     <div class="btn" id="sidebarBtn">
         <span class="fas fa-bars"></span>
     </div>
@@ -588,172 +818,7 @@
         <input type="text" id="beamDead" disabled>
         <input type="text" id="beamLive" disabled>
     </div>
-    <!-- Modal -->
-    <div class="modal fade" id="exampleModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel"
-         aria-hidden="true">
-        <div class="modal-dialog" role="document">
-            <div class="modal-content">
-                <div class="modal-header">
-                    <h5 class="modal-title" id="exampleModalLabel">Floor System</h5>
-                    <button type="button" class="close" data-dismiss="modal" aria-label="Close">
-                        <span aria-hidden="true">&times;</span>
-                    </button>
-                </div>
 
-                <div class="modal-body">
-
-                    <div class="form-group">
-                        <label class="subtitle" style="font-weight: bold;">Grids</label>
-                    </div>
-                    <div class="form-group">
-                        <label for="spaceX">Spacing in X-direction</label>
-                        <input type="text" name="" id="spaceX" class="form-control" value="3*6" required>
-                    </div>
-                    <div class="form-group">
-                        <label for="spaceZ">Spacing in Z-direction</label>
-                        <input type="text" name="" id="spaceZ" class="form-control" value="2*8" required>
-                    </div>
-                    <div class="form-group">
-                        <label for="height">Levels</label>
-                        <input type="text" name="" id="spaceY" class="form-control" value="3" required>
-                    </div>
-
-                    <div class="form-group" id="modes">
-                        <label for="drawingMode" style="font-weight: bold;">Drawing Mode</label>
-
-                        <div class="radio form-group">
-                            <label>
-                                <input type="radio" name="modegrp" id="autoMode" value="autoMode"
-                                       onclick="showHideAutoModeData()" checked>Automated
-                            </label>
-                        </div>
-                        <div class="radio form-group">
-                            <label><input type="radio" name="modegrp" id="manMode" value="manMode">Manual</label>
-                        </div>
-
-
-                    </div>
-                    <div id="autoModeData">
-                        <div class="form-group">
-                            <label class="subtitle" style="font-weight: bold;">Beams</label>
-                        </div>
-                        <div class="form-group">
-                            <label for="mainOrient">Main Beams Orientation</label>
-
-
-                            <div class="radio form-group">
-                                <label><input type="radio" name="optradio" id="xOrient" value="X" checked>X Axis</label>
-                            </div>
-                            <div class="radio form-group">
-                                <label><input type="radio" name="optradio" id="yOrient" value="Y">Y Axis</label>
-                            </div>
-
-
-                        </div>
-                        <div class="form-group">
-                            <label for="secSpace">Seccondary beams spacing</label>
-                            <input type="text" name="" id="secSpace" class="form-control" value="2" required>
-                        </div>
-                        <div class="form-group">
-                            <label for="material">Material</label>
-                            <select class="form-control" id="material">
-                                <option value="ST_37">Steel 37</option>
-                                <option value="ST_44">Steel 44</option>
-                                <option value="ST_52">Steel 52</option>
-                            </select>
-                        </div>
-
-                        <div class="form-group">
-                            <label for="secSection">Secondary Section</label>
-                            <select id="secSection">
-                                <option value="IPE80">IPE80</option>
-                                <option value="IPE100">IPE100</option>
-                                <option value="IPE120">IPE120</option>
-                                <option value="IPE140">IPE140</option>
-                                <option value="IPE160">IPE160</option>
-                                <option value="IPE180">IPE180</option>
-                                <option value="IPE200">IPE200</option>
-                                <option value="IPE220">IPE220</option>
-                                <option value="IPE240">IPE240</option>
-                                <option value="IPE270">IPE270</option>
-                                <option value="IPE300">IPE300</option>
-                                <option value="IPE330">IPE330</option>
-                                <option value="IPE360">IPE360</option>
-                                <option value="IPE400">IPE400</option>
-                                <option value="IPE450">IPE450</option>
-                                <option value="IPE500">IPE500</option>
-                                <option value="IPE550">IPE550</option>
-                                <option value="IPE600">IPE600</option>
-                            </select>
-                        </div>
-
-                        <label for="mainSection">Main Section</label>
-                        <select id="mainSection">
-                            <option value="IPE80">IPE80</option>
-                            <option value="IPE100">IPE100</option>
-                            <option value="IPE120">IPE120</option>
-                            <option value="IPE140">IPE140</option>
-                            <option value="IPE160">IPE160</option>
-                            <option value="IPE180">IPE180</option>
-                            <option value="IPE200">IPE200</option>
-                            <option value="IPE220">IPE220</option>
-                            <option value="IPE240">IPE240</option>
-                            <option value="IPE270">IPE270</option>
-                            <option value="IPE300">IPE300</option>
-                            <option value="IPE330">IPE330</option>
-                            <option value="IPE360">IPE360</option>
-                            <option value="IPE400">IPE400</option>
-                            <option value="IPE450">IPE450</option>
-                            <option value="IPE500">IPE500</option>
-                            <option value="IPE550">IPE550</option>
-                            <option value="IPE600">IPE600</option>
-                        </select>
-                    </div>
-
-                    <label for="colSection">Column Section</label>
-                    <select id="colSection">
-                        <option value="IPE80">IPE80</option>
-                        <option value="IPE100">IPE100</option>
-                        <option value="IPE120">IPE120</option>
-                        <option value="IPE140">IPE140</option>
-                        <option value="IPE160">IPE160</option>
-                        <option value="IPE180">IPE180</option>
-                        <option value="IPE200">IPE200</option>
-                        <option value="IPE220">IPE220</option>
-                        <option value="IPE240">IPE240</option>
-                        <option value="IPE270">IPE270</option>
-                        <option value="IPE300">IPE300</option>
-                        <option value="IPE330">IPE330</option>
-                        <option value="IPE360">IPE360</option>
-                        <option value="IPE400">IPE400</option>
-                        <option value="IPE450">IPE450</option>
-                        <option value="IPE500">IPE500</option>
-                        <option value="IPE550">IPE550</option>
-                        <option value="IPE600">IPE600</option>
-                    </select>
-                </div>
-                <!-- <div class="form-group">
-                    <label class="subtitle" style="font-weight: bold;">Loads</label>
-                </div>
-
-                <div class="form-group">
-                    <label for="secSpace">Dead Load</label>
-                    <input type="text" name="" id="dead" class="form-control" value="1.5" required>
-                </div>
-
-                <div class="form-group">
-                    <label for="secSpace">Live Load</label>
-                    <input type="text" name="" id="live" class="form-control" value="2.5" required>
-                </div>-->
-            </div>
-
-        </div>
-
-        <div class="modal-footer">
-            <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
-            <button type="button" class="btn btn-primary" id="createGrids">Create Grids</button>
-        </div>
-    </div>
 
     <!-- Notifaiction Modal -->
     <div class="modal" id="infoModal" tabindex="-1" role="dialog" data-backdrop="static" aria-labelledby="exampleModalCenterTitle" aria-hidden="true">
@@ -808,7 +873,7 @@
     <!-- Closing Modal -->
     <div class="modal" id="closingModal" data-backdrop="static" tabindex="-1" role="dialog" aria-labelledby="staticBackdropLabel" aria-hidden="true">
         <div class="modal-dialog modal-dialog-centered" role="document">
-            <div class="modal-content" style="background-color:#000D20">                
+            <div class="modal-content" style="background-color:#000D20">
                 <div class="modal-body" style="color:white">
                     Do you want to save the changes made to the model?
                 </div>

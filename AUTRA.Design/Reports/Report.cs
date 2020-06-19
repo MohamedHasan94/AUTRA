@@ -21,12 +21,11 @@ namespace AUTRA.Design
     {
         //Responsible for the IO operations
         public string FolderPath { get; set; }
-        public string  UserName { get; set; }
         public ProjectProperties Project { get; set; }
-        public Report(string folderPath , string userName,ProjectProperties project)
+        public string Owner { get; set; }
+        public Report(string folderPath ,ProjectProperties project ,string owner)
         {
             FolderPath = folderPath;
-            UserName = userName;
             Project = project;
         }
 
@@ -39,7 +38,7 @@ namespace AUTRA.Design
                 {
                     Document doc = new Document(pdf);
                     doc.SetMargins(50, 40, 50, 40);
-                    pdf.AddEventHandler(PdfDocumentEvent.START_PAGE, new Header(doc,UserName,  ImageDataFactory.Create(Assembly.GetExecutingAssembly().GoToPath(@"Resources\Images\AUTRA.PNG"))));
+                    pdf.AddEventHandler(PdfDocumentEvent.START_PAGE, new Header(doc,Owner,  ImageDataFactory.Create(Assembly.GetExecutingAssembly().GoToPath(@"Resources\Images\AUTRA.PNG"))));
                     Footer foot = new Footer(doc);
                     pdf.AddEventHandler(PdfDocumentEvent.END_PAGE, foot);
                     CoverPage(doc);

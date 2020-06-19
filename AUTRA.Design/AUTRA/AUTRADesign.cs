@@ -103,9 +103,9 @@ namespace AUTRA.Design
             Project.MainBeams.Sort(FrameElement.SortByID<Beam>());
             Project.Columns.Sort(FrameElement.SortByID<Column>());
         }
-        public void CreateReports(string folderPath,string userName)
+        public void CreateReports(string folderPath,string owner)
         {
-            Report report = new Report(folderPath ,  userName,Project.ProjectProperties);
+            Report report = new Report(folderPath ,  Project.ProjectProperties,owner);
             report.Create($"Design Calculation Sheet for {Project.ProjectProperties.Name}.pdf", SecondaryGroups,MainGroups,ColumnsGroup);
         }
         #endregion

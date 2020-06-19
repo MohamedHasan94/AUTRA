@@ -14,7 +14,7 @@ namespace AUTRA
    public static class AUTRA
     {
         //Entry point for AUTRADesign & AUTRA_TEKLA
-        public static void Init(Project model,string teklaModelPath,string userName)
+        public static void Init(Project model,string teklaModelPath,string owner)
         {
             /*
              * Main Goal For this function is: 
@@ -35,7 +35,7 @@ namespace AUTRA
             var sections = Reader.ReadList<Section>(sectionsPath);
             var bolts = Reader.ReadList<Bolt>(boltsPath);
             var boltGrades = Reader.ReadList<BoltGrade>(boltGradesPath);
-            var equalAngles = Reader.ReadList<EqualAngle>(equalAnglePath);
+            //var equalAngles = Reader.ReadList<EqualAngle>(equalAnglePath);
             #endregion
 
             #region Assign Material , Sections , Bolt & Grade
@@ -71,7 +71,7 @@ namespace AUTRA
             designer.Design();
             var connections= designer.DesignConnections();
             
-            designer.CreateReports("./wwwroot/Outputs/Reports",userName);//To be changed
+            designer.CreateReports("./wwwroot/Outputs/Reports" ,owner);//To be changed
             #endregion
             var teklaModel = ToTekla(model, connections);
             Writer.Write(teklaModel, teklaModelPath);
@@ -175,17 +175,14 @@ namespace AUTRA
         private static T.Grids GetTeklaGridsFromEditor(Grids grids)
         {
             T.Grids teklaGrids = new T.Grids();
-            grids.CXS.ToList().ForEach(x=>x=x*1000);
-            grids.CYS.ToList().ForEach(y => y = y * 1000);
+            grids.CXS.ForEach(x=>x=x*1000);
+            grids.CYS.ForEach(y => y = y * 1000);
             teklaGrids.CXS = grids.CXS.ToList();
             teklaGrids.CYS = grids.CYS.ToList();
             teklaGrids.CZS = new List<double>();
             teklaGrids.CZS.Add(-950);
             teklaGrids.CZS.Add(-700);
-            foreach (var z in grids.Levels)
-            {
-                teklaGrids.CZS.Add(z);
-            }
+            grids.Levels.ForEach(l => teklaGrids.CZS.Add(l));
             return teklaGrids;
         }
         #endregion

@@ -28,7 +28,6 @@ namespace AUTRA.Design
             FolderPath = folderPath;
             Project = project;
         }
-
         public void Create(string fileName,List<Group> secGroups,List<Group> mainGroups,Group columnGroups)
         {
             string fullpath = System.IO.Path.Combine(FolderPath, fileName);

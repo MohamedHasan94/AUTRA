@@ -3,13 +3,39 @@
     ViewData["Title"] = "MyProjects";
 }
 
-<h1>MyProjects</h1>
 
-<ul>
-    @foreach (var item in Model)
-    {
-        <li>
-            <a href="~/Editor/Open/@item.Name"><h2>@item.Name</h2></a>
-        </li>
-    }
-</ul>
+<div class="container mt-5 mb-5">
+    <h1>MyProjects</h1>
+    <div class="row">
+        @foreach (Project item in Model)
+        {
+            <div class="col-lg-4 mb-5">
+                <div class="card" @*style="width: 18rem;"*@>
+                    <img class="card-img-top" src="~/Users/@item.Fk_UserId/@item.Name/@(item.Name).png" alt="Card image cap">
+                    <div class="card-body">
+                        <h5 class="card-title">@item.Name</h5>
+                        <table class="table table-hover table-striped">
+                            <tr>
+                                <td><b>Designer</b></td>
+                                <td>@item.Designer</td>
+                            </tr>
+                            <tr>
+                                <td><b>Owner</b></td>
+                                <td>@item.Owner</td>
+                            </tr>
+                            <tr>
+                                <td><b>Location</b></td>
+                                <td>@item.Location</td>
+                            </tr>
+                            <tr>
+                                <td><b>Last Modified</b></td>
+                                <td>@item.LastModefied</td>
+                            </tr>
+                        </table>
+                        <a href="/Editor/Open/@item.Name" class="btn btn-primary" style="font-size: large;">Open Model</a>
+                    </div>
+                </div>
+            </div>
+        }
+    </div>
+</div>

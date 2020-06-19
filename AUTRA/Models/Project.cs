@@ -18,6 +18,13 @@ namespace AUTRA.Models
         [Column(Order = 2)]
         public string Name { get; set; }
 
+        public string Designer { get; set; }
+        public string Owner { get; set; }
+        public string Location { get; set; }
+
+        [DataType(DataType.Date)]
+        public DateTime LastModefied { get; set; }
+
         [ForeignKey("Fk_UserId")]
         public ApplicationUser User { get; set; }
     }

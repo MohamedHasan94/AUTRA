@@ -18,12 +18,15 @@
         $('#projectName').remove();
 
         if (path) {
+            $('#staticBackdrop').modal('show');
             $.ajax({
                 url: `${path}`,
                 success: function (data) {
                     debugger
                     retrocycle(data);
                     buildModel(data);
+                    $('#staticBackdrop').modal('hide');
+
                     //console.clear();
                 },
                 error: function (x, y, err) {
@@ -60,6 +63,7 @@
 
     $('#createGrids').click(function () {
         $('#exampleModal').modal('hide');
+        $('#staticBackdrop').modal('show');
         let secSpacing, coordX, coordZ;
         coordX = getCoords($('#spaceX').val()); //Get X-coordinates from X-spacings
         coordZ = getCoords($('#spaceZ').val()); //Get Z-coordinates from Z-spacings
@@ -127,6 +131,7 @@
                 }
             }
         }
+        $('#staticBackdrop').modal('hide');
     })
 
     //Turn spacings into coordinates
@@ -189,7 +194,7 @@
             editor.selectByArea(initialPosition, rectWidth, rectHeight, multiple);
         }
     }
-    
+
     window.addEventListener('keyup', function (event) {
         switch (event.key) {
             case 'Delete':
@@ -233,7 +238,8 @@
         let index = levels.indexOf(end.data.position.y) - 1;
         if (index < 0) {
             drawingPoints = [];
-            alert('please use one of the predefined levels');
+            $('#info').text('please use one of the predefined levels');
+            $('#infoModal').modal('show');
             return;
         }
         else {
@@ -320,7 +326,8 @@
                 }
                 else {
                     item.userData.element.move(displacement.multiplyScalar(-1));
-                    alert('please move elements to one of the predefined levels');
+                    $('#info').text('please move elements to one of the predefined levels');
+                    $('#infoModal').modal('show');
                 }
             }
         }
@@ -350,7 +357,8 @@
                     }
                     else {
                         element.move(displacement.multiplyScalar(-1));
-                        alert('please move elements to one of the predefined levels');
+                        $('#info').text('please move elements to one of the predefined levels');
+                        $('#infoModal').modal('show');
                     }
                 }
             }
@@ -393,7 +401,8 @@
                 if (item.userData.node)
                     points.push(item.userData.node.data.position);
                 else {
-                    alert('Please select two nodes before running the command')
+                    $('#info').text('Please select two nodes before running the command');
+                    $('#infoModal').modal('show');
                     return
                 }
             }
@@ -401,8 +410,10 @@
             input.value = `${points[0].distanceTo(points[1])} m`;
             setTimeout(() => input.value = '', 5000);
         }
-        else
-            alert('Please select two nodes before running the command');
+        else {
+            $('#info').text('Please select two nodes before running the command');
+            $('#infoModal').modal('show');
+        }
     }
 
     window.addLineLoad = function () { //Adds a LineLoad to the selected beam(s)
@@ -545,7 +556,8 @@
         return model;
     }
 
-    window.solve = function () { //Send data to server        
+    window.solve = function () { //Send data to server  
+        $('#staticBackdrop').modal('show');
         editor.clearGroup('loads');
         $.ajax({
             url: `/Editor/Solve`,
@@ -571,6 +583,7 @@
                 for (let i = 0; i < columns[0].length; i++) {
                     nodes[i].visual.reactions = res.supports[i].reactions;
                 }
+                $('#staticBackdrop').modal('hide')
             },
             error: function (x, y, res) {
                 console.log(res)
@@ -579,22 +592,39 @@
     }
 
     window.save = function () { // Save data on the server
-        let name = $('#projectName').val();
-        $.ajax({
-            url: `/Editor/Save/${name}`,
-            type: "POST",
-            contentType: 'text/plain',
-            data: createModel(),
-            success: function (res) {
-                if (res)
-                    alert('Project saved successfully')
-                else
-                    alert('Something went wrong. Please try again');
-            },
-            error: function (x, y, res) {
-                console.log(res)
-            }
-        });
+        $('#staticBackdrop').modal('show');
+        editor.renderer.render(editor.scene, editor.renderedCamera);
+        editor.canvas.toBlob(img => {
+            let form = new this.FormData();
+            form.append('name', 'iti')
+            form.append('designer', 'AUTRA')
+            form.append('owner', 'AUTRA')
+            form.append('location', 'Smart Village')
+            form.append('image', img);
+            form.append('jsonFile', createModel());
+            $.ajax({
+                url: `/Editor/Save`,
+                type: "POST",
+                contentType: false,
+                processData: false,
+                data: form,
+                success: function (res) {
+                    $('#staticBackdrop').modal('hide');
+                    if (res)
+                        $('#info').text('Project saved successfully');
+                    else
+                        $('#info').text('Something went wrong. Please try again');
+
+                    $('#infoModal').modal('show');
+                },
+                error: function (x, y, res) {
+                    $('#staticBackdrop').modal('hide');
+                    $('#info').text('Something went wrong. Please try again');
+
+                    $('#infoModal').modal('show');
+                }
+            });
+        })
     }
 
     window.downloadFile = function () {

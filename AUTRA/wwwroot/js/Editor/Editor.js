@@ -183,7 +183,7 @@ class Editor {
         }
     }
     screenshot() { //Take a screenshot to the view
-        this.renderer.render(this.scene, this.camera);
+        this.renderer.render(this.scene, this.renderedCamera);
         let imgData = this.canvas.toDataURL("image/jpg");
         imgData.replace("image/jpg", "image/octet-stream");
 
@@ -199,7 +199,7 @@ class Editor {
     }
     getIntersected(position) { //get the object at the given position (world position)
         let widthHalf = window.innerWidth / 2, heightHalf = window.innerHeight / 2;
-        position.project(this.camera); //Project the 3D world position on the screen
+        position.project(this.renderedCamera); //Project the 3D world position on the screen
         //The resulting position is between[-1,1] WebGl coordinates with the origin at the screen center
         //Switch position to screen position with the origin at the top left corner
         position.x = (position.x * widthHalf) + widthHalf;
@@ -208,7 +208,7 @@ class Editor {
         let temp = this.pickingScene.children;
         this.pickingScene.children = this.scene.userData.elements.children.map(c => c.userData.picking);
         //Read the position using the GPUPicker
-        let pickeckedMesh = this.picker.getObject(position, this.renderer, this.pickingScene, this.camera);
+        let pickeckedMesh = this.picker.getObject(position, this.renderer, this.pickingScene, this.renderedCamera);
         this.pickingScene.children = temp;
         return pickeckedMesh;
     }

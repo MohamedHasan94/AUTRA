@@ -338,27 +338,10 @@ namespace AUTRA.Tekla
 
         public void CompressFolder()
         {
-            var path = Model.GetInfo().ModelPath.GetFolderPath();
-            var newfolderName = string.Format($"{Data.ProjectProperties.Name}_User");
-            string[] filePaths = Directory.GetFiles(Model.GetInfo().ModelPath);
-            string newFolderPath = $@"{path}\{newfolderName}";
-            Directory.CreateDirectory(newFolderPath);
-            foreach (var filename in filePaths)
-            {
-                int index = filename.LastIndexOf('\\');
-                string file = filename.Substring(index);
-                //Do your job with "file"  
-                if(file!= "logs")
-                {
-                    {
-                        File.Copy(filename,string.Format($"{newFolderPath}\\{file}"),false);
-                    }
-                }
-            }
-            ZipFile.CreateFromDirectory(path, $"{path}{newfolderName}.zip");
-                
-                
-            
+            var path = Model.GetInfo().ModelPath;
+            var folderName = string.Format($"{path}\\PlotFiles");
+            ZipFile.CreateFromDirectory(folderName, $@"D:\ITI\GraduationPoject\AUTRA\AUTRA\wwwroot\Outputs\Reports\PlotFiles for {Data.ProjectProperties.Name}.zip");
+
         }
     }
 }

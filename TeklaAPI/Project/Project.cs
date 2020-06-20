@@ -62,10 +62,11 @@ namespace AUTRA.Tekla
         #region Init
         public bool Init()
         {
-            string modelfolder = @"D:\ITI\GraduationProject\AUTRA\AUTRA\wwwroot\Outputs\Tekla\";//TODO:To be changed
+            Random r = new Random();
+            string modelfolder = @"D:\ITI\GraduationPoject\AUTRA\AUTRA\wwwroot\Outputs\Tekla\";//TODO:To be changed
             _modelHandler = new TSM.ModelHandler();
             _modelHandler.Save();
-            if(_modelHandler.CreateNewSingleUserModel(Data.ProjectProperties.Name, modelfolder) &&
+            if(_modelHandler.CreateNewSingleUserModel($"{Data.ProjectProperties.Name}_{r.Next(0,1000)}", modelfolder) &&
                 _modelHandler.Save())
             {
                 return true;
@@ -340,7 +341,11 @@ namespace AUTRA.Tekla
         {
             var path = Model.GetInfo().ModelPath;
             var folderName = string.Format($"{path}\\PlotFiles");
-            ZipFile.CreateFromDirectory(folderName, $@"D:\ITI\GraduationProject\AUTRA\AUTRA\wwwroot\Outputs\plotfiles\{Data.ProjectProperties.Name}.zip");
+            if (File.Exists($@"D:\ITI\GraduationPoject\AUTRA\AUTRA\wwwroot\Outputs\plotfiles\{Data.ProjectProperties.Name}.zip"))
+            {
+                File.Delete($@"D:\ITI\GraduationPoject\AUTRA\AUTRA\wwwroot\Outputs\plotfiles\{Data.ProjectProperties.Name}.zip");
+            }
+            ZipFile.CreateFromDirectory(folderName, $@"D:\ITI\GraduationPoject\AUTRA\AUTRA\wwwroot\Outputs\plotfiles\{Data.ProjectProperties.Name}.zip");
         }
     }
 }

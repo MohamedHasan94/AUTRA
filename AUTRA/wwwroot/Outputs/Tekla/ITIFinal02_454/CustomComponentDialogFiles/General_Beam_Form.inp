@@ -1,0 +1,39 @@
+page("TeklaStructures","")
+{
+   macro(1, "General_Beam_Form")
+   {
+       tab_page("", "j_Parameters", 1)
+       {
+           picture("Tekla_Beam_Form", 450,150,100,50)
+           profile("j_Bottom_Profile", TBFBProf, TBFBMark, TBFBMat, , TBFBName,13)
+           profile("j_Side_Profile", TBFSProf, TBFSMark, TBFSMat, , TBFSName,14)
+           profile("j_Bottom_Support", TBFBSProf, TBFBSMark, TBFBSMat, , TBFBSName,15)
+           profile("j_Side_Support", TBFSSProf, TBFSSMark, TBFSSMat, , TBFSSName,16)
+           attribute(" ","j_class",label,"%s",none,none,"0","0", 840,290)
+           parameter("", "TBFBClass", integer, number, 840,310,80)
+           parameter("", "TBFSClass", integer, number, 840,335,80)
+           parameter("", "TBFBSClass", integer, number, 840,360,80)
+           parameter("", "TBFSSClass", integer, number, 840,385,80)
+           parameter("", "TBFWidth", distance, number, 550,20,80)
+           parameter("", "TBFHeight", distance, number, 730,120,80)
+           parameter("", "TBFSideSpacing", distance, number, 80,20,80)
+           parameter("", "TBF1stBSDist", distance, number, 80,230,80)
+           parameter("", "TBF1stBSSpacing", distance, number, 190,230,80)
+           parameter("", "TBFBSLength", distance, number, 550,230,80)
+           picture("line", 457,10,10,420)
+           attribute(" ","j_beam",label,"%s",none,none,"0","0", 20,465)
+           attribute(" ","j_name",label,"%s",none,none,"0","0", 150,440)
+           attribute(" ","j_prefix",label,"%s",none,none,"0","0", 350,440)
+           attribute(" ","j_Start_number",label,"%s",none,none,"0","0", 490,440)
+           parameter("", "TBFASSPrefix", string, text, 350,465,80)
+           parameter("", "TBFASSStartno", integer, number, 490,465,80)
+           parameter("", "TBFASSName", string, text, 150,465,150)
+       }
+       tab_page("", "j_input_example", 2)
+       {
+           picture("Tekla_Beam_Input", 210,160,100,50)
+           attribute(" ","j_1_Select_Input_point_1",label,"%s",none,none,"0","0", 20,300)
+           attribute(" ","j_2_Select_Input_point_2",label,"%s",none,none,"0","0", 20,320)
+       }
+   }
+}

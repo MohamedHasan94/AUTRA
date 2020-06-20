@@ -30,8 +30,8 @@ namespace AUTRA.Tekla
                     project.CreateConnections();
                     project.CreatePlanDWG();
                     project.CreateBasePlateDWG();
-                    //project.CreateElevationDWGSAlongX();
-                    //.CreateElevationDWGSAlongY();
+                    project.CreateElevationDWGSAlongX();
+                    project.CreateElevationDWGSAlongY();
                     project.PrintDrawings();
                     project.CompressFolder();
                     result = true;

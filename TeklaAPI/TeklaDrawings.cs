@@ -315,13 +315,13 @@ namespace AUTRA.Tekla
                 {
                     OutputType = TSD.DotPrintOutputType.PDF,                                                 //Type of Printer 
                     PaperSize = paperSize,                                                                   //Size of Paper
-                    ScalingMethod = TSD.DotPrintScalingType.Auto,                                              //Scaling Method*                                     
+                    ScalingMethod = TSD.DotPrintScalingType.Auto,                                            //Scaling Method*                                     
                     Orientation = TSD.DotPrintOrientationType.Landscape,                                     //Orientation of Paper 
                     ColorMode = TSD.DotPrintColor.BlackAndWhite,                                             //Print in Color or black and white
-                    PrintToMultipleSheet = TSD.DotPrintToMultipleSheet.Off,                                    //Whether to print to multiple sheets or not
+                    PrintToMultipleSheet = TSD.DotPrintToMultipleSheet.Off,                                  //Whether to print to multiple sheets or not
                     ScaleFactor = 1.0,                                                                       //scale factor          
                     NumberOfCopies = 1,                                                                      //Number of Copies              
-                    OutputFileName = $"{_model.GetInfo().ModelPath}/PlotFiles/{drawing.Name}.pdf",                    //Output File Name 
+                    OutputFileName = $"{_model.GetInfo().ModelPath}/PlotFiles/{drawing.Name}.pdf",            //Output File Name 
                     OpenFileWhenFinished = false                                                              //Open file when printing is finished 
                 };
                 result = _handler.PrintDrawing(drawing, attrs);

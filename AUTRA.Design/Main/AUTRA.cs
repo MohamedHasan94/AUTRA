@@ -76,7 +76,6 @@ namespace AUTRA
             #endregion
             var teklaModel = ToTekla(model, connections);
             Writer.Write(teklaModel, teklaModelPath);
-            InitTekla(teklaModelPath);
         }
         public static T.TeklaModelData ToTekla(Project model , List<Connection> connections)
         {
@@ -90,7 +89,7 @@ namespace AUTRA
             teklaModel.Model.Grids = GetTeklaGridsFromEditor(model.Grids);
             return teklaModel;
         }
-        public static void InitTekla(string path)
+        public static bool InitTekla(string path)
         {
             var p = new Process();
             p.StartInfo = new ProcessStartInfo(@"D:\ITI\GraduationProject\AUTRA\TeklaAPIHandler\bin\Debug\TeklaAPIHandler.exe", path)
@@ -99,6 +98,7 @@ namespace AUTRA
             };
             p.Start();
             p.WaitForExit();
+            return true;
         }
         #region Helper Methods
         private static List<T.Beam> GetTeklaBeamsFromDesign(List<Design.Beam> beams , string name, string finnish, string classNo)

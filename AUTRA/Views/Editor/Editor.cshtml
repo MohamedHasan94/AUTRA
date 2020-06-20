@@ -240,13 +240,15 @@
                                 id="createGrids">
                             Create Model
                         </button>
+
+                        <button id="readFromJson" class="btn-secondary">Upload JSON file</button>
                     </div>
                 </div>
             </div>
         </div>
     </div>
 
-
+    <input type="file" id="upload" accept="application/json" hidden/>
     <div class="btn" id="sidebarBtn">
         <span class="fas fa-bars"></span>
     </div>
@@ -383,7 +385,7 @@
                 <section>
                     <div class="taskbarIconBlock " id="generateDrawings" @*style="display:none;"*@ onclick="generateDrawings()">
                         <div class="flaticon-graphs icon">
-                            <div class="taskbarIconLabel">Generate Drawings</div>
+                            <div class="taskbarIconLabel">Drawings</div>
                         </div>
                     </div>
                 </section>

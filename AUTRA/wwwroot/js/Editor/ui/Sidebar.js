@@ -120,3 +120,5 @@ window.onbeforeunload = (e) => {
     return true;
 }
 //#endregion
+
+$('#readFromJson').click(() => $('#upload').click());

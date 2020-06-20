@@ -62,10 +62,11 @@ namespace AUTRA.Tekla
         #region Init
         public bool Init()
         {
+            Random r  = new Random();
             string modelfolder = @"D:\ITI\GraduationProject\AUTRA\AUTRA\wwwroot\Outputs\Tekla\";//TODO:To be changed
             _modelHandler = new TSM.ModelHandler();
             _modelHandler.Save();
-            if(_modelHandler.CreateNewSingleUserModel(Data.ProjectProperties.Name, modelfolder) &&
+            if(_modelHandler.CreateNewSingleUserModel($"Data.ProjectProperties.Name_{r.Next(0,1000)}", modelfolder) &&
                 _modelHandler.Save())
             {
                 return true;

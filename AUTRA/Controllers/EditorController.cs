@@ -94,6 +94,7 @@ namespace AUTRA.Controllers
             }
         }
 
+        [HttpPost]
         public bool Model() //Model on Tekla
         {
            return AUTRA.InitTekla(@"D:\ITI\GraduationProject\AUTRA\AUTRA\wwwroot\Inputs\ToTekla05.json");

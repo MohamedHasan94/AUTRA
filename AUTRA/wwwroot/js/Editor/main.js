@@ -8,7 +8,7 @@
     let canvas, domEvents;
     let levels, material, projectProperties;
     let draw = false, drawingPoints = [];
-    let sectionId = 0; 
+    let sectionId = 0;
     //#endregion
 
     function init() {
@@ -736,5 +736,45 @@
         let view = $('#view').val();
         if (view)
             editor.changeView(grids, view);
-    }    
+    }
+
+    window.generateDrawings = () => {
+        showInfoModal('Generating drawings');
+        editor.clearGroup('loads');
+        $.ajax({
+            url: `/Editor/Model`,
+            type: "POST",
+            success: function (res) {
+                if (res) {
+                    $.ajax({
+                        url: `/Outputs/plotfiles/${projectProperties.name}.zip`,
+                        type: 'GEt',
+                        xhrFields: { responseType: "blob" },
+                        success: function (data) {
+                            let text = new Blob([data], { type: 'octet-stream' }); //Blob : An object that represents a file
+                            let textFile = window.URL.createObjectURL(text); // The URL to that object
+                            let link = document.createElement('a'); //Create HTML link to download the file on client machine
+                            link.setAttribute('download', `${projectProperties.name}.zip`);
+                            link.href = textFile;
+                            document.body.appendChild(link);
+                            setTimeout(function () { // domElement takes some time to be added to the document
+                                link.click(); //Fire the click event of the link
+                                document.body.removeChild(link); //The link is no longer needed
+                                URL.revokeObjectURL(textFile); // Dispose the URL Object
+                                showInfoModal('Generating drawings');
+                            }, 1000);
+                        },
+                        error: function (x, y, err) {
+                            debugger
+                            showInfoModal('Something went wrong, please try again');
+                        }
+                    });
+                }
+            },
+            error: function (x, y, res) {
+                $('#staticBackdrop').modal('hide')
+                showInfoModal('Something went wrong. Please try again');
+            }
+        });
+    }
 })();

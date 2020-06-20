@@ -340,7 +340,7 @@ namespace AUTRA.Tekla
         {
             var path = Model.GetInfo().ModelPath;
             var folderName = string.Format($"{path}\\PlotFiles");
-            ZipFile.CreateFromDirectory(folderName, $@"D:\ITI\GraduationPoject\AUTRA\AUTRA\wwwroot\Outputs\PlotFiles\{Data.ProjectProperties.Name}.zip");
+            ZipFile.CreateFromDirectory(folderName, $@"D:\ITI\GraduationProject\AUTRA\AUTRA\wwwroot\Outputs\plotfiles\{Data.ProjectProperties.Name}.zip");
         }
     }
 }

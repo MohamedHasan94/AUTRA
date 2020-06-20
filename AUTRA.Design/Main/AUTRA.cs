@@ -93,7 +93,7 @@ namespace AUTRA
         public static void InitTekla(string path)
         {
             var p = new Process();
-            p.StartInfo = new ProcessStartInfo(@"D:\ITI\GraduationPoject\AUTRA\TeklaAPIHandler\bin\Debug\TeklaAPIHandler.exe", path)
+            p.StartInfo = new ProcessStartInfo(@"D:\ITI\GraduationProject\AUTRA\TeklaAPIHandler\bin\Debug\TeklaAPIHandler.exe", path)
             {
                 UseShellExecute = true
             };
@@ -176,14 +176,21 @@ namespace AUTRA
         private static T.Grids GetTeklaGridsFromEditor(Grids grids)
         {
             T.Grids teklaGrids = new T.Grids();
-            grids.CXS.ForEach(x=>x=x*1000);
-            grids.CYS.ForEach(y => y = y * 1000);
-            teklaGrids.CXS = grids.CXS.ToList();
-            teklaGrids.CYS = grids.CYS.ToList();
+            teklaGrids.CXS = grids.CXS;
+            for (int i = 0; i < teklaGrids.CXS.Count; i++)
+            {
+                teklaGrids.CXS[i] *= 1000;
+            }
+            teklaGrids.CYS = grids.CYS;
+            for (int i = 0; i < teklaGrids.CYS.Count; i++)
+            {
+                teklaGrids.CYS[i] *= 1000;
+            }           
+
             teklaGrids.CZS = new List<double>();
             teklaGrids.CZS.Add(-950);
             teklaGrids.CZS.Add(-700);
-            grids.Levels.ForEach(l => teklaGrids.CZS.Add(l));
+            grids.Levels.ForEach(l => teklaGrids.CZS.Add(l*1000));
             return teklaGrids;
         }
         #endregion

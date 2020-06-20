@@ -34,7 +34,7 @@
             });
         }
         else
-            $('#exampleModal').modal('show'); //Temporary data input
+            $('#modalDivDetails').css('display', 'block');
     }
     function buildModel(model) {
         editor.init(model.grids.coordX[model.grids.coordX.length - 1], model.grids.coordZ[model.grids.coordZ.length - 1]); //Setup editor
@@ -577,6 +577,29 @@
                 for (let i = 0; i < columns[0].length; i++) {
                     nodes[i].visual.reactions = res.supports[i].reactions;
                 }
+                $.ajax({
+                    url: `/Outputs/Reports/Design Calculation Sheet for ${projectProperties.name}.pdf`,
+                    type: 'GEt',
+                    xhrFields: { responseType: "blob" },
+                    success: function (data) {
+                        let text = new Blob([data], { type: 'octet-stream' }); //Blob : An object that represents a file
+                        let textFile = window.URL.createObjectURL(text); // The URL to that object
+                        let link = document.createElement('a'); //Create HTML link to download the file on client machine
+                        link.setAttribute('download', `Design Calculation Sheet for ${projectProperties.name}.pdf`);
+                        link.href = textFile;
+                        document.body.appendChild(link);
+                        setTimeout(function () { // domElement takes some time to be added to the document
+                            link.click(); //Fire the click event of the link
+                            document.body.removeChild(link); //The link is no longer needed
+                            URL.revokeObjectURL(textFile); // Dispose the URL Object
+                            $('#staticBackdrop').modal('hide');
+                        }, 1000);
+                    },
+                    error: function (x, y, err) {
+                        debugger
+                        showInfoModal('Something went wrong, please try again');
+                    }
+                });
                 $('#staticBackdrop').modal('hide')
             },
             error: function (x, y, res) {
@@ -592,7 +615,7 @@
         editor.canvas.toBlob(img => {
             let form = new this.FormData();
             form.append('name', projectProperties.name)
-            form.append('designer', projectProperties.deigner)
+            form.append('designer', projectProperties.designer)
             form.append('owner', projectProperties.owner)
             form.append('location', projectProperties.location)
             form.append('city', projectProperties.city)
@@ -622,53 +645,21 @@
 
     window.downloadFile = function () {
         $('#staticBackdrop').modal('show');
-        $.ajax({
-            url: `/MohamedHasanCV.pdf`,
-            type: 'GEt',
-            xhrFields: { responseType: "blob" },
-            success: function (data) {
-                let text = new Blob([data], { type: 'octet-stream' }); //Blob : An object that represents a file
-                let textFile = window.URL.createObjectURL(text); // The URL to that object
-                let link = document.createElement('a'); //Create HTML link to download the file on client machine
-                link.setAttribute('download', 'info.pdf');
-                link.href = textFile;
-                document.body.appendChild(link);
-                setTimeout(function () { // domElement takes some time to be added to the document
-                    link.click(); //Fire the click event of the link
-                    document.body.removeChild(link); //The link is no longer needed
-                    URL.revokeObjectURL(textFile); // Dispose the URL Object
-                    $('#staticBackdrop').modal('hide');
-                }, 1000);
-            },
-            error: function (x, y, err) {
-                debugger
-                showInfoModal('Something went wrong, please try again');
-            }
-        });
-        //let model = createModel();
-        ////this.localStorage.setItem('Model', model); //Save data to localStorage ??!! Option #1
-        ////Save data on client machine if no internet connection Option #2
-        //let text = new Blob([model], { type: 'text/json' }); //Blob : An object that represents a file
-        //let textFile = window.URL.createObjectURL(text); // The URL to that object
-        //let link = document.createElement('a'); //Create HTML link to download the file on client machine
-        //link.setAttribute('download', 'info.json');
-        //link.href = textFile;
-        //document.body.appendChild(link);
-        ////let model = createModel();
+        let model = createModel();
         //////this.localStorage.setItem('Model', model); //Save data to localStorage ??!! Option #1
         //////Save data on client machine if no internet connection Option #2
-        ////let text = new Blob([model], { type: 'text/json' }); //Blob : An object that represents a file
-        ////let textFile = window.URL.createObjectURL(text); // The URL to that object
-        ////let link = document.createElement('a'); //Create HTML link to download the file on client machine
-        ////link.setAttribute('download', 'info.json');
-        ////link.href = textFile;
-        ////document.body.appendChild(link);
-        //this.setTimeout(function () { // domElement takes some time to be added to the document
-        //    link.click(); //Fire the click event of the link
-        //    document.body.removeChild(link); //The link is no longer needed
-        //    URL.revokeObjectURL(textFile); // Dispose the URL Object
-        //    $('#staticBackdrop').modal('hide');
-        //}, 1000);
+        let text = new Blob([model], { type: 'text/json' }); //blob : an object that represents a file
+        let textfile = window.URL.createObjectURL(text); // the url to that object
+        let link = document.createElement('a'); //create html link to download the file on client machine
+        link.setAttribute('download', 'info.json');
+        link.href = textfile;
+        document.body.appendChild(link);
+        this.setTimeout(function () { // domelement takes some time to be added to the document
+            link.click(); //fire the click event of the link
+            document.body.removeChild(link); //the link is no longer needed
+            URL.revokeObjectURL(textfile); // dispose the url object
+            $('#staticBackdrop').modal('hide');
+        }, 1000);
     }
 
     /*$('#upload').change(function (event) { //Read data from uploaded file

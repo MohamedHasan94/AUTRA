@@ -15,7 +15,7 @@ namespace TeklaAPIHandler
         {
             Stopwatch stopwatch = new Stopwatch();
             stopwatch.Start();
-            //string path = @"D:\ITI\GraduationPoject\AUTRA\AUTRA\wwwroot\Inputs\ToTekla04.json";
+            //string path = @"D:\ITI\GraduationProject\AUTRA\AUTRA\wwwroot\Inputs\ToTekla05.json";
             //var data = Reader.Read<TeklaModelData>(path/*args[0]*/);
             //AUTRATekla.InitTekla(data);
             if (args.Length > 0)

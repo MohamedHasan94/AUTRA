@@ -34,7 +34,7 @@ namespace AUTRA.Tekla
                     //project.CreateElevationDWGSAlongX();
                     //.CreateElevationDWGSAlongY();
                     project.PrintDrawings();
-                    bool res = project.CreateReports(); //the type of report we are creating unfortunately is in us envirnoment not in middle east
+                    //bool res = project.CreateReports(); //the type of report we are creating unfortunately is in us envirnoment not in middle east
                     //project.ExportIFC();//not working
                     project.CompressFolder();
                     result = true;

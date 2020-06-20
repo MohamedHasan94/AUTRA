@@ -1,17 +1,31 @@
 {
   "ProjectProperties": {
     "Number": "1",
-    "Name": "nameFathy02",
-    "Designer": "designerFathy02",
+    "Name": "name",
+    "Designer": "designer",
     "Location": "loc",
     "City": "city",
     "Country": "country"
   },
   "Model": {
     "Grids": {
-      "CXS": [0.0, 6000, 8000, 6000],
-      "CYS": [0.0, 4000, 4000],
-      "CZS": [-950.0, -700.0, 0.0, 6000]
+      "CXS": [
+        0.0,
+        6000.0,
+        8000.0,
+        6000.0
+      ],
+      "CYS": [
+        0.0,
+        4000.0,
+        4000.0
+      ],
+      "CZS": [
+        -950.0,
+        -700.0,
+        0.0,
+        6000.0
+      ]
     },
     "Columns": [
       {

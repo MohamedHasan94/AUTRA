@@ -19,7 +19,7 @@
     <input type="text" hidden disabled id="projectName" value='@ViewData["projectName"]' />
     <canvas id="canvas" style="position:absolute"></canvas>
     <!--Start-up window-->
-    <div class="modelDivSize" id="modalDivDetails">
+    <div class="modelDivSize" id="modalDivDetails" style="display:none">
         <div class="container mt-3">
             <div class="row">
                 <div class="col-8"><h1>New Project</h1></div>
@@ -38,16 +38,16 @@
                                 <td><h6 class="subtitle" style=" color: #04DBEC;">Grids</h6></td>
                             </tr>
                             <tr class="form-group">
-                                <td><label for="spaceX">Spacing in X-direction</label></td>
-                                <td> <input type="text" name="" id="spaceX" class=" myModalInput" value="3*6" required></td>
+                                <td><label for="spaceX">Spacing in X-direction (meters)</label></td>
+                                <td> <input type="text" name="" id="spaceX" class=" myModalInput"  placeholder="Ex:3*6 or 4.5 6 8"></td>
                             </tr>
                             <tr class="form-group">
-                                <td><label for="spaceZ">Spacing in Y-direction</label></td>
-                                <td> <input type="text" name="" id="spaceZ" class=" myModalInput" value="2*8" required></td>
+                                <td><label for="spaceZ">Spacing in Y-direction (meters)</label></td>
+                                <td> <input type="text" name="" id="spaceZ" class=" myModalInput" placeholder="Ex:3*6 or 4.5 6 8" required></td>
                             </tr>
                             <tr class="form-group">
-                                <td><label for="height">Levels</label></td>
-                                <td><input type="text" name="" id="spaceY" class=" myModalInput" value="3" required></td>
+                                <td><label for="height">height (meters)</label></td>
+                                <td><input type="text" name="" id="spaceY" class=" myModalInput" placeholder="Ex:3" required></td>
                             </tr>
                             <tr style="display:none;">
                                 <td><h6 class="subtitle" style=" color: #04DBEC;">Drawing Mode &nbsp; &nbsp; &nbsp; &nbsp;&nbsp; &nbsp; &nbsp; </h6></td>
@@ -113,9 +113,9 @@
                                 <td> <h6 class="subtitle mt-4" style=" color: #04DBEC;">Secondary Beams</h6></td>
                             </tr>
                             <tr class="form-group">
-                                <td><label for="secSpace">Beams spacing&nbsp; &nbsp;&nbsp; &nbsp;&nbsp; &nbsp;  &nbsp; &nbsp; </label></td>
+                                <td><label for="secSpace">Beams spacing (meters)&nbsp; &nbsp;  &nbsp; &nbsp; </label></td>
 
-                                <td><input type="text" name="" id="secSpace" class="myModalInput" value="2" required></td>
+                                <td><input type="text" name="" id="secSpace" class="myModalInput" placeholder="2 or 1.5 2 2" required></td>
                             </tr>
                             <tr class="form-group">
 
@@ -202,32 +202,32 @@
                             <tr class="form-group">
                                 <td><label for="">Project name&nbsp; &nbsp;&nbsp; &nbsp;&nbsp; &nbsp;  &nbsp;  &nbsp;  &nbsp;  &nbsp;  &nbsp;  &nbsp;  &nbsp;  &nbsp;  &nbsp; &nbsp; </label></td>
 
-                                <td><input type="text" name="" id="projectName" class="myModalInput" value="2" required></td>
+                                <td><input type="text" name="" id="projectName" class="myModalInput" @*value="name"*@ required></td>
                             </tr>
                             <tr class="form-group">
                                 <td><label for="">Designer </label></td>
 
-                                <td><input type="text" name="" id="projectDesigner" class="myModalInput" value="2" required></td>
+                                <td><input type="text" name="" id="projectDesigner" class="myModalInput" @*value="designer"*@ required></td>
                             </tr>
                             <tr class="form-group">
                                 <td><label for="">Location</label></td>
 
-                                <td><input type="text" name="" id="projectLocation" class="myModalInput" value="2" required></td>
+                                <td><input type="text" name="" id="projectLocation" class="myModalInput" @*value="loc"*@ required></td>
                             </tr>
                             <tr class="form-group">
                                 <td><label for="">City</label></td>
 
-                                <td><input type="text" name="" id="projectCity" class="myModalInput" value="2" required></td>
+                                <td><input type="text" name="" id="projectCity" class="myModalInput" @*value="city"*@ required></td>
                             </tr>
                             <tr class="form-group">
                                 <td><label for="">Country</label></td>
 
-                                <td><input type="text" name="" id="projectCountry" class="myModalInput" value="2" required></td>
+                                <td><input type="text" name="" id="projectCountry" class="myModalInput" @*value="country"*@ required></td>
                             </tr>
                             <tr class="form-group">
                                 <td><label for="">Owner</label></td>
                                 
-                                <td><input type="text" name="" id="projectOwner" class="myModalInput" value="2" required></td>
+                                <td><input type="text" name="" id="projectOwner" class="myModalInput" @*value="owner"*@ required></td>
                             </tr>
                         </table>
                         <br>
@@ -421,24 +421,24 @@
                             <td>Choose Section  </td>
                             <td>
                                 <select id="drawSection" style="width:120%;">
-                                    <option value="IPE 80">IPE80</option>
-                                    <option value="IPE 100">IPE100</option>
-                                    <option value="IPE 120">IPE120</option>
-                                    <option value="IPE 140">IPE140</option>
-                                    <option value="IPE 160">IPE160</option>
-                                    <option value="IPE 180">IPE180</option>
-                                    <option value="IPE 200">IPE200</option>
-                                    <option value="IPE 220">IPE220</option>
-                                    <option value="IPE 240">IPE240</option>
-                                    <option value="IPE 270">IPE270</option>
-                                    <option value="IPE 300">IPE300</option>
-                                    <option value="IPE 330">IPE330</option>
-                                    <option value="IPE 360">IPE360</option>
-                                    <option value="IPE 400">IPE400</option>
-                                    <option value="IPE 450">IPE450</option>
-                                    <option value="IPE 500">IPE500</option>
-                                    <option value="IPE 550">IPE550</option>
-                                    <option value="IPE 600">IPE600</option>
+                                    <option value="IPE80">IPE80</option>
+                                    <option value="IPE100">IPE100</option>
+                                    <option value="IPE120">IPE120</option>
+                                    <option value="IPE140">IPE140</option>
+                                    <option value="IPE160">IPE160</option>
+                                    <option value="IPE180">IPE180</option>
+                                    <option value="IPE200">IPE200</option>
+                                    <option value="IPE220">IPE220</option>
+                                    <option value="IPE240">IPE240</option>
+                                    <option value="IPE270">IPE270</option>
+                                    <option value="IPE300">IPE300</option>
+                                    <option value="IPE330">IPE330</option>
+                                    <option value="IPE360">IPE360</option>
+                                    <option value="IPE400">IPE400</option>
+                                    <option value="IPE450">IPE450</option>
+                                    <option value="IPE500">IPE500</option>
+                                    <option value="IPE550">IPE550</option>
+                                    <option value="IPE600">IPE600</option>
                                 </select>
                             </td>
                         </tr>
@@ -503,24 +503,24 @@
                             <th>Change section to: &nbsp</th>
                             <td>
                                 <select id="section" style="width:120%;">
-                                    <option value="IPE 80">IPE80</option>
-                                    <option value="IPE 100">IPE100</option>
-                                    <option value="IPE 120">IPE120</option>
-                                    <option value="IPE 140">IPE140</option>
-                                    <option value="IPE 160">IPE160</option>
-                                    <option value="IPE 180">IPE180</option>
-                                    <option value="IPE 200">IPE200</option>
-                                    <option value="IPE 220">IPE220</option>
-                                    <option value="IPE 240">IPE240</option>
-                                    <option value="IPE 270">IPE270</option>
-                                    <option value="IPE 300">IPE300</option>
-                                    <option value="IPE 330">IPE330</option>
-                                    <option value="IPE 360">IPE360</option>
-                                    <option value="IPE 400">IPE400</option>
-                                    <option value="IPE 450">IPE450</option>
-                                    <option value="IPE 500">IPE500</option>
-                                    <option value="IPE 550">IPE550</option>
-                                    <option value="IPE 600">IPE600</option>
+                                    <option value="IPE80">IPE80</option>
+                                    <option value="IPE100">IPE100</option>
+                                    <option value="IPE120">IPE120</option>
+                                    <option value="IPE140">IPE140</option>
+                                    <option value="IPE160">IPE160</option>
+                                    <option value="IPE180">IPE180</option>
+                                    <option value="IPE200">IPE200</option>
+                                    <option value="IPE220">IPE220</option>
+                                    <option value="IPE240">IPE240</option>
+                                    <option value="IPE270">IPE270</option>
+                                    <option value="IPE300">IPE300</option>
+                                    <option value="IPE330">IPE330</option>
+                                    <option value="IPE360">IPE360</option>
+                                    <option value="IPE400">IPE400</option>
+                                    <option value="IPE450">IPE450</option>
+                                    <option value="IPE500">IPE500</option>
+                                    <option value="IPE550">IPE550</option>
+                                    <option value="IPE600">IPE600</option>
                                 </select>
                             </td>
                         </tr>
@@ -812,11 +812,12 @@
     </div>
 
     <div style="position:absolute;bottom:20px;right:20px">
-        <input type="text" id="beamSection" disabled>
-        <input type="text" id="beamStart" disabled>
-        <input type="text" id="beamEnd" disabled>
-        <input type="text" id="beamDead" disabled>
-        <input type="text" id="beamLive" disabled>
+        Element Data :
+        Section <input type="text" id="beamSection" disabled size="7" style="margin-left:5px;padding-left:5px">
+        StartPosition<input type="text" id="beamStart" disabled size="7" style="margin-left:5px;padding-left:5px">
+        EndPosition<input type="text" id="beamEnd" disabled size="7" style="margin-left:5px;padding-left:5px">
+        DeadLoad<input type="text" id="beamDead" disabled size="7" style="margin-left:5px;padding-left:5px">
+        LiveLoad<input type="text" id="beamLive" disabled size="7" style="margin-left:5px;padding-left:5px">
     </div>
 
 

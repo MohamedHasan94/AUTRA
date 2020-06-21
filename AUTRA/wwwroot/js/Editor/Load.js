@@ -18,24 +18,100 @@ class Load {
     clone() {
         return new this.constructor(this.magnitude, this.pattern);
     }
-    static distributeAreaLoad(dead, live, secondaryBeams, noOfBoundary, secSpacing) {
-        let linearDead = dead * secSpacing;
-        let linearLive = live * secSpacing;
-        for (let i = 0; i < secondaryBeams.length; i++) {
-            let secBeams = secondaryBeams[i];
-            for (let j = 0; j < noOfBoundary; j++) {
-                secBeams[j].addLoad(new LineLoad(0.5 * linearDead, 'dead'));
-                secBeams[j].addLoad(new LineLoad(0.5 * linearLive, 'live'));
+    static distributeAreaLoad(areaDead, areaLive, secondaryBeams, otherCoord, secSpacings) {
+        for (let k = 0; k < secondaryBeams.length; k++) {
+            debugger
+            let beamsRow = secSpacings.length
+            let deadMag = areaDead * 0.5 * secSpacings[0];
+            let liveMag = areaLive * 0.5 * secSpacings[0];
+            for (let i = 0; i < otherCoord.length - 1; i++) {
+                console.log(i);
+                secondaryBeams[k][i].addLoad(new LineLoad(deadMag, 'dead'), true)
+                secondaryBeams[k][i].addLoad(new LineLoad(liveMag, 'live'), true)
+                console.log(secondaryBeams[k][i * beamsRow].data.lineLoads)
             }
-            let lowerLimit = secBeams.length - noOfBoundary;
-            for (let j = lowerLimit; j < secBeams.length; j++) {
-                secBeams[j].addLoad(new LineLoad(0.5 * linearDead, 'dead'));
-                secBeams[j].addLoad(new LineLoad(0.5 * linearLive, 'live'));
+
+            for (let i = 1; i < secSpacings.length; i++) {
+                deadMag = areaDead * 0.5 * (secSpacings[i - 1] + secSpacings[i]);
+                liveMag = areaLive * 0.5 * (secSpacings[i - 1] + secSpacings[i]);
+                for (let j = 0; j < otherCoord.length - 1; j++) {
+                    console.log(i * (otherCoord.length - 1) + j);
+                    secondaryBeams[k][i * (otherCoord.length - 1) + j].addLoad(new LineLoad(deadMag, 'dead'), true)
+                    secondaryBeams[k][i * (otherCoord.length - 1) + j].addLoad(new LineLoad(liveMag, 'live'), true)
+                    console.log(secondaryBeams[k][i * (otherCoord.length - 1) + j].data.lineLoads)
+                }
             }
-            for (let j = noOfBoundary; j < lowerLimit; j++) {
-                secBeams[j].addLoad(new LineLoad(linearDead, 'dead'));
-                secBeams[j].addLoad(new LineLoad(linearLive, 'live'));
+
+
+            //for (let j = 1; j < secSpacings.length; j++) {
+            //    deadMag = areaDead * 0.5 * (secSpacings[j] + secSpacings[j + 1]);
+            //    liveMag = areaLive * 0.5 * (secSpacings[j] + secSpacings[j + 1]);
+            //    for (let i = 0; i < otherCoord.length - 1; i++) {
+            //        let n = j * (otherCoord.length - 1) + i;
+            //        secondaryBeams[k][j * (otherCoord.length - 1) + i].addLoad(new LineLoad(deadMag, 'dead'), true)
+            //        secondaryBeams[k][j * (otherCoord.length - 1) + i].addLoad(new LineLoad(liveMag, 'live'), true)
+            //    }
+            //}
+
+            deadMag = areaDead * 0.5 * secSpacings[secSpacings.length - 1];
+            liveMag = areaLive * 0.5 * secSpacings[secSpacings.length - 1];
+            for (let i = 0; i < otherCoord.length - 1; i++) {
+                console.log(secondaryBeams[k].length - 1 - i);
+                secondaryBeams[k][secondaryBeams[k].length-1- i].addLoad(new LineLoad(deadMag, 'dead'), true)
+                secondaryBeams[k][secondaryBeams[k].length - 1 - i].addLoad(new LineLoad(liveMag, 'live'), true)
+                console.log(secondaryBeams[k][secondaryBeams[k].length - 1 - i].data.lineLoads)
             }
+        }
+
+        /*for (let i = 0; i < otherCoord.length - 1; i++) {
+            for (let j = 1; j < secSpacing.length - 1; j++) {
+                deadMag = dead * 0.5 * (secSpacing[j - 1] + secSpacing[j])
+                deadMag = dead * 0.5 * (secSpacing[j - 1] + secSpacing[j])
+                secondaryBeams[i * secSpacing.length + j].addLoad(new LineLoad(dead, 'dead'))
+                secondaryBeams[i * secSpacing.length + j].addLoad(new LineLoad(live, 'live'))
+            }
+        }
+
+        for (let i = 0; i < otherCoord.length - 1; i++) {
+            secondaryBeams[i * secSpacing.length + secSpacing.length - 1].addLoad(new LineLoad(dead, 'dead'))
+            secondaryBeams[i * secSpacing.length + secSpacing.length - 1].addLoad(new LineLoad(live, 'live'))
+        }
+
+
+
+
+
+        for (let j = 1; i < otherCoord.length; i++) {//otherCoord : coordinates in the direction perpendicular to mainbeams
+            let s = 0.5 * (secSpacing[j - 1] + secSpacing[j]);
+            let deadMag = s * dead;
+            let liveMag = s * live;
+            for (; j < secSpacing.length - 1; j++) {
+                secondaryBeams[i * (otherCoord.length - 1) + j].addLoad(new LineLoad(deadMag, 'dead'))
+                secondaryBeams[i * (otherCoord.length - 1) + j].addLoad(new LineLoad(liveMag, 'live'))
+            }
+        }*/
+        //let linearDead = dead * secSpacing;
+        //let linearLive = live * secSpacing;
+        //for (let i = 0; i < secondaryBeams.length; i++) {
+        //    let secBeams = secondaryBeams[i];
+        //    for (let j = 0; j < noOfBoundary; j++) {
+        //        secBeams[j].addLoad(new LineLoad(0.5 * linearDead, 'dead'));
+        //        secBeams[j].addLoad(new LineLoad(0.5 * linearLive, 'live'));
+        //    }
+        //    let lowerLimit = secBeams.length - noOfBoundary;
+        //    for (let j = lowerLimit; j < secBeams.length; j++) {
+        //        secBeams[j].addLoad(new LineLoad(0.5 * linearDead, 'dead'));
+        //        secBeams[j].addLoad(new LineLoad(0.5 * linearLive, 'live'));
+        //    }
+        //    for (let j = noOfBoundary; j < lowerLimit; j++) {
+        //        secBeams[j].addLoad(new LineLoad(linearDead, 'dead'));
+        //        secBeams[j].addLoad(new LineLoad(linearLive, 'live'));
+        //    }
+        //}
+        console.log('///**************************************************************///')
+        for (let i = 0; i < secondaryBeams[0].length; i++) {
+            console.log(i);
+            console.log(secondaryBeams[0][i].data.lineLoads);
         }
     }
 }

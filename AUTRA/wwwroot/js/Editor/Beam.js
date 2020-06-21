@@ -146,41 +146,42 @@ class Beam extends FrameElement {
 
 //Calculate the starting coords of secondary beams
 function getSecCoords(mainCoord, secSpacing) {
-    let coord = [0], number, sum = 0;
+    let coord = [0], number, sum = 0, secSpacings = [];
     number = mainCoord.length;
-
+    
     for (var i = 1; i < number; i++) {
         while (sum < mainCoord[i]) {
             sum = 10 * sum + 10 * (secSpacing[i - 1] ?? secSpacing[0]);
             sum /= 10;
+            secSpacings.push(secSpacing[i - 1] ?? secSpacing[0]);
             coord.push(sum);
         }
     }
-    return coord;
+    return [coord, secSpacings];
 }
 
 //Automatically generate the floor system from user's input with main beams on Z-axis (Creates the nodes with the beams)
 function generateMainBeamsZ(editor, coordX, coordY, coordZ, mainSection, secSection, secSpacing) {
-    let mainBeams, secBeams, secCoord = [0], secNodes, nodes;
+    let mainBeams, secBeams, secCoord = [0], secNodes, nodes, secSpacings;
 
     [mainBeams, nodes] = createZBeamsWithNodes(editor, coordX, coordY, coordZ, mainSection); //Create main beams on z-axis
 
-    secCoord = getSecCoords(coordZ, secSpacing);
+    [secCoord, secSpacings] = getSecCoords(coordZ, secSpacing);
     [secBeams, secNodes] = createXBeams(editor, coordX, coordY, secCoord, secSection, coordZ, nodes, mainBeams);  //Create secondary beams on x-axis
 
-    return [mainBeams, secBeams, nodes, secNodes];
+    return [mainBeams, secBeams, nodes, secNodes, secSpacings];
 }
 
 //Automatically generate the floor system from user's input with main beams on X-axis (Creates the nodes with the beams)
 function generateMainBeamsX(editor, coordX, coordY, coordZ, mainSection, secSection, secSpacing) {
-    let mainBeams, secBeams, secCoord = [0], secNodes, nodes;
+    let mainBeams, secBeams, secCoord = [0], secNodes, secSpacings;
 
     [mainBeams, nodes] = createXBeamsWithNodes(editor, coordX, coordY, coordZ, mainSection); //Create main beams on x-axis (short direction)
 
-    secCoord = getSecCoords(coordX, secSpacing);
+    [secCoord, secSpacings] = getSecCoords(coordX, secSpacing);
     [secBeams, secNodes] = createZBeams(editor, secCoord, coordY, coordZ, secSection, coordX, nodes, mainBeams);  //Create secondary beams on z-axis (long direction)
 
-    return [mainBeams, secBeams, nodes, secNodes];
+    return [mainBeams, secBeams, nodes, secNodes, secSpacings];
 }
 
 //Create one material and clone from it (better performance)

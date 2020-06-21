@@ -160,15 +160,15 @@ class Editor {
         this.renderer.setClearColor(0x000000);
         light.style.display = 'block';
         dark.style.display = 'none';
-        this.changeColor(0xffff00, 0x0000ff, 0xff0000);
+        this.changeColor(0xffff00, 0x0000ff, 0xff0000, 0xffffff);
     }
     lightTheme = function () {
         this.renderer.setClearColor(0xdddddd);
         dark.style.display = 'block';
         light.style.display = 'none';
-        this.changeColor(0x000000, 0xffcc00, 0x6633ff);
+        this.changeColor(0x000000, 0xffcc00, 0x6633ff, 0x333333);
     }
-    changeColor(elementsColor, nodesColor, supportsColor) {
+    changeColor(elementsColor, nodesColor, supportsColor, gridsColor) {
         let elements = this.scene.userData.elements.children;
         for (let i = 0; i < elements.length; i++) {
             elements[i].material.color.setHex(elementsColor);
@@ -180,6 +180,11 @@ class Editor {
                 nodes[i].material.color.setHex(nodesColor);
             else //Support
                 nodes[i].material.color.setHex(supportsColor);
+        }
+
+        let grids = this.scene.userData.grids.children;
+        for (let i = 0; i < 2; i++) {
+            grids[i].material.color.setHex(gridsColor);
         }
     }
     screenshot() { //Take a screenshot to the view

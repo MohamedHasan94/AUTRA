@@ -101,6 +101,7 @@ $(' #viewsBtn ').click(function () {
 });
 $(' #measureBtn ').click(function () {
     $('#measureDetails').fadeOut();
+    $('#distance').val('');
 });
 $(' #createGrids ').click(function () {
     $('#modalDivDetails').fadeOut(500);
@@ -122,3 +123,16 @@ window.onbeforeunload = (e) => {
 //#endregion
 
 $('#readFromJson').click(() => $('#upload').click());
+
+//#region modal div
+$('#secSpace').change(() => {
+    if ($('#secSpace').val().split(' ').length == 1) {
+        $('#loadsSection').css('display', 'block');
+        $('#uniform').prop('checked', true);
+    }
+    else {
+        $('#loadsSection').css('display', 'none');
+        $('#uniform').prop('checked', false);
+    }
+})
+//#endregion

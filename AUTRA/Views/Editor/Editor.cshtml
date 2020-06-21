@@ -12,7 +12,26 @@
     <link href="~/css/style.css" rel="stylesheet" />
     <link rel="stylesheet" href="~/assets/my-icons-collection/font/flaticon.css">
     <link href="~/css/sidebar.css" rel="stylesheet" />
+    <style>
+        @@keyframes blink {
+            0% {
+                opacity: 1;
+            }
 
+            50% {
+                opacity: 0.15;
+            }
+
+            100% {
+                opacity: 1;
+            }
+        }
+
+        .img {
+            animation: blink 2s;
+            animation-iteration-count: infinite;
+        }
+    </style>
     <title>Editor</title>
 </head>
 <body>
@@ -39,7 +58,7 @@
                             </tr>
                             <tr class="form-group">
                                 <td><label for="spaceX">Spacing in X-direction (meters)</label></td>
-                                <td> <input type="text" name="" id="spaceX" class=" myModalInput"  placeholder="Ex:3*6 or 4.5 6 8"></td>
+                                <td> <input type="text" name="" id="spaceX" class=" myModalInput" placeholder="Ex:3*6 or 4.5 6 8"></td>
                             </tr>
                             <tr class="form-group">
                                 <td><label for="spaceZ">Spacing in Y-direction (meters)</label></td>
@@ -177,25 +196,27 @@
 
                 </div>
                 <div class="col">
-                    <h3 style="display:none;"> Loads</h3>
-                    <div style="display:none;" class="border-white mt-4">
-                        <table style="display:table; width:110%;">
-                            <tr class="form-group">
-                                <td>
-                                    <label for="secSpace">Dead Load&nbsp; &nbsp;&nbsp; &nbsp;&nbsp; &nbsp;  &nbsp;  &nbsp;  &nbsp;  &nbsp;  &nbsp;  &nbsp;  &nbsp;  &nbsp;  &nbsp; &nbsp; </label>
-                                </td>
-                                <td><input type="text" name="" id="dead" class="myModalInput" value="1.5" required></td>
-                            </tr>
+                    <div id="loadsSection" style="display:none">
+                        <h3 @*style="display:none;"*@>Floor Loads</h3>
+                        <div @*style="display:none;"*@ class="border-white mt-4">
+                            <input type="checkbox" hidden id="uniform"/>
+                            <table style="display:table; width:110%;">
+                                <tr class="form-group">
+                                    <td>
+                                        <label for="secSpace">Dead Load (t/m2)&nbsp;&nbsp; &nbsp;  &nbsp;  &nbsp;  &nbsp;  &nbsp;  &nbsp;  &nbsp;  &nbsp;  &nbsp;  &nbsp; &nbsp; </label>
+                                    </td>
+                                    <td><input type="text" name="" id="dead" class="myModalInput" value="0.25" required></td>
+                                </tr>
 
-                            <tr class="form-group">
-                                <td>
-                                    <label for="secSpace">Live Load</label>
-                                </td>
-                                <td> <input type="text" name="" id="live" class="myModalInput" value="2.5" required></td>
-                            </tr>
-                        </table>
+                                <tr class="form-group">
+                                    <td>
+                                        <label for="secSpace">Live Load (t/m2)</label>
+                                    </td>
+                                    <td> <input type="text" name="" id="live" class="myModalInput" value="0.5" required></td>
+                                </tr>
+                            </table>
+                        </div>
                     </div>
-
                     <h3> Project Information</h3>
                     <div class="border-white mt-4">
                         <table style="display:table; width:110%;">
@@ -226,7 +247,7 @@
                             </tr>
                             <tr class="form-group">
                                 <td><label for="">Owner</label></td>
-                                
+
                                 <td><input type="text" name="" id="projectOwner" class="myModalInput" @*value="owner"*@ required></td>
                             </tr>
                         </table>
@@ -248,7 +269,7 @@
         </div>
     </div>
 
-    <input type="file" id="upload" accept="application/json" hidden/>
+    <input type="file" id="upload" accept="text/aut" hidden />
     <div class="btn" id="sidebarBtn">
         <span class="fas fa-bars"></span>
     </div>
@@ -259,7 +280,7 @@
 
                     <div class="taskbarIconBlock">
                         <div class=" icon">
-                            <div class="taskbarIconLabel"><img src="/assets/img/AutraLogo/8.png" alt="AUTRA" style="width:40%;padding-top:8px;" /></div>
+                            <div class="taskbarIconLabel"><img src="/assets/img/AutraLogo/8.png" id="autraLogo" alt="AUTRA" style="width:40%;padding-top:8px;" /></div>
                         </div>
                     </div>
                 </section>
@@ -383,7 +404,7 @@
                     </div>
                 </section>
                 <section>
-                    <div class="taskbarIconBlock " id="generateDrawings" @*style="display:none;"*@ onclick="generateDrawings()">
+                    <div class="taskbarIconBlock " id="generateDrawings" style="display:none;" onclick="generateDrawings()">
                         <div class="flaticon-graphs icon">
                             <div class="taskbarIconLabel">Drawings</div>
                         </div>
@@ -767,8 +788,8 @@
                 <button class="myBtn" onclick="result()">Show Result</button>
                 <button class="myBtn" onclick="hideResults()">Hide Result</button>
                 <br>
-                Value &nbsp;&nbsp;&nbsp;<input type="text" id="station" disabled size="10"> <br />
-                Station <input type="text" id="action" disabled size="10">
+                Station &nbsp;&nbsp;&nbsp;<input type="text" id="station" disabled size="10"> <br />
+                Action <input type="text" id="action" disabled size="10">
             </div>
         </div>
         <div id="viewsDetails" class="popupDiv large3DivSize">

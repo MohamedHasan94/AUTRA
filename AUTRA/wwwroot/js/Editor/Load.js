@@ -18,6 +18,26 @@ class Load {
     clone() {
         return new this.constructor(this.magnitude, this.pattern);
     }
+    static distributeAreaLoad(dead, live, secondaryBeams, noOfBoundary, secSpacing) {
+        let linearDead = dead * secSpacing;
+        let linearLive = live * secSpacing;
+        for (let i = 0; i < secondaryBeams.length; i++) {
+            let secBeams = secondaryBeams[i];
+            for (let j = 0; j < noOfBoundary; j++) {
+                secBeams[j].addLoad(new LineLoad(0.5 * linearDead, 'dead'));
+                secBeams[j].addLoad(new LineLoad(0.5 * linearLive, 'live'));
+            }
+            let lowerLimit = secBeams.length - noOfBoundary;
+            for (let j = lowerLimit; j < secBeams.length; j++) {
+                secBeams[j].addLoad(new LineLoad(0.5 * linearDead, 'dead'));
+                secBeams[j].addLoad(new LineLoad(0.5 * linearLive, 'live'));
+            }
+            for (let j = noOfBoundary; j < lowerLimit; j++) {
+                secBeams[j].addLoad(new LineLoad(linearDead, 'dead'));
+                secBeams[j].addLoad(new LineLoad(linearLive, 'live'));
+            }
+        }
+    }
 }
 
 class LineLoad extends Load {
@@ -31,7 +51,6 @@ class LineLoad extends Load {
 
             let mesh = new THREE.Mesh(new THREE.PlaneBufferGeometry(beam.data.length, height, 1, 1), loadMaterial.clone());
 
-            let magnitude = -1 * this.magnitude;
             let textGeometry = new THREE.TextBufferGeometry(`${-1 * this.magnitude} t/m`, {
                 font: myFont,
                 size: 0.35 * height,
@@ -59,22 +78,26 @@ class PointLoad extends Load {
         super(magnitude, pattern);
     }
     render(position) {
-        let height = (-0.42 * this.magnitude + 0.395);
-        height = height < 0.5 ? 0.5 : height > 2.5 ? 2.5 : height;
+        if (this.magnitude) {
+            let height = (-0.42 * this.magnitude + 0.395);
+            height = height < 0.5 ? 0.5 : height > 2.5 ? 2.5 : height;
 
-        position.y += height + 0.075;
+            position.y += height + 0.075;
 
-        let arrow = new THREE.ArrowHelper(direction, position, height, 0xcc00ff);
-        let textGeometry = new THREE.TextBufferGeometry(`${this.magnitude * -1} t`, {
-            font: myFont,
-            size: 0.35 * height,
-            height: 0,
-            curveSegments: 3,
-            bevelEnabled: false
-        });
-        let text = new THREE.Mesh(textGeometry, fontMaterial);
-        text.rotateX(Math.PI);
-        arrow.add(text);
-        return arrow;
+            let arrow = new THREE.ArrowHelper(direction, position, height, 0xcc00ff);
+            let textGeometry = new THREE.TextBufferGeometry(`${this.magnitude * -1} t`, {
+                font: myFont,
+                size: 0.35 * height,
+                height: 0,
+                curveSegments: 3,
+                bevelEnabled: false
+            });
+            let text = new THREE.Mesh(textGeometry, fontMaterial);
+            text.rotateX(Math.PI);
+            arrow.add(text);
+            return arrow;
+        }
+        else
+            return null;
     }
 }

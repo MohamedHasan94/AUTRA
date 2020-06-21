@@ -113,7 +113,7 @@
                     columns.push(columnsLoop);
                 }
                 //if ($('#uniform').prop('checked')) //uniform secondary spacing
-                Load.distributeAreaLoad(0.5, 1, secondaryBeams, coordZ, secSpacings);
+                Load.distributeAreaLoad(parseFloat($('#floorDead').val()), parseFloat($('#floorLive').val()), secondaryBeams, coordZ, secSpacings);
             }
             else {
                 //creating and adding the Hinged-Nodes to MainNodes Array
@@ -137,7 +137,7 @@
                 }
                 //if ($('#uniform').prop('checked')) //uniform secondary spacing
                 //    Load.distributeAreaLoad(0.5, 1, secondaryBeams, coordX.length - 1, secSpacing);
-                Load.distributeAreaLoad(0.5, 1, secondaryBeams, coordX, secSpacings);
+                Load.distributeAreaLoad(parseFloat($('#floorDead').val()), parseFloat($('#floorLive').val()), secondaryBeams, coordX, secSpacings);
 
             }
         }

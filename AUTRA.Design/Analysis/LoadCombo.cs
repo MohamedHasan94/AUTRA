@@ -8,6 +8,5 @@ namespace AUTRA.Design
     {
         public LoadPattern Pattern { get; set; }
         public double ScaleFactor { get; set; }
-    }
-   
+    }   
 }

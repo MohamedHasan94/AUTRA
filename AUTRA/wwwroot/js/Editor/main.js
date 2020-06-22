@@ -6,7 +6,7 @@
     let nodes = new Array(), grids;
     let columns = new Array(), mainBeams = new Array(), secondaryBeams = new Array(), sections = new Array();
     let canvas, domEvents;
-    let levels, material, projectProperties;
+    let levels, material, projectProperties, loadCombo;
     let draw = false, drawingPoints = [];
     let sectionId = 0;
     //#endregion
@@ -25,7 +25,6 @@
                     retrocycle(data);
                     buildModel(data);
                     $('#staticBackdrop').modal('hide');
-                    //console.clear();
                 },
                 error: function (x, y, err) {
                     debugger
@@ -38,9 +37,7 @@
     }
     function buildModel(model) {
         editor.init(model.grids.coordX[model.grids.coordX.length - 1], model.grids.coordZ[model.grids.coordZ.length - 1]); //Setup editor
-
         grids = new Grid(model.grids.coordX, model.grids.coordZ, 4.5, model.grids.levels);
-
         levels = grids.levels;
         editor.addToGroup(grids.gridLines, 'grids'); //Add x-grids to scene (as a group)this.meshInX
         editor.addToGroup(grids.gridNames, 'grids'); //Add z-grids to scene (as a group)
@@ -57,42 +54,50 @@
         secondaryBeams.push(Beam.generate(model.secondaryBeams, editor));
         mainBeams.push(Beam.generate(model.mainBeams, editor));
         columns.push(Column.generate(model.columns, editor));
+        loadCombo = model.loadCombination;
+        confirmCloseWindow();
     }
 
     $('#createGrids').click(function () {
-        $('#exampleModal').modal('hide');
-        $('#staticBackdrop').modal('show');
-        let secSpacing, coordX, coordZ;
-        coordX = getCoords($('#spaceX').val()); //Get X-coordinates from X-spacings
-        coordZ = getCoords($('#spaceZ').val()); //Get Z-coordinates from Z-spacings
-        levels = getCoords($('#spaceY').val()); //Get Y-coordinates from Y-spacings
-        secSpacing = $('#secSpace').val().split(' ').map(s => parseFloat(s)); //Spacing between secondary beams
+        if ($("#form2StructureData").valid()) {
+            $('#modalDivDetails').hide();
+            $('#staticBackdrop').modal('show');
+            let secSpacing, coordX, coordZ;
+            coordX = getCoords($('#spaceX').val()); //Get X-coordinates from X-spacings
+            coordZ = getCoords($('#spaceZ').val()); //Get Z-coordinates from Z-spacings
+            levels = getCoords($('#spaceY').val()); //Get Y-coordinates from Y-spacings
+            secSpacing = $('#secSpace').val().split(' ').map(s => parseFloat(s)); //Spacing between secondary beams
 
-        grids = new Grid(coordX, coordZ, 4.5, levels);
-        editor.init(coordX[coordX.length - 1], coordZ[coordZ.length - 1]); //Setup editor
-        editor.addToGroup(grids.gridLines, 'grids'); //Add x-grids to scene (as a group)this.meshInX
-        editor.addToGroup(grids.gridNames, 'grids'); //Add z-grids to scene (as a group)
-        editor.addToGroup(grids.axes, 'grids'); //Add z-grids to scene (as a group)
-        editor.addToGroup(grids.dimensions, 'dimensions');
-        projectProperties = {
-            number: "1",
-            name: $('#projectName').val(),
-            designer: $('#projectDesigner').val(),
-            location: $('#projectLocation').val(),
-            city: $('#projectCity').val(),
-            Country: $('#projectCountry').val(),
-            owner: $('#projectOwner').val()
-        }
-        if (!document.getElementById("autoMode").checked) {
-            nodes = createNodesZ(editor, coordX, coordZ);
-        }
-        else {
+            grids = new Grid(coordX, coordZ, 4.5, levels);
+            editor.init(coordX[coordX.length - 1], coordZ[coordZ.length - 1]); //Setup editor
+            editor.addToGroup(grids.gridLines, 'grids'); //Add x-grids to scene (as a group)this.meshInX
+            editor.addToGroup(grids.gridNames, 'grids'); //Add z-grids to scene (as a group)
+            editor.addToGroup(grids.axes, 'grids'); //Add z-grids to scene (as a group)
+            editor.addToGroup(grids.dimensions, 'dimensions');
+            projectProperties = {
+                number: "1",
+                name: $('#projectName').val(),
+                designer: $('#projectDesigner').val(),
+                location: $('#projectLocation').val(),
+                city: $('#projectCity').val(),
+                Country: $('#projectCountry').val(),
+                owner: $('#projectOwner').val()
+            }
+
+            //let deadFactor = parseFloat($('#deadFactor').val());
+            //let liveFactor = parseFloat($('#liveFactor').val());
+            loadCombo = {
+                name: `1*Dead + 1*Live`,
+                combo: [{ pattern: 'dead', scaleFactor: 1 }, { pattern: 'live', scaleFactor: 1 }]
+            }
+
             material = { $id: 'm', name: $('#material').val() };
             sections.push({ $id: `${sectionId += 1000}`, name: $('#secSection').val(), material: { $ref: 'm' } },
                 { $id: `${sectionId += 1000}`, name: $('#mainSection').val(), material: { $ref: 'm' } },
                 { $id: `${sectionId += 1000}`, name: $('#colSection').val(), material: { $ref: 'm' } });
 
-            let mainNodes = new Array(), mainBeamsLoop, secondaryBeamsLoop, mainNodesLoop, secNodesLoop, nodesLoop;
+            let mainNodes = new Array(), mainBeamsLoop, secondaryBeamsLoop, mainNodesLoop, secNodesLoop, nodesLoop, secSpacings;
+
             if (document.getElementById("xOrient").checked) { //Draw main beams on X-axis
                 //creating and adding the Hinged-Nodes to MainNodes Array
                 lowerNodesIntial = createNodesZ(editor, coordX, coordZ);
@@ -101,7 +106,7 @@
 
                 for (let i = 1; i < levels.length; i++) {
 
-                    [mainBeamsLoop, secondaryBeamsLoop, mainNodesLoop, secNodesLoop] = generateMainBeamsX(editor, coordX, levels[i], coordZ,
+                    [mainBeamsLoop, secondaryBeamsLoop, mainNodesLoop, secNodesLoop, secSpacings] = generateMainBeamsX(editor, coordX, levels[i], coordZ,
                         sections[1], sections[0], secSpacing); //Auto generate floor beams and nodes in X
 
                     nodesLoop = mainNodesLoop.concat(secNodesLoop);
@@ -114,6 +119,7 @@
                     secondaryBeams.push(secondaryBeamsLoop);
                     columns.push(columnsLoop);
                 }
+                Load.distributeAreaLoad(parseFloat($('#floorDead').val()), parseFloat($('#floorLive').val()), secondaryBeams, coordZ, secSpacings);
             }
             else {
                 //creating and adding the Hinged-Nodes to MainNodes Array
@@ -122,7 +128,7 @@
                 nodes = nodes.concat(lowerNodesIntial);
 
                 for (let i = 1; i < levels.length; i++) {
-                    [mainBeamsLoop, secondaryBeamsLoop, mainNodesLoop, secNodesLoop] = generateMainBeamsZ(editor, coordX, levels[i], coordZ,
+                    [mainBeamsLoop, secondaryBeamsLoop, mainNodesLoop, secNodesLoop, secSpacings] = generateMainBeamsZ(editor, coordX, levels[i], coordZ,
                         sections[1], sections[0], secSpacing); //Auto generate floor beams and nodes in Z
 
                     nodesLoop = mainNodesLoop.concat(secNodesLoop);
@@ -135,9 +141,14 @@
                     secondaryBeams.push(secondaryBeamsLoop);
                     columns.push(columnsLoop);
                 }
+                Load.distributeAreaLoad(parseFloat($('#floorDead').val()), parseFloat($('#floorLive').val()), secondaryBeams, coordX, secSpacings);
             }
+            $('#staticBackdrop').modal('hide');
+            confirmCloseWindow();
         }
-        $('#staticBackdrop').modal('hide');
+        else {
+            $('#modalDivDetails').show();
+        }
     })
 
     //Turn spacings into coordinates
@@ -408,9 +419,7 @@
                     return
                 }
             }
-            let input = document.getElementById('distance');
-            input.value = `${points[0].distanceTo(points[1])} m`;
-            setTimeout(() => input.value = '', 5000);
+            $('#distance').val(`${points[0].distanceTo(points[1]).toFixed(2)} m`);
         }
         else {
             showInfoModal('Please select two nodes before running the command');
@@ -525,7 +534,8 @@
     function createModel() { //Serialize model components to JSON
         let model = {
             nodes: [], material: material, sections: sections,
-            secondaryBeams: [], mainBeams: [], columns: [], grids: {}
+            secondaryBeams: [], mainBeams: [], columns: [], grids: {},
+            loadCombination: loadCombo
         };
         model.projectProperties = projectProperties;
         for (var i = 0; i < nodes.length; i++) {
@@ -545,8 +555,7 @@
         model.grids.coordX = grids.coordX; //For model re-openning
         model.grids.coordZ = grids.coordZ; //For model re-openning
         model.grids.levels = grids.levels; //For Tekla & model re-openning
-        model = JSON.stringify(model);
-        return model;
+        return JSON.stringify(model);
     }
 
     window.solve = function () { //Send data to server  
@@ -566,17 +575,16 @@
                 editor.clearGroup('results');
                 editor.hideGroup('nodes');
                 analysisResult.style.display = 'block';
+                $('#generateDrawings').css('display', 'block');
                 FrameElement.assignResults(mainBeams[0], res.mainBeams); //MainBeams
                 Beam.showResults(mainBeams[0], 'dead', 'showMoment', 0, domEvents, editor);
-
                 FrameElement.assignResults(secondaryBeams[0], res.secondaryBeams); //SecondaryBeams
                 Beam.showResults(secondaryBeams[0], 'dead', 'showMoment', 0, domEvents, editor);
-
                 FrameElement.assignResults(columns[0], res.columns); //Columns
-
-                for (let i = 0; i < columns[0].length; i++) {
+                for (let i = 0; i < columns[0].length; i++) { //Supports reaction
                     nodes[i].visual.reactions = res.supports[i].reactions;
                 }
+                $(' #analysisResult ').click();
                 $.ajax({
                     url: `/Outputs/Reports/Design Calculation Sheet for ${projectProperties.name}.pdf`,
                     type: 'GEt',
@@ -652,7 +660,7 @@
         let text = new Blob([model], { type: 'text/json' }); //blob : an object that represents a file
         let textfile = window.URL.createObjectURL(text); // the url to that object
         let link = document.createElement('a'); //create html link to download the file on client machine
-        link.setAttribute('download', 'info.json');
+        link.setAttribute('download', `${projectProperties.name}.aut`);
         link.href = textfile;
         document.body.appendChild(link);
         this.setTimeout(function () { // domelement takes some time to be added to the document
@@ -666,7 +674,6 @@
     $('#upload').change(function (event) { //Read data from uploaded file
         $('#modalDivDetails').css('display', 'none');
         $('#staticBackdrop').modal('show');
-        debugger
         let file = event.target.files[0];
         var reader = new FileReader();
         reader.onload = function (evt) {
@@ -674,7 +681,6 @@
             retrocycle(model);
             buildModel(model);
             $('#staticBackdrop').modal('hide');
-            console.log(obj);
         };
         reader.readAsText(file);
     });
@@ -700,6 +706,7 @@
 
     window.result = () => {
         editor.clearGroup('results'); //Clear displayed results(if any)
+        editor.clearGroup('loads'); //Clear displayed results(if any)
         editor.hideGroup('nodes'); //Temporarily hide nodes (for clearer display of stations)
         let pattern = $('#resultPattern').val();
         let strainingAction = $('#strainingAction').val();
@@ -746,6 +753,7 @@
 
     window.generateDrawings = () => {
         showInfoModal('Generating drawings');
+        $('#autraLogo').addClass('img');
         editor.clearGroup('loads');
         $.ajax({
             url: `/Editor/Model`,
@@ -767,12 +775,14 @@
                                 link.click(); //Fire the click event of the link
                                 document.body.removeChild(link); //The link is no longer needed
                                 URL.revokeObjectURL(textFile); // Dispose the URL Object
-                                showInfoModal('Generating drawings');
+                                showInfoModal('Drawings created');
+                                $('#autraLogo').removeClass('img');
                             }, 1000);
                         },
                         error: function (x, y, err) {
                             debugger
                             showInfoModal('Something went wrong, please try again');
+                            $('#autraLogo').removeClass('img');
                         }
                     });
                 }
@@ -780,6 +790,7 @@
             error: function (x, y, res) {
                 $('#staticBackdrop').modal('hide')
                 showInfoModal('Something went wrong. Please try again');
+                $('#autraLogo').removeClass('img');
             }
         });
     }

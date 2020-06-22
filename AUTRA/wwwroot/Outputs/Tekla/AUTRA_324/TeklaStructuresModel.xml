@@ -1,0 +1,18 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no"?>
+<!DOCTYPE TeklaStructuresModels>
+<TeklaStructuresModels>
+    <Model>
+        <Name>AUTRA_324</Name>
+        <Designer>Structural Engineer</Designer>
+        <Description></Description>
+        <Version>2020</Version>
+        <Language>enu</Language>
+        <Template></Template>
+        <Environment>middle_east</Environment>
+        <IsTemplate>FALSE</IsTemplate>
+        <XS_PROJECT></XS_PROJECT>
+        <XS_FIRM></XS_FIRM>
+        <XS_SYSTEM>C:\ProgramData\Trimble\Tekla Structures\2020.0\\environments\middle_east\Steel\component_attributes\;C:\ProgramData\Trimble\Tekla Structures\2020.0\\environments\middle_east\Steel\drawing_filters\;C:\ProgramData\Trimble\Tekla Structures\2020.0\\environmen</XS_SYSTEM>
+        <ConnectedId></ConnectedId>
+    </Model>
+</TeklaStructuresModels>

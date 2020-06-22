@@ -251,9 +251,7 @@ namespace AUTRA.Tekla
 			{
 				Operation.DisplayPrompt("Selection is interrupted");
 				return null;
-
-			}
-			
+			}			
 		}
 		#endregion
 	}

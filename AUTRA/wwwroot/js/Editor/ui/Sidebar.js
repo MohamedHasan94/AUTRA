@@ -1,4 +1,4 @@
-var dark=document.getElementById("dark");
+var dark = document.getElementById("dark");
 var light = document.getElementById("light");
 var analysisResult = document.getElementById("analysisResult");
 
@@ -95,16 +95,18 @@ $(' #showLoadBtn ').click(function () {
 });
 $(' #analysisResultBtn ').click(function () {
     $('#analysisResultDetails').fadeOut();
+
 });
 $(' #viewsBtn ').click(function () {
     $('#viewsDetails').fadeOut();
 });
 $(' #measureBtn ').click(function () {
     $('#measureDetails').fadeOut();
+    $('#distance').val('');
 });
-$(' #createGrids ').click(function () {
-    $('#modalDivDetails').fadeOut(500);
-});
+//$(' #createGrids ').click(function () {
+//    $('#modalDivDetails').fadeOut(500);
+//});
 //#endregion
 
 //#region Show info modal
@@ -115,9 +117,11 @@ function showInfoModal(message) {
 //#endregion
 
 //#region prevent closing window
-window.onbeforeunload = (e) => {
-    e.preventDefault();
-    return true;
+function confirmCloseWindow() {
+    window.onbeforeunload = (e) => {
+        e.preventDefault();
+        return true;
+    }
 }
 //#endregion
 

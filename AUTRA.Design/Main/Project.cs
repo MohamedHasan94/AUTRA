@@ -17,6 +17,7 @@ namespace AUTRA.Design
         public List<Column> Columns { get; set; }
         public List<Support> Supports { get; set; }
         public Grids Grids { get; set; }
+        public LoadCombination loadCombination { get; set; }
     }
 
     public struct Grids

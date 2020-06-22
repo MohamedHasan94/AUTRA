@@ -5,7 +5,7 @@ $("#manMode").click(function () { //Hide Auto mode data if Manual mode selected
 
 $("#autoMode").click(function () { //Show Auto mode data if Manual mode not selected
     $("#autoModeData").fadeIn();
-}); 
+});
 
 
 $('#modalOpenProjectTitle').click(function () {
@@ -51,7 +51,7 @@ $('#modalFlipBackward').click(function () {
 
 
 $(document).ready(function () {
-$("form[name='form1ProjectData']").validate({
+    $("form[name='form1ProjectData']").validate({
         // Specify validation rules
         rules: {
             project: "required",
@@ -70,7 +70,7 @@ $("form[name='form1ProjectData']").validate({
             country: "Please enter the country.",
             owner: "Please enter the owner's name.",
         },
-});
+    });
 
     $("form[name='form2StructureData']").validate({
         // Specify validation rules
@@ -92,11 +92,11 @@ $("form[name='form1ProjectData']").validate({
     });
 
 
-$('#modalFlipForward').click(function () {  // capture the click
-    if ($("#form1ProjectData").valid()) {   // test for validity
-        $("#modalPage1").hide();
-        $("#modalPage2").show();
-    }
-});
+    $('#modalFlipForward').click(function () {  // capture the click
+        if ($("#form1ProjectData").valid()) {   // test for validity
+            $("#modalPage1").hide();
+            $("#modalPage2").show();
+        }
+    });
 
 });

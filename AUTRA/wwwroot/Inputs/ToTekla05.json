@@ -1,26 +1,24 @@
 {
   "ProjectProperties": {
     "Number": "1",
-    "Name": "ElementId",
-    "Designer": "",
+    "Name": "ifi",
+    "Designer": "kjk",
     "Location": "",
     "City": "",
-    "Country": ""
+    "Country": "kijnki"
   },
   "Model": {
     "Grids": {
       "CXS": [
         0.0,
-        4500.0,
         6000.0,
         8000.0,
-        5199.999999999999
+        6000.0
       ],
       "CYS": [
         0.0,
-        5000.0,
-        5000.0,
-        5000.0
+        4000.0,
+        4000.0
       ],
       "CZS": [
         -950.0,
@@ -47,7 +45,7 @@
       },
       {
         "Point": {
-          "X": 4500.0,
+          "X": 6000.0,
           "Y": 0.0,
           "Z": 0.0
         },
@@ -62,7 +60,7 @@
       },
       {
         "Point": {
-          "X": 10500.0,
+          "X": 14000.0,
           "Y": 0.0,
           "Z": 0.0
         },
@@ -77,8 +75,8 @@
       },
       {
         "Point": {
-          "X": 18500.0,
-          "Y": 0.0,
+          "X": 0.0,
+          "Y": 4000.0,
           "Z": 0.0
         },
         "Height": 3000.0,
@@ -92,8 +90,8 @@
       },
       {
         "Point": {
-          "X": 23700.0,
-          "Y": 0.0,
+          "X": 6000.0,
+          "Y": 4000.0,
           "Z": 0.0
         },
         "Height": 3000.0,
@@ -107,8 +105,8 @@
       },
       {
         "Point": {
-          "X": 0.0,
-          "Y": 5000.0,
+          "X": 14000.0,
+          "Y": 4000.0,
           "Z": 0.0
         },
         "Height": 3000.0,
@@ -122,8 +120,8 @@
       },
       {
         "Point": {
-          "X": 4500.0,
-          "Y": 5000.0,
+          "X": 20000.0,
+          "Y": 4000.0,
           "Z": 0.0
         },
         "Height": 3000.0,
@@ -137,8 +135,8 @@
       },
       {
         "Point": {
-          "X": 10500.0,
-          "Y": 5000.0,
+          "X": 0.0,
+          "Y": 8000.0,
           "Z": 0.0
         },
         "Height": 3000.0,
@@ -152,8 +150,8 @@
       },
       {
         "Point": {
-          "X": 18500.0,
-          "Y": 5000.0,
+          "X": 6000.0,
+          "Y": 8000.0,
           "Z": 0.0
         },
         "Height": 3000.0,
@@ -167,8 +165,8 @@
       },
       {
         "Point": {
-          "X": 23700.0,
-          "Y": 5000.0,
+          "X": 14000.0,
+          "Y": 8000.0,
           "Z": 0.0
         },
         "Height": 3000.0,
@@ -182,147 +180,12 @@
       },
       {
         "Point": {
-          "X": 0.0,
-          "Y": 10000.0,
+          "X": 20000.0,
+          "Y": 8000.0,
           "Z": 0.0
         },
         "Height": 3000.0,
         "Id": 11,
-        "Name": "Column",
-        "Material": "St-37",
-        "Profile": "IPE300",
-        "Finish": "Paint",
-        "AssemblyPrefix": "C",
-        "Class": "4"
-      },
-      {
-        "Point": {
-          "X": 4500.0,
-          "Y": 10000.0,
-          "Z": 0.0
-        },
-        "Height": 3000.0,
-        "Id": 12,
-        "Name": "Column",
-        "Material": "St-37",
-        "Profile": "IPE300",
-        "Finish": "Paint",
-        "AssemblyPrefix": "C",
-        "Class": "4"
-      },
-      {
-        "Point": {
-          "X": 10500.0,
-          "Y": 10000.0,
-          "Z": 0.0
-        },
-        "Height": 3000.0,
-        "Id": 13,
-        "Name": "Column",
-        "Material": "St-37",
-        "Profile": "IPE300",
-        "Finish": "Paint",
-        "AssemblyPrefix": "C",
-        "Class": "4"
-      },
-      {
-        "Point": {
-          "X": 18500.0,
-          "Y": 10000.0,
-          "Z": 0.0
-        },
-        "Height": 3000.0,
-        "Id": 14,
-        "Name": "Column",
-        "Material": "St-37",
-        "Profile": "IPE300",
-        "Finish": "Paint",
-        "AssemblyPrefix": "C",
-        "Class": "4"
-      },
-      {
-        "Point": {
-          "X": 23700.0,
-          "Y": 10000.0,
-          "Z": 0.0
-        },
-        "Height": 3000.0,
-        "Id": 15,
-        "Name": "Column",
-        "Material": "St-37",
-        "Profile": "IPE300",
-        "Finish": "Paint",
-        "AssemblyPrefix": "C",
-        "Class": "4"
-      },
-      {
-        "Point": {
-          "X": 0.0,
-          "Y": 15000.0,
-          "Z": 0.0
-        },
-        "Height": 3000.0,
-        "Id": 16,
-        "Name": "Column",
-        "Material": "St-37",
-        "Profile": "IPE300",
-        "Finish": "Paint",
-        "AssemblyPrefix": "C",
-        "Class": "4"
-      },
-      {
-        "Point": {
-          "X": 4500.0,
-          "Y": 15000.0,
-          "Z": 0.0
-        },
-        "Height": 3000.0,
-        "Id": 17,
-        "Name": "Column",
-        "Material": "St-37",
-        "Profile": "IPE300",
-        "Finish": "Paint",
-        "AssemblyPrefix": "C",
-        "Class": "4"
-      },
-      {
-        "Point": {
-          "X": 10500.0,
-          "Y": 15000.0,
-          "Z": 0.0
-        },
-        "Height": 3000.0,
-        "Id": 18,
-        "Name": "Column",
-        "Material": "St-37",
-        "Profile": "IPE300",
-        "Finish": "Paint",
-        "AssemblyPrefix": "C",
-        "Class": "4"
-      },
-      {
-        "Point": {
-          "X": 18500.0,
-          "Y": 15000.0,
-          "Z": 0.0
-        },
-        "Height": 3000.0,
-        "Id": 19,
-        "Name": "Column",
-        "Material": "St-37",
-        "Profile": "IPE300",
-        "Finish": "Paint",
-        "AssemblyPrefix": "C",
-        "Class": "4"
-      },
-      {
-        "Point": {
-          "X": 23700.0,
-          "Y": 15000.0,
-          "Z": 0.0
-        },
-        "Height": 3000.0,
-        "Id": 20,
         "Name": "Column",
         "Material": "St-37",
         "Profile": "IPE300",
@@ -350,7 +213,7 @@
         "Profile": "1500*1500",
         "Material": "C30",
         "Point": {
-          "X": 4500.0,
+          "X": 6000.0,
           "Y": 0.0,
           "Z": 0.0
         },
@@ -363,33 +226,7 @@
         "Profile": "1500*1500",
         "Material": "C30",
         "Point": {
-          "X": 10500.0,
-          "Y": 0.0,
-          "Z": 0.0
-        },
-        "Depth": 700.0,
-        "Length": 1500.0,
-        "Width": 1500.0
-      },
-      {
-        "Name": "RC Footing",
-        "Profile": "1500*1500",
-        "Material": "C30",
-        "Point": {
-          "X": 18500.0,
-          "Y": 0.0,
-          "Z": 0.0
-        },
-        "Depth": 700.0,
-        "Length": 1500.0,
-        "Width": 1500.0
-      },
-      {
-        "Name": "RC Footing",
-        "Profile": "1500*1500",
-        "Material": "C30",
-        "Point": {
-          "X": 23700.0,
+          "X": 14000.0,
           "Y": 0.0,
           "Z": 0.0
         },
@@ -403,7 +240,7 @@
         "Material": "C30",
         "Point": {
           "X": 0.0,
-          "Y": 5000.0,
+          "Y": 4000.0,
           "Z": 0.0
         },
         "Depth": 700.0,
@@ -415,8 +252,8 @@
         "Profile": "1500*1500",
         "Material": "C30",
         "Point": {
-          "X": 4500.0,
-          "Y": 5000.0,
+          "X": 6000.0,
+          "Y": 4000.0,
           "Z": 0.0
         },
         "Depth": 700.0,
@@ -428,8 +265,8 @@
         "Profile": "1500*1500",
         "Material": "C30",
         "Point": {
-          "X": 10500.0,
-          "Y": 5000.0,
+          "X": 14000.0,
+          "Y": 4000.0,
           "Z": 0.0
         },
         "Depth": 700.0,
@@ -441,21 +278,8 @@
         "Profile": "1500*1500",
         "Material": "C30",
         "Point": {
-          "X": 18500.0,
-          "Y": 5000.0,
-          "Z": 0.0
-        },
-        "Depth": 700.0,
-        "Length": 1500.0,
-        "Width": 1500.0
-      },
-      {
-        "Name": "RC Footing",
-        "Profile": "1500*1500",
-        "Material": "C30",
-        "Point": {
-          "X": 23700.0,
-          "Y": 5000.0,
+          "X": 20000.0,
+          "Y": 4000.0,
           "Z": 0.0
         },
         "Depth": 700.0,
@@ -468,7 +292,7 @@
         "Material": "C30",
         "Point": {
           "X": 0.0,
-          "Y": 10000.0,
+          "Y": 8000.0,
           "Z": 0.0
         },
         "Depth": 700.0,
@@ -480,8 +304,8 @@
         "Profile": "1500*1500",
         "Material": "C30",
         "Point": {
-          "X": 4500.0,
-          "Y": 10000.0,
+          "X": 6000.0,
+          "Y": 8000.0,
           "Z": 0.0
         },
         "Depth": 700.0,
@@ -493,8 +317,8 @@
         "Profile": "1500*1500",
         "Material": "C30",
         "Point": {
-          "X": 10500.0,
-          "Y": 10000.0,
+          "X": 14000.0,
+          "Y": 8000.0,
           "Z": 0.0
         },
         "Depth": 700.0,
@@ -506,86 +330,8 @@
         "Profile": "1500*1500",
         "Material": "C30",
         "Point": {
-          "X": 18500.0,
-          "Y": 10000.0,
-          "Z": 0.0
-        },
-        "Depth": 700.0,
-        "Length": 1500.0,
-        "Width": 1500.0
-      },
-      {
-        "Name": "RC Footing",
-        "Profile": "1500*1500",
-        "Material": "C30",
-        "Point": {
-          "X": 23700.0,
-          "Y": 10000.0,
-          "Z": 0.0
-        },
-        "Depth": 700.0,
-        "Length": 1500.0,
-        "Width": 1500.0
-      },
-      {
-        "Name": "RC Footing",
-        "Profile": "1500*1500",
-        "Material": "C30",
-        "Point": {
-          "X": 0.0,
-          "Y": 15000.0,
-          "Z": 0.0
-        },
-        "Depth": 700.0,
-        "Length": 1500.0,
-        "Width": 1500.0
-      },
-      {
-        "Name": "RC Footing",
-        "Profile": "1500*1500",
-        "Material": "C30",
-        "Point": {
-          "X": 4500.0,
-          "Y": 15000.0,
-          "Z": 0.0
-        },
-        "Depth": 700.0,
-        "Length": 1500.0,
-        "Width": 1500.0
-      },
-      {
-        "Name": "RC Footing",
-        "Profile": "1500*1500",
-        "Material": "C30",
-        "Point": {
-          "X": 10500.0,
-          "Y": 15000.0,
-          "Z": 0.0
-        },
-        "Depth": 700.0,
-        "Length": 1500.0,
-        "Width": 1500.0
-      },
-      {
-        "Name": "RC Footing",
-        "Profile": "1500*1500",
-        "Material": "C30",
-        "Point": {
-          "X": 18500.0,
-          "Y": 15000.0,
-          "Z": 0.0
-        },
-        "Depth": 700.0,
-        "Length": 1500.0,
-        "Width": 1500.0
-      },
-      {
-        "Name": "RC Footing",
-        "Profile": "1500*1500",
-        "Material": "C30",
-        "Point": {
-          "X": 23700.0,
-          "Y": 15000.0,
+          "X": 20000.0,
+          "Y": 8000.0,
           "Z": 0.0
         },
         "Depth": 700.0,
@@ -601,7 +347,7 @@
           "Z": 3000.0
         },
         "EndPoint": {
-          "X": 4500.0,
+          "X": 6000.0,
           "Y": 0.0,
           "Z": 3000.0
         },
@@ -615,12 +361,12 @@
       },
       {
         "StartPoint": {
-          "X": 4500.0,
+          "X": 6000.0,
           "Y": 0.0,
           "Z": 3000.0
         },
         "EndPoint": {
-          "X": 10500.0,
+          "X": 14000.0,
           "Y": 0.0,
           "Z": 3000.0
         },
@@ -634,35 +380,16 @@
       },
       {
         "StartPoint": {
-          "X": 10500.0,
-          "Y": 0.0,
+          "X": 0.0,
+          "Y": 4000.0,
           "Z": 3000.0
         },
         "EndPoint": {
-          "X": 18500.0,
-          "Y": 0.0,
+          "X": 6000.0,
+          "Y": 4000.0,
           "Z": 3000.0
         },
         "Id": 3,
-        "Name": "Main Beam",
-        "Material": "St-37",
-        "Profile": "IPE300",
-        "Finish": "Paint",
-        "AssemblyPrefix": "MB",
-        "Class": "10"
-      },
-      {
-        "StartPoint": {
-          "X": 18500.0,
-          "Y": 0.0,
-          "Z": 3000.0
-        },
-        "EndPoint": {
-          "X": 23700.0,
-          "Y": 0.0,
-          "Z": 3000.0
-        },
-        "Id": 4,
         "Name": "Main Beam",
         "Material": "St-37",
         "Profile": "IPE270",
@@ -672,13 +399,32 @@
       },
       {
         "StartPoint": {
-          "X": 0.0,
-          "Y": 5000.0,
+          "X": 6000.0,
+          "Y": 4000.0,
           "Z": 3000.0
         },
         "EndPoint": {
-          "X": 4500.0,
-          "Y": 5000.0,
+          "X": 14000.0,
+          "Y": 4000.0,
+          "Z": 3000.0
+        },
+        "Id": 4,
+        "Name": "Main Beam",
+        "Material": "St-37",
+        "Profile": "IPE360",
+        "Finish": "Paint",
+        "AssemblyPrefix": "MB",
+        "Class": "10"
+      },
+      {
+        "StartPoint": {
+          "X": 14000.0,
+          "Y": 4000.0,
+          "Z": 3000.0
+        },
+        "EndPoint": {
+          "X": 20000.0,
+          "Y": 4000.0,
           "Z": 3000.0
         },
         "Id": 5,
@@ -691,206 +437,54 @@
       },
       {
         "StartPoint": {
-          "X": 4500.0,
-          "Y": 5000.0,
+          "X": 0.0,
+          "Y": 8000.0,
           "Z": 3000.0
         },
         "EndPoint": {
-          "X": 10500.0,
-          "Y": 5000.0,
+          "X": 6000.0,
+          "Y": 8000.0,
           "Z": 3000.0
         },
         "Id": 6,
         "Name": "Main Beam",
         "Material": "St-37",
-        "Profile": "IPE300",
+        "Profile": "IPE270",
         "Finish": "Paint",
         "AssemblyPrefix": "MB",
         "Class": "10"
       },
       {
         "StartPoint": {
-          "X": 10500.0,
-          "Y": 5000.0,
+          "X": 6000.0,
+          "Y": 8000.0,
           "Z": 3000.0
         },
         "EndPoint": {
-          "X": 18500.0,
-          "Y": 5000.0,
+          "X": 14000.0,
+          "Y": 8000.0,
           "Z": 3000.0
         },
         "Id": 7,
         "Name": "Main Beam",
         "Material": "St-37",
-        "Profile": "IPE400",
+        "Profile": "IPE270",
         "Finish": "Paint",
         "AssemblyPrefix": "MB",
         "Class": "10"
       },
       {
         "StartPoint": {
-          "X": 18500.0,
-          "Y": 5000.0,
+          "X": 14000.0,
+          "Y": 8000.0,
           "Z": 3000.0
         },
         "EndPoint": {
-          "X": 23700.0,
-          "Y": 5000.0,
+          "X": 20000.0,
+          "Y": 8000.0,
           "Z": 3000.0
         },
         "Id": 8,
-        "Name": "Main Beam",
-        "Material": "St-37",
-        "Profile": "IPE300",
-        "Finish": "Paint",
-        "AssemblyPrefix": "MB",
-        "Class": "10"
-      },
-      {
-        "StartPoint": {
-          "X": 0.0,
-          "Y": 10000.0,
-          "Z": 3000.0
-        },
-        "EndPoint": {
-          "X": 4500.0,
-          "Y": 10000.0,
-          "Z": 3000.0
-        },
-        "Id": 9,
-        "Name": "Main Beam",
-        "Material": "St-37",
-        "Profile": "IPE270",
-        "Finish": "Paint",
-        "AssemblyPrefix": "MB",
-        "Class": "10"
-      },
-      {
-        "StartPoint": {
-          "X": 4500.0,
-          "Y": 10000.0,
-          "Z": 3000.0
-        },
-        "EndPoint": {
-          "X": 10500.0,
-          "Y": 10000.0,
-          "Z": 3000.0
-        },
-        "Id": 10,
-        "Name": "Main Beam",
-        "Material": "St-37",
-        "Profile": "IPE300",
-        "Finish": "Paint",
-        "AssemblyPrefix": "MB",
-        "Class": "10"
-      },
-      {
-        "StartPoint": {
-          "X": 10500.0,
-          "Y": 10000.0,
-          "Z": 3000.0
-        },
-        "EndPoint": {
-          "X": 18500.0,
-          "Y": 10000.0,
-          "Z": 3000.0
-        },
-        "Id": 11,
-        "Name": "Main Beam",
-        "Material": "St-37",
-        "Profile": "IPE400",
-        "Finish": "Paint",
-        "AssemblyPrefix": "MB",
-        "Class": "10"
-      },
-      {
-        "StartPoint": {
-          "X": 18500.0,
-          "Y": 10000.0,
-          "Z": 3000.0
-        },
-        "EndPoint": {
-          "X": 23700.0,
-          "Y": 10000.0,
-          "Z": 3000.0
-        },
-        "Id": 12,
-        "Name": "Main Beam",
-        "Material": "St-37",
-        "Profile": "IPE300",
-        "Finish": "Paint",
-        "AssemblyPrefix": "MB",
-        "Class": "10"
-      },
-      {
-        "StartPoint": {
-          "X": 0.0,
-          "Y": 15000.0,
-          "Z": 3000.0
-        },
-        "EndPoint": {
-          "X": 4500.0,
-          "Y": 15000.0,
-          "Z": 3000.0
-        },
-        "Id": 13,
-        "Name": "Main Beam",
-        "Material": "St-37",
-        "Profile": "IPE270",
-        "Finish": "Paint",
-        "AssemblyPrefix": "MB",
-        "Class": "10"
-      },
-      {
-        "StartPoint": {
-          "X": 4500.0,
-          "Y": 15000.0,
-          "Z": 3000.0
-        },
-        "EndPoint": {
-          "X": 10500.0,
-          "Y": 15000.0,
-          "Z": 3000.0
-        },
-        "Id": 14,
-        "Name": "Main Beam",
-        "Material": "St-37",
-        "Profile": "IPE270",
-        "Finish": "Paint",
-        "AssemblyPrefix": "MB",
-        "Class": "10"
-      },
-      {
-        "StartPoint": {
-          "X": 10500.0,
-          "Y": 15000.0,
-          "Z": 3000.0
-        },
-        "EndPoint": {
-          "X": 18500.0,
-          "Y": 15000.0,
-          "Z": 3000.0
-        },
-        "Id": 15,
-        "Name": "Main Beam",
-        "Material": "St-37",
-        "Profile": "IPE300",
-        "Finish": "Paint",
-        "AssemblyPrefix": "MB",
-        "Class": "10"
-      },
-      {
-        "StartPoint": {
-          "X": 18500.0,
-          "Y": 15000.0,
-          "Z": 3000.0
-        },
-        "EndPoint": {
-          "X": 23700.0,
-          "Y": 15000.0,
-          "Z": 3000.0
-        },
-        "Id": 16,
         "Name": "Main Beam",
         "Material": "St-37",
         "Profile": "IPE270",
@@ -908,7 +502,7 @@
         },
         "EndPoint": {
           "X": 0.0,
-          "Y": 5000.0,
+          "Y": 4000.0,
           "Z": 3000.0
         },
         "Id": 1,
@@ -922,12 +516,12 @@
       {
         "StartPoint": {
           "X": 0.0,
-          "Y": 5000.0,
+          "Y": 4000.0,
           "Z": 3000.0
         },
         "EndPoint": {
           "X": 0.0,
-          "Y": 10000.0,
+          "Y": 8000.0,
           "Z": 3000.0
         },
         "Id": 2,
@@ -940,13 +534,13 @@
       },
       {
         "StartPoint": {
-          "X": 0.0,
-          "Y": 10000.0,
+          "X": 2000.0,
+          "Y": 0.0,
           "Z": 3000.0
         },
         "EndPoint": {
-          "X": 0.0,
-          "Y": 15000.0,
+          "X": 2000.0,
+          "Y": 4000.0,
           "Z": 3000.0
         },
         "Id": 3,
@@ -959,13 +553,13 @@
       },
       {
         "StartPoint": {
-          "X": 1500.0,
-          "Y": 0.0,
+          "X": 2000.0,
+          "Y": 4000.0,
           "Z": 3000.0
         },
         "EndPoint": {
-          "X": 1500.0,
-          "Y": 5000.0,
+          "X": 2000.0,
+          "Y": 8000.0,
           "Z": 3000.0
         },
         "Id": 4,
@@ -978,13 +572,13 @@
       },
       {
         "StartPoint": {
-          "X": 1500.0,
-          "Y": 5000.0,
+          "X": 4000.0,
+          "Y": 0.0,
           "Z": 3000.0
         },
         "EndPoint": {
-          "X": 1500.0,
-          "Y": 10000.0,
+          "X": 4000.0,
+          "Y": 4000.0,
           "Z": 3000.0
         },
         "Id": 5,
@@ -997,13 +591,13 @@
       },
       {
         "StartPoint": {
-          "X": 1500.0,
-          "Y": 10000.0,
+          "X": 4000.0,
+          "Y": 4000.0,
           "Z": 3000.0
         },
         "EndPoint": {
-          "X": 1500.0,
-          "Y": 15000.0,
+          "X": 4000.0,
+          "Y": 8000.0,
           "Z": 3000.0
         },
         "Id": 6,
@@ -1016,13 +610,13 @@
       },
       {
         "StartPoint": {
-          "X": 3000.0,
+          "X": 6000.0,
           "Y": 0.0,
           "Z": 3000.0
         },
         "EndPoint": {
-          "X": 3000.0,
-          "Y": 5000.0,
+          "X": 6000.0,
+          "Y": 4000.0,
           "Z": 3000.0
         },
         "Id": 7,
@@ -1035,13 +629,13 @@
       },
       {
         "StartPoint": {
-          "X": 3000.0,
-          "Y": 5000.0,
+          "X": 6000.0,
+          "Y": 4000.0,
           "Z": 3000.0
         },
         "EndPoint": {
-          "X": 3000.0,
-          "Y": 10000.0,
+          "X": 6000.0,
+          "Y": 8000.0,
           "Z": 3000.0
         },
         "Id": 8,
@@ -1054,13 +648,13 @@
       },
       {
         "StartPoint": {
-          "X": 3000.0,
-          "Y": 10000.0,
+          "X": 8000.0,
+          "Y": 0.0,
           "Z": 3000.0
         },
         "EndPoint": {
-          "X": 3000.0,
-          "Y": 15000.0,
+          "X": 8000.0,
+          "Y": 4000.0,
           "Z": 3000.0
         },
         "Id": 9,
@@ -1073,13 +667,13 @@
       },
       {
         "StartPoint": {
-          "X": 4500.0,
-          "Y": 0.0,
+          "X": 8000.0,
+          "Y": 4000.0,
           "Z": 3000.0
         },
         "EndPoint": {
-          "X": 4500.0,
-          "Y": 5000.0,
+          "X": 8000.0,
+          "Y": 8000.0,
           "Z": 3000.0
         },
         "Id": 10,
@@ -1092,13 +686,13 @@
       },
       {
         "StartPoint": {
-          "X": 4500.0,
-          "Y": 5000.0,
+          "X": 10000.0,
+          "Y": 0.0,
           "Z": 3000.0
         },
         "EndPoint": {
-          "X": 4500.0,
-          "Y": 10000.0,
+          "X": 10000.0,
+          "Y": 4000.0,
           "Z": 3000.0
         },
         "Id": 11,
@@ -1111,13 +705,13 @@
       },
       {
         "StartPoint": {
-          "X": 4500.0,
-          "Y": 10000.0,
+          "X": 10000.0,
+          "Y": 4000.0,
           "Z": 3000.0
         },
         "EndPoint": {
-          "X": 4500.0,
-          "Y": 15000.0,
+          "X": 10000.0,
+          "Y": 8000.0,
           "Z": 3000.0
         },
         "Id": 12,
@@ -1130,13 +724,13 @@
       },
       {
         "StartPoint": {
-          "X": 6500.0,
+          "X": 12000.0,
           "Y": 0.0,
           "Z": 3000.0
         },
         "EndPoint": {
-          "X": 6500.0,
-          "Y": 5000.0,
+          "X": 12000.0,
+          "Y": 4000.0,
           "Z": 3000.0
         },
         "Id": 13,
@@ -1149,13 +743,13 @@
       },
       {
         "StartPoint": {
-          "X": 6500.0,
-          "Y": 5000.0,
+          "X": 12000.0,
+          "Y": 4000.0,
           "Z": 3000.0
         },
         "EndPoint": {
-          "X": 6500.0,
-          "Y": 10000.0,
+          "X": 12000.0,
+          "Y": 8000.0,
           "Z": 3000.0
         },
         "Id": 14,
@@ -1168,13 +762,13 @@
       },
       {
         "StartPoint": {
-          "X": 6500.0,
-          "Y": 10000.0,
+          "X": 14000.0,
+          "Y": 0.0,
           "Z": 3000.0
         },
         "EndPoint": {
-          "X": 6500.0,
-          "Y": 15000.0,
+          "X": 14000.0,
+          "Y": 4000.0,
           "Z": 3000.0
         },
         "Id": 15,
@@ -1187,13 +781,13 @@
       },
       {
         "StartPoint": {
-          "X": 8500.0,
-          "Y": 0.0,
+          "X": 14000.0,
+          "Y": 4000.0,
           "Z": 3000.0
         },
         "EndPoint": {
-          "X": 8500.0,
-          "Y": 5000.0,
+          "X": 14000.0,
+          "Y": 8000.0,
           "Z": 3000.0
         },
         "Id": 16,
@@ -1206,13 +800,13 @@
       },
       {
         "StartPoint": {
-          "X": 8500.0,
-          "Y": 5000.0,
+          "X": 16000.0,
+          "Y": 4000.0,
           "Z": 3000.0
         },
         "EndPoint": {
-          "X": 8500.0,
-          "Y": 10000.0,
+          "X": 16000.0,
+          "Y": 8000.0,
           "Z": 3000.0
         },
         "Id": 17,
@@ -1225,13 +819,13 @@
       },
       {
         "StartPoint": {
-          "X": 8500.0,
-          "Y": 10000.0,
+          "X": 18000.0,
+          "Y": 4000.0,
           "Z": 3000.0
         },
         "EndPoint": {
-          "X": 8500.0,
-          "Y": 15000.0,
+          "X": 18000.0,
+          "Y": 8000.0,
           "Z": 3000.0
         },
         "Id": 18,
@@ -1244,510 +838,16 @@
       },
       {
         "StartPoint": {
-          "X": 10500.0,
-          "Y": 0.0,
+          "X": 20000.0,
+          "Y": 4000.0,
           "Z": 3000.0
         },
         "EndPoint": {
-          "X": 10500.0,
-          "Y": 5000.0,
+          "X": 20000.0,
+          "Y": 8000.0,
           "Z": 3000.0
         },
         "Id": 19,
-        "Name": "Secondary Beam",
-        "Material": "St-37",
-        "Profile": "IPE270",
-        "Finish": "Paint",
-        "AssemblyPrefix": "SB",
-        "Class": "13"
-      },
-      {
-        "StartPoint": {
-          "X": 10500.0,
-          "Y": 5000.0,
-          "Z": 3000.0
-        },
-        "EndPoint": {
-          "X": 10500.0,
-          "Y": 10000.0,
-          "Z": 3000.0
-        },
-        "Id": 20,
-        "Name": "Secondary Beam",
-        "Material": "St-37",
-        "Profile": "IPE270",
-        "Finish": "Paint",
-        "AssemblyPrefix": "SB",
-        "Class": "13"
-      },
-      {
-        "StartPoint": {
-          "X": 10500.0,
-          "Y": 10000.0,
-          "Z": 3000.0
-        },
-        "EndPoint": {
-          "X": 10500.0,
-          "Y": 15000.0,
-          "Z": 3000.0
-        },
-        "Id": 21,
-        "Name": "Secondary Beam",
-        "Material": "St-37",
-        "Profile": "IPE270",
-        "Finish": "Paint",
-        "AssemblyPrefix": "SB",
-        "Class": "13"
-      },
-      {
-        "StartPoint": {
-          "X": 12500.0,
-          "Y": 0.0,
-          "Z": 3000.0
-        },
-        "EndPoint": {
-          "X": 12500.0,
-          "Y": 5000.0,
-          "Z": 3000.0
-        },
-        "Id": 22,
-        "Name": "Secondary Beam",
-        "Material": "St-37",
-        "Profile": "IPE270",
-        "Finish": "Paint",
-        "AssemblyPrefix": "SB",
-        "Class": "13"
-      },
-      {
-        "StartPoint": {
-          "X": 12500.0,
-          "Y": 5000.0,
-          "Z": 3000.0
-        },
-        "EndPoint": {
-          "X": 12500.0,
-          "Y": 10000.0,
-          "Z": 3000.0
-        },
-        "Id": 23,
-        "Name": "Secondary Beam",
-        "Material": "St-37",
-        "Profile": "IPE270",
-        "Finish": "Paint",
-        "AssemblyPrefix": "SB",
-        "Class": "13"
-      },
-      {
-        "StartPoint": {
-          "X": 12500.0,
-          "Y": 10000.0,
-          "Z": 3000.0
-        },
-        "EndPoint": {
-          "X": 12500.0,
-          "Y": 15000.0,
-          "Z": 3000.0
-        },
-        "Id": 24,
-        "Name": "Secondary Beam",
-        "Material": "St-37",
-        "Profile": "IPE270",
-        "Finish": "Paint",
-        "AssemblyPrefix": "SB",
-        "Class": "13"
-      },
-      {
-        "StartPoint": {
-          "X": 14500.0,
-          "Y": 0.0,
-          "Z": 3000.0
-        },
-        "EndPoint": {
-          "X": 14500.0,
-          "Y": 5000.0,
-          "Z": 3000.0
-        },
-        "Id": 25,
-        "Name": "Secondary Beam",
-        "Material": "St-37",
-        "Profile": "IPE270",
-        "Finish": "Paint",
-        "AssemblyPrefix": "SB",
-        "Class": "13"
-      },
-      {
-        "StartPoint": {
-          "X": 14500.0,
-          "Y": 5000.0,
-          "Z": 3000.0
-        },
-        "EndPoint": {
-          "X": 14500.0,
-          "Y": 10000.0,
-          "Z": 3000.0
-        },
-        "Id": 26,
-        "Name": "Secondary Beam",
-        "Material": "St-37",
-        "Profile": "IPE270",
-        "Finish": "Paint",
-        "AssemblyPrefix": "SB",
-        "Class": "13"
-      },
-      {
-        "StartPoint": {
-          "X": 14500.0,
-          "Y": 10000.0,
-          "Z": 3000.0
-        },
-        "EndPoint": {
-          "X": 14500.0,
-          "Y": 15000.0,
-          "Z": 3000.0
-        },
-        "Id": 27,
-        "Name": "Secondary Beam",
-        "Material": "St-37",
-        "Profile": "IPE270",
-        "Finish": "Paint",
-        "AssemblyPrefix": "SB",
-        "Class": "13"
-      },
-      {
-        "StartPoint": {
-          "X": 16500.0,
-          "Y": 0.0,
-          "Z": 3000.0
-        },
-        "EndPoint": {
-          "X": 16500.0,
-          "Y": 5000.0,
-          "Z": 3000.0
-        },
-        "Id": 28,
-        "Name": "Secondary Beam",
-        "Material": "St-37",
-        "Profile": "IPE270",
-        "Finish": "Paint",
-        "AssemblyPrefix": "SB",
-        "Class": "13"
-      },
-      {
-        "StartPoint": {
-          "X": 16500.0,
-          "Y": 5000.0,
-          "Z": 3000.0
-        },
-        "EndPoint": {
-          "X": 16500.0,
-          "Y": 10000.0,
-          "Z": 3000.0
-        },
-        "Id": 29,
-        "Name": "Secondary Beam",
-        "Material": "St-37",
-        "Profile": "IPE270",
-        "Finish": "Paint",
-        "AssemblyPrefix": "SB",
-        "Class": "13"
-      },
-      {
-        "StartPoint": {
-          "X": 16500.0,
-          "Y": 10000.0,
-          "Z": 3000.0
-        },
-        "EndPoint": {
-          "X": 16500.0,
-          "Y": 15000.0,
-          "Z": 3000.0
-        },
-        "Id": 30,
-        "Name": "Secondary Beam",
-        "Material": "St-37",
-        "Profile": "IPE270",
-        "Finish": "Paint",
-        "AssemblyPrefix": "SB",
-        "Class": "13"
-      },
-      {
-        "StartPoint": {
-          "X": 18500.0,
-          "Y": 0.0,
-          "Z": 3000.0
-        },
-        "EndPoint": {
-          "X": 18500.0,
-          "Y": 5000.0,
-          "Z": 3000.0
-        },
-        "Id": 31,
-        "Name": "Secondary Beam",
-        "Material": "St-37",
-        "Profile": "IPE270",
-        "Finish": "Paint",
-        "AssemblyPrefix": "SB",
-        "Class": "13"
-      },
-      {
-        "StartPoint": {
-          "X": 18500.0,
-          "Y": 5000.0,
-          "Z": 3000.0
-        },
-        "EndPoint": {
-          "X": 18500.0,
-          "Y": 10000.0,
-          "Z": 3000.0
-        },
-        "Id": 32,
-        "Name": "Secondary Beam",
-        "Material": "St-37",
-        "Profile": "IPE270",
-        "Finish": "Paint",
-        "AssemblyPrefix": "SB",
-        "Class": "13"
-      },
-      {
-        "StartPoint": {
-          "X": 18500.0,
-          "Y": 10000.0,
-          "Z": 3000.0
-        },
-        "EndPoint": {
-          "X": 18500.0,
-          "Y": 15000.0,
-          "Z": 3000.0
-        },
-        "Id": 33,
-        "Name": "Secondary Beam",
-        "Material": "St-37",
-        "Profile": "IPE270",
-        "Finish": "Paint",
-        "AssemblyPrefix": "SB",
-        "Class": "13"
-      },
-      {
-        "StartPoint": {
-          "X": 19800.0,
-          "Y": 0.0,
-          "Z": 3000.0
-        },
-        "EndPoint": {
-          "X": 19800.0,
-          "Y": 5000.0,
-          "Z": 3000.0
-        },
-        "Id": 34,
-        "Name": "Secondary Beam",
-        "Material": "St-37",
-        "Profile": "IPE270",
-        "Finish": "Paint",
-        "AssemblyPrefix": "SB",
-        "Class": "13"
-      },
-      {
-        "StartPoint": {
-          "X": 19800.0,
-          "Y": 5000.0,
-          "Z": 3000.0
-        },
-        "EndPoint": {
-          "X": 19800.0,
-          "Y": 10000.0,
-          "Z": 3000.0
-        },
-        "Id": 35,
-        "Name": "Secondary Beam",
-        "Material": "St-37",
-        "Profile": "IPE270",
-        "Finish": "Paint",
-        "AssemblyPrefix": "SB",
-        "Class": "13"
-      },
-      {
-        "StartPoint": {
-          "X": 19800.0,
-          "Y": 10000.0,
-          "Z": 3000.0
-        },
-        "EndPoint": {
-          "X": 19800.0,
-          "Y": 15000.0,
-          "Z": 3000.0
-        },
-        "Id": 36,
-        "Name": "Secondary Beam",
-        "Material": "St-37",
-        "Profile": "IPE270",
-        "Finish": "Paint",
-        "AssemblyPrefix": "SB",
-        "Class": "13"
-      },
-      {
-        "StartPoint": {
-          "X": 21100.0,
-          "Y": 0.0,
-          "Z": 3000.0
-        },
-        "EndPoint": {
-          "X": 21100.0,
-          "Y": 5000.0,
-          "Z": 3000.0
-        },
-        "Id": 37,
-        "Name": "Secondary Beam",
-        "Material": "St-37",
-        "Profile": "IPE270",
-        "Finish": "Paint",
-        "AssemblyPrefix": "SB",
-        "Class": "13"
-      },
-      {
-        "StartPoint": {
-          "X": 21100.0,
-          "Y": 5000.0,
-          "Z": 3000.0
-        },
-        "EndPoint": {
-          "X": 21100.0,
-          "Y": 10000.0,
-          "Z": 3000.0
-        },
-        "Id": 38,
-        "Name": "Secondary Beam",
-        "Material": "St-37",
-        "Profile": "IPE270",
-        "Finish": "Paint",
-        "AssemblyPrefix": "SB",
-        "Class": "13"
-      },
-      {
-        "StartPoint": {
-          "X": 21100.0,
-          "Y": 10000.0,
-          "Z": 3000.0
-        },
-        "EndPoint": {
-          "X": 21100.0,
-          "Y": 15000.0,
-          "Z": 3000.0
-        },
-        "Id": 39,
-        "Name": "Secondary Beam",
-        "Material": "St-37",
-        "Profile": "IPE270",
-        "Finish": "Paint",
-        "AssemblyPrefix": "SB",
-        "Class": "13"
-      },
-      {
-        "StartPoint": {
-          "X": 22400.0,
-          "Y": 0.0,
-          "Z": 3000.0
-        },
-        "EndPoint": {
-          "X": 22400.0,
-          "Y": 5000.0,
-          "Z": 3000.0
-        },
-        "Id": 40,
-        "Name": "Secondary Beam",
-        "Material": "St-37",
-        "Profile": "IPE270",
-        "Finish": "Paint",
-        "AssemblyPrefix": "SB",
-        "Class": "13"
-      },
-      {
-        "StartPoint": {
-          "X": 22400.0,
-          "Y": 5000.0,
-          "Z": 3000.0
-        },
-        "EndPoint": {
-          "X": 22400.0,
-          "Y": 10000.0,
-          "Z": 3000.0
-        },
-        "Id": 41,
-        "Name": "Secondary Beam",
-        "Material": "St-37",
-        "Profile": "IPE270",
-        "Finish": "Paint",
-        "AssemblyPrefix": "SB",
-        "Class": "13"
-      },
-      {
-        "StartPoint": {
-          "X": 22400.0,
-          "Y": 10000.0,
-          "Z": 3000.0
-        },
-        "EndPoint": {
-          "X": 22400.0,
-          "Y": 15000.0,
-          "Z": 3000.0
-        },
-        "Id": 42,
-        "Name": "Secondary Beam",
-        "Material": "St-37",
-        "Profile": "IPE270",
-        "Finish": "Paint",
-        "AssemblyPrefix": "SB",
-        "Class": "13"
-      },
-      {
-        "StartPoint": {
-          "X": 23700.0,
-          "Y": 0.0,
-          "Z": 3000.0
-        },
-        "EndPoint": {
-          "X": 23700.0,
-          "Y": 5000.0,
-          "Z": 3000.0
-        },
-        "Id": 43,
-        "Name": "Secondary Beam",
-        "Material": "St-37",
-        "Profile": "IPE270",
-        "Finish": "Paint",
-        "AssemblyPrefix": "SB",
-        "Class": "13"
-      },
-      {
-        "StartPoint": {
-          "X": 23700.0,
-          "Y": 5000.0,
-          "Z": 3000.0
-        },
-        "EndPoint": {
-          "X": 23700.0,
-          "Y": 10000.0,
-          "Z": 3000.0
-        },
-        "Id": 44,
-        "Name": "Secondary Beam",
-        "Material": "St-37",
-        "Profile": "IPE270",
-        "Finish": "Paint",
-        "AssemblyPrefix": "SB",
-        "Class": "13"
-      },
-      {
-        "StartPoint": {
-          "X": 23700.0,
-          "Y": 10000.0,
-          "Z": 3000.0
-        },
-        "EndPoint": {
-          "X": 23700.0,
-          "Y": 15000.0,
-          "Z": 3000.0
-        },
-        "Id": 45,
         "Name": "Secondary Beam",
         "Material": "St-37",
         "Profile": "IPE270",
@@ -1759,14 +859,14 @@
     "Connections": [
       {
         "Node": {
-          "X": 23700.0,
-          "Y": 10000.0,
+          "X": 20000.0,
+          "Y": 4000.0,
           "Z": 3000.0
         },
         "Main": null,
         "Secondary": null,
-        "MainPartId": "C15",
-        "SecondaryPartId": "SB45",
+        "MainPartId": "C7",
+        "SecondaryPartId": "SB19",
         "ConnectionNumber": "103",
         "Top": 54.0,
         "Hp": 189.0,
@@ -1779,94 +879,14 @@
       },
       {
         "Node": {
-          "X": 23700.0,
-          "Y": 15000.0,
+          "X": 20000.0,
+          "Y": 8000.0,
           "Z": 3000.0
         },
         "Main": null,
         "Secondary": null,
-        "MainPartId": "C20",
-        "SecondaryPartId": "SB45",
-        "ConnectionNumber": "103",
-        "Top": 54.0,
-        "Hp": 189.0,
-        "Tp": 10.0,
-        "Edge": 31.0,
-        "PitchLayout": "63 63 ",
-        "Dia": 20.0,
-        "BoltType": "8.8XOX",
-        "Sw": 6.0
-      },
-      {
-        "Node": {
-          "X": 23700.0,
-          "Y": 5000.0,
-          "Z": 3000.0
-        },
-        "Main": null,
-        "Secondary": null,
-        "MainPartId": "C10",
-        "SecondaryPartId": "SB44",
-        "ConnectionNumber": "103",
-        "Top": 54.0,
-        "Hp": 189.0,
-        "Tp": 10.0,
-        "Edge": 31.0,
-        "PitchLayout": "63 63 ",
-        "Dia": 20.0,
-        "BoltType": "8.8XOX",
-        "Sw": 6.0
-      },
-      {
-        "Node": {
-          "X": 23700.0,
-          "Y": 10000.0,
-          "Z": 3000.0
-        },
-        "Main": null,
-        "Secondary": null,
-        "MainPartId": "C15",
-        "SecondaryPartId": "SB44",
-        "ConnectionNumber": "103",
-        "Top": 54.0,
-        "Hp": 189.0,
-        "Tp": 10.0,
-        "Edge": 31.0,
-        "PitchLayout": "63 63 ",
-        "Dia": 20.0,
-        "BoltType": "8.8XOX",
-        "Sw": 6.0
-      },
-      {
-        "Node": {
-          "X": 23700.0,
-          "Y": 0.0,
-          "Z": 3000.0
-        },
-        "Main": null,
-        "Secondary": null,
-        "MainPartId": "C5",
-        "SecondaryPartId": "SB43",
-        "ConnectionNumber": "103",
-        "Top": 54.0,
-        "Hp": 189.0,
-        "Tp": 10.0,
-        "Edge": 31.0,
-        "PitchLayout": "63 63 ",
-        "Dia": 20.0,
-        "BoltType": "8.8XOX",
-        "Sw": 6.0
-      },
-      {
-        "Node": {
-          "X": 23700.0,
-          "Y": 5000.0,
-          "Z": 3000.0
-        },
-        "Main": null,
-        "Secondary": null,
-        "MainPartId": "C10",
-        "SecondaryPartId": "SB43",
+        "MainPartId": "C11",
+        "SecondaryPartId": "SB19",
         "ConnectionNumber": "103",
         "Top": 54.0,
         "Hp": 189.0,
@@ -1880,12 +900,12 @@
       {
         "Node": {
           "X": 0.0,
-          "Y": 5000.0,
+          "Y": 4000.0,
           "Z": 3000.0
         },
         "Main": null,
         "Secondary": null,
-        "MainPartId": "C6",
+        "MainPartId": "C4",
         "SecondaryPartId": "SB2",
         "ConnectionNumber": "103",
         "Top": 54.0,
@@ -1900,53 +920,13 @@
       {
         "Node": {
           "X": 0.0,
-          "Y": 10000.0,
+          "Y": 8000.0,
           "Z": 3000.0
         },
         "Main": null,
         "Secondary": null,
-        "MainPartId": "C11",
+        "MainPartId": "C8",
         "SecondaryPartId": "SB2",
-        "ConnectionNumber": "103",
-        "Top": 54.0,
-        "Hp": 189.0,
-        "Tp": 10.0,
-        "Edge": 31.0,
-        "PitchLayout": "63 63 ",
-        "Dia": 20.0,
-        "BoltType": "8.8XOX",
-        "Sw": 6.0
-      },
-      {
-        "Node": {
-          "X": 0.0,
-          "Y": 10000.0,
-          "Z": 3000.0
-        },
-        "Main": null,
-        "Secondary": null,
-        "MainPartId": "C11",
-        "SecondaryPartId": "SB3",
-        "ConnectionNumber": "103",
-        "Top": 54.0,
-        "Hp": 189.0,
-        "Tp": 10.0,
-        "Edge": 31.0,
-        "PitchLayout": "63 63 ",
-        "Dia": 20.0,
-        "BoltType": "8.8XOX",
-        "Sw": 6.0
-      },
-      {
-        "Node": {
-          "X": 0.0,
-          "Y": 15000.0,
-          "Z": 3000.0
-        },
-        "Main": null,
-        "Secondary": null,
-        "MainPartId": "C16",
-        "SecondaryPartId": "SB3",
         "ConnectionNumber": "103",
         "Top": 54.0,
         "Hp": 189.0,
@@ -1980,12 +960,12 @@
       {
         "Node": {
           "X": 0.0,
-          "Y": 5000.0,
+          "Y": 4000.0,
           "Z": 3000.0
         },
         "Main": null,
         "Secondary": null,
-        "MainPartId": "C6",
+        "MainPartId": "C4",
         "SecondaryPartId": "SB1",
         "ConnectionNumber": "103",
         "Top": 54.0,
@@ -1999,1013 +979,13 @@
       },
       {
         "Node": {
-          "X": 21100.0,
-          "Y": 10000.0,
+          "X": 14000.0,
+          "Y": 4000.0,
           "Z": 3000.0
         },
         "Main": null,
         "Secondary": null,
-        "MainPartId": "MB12",
-        "SecondaryPartId": "SB39",
-        "ConnectionNumber": "103",
-        "Top": 54.0,
-        "Hp": 189.0,
-        "Tp": 10.0,
-        "Edge": 31.0,
-        "PitchLayout": "63 63 ",
-        "Dia": 20.0,
-        "BoltType": "8.8XOX",
-        "Sw": 6.0
-      },
-      {
-        "Node": {
-          "X": 21100.0,
-          "Y": 15000.0,
-          "Z": 3000.0
-        },
-        "Main": null,
-        "Secondary": null,
-        "MainPartId": "MB16",
-        "SecondaryPartId": "SB39",
-        "ConnectionNumber": "103",
-        "Top": 54.0,
-        "Hp": 189.0,
-        "Tp": 10.0,
-        "Edge": 31.0,
-        "PitchLayout": "63 63 ",
-        "Dia": 20.0,
-        "BoltType": "8.8XOX",
-        "Sw": 6.0
-      },
-      {
-        "Node": {
-          "X": 21100.0,
-          "Y": 0.0,
-          "Z": 3000.0
-        },
-        "Main": null,
-        "Secondary": null,
-        "MainPartId": "MB4",
-        "SecondaryPartId": "SB37",
-        "ConnectionNumber": "103",
-        "Top": 54.0,
-        "Hp": 189.0,
-        "Tp": 10.0,
-        "Edge": 31.0,
-        "PitchLayout": "63 63 ",
-        "Dia": 20.0,
-        "BoltType": "8.8XOX",
-        "Sw": 6.0
-      },
-      {
-        "Node": {
-          "X": 21100.0,
-          "Y": 5000.0,
-          "Z": 3000.0
-        },
-        "Main": null,
-        "Secondary": null,
-        "MainPartId": "MB8",
-        "SecondaryPartId": "SB37",
-        "ConnectionNumber": "103",
-        "Top": 54.0,
-        "Hp": 189.0,
-        "Tp": 10.0,
-        "Edge": 31.0,
-        "PitchLayout": "63 63 ",
-        "Dia": 20.0,
-        "BoltType": "8.8XOX",
-        "Sw": 6.0
-      },
-      {
-        "Node": {
-          "X": 19800.0,
-          "Y": 10000.0,
-          "Z": 3000.0
-        },
-        "Main": null,
-        "Secondary": null,
-        "MainPartId": "MB12",
-        "SecondaryPartId": "SB36",
-        "ConnectionNumber": "103",
-        "Top": 54.0,
-        "Hp": 189.0,
-        "Tp": 10.0,
-        "Edge": 31.0,
-        "PitchLayout": "63 63 ",
-        "Dia": 20.0,
-        "BoltType": "8.8XOX",
-        "Sw": 6.0
-      },
-      {
-        "Node": {
-          "X": 19800.0,
-          "Y": 15000.0,
-          "Z": 3000.0
-        },
-        "Main": null,
-        "Secondary": null,
-        "MainPartId": "MB16",
-        "SecondaryPartId": "SB36",
-        "ConnectionNumber": "103",
-        "Top": 54.0,
-        "Hp": 189.0,
-        "Tp": 10.0,
-        "Edge": 31.0,
-        "PitchLayout": "63 63 ",
-        "Dia": 20.0,
-        "BoltType": "8.8XOX",
-        "Sw": 6.0
-      },
-      {
-        "Node": {
-          "X": 19800.0,
-          "Y": 5000.0,
-          "Z": 3000.0
-        },
-        "Main": null,
-        "Secondary": null,
-        "MainPartId": "MB8",
-        "SecondaryPartId": "SB35",
-        "ConnectionNumber": "103",
-        "Top": 54.0,
-        "Hp": 189.0,
-        "Tp": 10.0,
-        "Edge": 31.0,
-        "PitchLayout": "63 63 ",
-        "Dia": 20.0,
-        "BoltType": "8.8XOX",
-        "Sw": 6.0
-      },
-      {
-        "Node": {
-          "X": 19800.0,
-          "Y": 10000.0,
-          "Z": 3000.0
-        },
-        "Main": null,
-        "Secondary": null,
-        "MainPartId": "MB12",
-        "SecondaryPartId": "SB35",
-        "ConnectionNumber": "103",
-        "Top": 54.0,
-        "Hp": 189.0,
-        "Tp": 10.0,
-        "Edge": 31.0,
-        "PitchLayout": "63 63 ",
-        "Dia": 20.0,
-        "BoltType": "8.8XOX",
-        "Sw": 6.0
-      },
-      {
-        "Node": {
-          "X": 19800.0,
-          "Y": 0.0,
-          "Z": 3000.0
-        },
-        "Main": null,
-        "Secondary": null,
-        "MainPartId": "MB4",
-        "SecondaryPartId": "SB34",
-        "ConnectionNumber": "103",
-        "Top": 54.0,
-        "Hp": 189.0,
-        "Tp": 10.0,
-        "Edge": 31.0,
-        "PitchLayout": "63 63 ",
-        "Dia": 20.0,
-        "BoltType": "8.8XOX",
-        "Sw": 6.0
-      },
-      {
-        "Node": {
-          "X": 19800.0,
-          "Y": 5000.0,
-          "Z": 3000.0
-        },
-        "Main": null,
-        "Secondary": null,
-        "MainPartId": "MB8",
-        "SecondaryPartId": "SB34",
-        "ConnectionNumber": "103",
-        "Top": 54.0,
-        "Hp": 189.0,
-        "Tp": 10.0,
-        "Edge": 31.0,
-        "PitchLayout": "63 63 ",
-        "Dia": 20.0,
-        "BoltType": "8.8XOX",
-        "Sw": 6.0
-      },
-      {
-        "Node": {
-          "X": 21100.0,
-          "Y": 5000.0,
-          "Z": 3000.0
-        },
-        "Main": null,
-        "Secondary": null,
-        "MainPartId": "MB8",
-        "SecondaryPartId": "SB38",
-        "ConnectionNumber": "103",
-        "Top": 54.0,
-        "Hp": 189.0,
-        "Tp": 10.0,
-        "Edge": 31.0,
-        "PitchLayout": "63 63 ",
-        "Dia": 20.0,
-        "BoltType": "8.8XOX",
-        "Sw": 6.0
-      },
-      {
-        "Node": {
-          "X": 21100.0,
-          "Y": 10000.0,
-          "Z": 3000.0
-        },
-        "Main": null,
-        "Secondary": null,
-        "MainPartId": "MB12",
-        "SecondaryPartId": "SB38",
-        "ConnectionNumber": "103",
-        "Top": 54.0,
-        "Hp": 189.0,
-        "Tp": 10.0,
-        "Edge": 31.0,
-        "PitchLayout": "63 63 ",
-        "Dia": 20.0,
-        "BoltType": "8.8XOX",
-        "Sw": 6.0
-      },
-      {
-        "Node": {
-          "X": 22400.0,
-          "Y": 0.0,
-          "Z": 3000.0
-        },
-        "Main": null,
-        "Secondary": null,
-        "MainPartId": "MB4",
-        "SecondaryPartId": "SB40",
-        "ConnectionNumber": "103",
-        "Top": 54.0,
-        "Hp": 189.0,
-        "Tp": 10.0,
-        "Edge": 31.0,
-        "PitchLayout": "63 63 ",
-        "Dia": 20.0,
-        "BoltType": "8.8XOX",
-        "Sw": 6.0
-      },
-      {
-        "Node": {
-          "X": 22400.0,
-          "Y": 5000.0,
-          "Z": 3000.0
-        },
-        "Main": null,
-        "Secondary": null,
-        "MainPartId": "MB8",
-        "SecondaryPartId": "SB40",
-        "ConnectionNumber": "103",
-        "Top": 54.0,
-        "Hp": 189.0,
-        "Tp": 10.0,
-        "Edge": 31.0,
-        "PitchLayout": "63 63 ",
-        "Dia": 20.0,
-        "BoltType": "8.8XOX",
-        "Sw": 6.0
-      },
-      {
-        "Node": {
-          "X": 22400.0,
-          "Y": 10000.0,
-          "Z": 3000.0
-        },
-        "Main": null,
-        "Secondary": null,
-        "MainPartId": "MB12",
-        "SecondaryPartId": "SB42",
-        "ConnectionNumber": "103",
-        "Top": 54.0,
-        "Hp": 189.0,
-        "Tp": 10.0,
-        "Edge": 31.0,
-        "PitchLayout": "63 63 ",
-        "Dia": 20.0,
-        "BoltType": "8.8XOX",
-        "Sw": 6.0
-      },
-      {
-        "Node": {
-          "X": 22400.0,
-          "Y": 15000.0,
-          "Z": 3000.0
-        },
-        "Main": null,
-        "Secondary": null,
-        "MainPartId": "MB16",
-        "SecondaryPartId": "SB42",
-        "ConnectionNumber": "103",
-        "Top": 54.0,
-        "Hp": 189.0,
-        "Tp": 10.0,
-        "Edge": 31.0,
-        "PitchLayout": "63 63 ",
-        "Dia": 20.0,
-        "BoltType": "8.8XOX",
-        "Sw": 6.0
-      },
-      {
-        "Node": {
-          "X": 22400.0,
-          "Y": 5000.0,
-          "Z": 3000.0
-        },
-        "Main": null,
-        "Secondary": null,
-        "MainPartId": "MB8",
-        "SecondaryPartId": "SB41",
-        "ConnectionNumber": "103",
-        "Top": 54.0,
-        "Hp": 189.0,
-        "Tp": 10.0,
-        "Edge": 31.0,
-        "PitchLayout": "63 63 ",
-        "Dia": 20.0,
-        "BoltType": "8.8XOX",
-        "Sw": 6.0
-      },
-      {
-        "Node": {
-          "X": 22400.0,
-          "Y": 10000.0,
-          "Z": 3000.0
-        },
-        "Main": null,
-        "Secondary": null,
-        "MainPartId": "MB12",
-        "SecondaryPartId": "SB41",
-        "ConnectionNumber": "103",
-        "Top": 54.0,
-        "Hp": 189.0,
-        "Tp": 10.0,
-        "Edge": 31.0,
-        "PitchLayout": "63 63 ",
-        "Dia": 20.0,
-        "BoltType": "8.8XOX",
-        "Sw": 6.0
-      },
-      {
-        "Node": {
-          "X": 1500.0,
-          "Y": 10000.0,
-          "Z": 3000.0
-        },
-        "Main": null,
-        "Secondary": null,
-        "MainPartId": "MB9",
-        "SecondaryPartId": "SB6",
-        "ConnectionNumber": "103",
-        "Top": 54.0,
-        "Hp": 189.0,
-        "Tp": 10.0,
-        "Edge": 31.0,
-        "PitchLayout": "63 63 ",
-        "Dia": 20.0,
-        "BoltType": "8.8XOX",
-        "Sw": 6.0
-      },
-      {
-        "Node": {
-          "X": 1500.0,
-          "Y": 15000.0,
-          "Z": 3000.0
-        },
-        "Main": null,
-        "Secondary": null,
-        "MainPartId": "MB13",
-        "SecondaryPartId": "SB6",
-        "ConnectionNumber": "103",
-        "Top": 54.0,
-        "Hp": 189.0,
-        "Tp": 10.0,
-        "Edge": 31.0,
-        "PitchLayout": "63 63 ",
-        "Dia": 20.0,
-        "BoltType": "8.8XOX",
-        "Sw": 6.0
-      },
-      {
-        "Node": {
-          "X": 3000.0,
-          "Y": 10000.0,
-          "Z": 3000.0
-        },
-        "Main": null,
-        "Secondary": null,
-        "MainPartId": "MB9",
-        "SecondaryPartId": "SB9",
-        "ConnectionNumber": "103",
-        "Top": 54.0,
-        "Hp": 189.0,
-        "Tp": 10.0,
-        "Edge": 31.0,
-        "PitchLayout": "63 63 ",
-        "Dia": 20.0,
-        "BoltType": "8.8XOX",
-        "Sw": 6.0
-      },
-      {
-        "Node": {
-          "X": 3000.0,
-          "Y": 15000.0,
-          "Z": 3000.0
-        },
-        "Main": null,
-        "Secondary": null,
-        "MainPartId": "MB13",
-        "SecondaryPartId": "SB9",
-        "ConnectionNumber": "103",
-        "Top": 54.0,
-        "Hp": 189.0,
-        "Tp": 10.0,
-        "Edge": 31.0,
-        "PitchLayout": "63 63 ",
-        "Dia": 20.0,
-        "BoltType": "8.8XOX",
-        "Sw": 6.0
-      },
-      {
-        "Node": {
-          "X": 3000.0,
-          "Y": 5000.0,
-          "Z": 3000.0
-        },
-        "Main": null,
-        "Secondary": null,
-        "MainPartId": "MB5",
-        "SecondaryPartId": "SB8",
-        "ConnectionNumber": "103",
-        "Top": 54.0,
-        "Hp": 189.0,
-        "Tp": 10.0,
-        "Edge": 31.0,
-        "PitchLayout": "63 63 ",
-        "Dia": 20.0,
-        "BoltType": "8.8XOX",
-        "Sw": 6.0
-      },
-      {
-        "Node": {
-          "X": 3000.0,
-          "Y": 10000.0,
-          "Z": 3000.0
-        },
-        "Main": null,
-        "Secondary": null,
-        "MainPartId": "MB9",
-        "SecondaryPartId": "SB8",
-        "ConnectionNumber": "103",
-        "Top": 54.0,
-        "Hp": 189.0,
-        "Tp": 10.0,
-        "Edge": 31.0,
-        "PitchLayout": "63 63 ",
-        "Dia": 20.0,
-        "BoltType": "8.8XOX",
-        "Sw": 6.0
-      },
-      {
-        "Node": {
-          "X": 3000.0,
-          "Y": 0.0,
-          "Z": 3000.0
-        },
-        "Main": null,
-        "Secondary": null,
-        "MainPartId": "MB1",
-        "SecondaryPartId": "SB7",
-        "ConnectionNumber": "103",
-        "Top": 54.0,
-        "Hp": 189.0,
-        "Tp": 10.0,
-        "Edge": 31.0,
-        "PitchLayout": "63 63 ",
-        "Dia": 20.0,
-        "BoltType": "8.8XOX",
-        "Sw": 6.0
-      },
-      {
-        "Node": {
-          "X": 3000.0,
-          "Y": 5000.0,
-          "Z": 3000.0
-        },
-        "Main": null,
-        "Secondary": null,
-        "MainPartId": "MB5",
-        "SecondaryPartId": "SB7",
-        "ConnectionNumber": "103",
-        "Top": 54.0,
-        "Hp": 189.0,
-        "Tp": 10.0,
-        "Edge": 31.0,
-        "PitchLayout": "63 63 ",
-        "Dia": 20.0,
-        "BoltType": "8.8XOX",
-        "Sw": 6.0
-      },
-      {
-        "Node": {
-          "X": 1500.0,
-          "Y": 5000.0,
-          "Z": 3000.0
-        },
-        "Main": null,
-        "Secondary": null,
-        "MainPartId": "MB5",
-        "SecondaryPartId": "SB5",
-        "ConnectionNumber": "103",
-        "Top": 54.0,
-        "Hp": 189.0,
-        "Tp": 10.0,
-        "Edge": 31.0,
-        "PitchLayout": "63 63 ",
-        "Dia": 20.0,
-        "BoltType": "8.8XOX",
-        "Sw": 6.0
-      },
-      {
-        "Node": {
-          "X": 1500.0,
-          "Y": 10000.0,
-          "Z": 3000.0
-        },
-        "Main": null,
-        "Secondary": null,
-        "MainPartId": "MB9",
-        "SecondaryPartId": "SB5",
-        "ConnectionNumber": "103",
-        "Top": 54.0,
-        "Hp": 189.0,
-        "Tp": 10.0,
-        "Edge": 31.0,
-        "PitchLayout": "63 63 ",
-        "Dia": 20.0,
-        "BoltType": "8.8XOX",
-        "Sw": 6.0
-      },
-      {
-        "Node": {
-          "X": 1500.0,
-          "Y": 0.0,
-          "Z": 3000.0
-        },
-        "Main": null,
-        "Secondary": null,
-        "MainPartId": "MB1",
-        "SecondaryPartId": "SB4",
-        "ConnectionNumber": "103",
-        "Top": 54.0,
-        "Hp": 189.0,
-        "Tp": 10.0,
-        "Edge": 31.0,
-        "PitchLayout": "63 63 ",
-        "Dia": 20.0,
-        "BoltType": "8.8XOX",
-        "Sw": 6.0
-      },
-      {
-        "Node": {
-          "X": 1500.0,
-          "Y": 5000.0,
-          "Z": 3000.0
-        },
-        "Main": null,
-        "Secondary": null,
-        "MainPartId": "MB5",
-        "SecondaryPartId": "SB4",
-        "ConnectionNumber": "103",
-        "Top": 54.0,
-        "Hp": 189.0,
-        "Tp": 10.0,
-        "Edge": 31.0,
-        "PitchLayout": "63 63 ",
-        "Dia": 20.0,
-        "BoltType": "8.8XOX",
-        "Sw": 6.0
-      },
-      {
-        "Node": {
-          "X": 18500.0,
-          "Y": 0.0,
-          "Z": 3000.0
-        },
-        "Main": null,
-        "Secondary": null,
-        "MainPartId": "C4",
-        "SecondaryPartId": "SB31",
-        "ConnectionNumber": "103",
-        "Top": 54.0,
-        "Hp": 189.0,
-        "Tp": 10.0,
-        "Edge": 31.0,
-        "PitchLayout": "63 63 ",
-        "Dia": 20.0,
-        "BoltType": "8.8XOX",
-        "Sw": 6.0
-      },
-      {
-        "Node": {
-          "X": 18500.0,
-          "Y": 5000.0,
-          "Z": 3000.0
-        },
-        "Main": null,
-        "Secondary": null,
-        "MainPartId": "C9",
-        "SecondaryPartId": "SB31",
-        "ConnectionNumber": "103",
-        "Top": 54.0,
-        "Hp": 189.0,
-        "Tp": 10.0,
-        "Edge": 31.0,
-        "PitchLayout": "63 63 ",
-        "Dia": 20.0,
-        "BoltType": "8.8XOX",
-        "Sw": 6.0
-      },
-      {
-        "Node": {
-          "X": 18500.0,
-          "Y": 5000.0,
-          "Z": 3000.0
-        },
-        "Main": null,
-        "Secondary": null,
-        "MainPartId": "C9",
-        "SecondaryPartId": "SB32",
-        "ConnectionNumber": "103",
-        "Top": 54.0,
-        "Hp": 189.0,
-        "Tp": 10.0,
-        "Edge": 31.0,
-        "PitchLayout": "63 63 ",
-        "Dia": 20.0,
-        "BoltType": "8.8XOX",
-        "Sw": 6.0
-      },
-      {
-        "Node": {
-          "X": 18500.0,
-          "Y": 10000.0,
-          "Z": 3000.0
-        },
-        "Main": null,
-        "Secondary": null,
-        "MainPartId": "C14",
-        "SecondaryPartId": "SB32",
-        "ConnectionNumber": "103",
-        "Top": 54.0,
-        "Hp": 189.0,
-        "Tp": 10.0,
-        "Edge": 31.0,
-        "PitchLayout": "63 63 ",
-        "Dia": 20.0,
-        "BoltType": "8.8XOX",
-        "Sw": 6.0
-      },
-      {
-        "Node": {
-          "X": 18500.0,
-          "Y": 10000.0,
-          "Z": 3000.0
-        },
-        "Main": null,
-        "Secondary": null,
-        "MainPartId": "C14",
-        "SecondaryPartId": "SB33",
-        "ConnectionNumber": "103",
-        "Top": 54.0,
-        "Hp": 189.0,
-        "Tp": 10.0,
-        "Edge": 31.0,
-        "PitchLayout": "63 63 ",
-        "Dia": 20.0,
-        "BoltType": "8.8XOX",
-        "Sw": 6.0
-      },
-      {
-        "Node": {
-          "X": 18500.0,
-          "Y": 15000.0,
-          "Z": 3000.0
-        },
-        "Main": null,
-        "Secondary": null,
-        "MainPartId": "C19",
-        "SecondaryPartId": "SB33",
-        "ConnectionNumber": "103",
-        "Top": 54.0,
-        "Hp": 189.0,
-        "Tp": 10.0,
-        "Edge": 31.0,
-        "PitchLayout": "63 63 ",
-        "Dia": 20.0,
-        "BoltType": "8.8XOX",
-        "Sw": 6.0
-      },
-      {
-        "Node": {
-          "X": 4500.0,
-          "Y": 0.0,
-          "Z": 3000.0
-        },
-        "Main": null,
-        "Secondary": null,
-        "MainPartId": "C2",
-        "SecondaryPartId": "SB10",
-        "ConnectionNumber": "103",
-        "Top": 54.0,
-        "Hp": 189.0,
-        "Tp": 10.0,
-        "Edge": 31.0,
-        "PitchLayout": "63 63 ",
-        "Dia": 20.0,
-        "BoltType": "8.8XOX",
-        "Sw": 6.0
-      },
-      {
-        "Node": {
-          "X": 4500.0,
-          "Y": 5000.0,
-          "Z": 3000.0
-        },
-        "Main": null,
-        "Secondary": null,
-        "MainPartId": "C7",
-        "SecondaryPartId": "SB10",
-        "ConnectionNumber": "103",
-        "Top": 54.0,
-        "Hp": 189.0,
-        "Tp": 10.0,
-        "Edge": 31.0,
-        "PitchLayout": "63 63 ",
-        "Dia": 20.0,
-        "BoltType": "8.8XOX",
-        "Sw": 6.0
-      },
-      {
-        "Node": {
-          "X": 4500.0,
-          "Y": 5000.0,
-          "Z": 3000.0
-        },
-        "Main": null,
-        "Secondary": null,
-        "MainPartId": "C7",
-        "SecondaryPartId": "SB11",
-        "ConnectionNumber": "103",
-        "Top": 54.0,
-        "Hp": 189.0,
-        "Tp": 10.0,
-        "Edge": 31.0,
-        "PitchLayout": "63 63 ",
-        "Dia": 20.0,
-        "BoltType": "8.8XOX",
-        "Sw": 6.0
-      },
-      {
-        "Node": {
-          "X": 4500.0,
-          "Y": 10000.0,
-          "Z": 3000.0
-        },
-        "Main": null,
-        "Secondary": null,
-        "MainPartId": "C12",
-        "SecondaryPartId": "SB11",
-        "ConnectionNumber": "103",
-        "Top": 54.0,
-        "Hp": 189.0,
-        "Tp": 10.0,
-        "Edge": 31.0,
-        "PitchLayout": "63 63 ",
-        "Dia": 20.0,
-        "BoltType": "8.8XOX",
-        "Sw": 6.0
-      },
-      {
-        "Node": {
-          "X": 4500.0,
-          "Y": 10000.0,
-          "Z": 3000.0
-        },
-        "Main": null,
-        "Secondary": null,
-        "MainPartId": "C12",
-        "SecondaryPartId": "SB12",
-        "ConnectionNumber": "103",
-        "Top": 54.0,
-        "Hp": 189.0,
-        "Tp": 10.0,
-        "Edge": 31.0,
-        "PitchLayout": "63 63 ",
-        "Dia": 20.0,
-        "BoltType": "8.8XOX",
-        "Sw": 6.0
-      },
-      {
-        "Node": {
-          "X": 4500.0,
-          "Y": 15000.0,
-          "Z": 3000.0
-        },
-        "Main": null,
-        "Secondary": null,
-        "MainPartId": "C17",
-        "SecondaryPartId": "SB12",
-        "ConnectionNumber": "103",
-        "Top": 54.0,
-        "Hp": 189.0,
-        "Tp": 10.0,
-        "Edge": 31.0,
-        "PitchLayout": "63 63 ",
-        "Dia": 20.0,
-        "BoltType": "8.8XOX",
-        "Sw": 6.0
-      },
-      {
-        "Node": {
-          "X": 6500.0,
-          "Y": 10000.0,
-          "Z": 3000.0
-        },
-        "Main": null,
-        "Secondary": null,
-        "MainPartId": "MB10",
-        "SecondaryPartId": "SB15",
-        "ConnectionNumber": "103",
-        "Top": 54.0,
-        "Hp": 189.0,
-        "Tp": 10.0,
-        "Edge": 31.0,
-        "PitchLayout": "63 63 ",
-        "Dia": 20.0,
-        "BoltType": "8.8XOX",
-        "Sw": 6.0
-      },
-      {
-        "Node": {
-          "X": 6500.0,
-          "Y": 15000.0,
-          "Z": 3000.0
-        },
-        "Main": null,
-        "Secondary": null,
-        "MainPartId": "MB14",
-        "SecondaryPartId": "SB15",
-        "ConnectionNumber": "103",
-        "Top": 54.0,
-        "Hp": 189.0,
-        "Tp": 10.0,
-        "Edge": 31.0,
-        "PitchLayout": "63 63 ",
-        "Dia": 20.0,
-        "BoltType": "8.8XOX",
-        "Sw": 6.0
-      },
-      {
-        "Node": {
-          "X": 6500.0,
-          "Y": 0.0,
-          "Z": 3000.0
-        },
-        "Main": null,
-        "Secondary": null,
-        "MainPartId": "MB2",
-        "SecondaryPartId": "SB13",
-        "ConnectionNumber": "103",
-        "Top": 54.0,
-        "Hp": 189.0,
-        "Tp": 10.0,
-        "Edge": 31.0,
-        "PitchLayout": "63 63 ",
-        "Dia": 20.0,
-        "BoltType": "8.8XOX",
-        "Sw": 6.0
-      },
-      {
-        "Node": {
-          "X": 6500.0,
-          "Y": 5000.0,
-          "Z": 3000.0
-        },
-        "Main": null,
-        "Secondary": null,
-        "MainPartId": "MB6",
-        "SecondaryPartId": "SB13",
-        "ConnectionNumber": "103",
-        "Top": 54.0,
-        "Hp": 189.0,
-        "Tp": 10.0,
-        "Edge": 31.0,
-        "PitchLayout": "63 63 ",
-        "Dia": 20.0,
-        "BoltType": "8.8XOX",
-        "Sw": 6.0
-      },
-      {
-        "Node": {
-          "X": 6500.0,
-          "Y": 5000.0,
-          "Z": 3000.0
-        },
-        "Main": null,
-        "Secondary": null,
-        "MainPartId": "MB6",
-        "SecondaryPartId": "SB14",
-        "ConnectionNumber": "103",
-        "Top": 54.0,
-        "Hp": 189.0,
-        "Tp": 10.0,
-        "Edge": 31.0,
-        "PitchLayout": "63 63 ",
-        "Dia": 20.0,
-        "BoltType": "8.8XOX",
-        "Sw": 6.0
-      },
-      {
-        "Node": {
-          "X": 6500.0,
-          "Y": 10000.0,
-          "Z": 3000.0
-        },
-        "Main": null,
-        "Secondary": null,
-        "MainPartId": "MB10",
-        "SecondaryPartId": "SB14",
-        "ConnectionNumber": "103",
-        "Top": 54.0,
-        "Hp": 189.0,
-        "Tp": 10.0,
-        "Edge": 31.0,
-        "PitchLayout": "63 63 ",
-        "Dia": 20.0,
-        "BoltType": "8.8XOX",
-        "Sw": 6.0
-      },
-      {
-        "Node": {
-          "X": 10500.0,
-          "Y": 5000.0,
-          "Z": 3000.0
-        },
-        "Main": null,
-        "Secondary": null,
-        "MainPartId": "C8",
-        "SecondaryPartId": "SB20",
-        "ConnectionNumber": "103",
-        "Top": 54.0,
-        "Hp": 189.0,
-        "Tp": 10.0,
-        "Edge": 31.0,
-        "PitchLayout": "63 63 ",
-        "Dia": 20.0,
-        "BoltType": "8.8XOX",
-        "Sw": 6.0
-      },
-      {
-        "Node": {
-          "X": 10500.0,
-          "Y": 10000.0,
-          "Z": 3000.0
-        },
-        "Main": null,
-        "Secondary": null,
-        "MainPartId": "C13",
-        "SecondaryPartId": "SB20",
-        "ConnectionNumber": "103",
-        "Top": 54.0,
-        "Hp": 189.0,
-        "Tp": 10.0,
-        "Edge": 31.0,
-        "PitchLayout": "63 63 ",
-        "Dia": 20.0,
-        "BoltType": "8.8XOX",
-        "Sw": 6.0
-      },
-      {
-        "Node": {
-          "X": 8500.0,
-          "Y": 0.0,
-          "Z": 3000.0
-        },
-        "Main": null,
-        "Secondary": null,
-        "MainPartId": "MB2",
+        "MainPartId": "C6",
         "SecondaryPartId": "SB16",
         "ConnectionNumber": "103",
         "Top": 54.0,
@@ -3019,13 +999,13 @@
       },
       {
         "Node": {
-          "X": 8500.0,
-          "Y": 5000.0,
+          "X": 14000.0,
+          "Y": 8000.0,
           "Z": 3000.0
         },
         "Main": null,
         "Secondary": null,
-        "MainPartId": "MB6",
+        "MainPartId": "C10",
         "SecondaryPartId": "SB16",
         "ConnectionNumber": "103",
         "Top": 54.0,
@@ -3039,94 +1019,14 @@
       },
       {
         "Node": {
-          "X": 8500.0,
-          "Y": 5000.0,
-          "Z": 3000.0
-        },
-        "Main": null,
-        "Secondary": null,
-        "MainPartId": "MB6",
-        "SecondaryPartId": "SB17",
-        "ConnectionNumber": "103",
-        "Top": 54.0,
-        "Hp": 189.0,
-        "Tp": 10.0,
-        "Edge": 31.0,
-        "PitchLayout": "63 63 ",
-        "Dia": 20.0,
-        "BoltType": "8.8XOX",
-        "Sw": 6.0
-      },
-      {
-        "Node": {
-          "X": 8500.0,
-          "Y": 10000.0,
-          "Z": 3000.0
-        },
-        "Main": null,
-        "Secondary": null,
-        "MainPartId": "MB10",
-        "SecondaryPartId": "SB17",
-        "ConnectionNumber": "103",
-        "Top": 54.0,
-        "Hp": 189.0,
-        "Tp": 10.0,
-        "Edge": 31.0,
-        "PitchLayout": "63 63 ",
-        "Dia": 20.0,
-        "BoltType": "8.8XOX",
-        "Sw": 6.0
-      },
-      {
-        "Node": {
-          "X": 8500.0,
-          "Y": 10000.0,
-          "Z": 3000.0
-        },
-        "Main": null,
-        "Secondary": null,
-        "MainPartId": "MB10",
-        "SecondaryPartId": "SB18",
-        "ConnectionNumber": "103",
-        "Top": 54.0,
-        "Hp": 189.0,
-        "Tp": 10.0,
-        "Edge": 31.0,
-        "PitchLayout": "63 63 ",
-        "Dia": 20.0,
-        "BoltType": "8.8XOX",
-        "Sw": 6.0
-      },
-      {
-        "Node": {
-          "X": 8500.0,
-          "Y": 15000.0,
-          "Z": 3000.0
-        },
-        "Main": null,
-        "Secondary": null,
-        "MainPartId": "MB14",
-        "SecondaryPartId": "SB18",
-        "ConnectionNumber": "103",
-        "Top": 54.0,
-        "Hp": 189.0,
-        "Tp": 10.0,
-        "Edge": 31.0,
-        "PitchLayout": "63 63 ",
-        "Dia": 20.0,
-        "BoltType": "8.8XOX",
-        "Sw": 6.0
-      },
-      {
-        "Node": {
-          "X": 10500.0,
+          "X": 14000.0,
           "Y": 0.0,
           "Z": 3000.0
         },
         "Main": null,
         "Secondary": null,
         "MainPartId": "C3",
-        "SecondaryPartId": "SB19",
+        "SecondaryPartId": "SB15",
         "ConnectionNumber": "103",
         "Top": 54.0,
         "Hp": 189.0,
@@ -3139,14 +1039,14 @@
       },
       {
         "Node": {
-          "X": 10500.0,
-          "Y": 5000.0,
+          "X": 14000.0,
+          "Y": 4000.0,
           "Z": 3000.0
         },
         "Main": null,
         "Secondary": null,
-        "MainPartId": "C8",
-        "SecondaryPartId": "SB19",
+        "MainPartId": "C6",
+        "SecondaryPartId": "SB15",
         "ConnectionNumber": "103",
         "Top": 54.0,
         "Hp": 189.0,
@@ -3159,14 +1059,14 @@
       },
       {
         "Node": {
-          "X": 10500.0,
-          "Y": 10000.0,
+          "X": 12000.0,
+          "Y": 4000.0,
           "Z": 3000.0
         },
         "Main": null,
         "Secondary": null,
-        "MainPartId": "C13",
-        "SecondaryPartId": "SB21",
+        "MainPartId": "MB4",
+        "SecondaryPartId": "SB14",
         "ConnectionNumber": "103",
         "Top": 54.0,
         "Hp": 189.0,
@@ -3179,14 +1079,14 @@
       },
       {
         "Node": {
-          "X": 10500.0,
-          "Y": 15000.0,
+          "X": 12000.0,
+          "Y": 8000.0,
           "Z": 3000.0
         },
         "Main": null,
         "Secondary": null,
-        "MainPartId": "C18",
-        "SecondaryPartId": "SB21",
+        "MainPartId": "MB7",
+        "SecondaryPartId": "SB14",
         "ConnectionNumber": "103",
         "Top": 54.0,
         "Hp": 189.0,
@@ -3199,14 +1099,14 @@
       },
       {
         "Node": {
-          "X": 12500.0,
+          "X": 12000.0,
           "Y": 0.0,
           "Z": 3000.0
         },
         "Main": null,
         "Secondary": null,
-        "MainPartId": "MB3",
-        "SecondaryPartId": "SB22",
+        "MainPartId": "MB2",
+        "SecondaryPartId": "SB13",
         "ConnectionNumber": "103",
         "Top": 54.0,
         "Hp": 189.0,
@@ -3219,14 +1119,54 @@
       },
       {
         "Node": {
-          "X": 12500.0,
-          "Y": 5000.0,
+          "X": 12000.0,
+          "Y": 4000.0,
+          "Z": 3000.0
+        },
+        "Main": null,
+        "Secondary": null,
+        "MainPartId": "MB4",
+        "SecondaryPartId": "SB13",
+        "ConnectionNumber": "103",
+        "Top": 54.0,
+        "Hp": 189.0,
+        "Tp": 10.0,
+        "Edge": 31.0,
+        "PitchLayout": "63 63 ",
+        "Dia": 20.0,
+        "BoltType": "8.8XOX",
+        "Sw": 6.0
+      },
+      {
+        "Node": {
+          "X": 10000.0,
+          "Y": 4000.0,
+          "Z": 3000.0
+        },
+        "Main": null,
+        "Secondary": null,
+        "MainPartId": "MB4",
+        "SecondaryPartId": "SB12",
+        "ConnectionNumber": "103",
+        "Top": 54.0,
+        "Hp": 189.0,
+        "Tp": 10.0,
+        "Edge": 31.0,
+        "PitchLayout": "63 63 ",
+        "Dia": 20.0,
+        "BoltType": "8.8XOX",
+        "Sw": 6.0
+      },
+      {
+        "Node": {
+          "X": 10000.0,
+          "Y": 8000.0,
           "Z": 3000.0
         },
         "Main": null,
         "Secondary": null,
         "MainPartId": "MB7",
-        "SecondaryPartId": "SB22",
+        "SecondaryPartId": "SB12",
         "ConnectionNumber": "103",
         "Top": 54.0,
         "Hp": 189.0,
@@ -3239,54 +1179,14 @@
       },
       {
         "Node": {
-          "X": 12500.0,
-          "Y": 10000.0,
-          "Z": 3000.0
-        },
-        "Main": null,
-        "Secondary": null,
-        "MainPartId": "MB11",
-        "SecondaryPartId": "SB24",
-        "ConnectionNumber": "103",
-        "Top": 54.0,
-        "Hp": 189.0,
-        "Tp": 10.0,
-        "Edge": 31.0,
-        "PitchLayout": "63 63 ",
-        "Dia": 20.0,
-        "BoltType": "8.8XOX",
-        "Sw": 6.0
-      },
-      {
-        "Node": {
-          "X": 12500.0,
-          "Y": 15000.0,
-          "Z": 3000.0
-        },
-        "Main": null,
-        "Secondary": null,
-        "MainPartId": "MB15",
-        "SecondaryPartId": "SB24",
-        "ConnectionNumber": "103",
-        "Top": 54.0,
-        "Hp": 189.0,
-        "Tp": 10.0,
-        "Edge": 31.0,
-        "PitchLayout": "63 63 ",
-        "Dia": 20.0,
-        "BoltType": "8.8XOX",
-        "Sw": 6.0
-      },
-      {
-        "Node": {
-          "X": 14500.0,
+          "X": 10000.0,
           "Y": 0.0,
           "Z": 3000.0
         },
         "Main": null,
         "Secondary": null,
-        "MainPartId": "MB3",
-        "SecondaryPartId": "SB25",
+        "MainPartId": "MB2",
+        "SecondaryPartId": "SB11",
         "ConnectionNumber": "103",
         "Top": 54.0,
         "Hp": 189.0,
@@ -3299,14 +1199,14 @@
       },
       {
         "Node": {
-          "X": 14500.0,
-          "Y": 5000.0,
+          "X": 10000.0,
+          "Y": 4000.0,
           "Z": 3000.0
         },
         "Main": null,
         "Secondary": null,
-        "MainPartId": "MB7",
-        "SecondaryPartId": "SB25",
+        "MainPartId": "MB4",
+        "SecondaryPartId": "SB11",
         "ConnectionNumber": "103",
         "Top": 54.0,
         "Hp": 189.0,
@@ -3319,14 +1219,14 @@
       },
       {
         "Node": {
-          "X": 14500.0,
-          "Y": 5000.0,
+          "X": 18000.0,
+          "Y": 4000.0,
           "Z": 3000.0
         },
         "Main": null,
         "Secondary": null,
-        "MainPartId": "MB7",
-        "SecondaryPartId": "SB26",
+        "MainPartId": "MB5",
+        "SecondaryPartId": "SB18",
         "ConnectionNumber": "103",
         "Top": 54.0,
         "Hp": 189.0,
@@ -3339,14 +1239,14 @@
       },
       {
         "Node": {
-          "X": 14500.0,
-          "Y": 10000.0,
+          "X": 18000.0,
+          "Y": 8000.0,
           "Z": 3000.0
         },
         "Main": null,
         "Secondary": null,
-        "MainPartId": "MB11",
-        "SecondaryPartId": "SB26",
+        "MainPartId": "MB8",
+        "SecondaryPartId": "SB18",
         "ConnectionNumber": "103",
         "Top": 54.0,
         "Hp": 189.0,
@@ -3359,54 +1259,134 @@
       },
       {
         "Node": {
-          "X": 14500.0,
-          "Y": 10000.0,
-          "Z": 3000.0
-        },
-        "Main": null,
-        "Secondary": null,
-        "MainPartId": "MB11",
-        "SecondaryPartId": "SB27",
-        "ConnectionNumber": "103",
-        "Top": 54.0,
-        "Hp": 189.0,
-        "Tp": 10.0,
-        "Edge": 31.0,
-        "PitchLayout": "63 63 ",
-        "Dia": 20.0,
-        "BoltType": "8.8XOX",
-        "Sw": 6.0
-      },
-      {
-        "Node": {
-          "X": 14500.0,
-          "Y": 15000.0,
-          "Z": 3000.0
-        },
-        "Main": null,
-        "Secondary": null,
-        "MainPartId": "MB15",
-        "SecondaryPartId": "SB27",
-        "ConnectionNumber": "103",
-        "Top": 54.0,
-        "Hp": 189.0,
-        "Tp": 10.0,
-        "Edge": 31.0,
-        "PitchLayout": "63 63 ",
-        "Dia": 20.0,
-        "BoltType": "8.8XOX",
-        "Sw": 6.0
-      },
-      {
-        "Node": {
-          "X": 16500.0,
+          "X": 8000.0,
           "Y": 0.0,
           "Z": 3000.0
         },
         "Main": null,
         "Secondary": null,
+        "MainPartId": "MB2",
+        "SecondaryPartId": "SB9",
+        "ConnectionNumber": "103",
+        "Top": 54.0,
+        "Hp": 189.0,
+        "Tp": 10.0,
+        "Edge": 31.0,
+        "PitchLayout": "63 63 ",
+        "Dia": 20.0,
+        "BoltType": "8.8XOX",
+        "Sw": 6.0
+      },
+      {
+        "Node": {
+          "X": 8000.0,
+          "Y": 4000.0,
+          "Z": 3000.0
+        },
+        "Main": null,
+        "Secondary": null,
+        "MainPartId": "MB4",
+        "SecondaryPartId": "SB9",
+        "ConnectionNumber": "103",
+        "Top": 54.0,
+        "Hp": 189.0,
+        "Tp": 10.0,
+        "Edge": 31.0,
+        "PitchLayout": "63 63 ",
+        "Dia": 20.0,
+        "BoltType": "8.8XOX",
+        "Sw": 6.0
+      },
+      {
+        "Node": {
+          "X": 6000.0,
+          "Y": 4000.0,
+          "Z": 3000.0
+        },
+        "Main": null,
+        "Secondary": null,
+        "MainPartId": "C5",
+        "SecondaryPartId": "SB8",
+        "ConnectionNumber": "103",
+        "Top": 54.0,
+        "Hp": 189.0,
+        "Tp": 10.0,
+        "Edge": 31.0,
+        "PitchLayout": "63 63 ",
+        "Dia": 20.0,
+        "BoltType": "8.8XOX",
+        "Sw": 6.0
+      },
+      {
+        "Node": {
+          "X": 6000.0,
+          "Y": 8000.0,
+          "Z": 3000.0
+        },
+        "Main": null,
+        "Secondary": null,
+        "MainPartId": "C9",
+        "SecondaryPartId": "SB8",
+        "ConnectionNumber": "103",
+        "Top": 54.0,
+        "Hp": 189.0,
+        "Tp": 10.0,
+        "Edge": 31.0,
+        "PitchLayout": "63 63 ",
+        "Dia": 20.0,
+        "BoltType": "8.8XOX",
+        "Sw": 6.0
+      },
+      {
+        "Node": {
+          "X": 6000.0,
+          "Y": 0.0,
+          "Z": 3000.0
+        },
+        "Main": null,
+        "Secondary": null,
+        "MainPartId": "C2",
+        "SecondaryPartId": "SB7",
+        "ConnectionNumber": "103",
+        "Top": 54.0,
+        "Hp": 189.0,
+        "Tp": 10.0,
+        "Edge": 31.0,
+        "PitchLayout": "63 63 ",
+        "Dia": 20.0,
+        "BoltType": "8.8XOX",
+        "Sw": 6.0
+      },
+      {
+        "Node": {
+          "X": 6000.0,
+          "Y": 4000.0,
+          "Z": 3000.0
+        },
+        "Main": null,
+        "Secondary": null,
+        "MainPartId": "C5",
+        "SecondaryPartId": "SB7",
+        "ConnectionNumber": "103",
+        "Top": 54.0,
+        "Hp": 189.0,
+        "Tp": 10.0,
+        "Edge": 31.0,
+        "PitchLayout": "63 63 ",
+        "Dia": 20.0,
+        "BoltType": "8.8XOX",
+        "Sw": 6.0
+      },
+      {
+        "Node": {
+          "X": 4000.0,
+          "Y": 4000.0,
+          "Z": 3000.0
+        },
+        "Main": null,
+        "Secondary": null,
         "MainPartId": "MB3",
-        "SecondaryPartId": "SB28",
+        "SecondaryPartId": "SB6",
         "ConnectionNumber": "103",
         "Top": 54.0,
         "Hp": 189.0,
@@ -3419,14 +1399,214 @@
       },
       {
         "Node": {
-          "X": 16500.0,
-          "Y": 5000.0,
+          "X": 4000.0,
+          "Y": 8000.0,
+          "Z": 3000.0
+        },
+        "Main": null,
+        "Secondary": null,
+        "MainPartId": "MB6",
+        "SecondaryPartId": "SB6",
+        "ConnectionNumber": "103",
+        "Top": 54.0,
+        "Hp": 189.0,
+        "Tp": 10.0,
+        "Edge": 31.0,
+        "PitchLayout": "63 63 ",
+        "Dia": 20.0,
+        "BoltType": "8.8XOX",
+        "Sw": 6.0
+      },
+      {
+        "Node": {
+          "X": 4000.0,
+          "Y": 0.0,
+          "Z": 3000.0
+        },
+        "Main": null,
+        "Secondary": null,
+        "MainPartId": "MB1",
+        "SecondaryPartId": "SB5",
+        "ConnectionNumber": "103",
+        "Top": 54.0,
+        "Hp": 189.0,
+        "Tp": 10.0,
+        "Edge": 31.0,
+        "PitchLayout": "63 63 ",
+        "Dia": 20.0,
+        "BoltType": "8.8XOX",
+        "Sw": 6.0
+      },
+      {
+        "Node": {
+          "X": 4000.0,
+          "Y": 4000.0,
+          "Z": 3000.0
+        },
+        "Main": null,
+        "Secondary": null,
+        "MainPartId": "MB3",
+        "SecondaryPartId": "SB5",
+        "ConnectionNumber": "103",
+        "Top": 54.0,
+        "Hp": 189.0,
+        "Tp": 10.0,
+        "Edge": 31.0,
+        "PitchLayout": "63 63 ",
+        "Dia": 20.0,
+        "BoltType": "8.8XOX",
+        "Sw": 6.0
+      },
+      {
+        "Node": {
+          "X": 2000.0,
+          "Y": 4000.0,
+          "Z": 3000.0
+        },
+        "Main": null,
+        "Secondary": null,
+        "MainPartId": "MB3",
+        "SecondaryPartId": "SB4",
+        "ConnectionNumber": "103",
+        "Top": 54.0,
+        "Hp": 189.0,
+        "Tp": 10.0,
+        "Edge": 31.0,
+        "PitchLayout": "63 63 ",
+        "Dia": 20.0,
+        "BoltType": "8.8XOX",
+        "Sw": 6.0
+      },
+      {
+        "Node": {
+          "X": 2000.0,
+          "Y": 8000.0,
+          "Z": 3000.0
+        },
+        "Main": null,
+        "Secondary": null,
+        "MainPartId": "MB6",
+        "SecondaryPartId": "SB4",
+        "ConnectionNumber": "103",
+        "Top": 54.0,
+        "Hp": 189.0,
+        "Tp": 10.0,
+        "Edge": 31.0,
+        "PitchLayout": "63 63 ",
+        "Dia": 20.0,
+        "BoltType": "8.8XOX",
+        "Sw": 6.0
+      },
+      {
+        "Node": {
+          "X": 2000.0,
+          "Y": 0.0,
+          "Z": 3000.0
+        },
+        "Main": null,
+        "Secondary": null,
+        "MainPartId": "MB1",
+        "SecondaryPartId": "SB3",
+        "ConnectionNumber": "103",
+        "Top": 54.0,
+        "Hp": 189.0,
+        "Tp": 10.0,
+        "Edge": 31.0,
+        "PitchLayout": "63 63 ",
+        "Dia": 20.0,
+        "BoltType": "8.8XOX",
+        "Sw": 6.0
+      },
+      {
+        "Node": {
+          "X": 2000.0,
+          "Y": 4000.0,
+          "Z": 3000.0
+        },
+        "Main": null,
+        "Secondary": null,
+        "MainPartId": "MB3",
+        "SecondaryPartId": "SB3",
+        "ConnectionNumber": "103",
+        "Top": 54.0,
+        "Hp": 189.0,
+        "Tp": 10.0,
+        "Edge": 31.0,
+        "PitchLayout": "63 63 ",
+        "Dia": 20.0,
+        "BoltType": "8.8XOX",
+        "Sw": 6.0
+      },
+      {
+        "Node": {
+          "X": 16000.0,
+          "Y": 4000.0,
+          "Z": 3000.0
+        },
+        "Main": null,
+        "Secondary": null,
+        "MainPartId": "MB5",
+        "SecondaryPartId": "SB17",
+        "ConnectionNumber": "103",
+        "Top": 54.0,
+        "Hp": 189.0,
+        "Tp": 10.0,
+        "Edge": 31.0,
+        "PitchLayout": "63 63 ",
+        "Dia": 20.0,
+        "BoltType": "8.8XOX",
+        "Sw": 6.0
+      },
+      {
+        "Node": {
+          "X": 16000.0,
+          "Y": 8000.0,
+          "Z": 3000.0
+        },
+        "Main": null,
+        "Secondary": null,
+        "MainPartId": "MB8",
+        "SecondaryPartId": "SB17",
+        "ConnectionNumber": "103",
+        "Top": 54.0,
+        "Hp": 189.0,
+        "Tp": 10.0,
+        "Edge": 31.0,
+        "PitchLayout": "63 63 ",
+        "Dia": 20.0,
+        "BoltType": "8.8XOX",
+        "Sw": 6.0
+      },
+      {
+        "Node": {
+          "X": 8000.0,
+          "Y": 4000.0,
+          "Z": 3000.0
+        },
+        "Main": null,
+        "Secondary": null,
+        "MainPartId": "MB4",
+        "SecondaryPartId": "SB10",
+        "ConnectionNumber": "103",
+        "Top": 54.0,
+        "Hp": 189.0,
+        "Tp": 10.0,
+        "Edge": 31.0,
+        "PitchLayout": "63 63 ",
+        "Dia": 20.0,
+        "BoltType": "8.8XOX",
+        "Sw": 6.0
+      },
+      {
+        "Node": {
+          "X": 8000.0,
+          "Y": 8000.0,
           "Z": 3000.0
         },
         "Main": null,
         "Secondary": null,
         "MainPartId": "MB7",
-        "SecondaryPartId": "SB28",
+        "SecondaryPartId": "SB10",
         "ConnectionNumber": "103",
         "Top": 54.0,
         "Hp": 189.0,
@@ -3439,14 +1619,14 @@
       },
       {
         "Node": {
-          "X": 16500.0,
-          "Y": 5000.0,
+          "X": 14000.0,
+          "Y": 8000.0,
           "Z": 3000.0
         },
         "Main": null,
         "Secondary": null,
-        "MainPartId": "MB7",
-        "SecondaryPartId": "SB29",
+        "MainPartId": "C10",
+        "SecondaryPartId": "MB8",
         "ConnectionNumber": "103",
         "Top": 54.0,
         "Hp": 189.0,
@@ -3459,94 +1639,14 @@
       },
       {
         "Node": {
-          "X": 16500.0,
-          "Y": 10000.0,
+          "X": 20000.0,
+          "Y": 8000.0,
           "Z": 3000.0
         },
         "Main": null,
         "Secondary": null,
-        "MainPartId": "MB11",
-        "SecondaryPartId": "SB29",
-        "ConnectionNumber": "103",
-        "Top": 54.0,
-        "Hp": 189.0,
-        "Tp": 10.0,
-        "Edge": 31.0,
-        "PitchLayout": "63 63 ",
-        "Dia": 20.0,
-        "BoltType": "8.8XOX",
-        "Sw": 6.0
-      },
-      {
-        "Node": {
-          "X": 16500.0,
-          "Y": 10000.0,
-          "Z": 3000.0
-        },
-        "Main": null,
-        "Secondary": null,
-        "MainPartId": "MB11",
-        "SecondaryPartId": "SB30",
-        "ConnectionNumber": "103",
-        "Top": 54.0,
-        "Hp": 189.0,
-        "Tp": 10.0,
-        "Edge": 31.0,
-        "PitchLayout": "63 63 ",
-        "Dia": 20.0,
-        "BoltType": "8.8XOX",
-        "Sw": 6.0
-      },
-      {
-        "Node": {
-          "X": 16500.0,
-          "Y": 15000.0,
-          "Z": 3000.0
-        },
-        "Main": null,
-        "Secondary": null,
-        "MainPartId": "MB15",
-        "SecondaryPartId": "SB30",
-        "ConnectionNumber": "103",
-        "Top": 54.0,
-        "Hp": 189.0,
-        "Tp": 10.0,
-        "Edge": 31.0,
-        "PitchLayout": "63 63 ",
-        "Dia": 20.0,
-        "BoltType": "8.8XOX",
-        "Sw": 6.0
-      },
-      {
-        "Node": {
-          "X": 12500.0,
-          "Y": 5000.0,
-          "Z": 3000.0
-        },
-        "Main": null,
-        "Secondary": null,
-        "MainPartId": "MB7",
-        "SecondaryPartId": "SB23",
-        "ConnectionNumber": "103",
-        "Top": 54.0,
-        "Hp": 189.0,
-        "Tp": 10.0,
-        "Edge": 31.0,
-        "PitchLayout": "63 63 ",
-        "Dia": 20.0,
-        "BoltType": "8.8XOX",
-        "Sw": 6.0
-      },
-      {
-        "Node": {
-          "X": 12500.0,
-          "Y": 10000.0,
-          "Z": 3000.0
-        },
-        "Main": null,
-        "Secondary": null,
-        "MainPartId": "MB11",
-        "SecondaryPartId": "SB23",
+        "MainPartId": "C11",
+        "SecondaryPartId": "MB8",
         "ConnectionNumber": "103",
         "Top": 54.0,
         "Hp": 189.0,
@@ -3560,13 +1660,13 @@
       {
         "Node": {
           "X": 0.0,
-          "Y": 15000.0,
+          "Y": 8000.0,
           "Z": 3000.0
         },
         "Main": null,
         "Secondary": null,
-        "MainPartId": "C16",
-        "SecondaryPartId": "MB13",
+        "MainPartId": "C8",
+        "SecondaryPartId": "MB6",
         "ConnectionNumber": "103",
         "Top": 54.0,
         "Hp": 189.0,
@@ -3579,14 +1679,54 @@
       },
       {
         "Node": {
-          "X": 4500.0,
-          "Y": 15000.0,
+          "X": 6000.0,
+          "Y": 8000.0,
           "Z": 3000.0
         },
         "Main": null,
         "Secondary": null,
-        "MainPartId": "C17",
-        "SecondaryPartId": "MB13",
+        "MainPartId": "C9",
+        "SecondaryPartId": "MB6",
+        "ConnectionNumber": "103",
+        "Top": 54.0,
+        "Hp": 189.0,
+        "Tp": 10.0,
+        "Edge": 31.0,
+        "PitchLayout": "63 63 ",
+        "Dia": 20.0,
+        "BoltType": "8.8XOX",
+        "Sw": 6.0
+      },
+      {
+        "Node": {
+          "X": 14000.0,
+          "Y": 4000.0,
+          "Z": 3000.0
+        },
+        "Main": null,
+        "Secondary": null,
+        "MainPartId": "C6",
+        "SecondaryPartId": "MB5",
+        "ConnectionNumber": "103",
+        "Top": 54.0,
+        "Hp": 189.0,
+        "Tp": 10.0,
+        "Edge": 31.0,
+        "PitchLayout": "63 63 ",
+        "Dia": 20.0,
+        "BoltType": "8.8XOX",
+        "Sw": 6.0
+      },
+      {
+        "Node": {
+          "X": 20000.0,
+          "Y": 4000.0,
+          "Z": 3000.0
+        },
+        "Main": null,
+        "Secondary": null,
+        "MainPartId": "C7",
+        "SecondaryPartId": "MB5",
         "ConnectionNumber": "103",
         "Top": 54.0,
         "Hp": 189.0,
@@ -3619,7 +1759,7 @@
       },
       {
         "Node": {
-          "X": 4500.0,
+          "X": 6000.0,
           "Y": 0.0,
           "Z": 3000.0
         },
@@ -3639,54 +1779,14 @@
       },
       {
         "Node": {
-          "X": 18500.0,
-          "Y": 15000.0,
-          "Z": 3000.0
-        },
-        "Main": null,
-        "Secondary": null,
-        "MainPartId": "C19",
-        "SecondaryPartId": "MB16",
-        "ConnectionNumber": "103",
-        "Top": 54.0,
-        "Hp": 189.0,
-        "Tp": 10.0,
-        "Edge": 31.0,
-        "PitchLayout": "63 63 ",
-        "Dia": 20.0,
-        "BoltType": "8.8XOX",
-        "Sw": 6.0
-      },
-      {
-        "Node": {
-          "X": 23700.0,
-          "Y": 15000.0,
-          "Z": 3000.0
-        },
-        "Main": null,
-        "Secondary": null,
-        "MainPartId": "C20",
-        "SecondaryPartId": "MB16",
-        "ConnectionNumber": "103",
-        "Top": 54.0,
-        "Hp": 189.0,
-        "Tp": 10.0,
-        "Edge": 31.0,
-        "PitchLayout": "63 63 ",
-        "Dia": 20.0,
-        "BoltType": "8.8XOX",
-        "Sw": 6.0
-      },
-      {
-        "Node": {
-          "X": 18500.0,
-          "Y": 0.0,
+          "X": 0.0,
+          "Y": 4000.0,
           "Z": 3000.0
         },
         "Main": null,
         "Secondary": null,
         "MainPartId": "C4",
-        "SecondaryPartId": "MB4",
+        "SecondaryPartId": "MB3",
         "ConnectionNumber": "103",
         "Top": 54.0,
         "Hp": 189.0,
@@ -3699,14 +1799,14 @@
       },
       {
         "Node": {
-          "X": 23700.0,
-          "Y": 0.0,
+          "X": 6000.0,
+          "Y": 4000.0,
           "Z": 3000.0
         },
         "Main": null,
         "Secondary": null,
         "MainPartId": "C5",
-        "SecondaryPartId": "MB4",
+        "SecondaryPartId": "MB3",
         "ConnectionNumber": "103",
         "Top": 54.0,
         "Hp": 189.0,
@@ -3719,14 +1819,14 @@
       },
       {
         "Node": {
-          "X": 4500.0,
-          "Y": 15000.0,
+          "X": 6000.0,
+          "Y": 8000.0,
           "Z": 3000.0
         },
         "Main": null,
         "Secondary": null,
-        "MainPartId": "C17",
-        "SecondaryPartId": "MB14",
+        "MainPartId": "C9",
+        "SecondaryPartId": "MB7",
         "ConnectionNumber": "103",
         "Top": 54.0,
         "Hp": 189.0,
@@ -3739,14 +1839,14 @@
       },
       {
         "Node": {
-          "X": 10500.0,
-          "Y": 15000.0,
+          "X": 14000.0,
+          "Y": 8000.0,
           "Z": 3000.0
         },
         "Main": null,
         "Secondary": null,
-        "MainPartId": "C18",
-        "SecondaryPartId": "MB14",
+        "MainPartId": "C10",
+        "SecondaryPartId": "MB7",
         "ConnectionNumber": "103",
         "Top": 54.0,
         "Hp": 189.0,
@@ -3759,7 +1859,7 @@
       },
       {
         "Node": {
-          "X": 4500.0,
+          "X": 6000.0,
           "Y": 0.0,
           "Z": 3000.0
         },
@@ -3779,7 +1879,7 @@
       },
       {
         "Node": {
-          "X": 10500.0,
+          "X": 14000.0,
           "Y": 0.0,
           "Z": 3000.0
         },
@@ -3799,400 +1899,40 @@
       },
       {
         "Node": {
-          "X": 0.0,
-          "Y": 10000.0,
+          "X": 6000.0,
+          "Y": 4000.0,
           "Z": 3000.0
         },
         "Main": null,
         "Secondary": null,
-        "MainPartId": "C11",
-        "SecondaryPartId": "MB9",
+        "MainPartId": "C5",
+        "SecondaryPartId": "MB4",
         "ConnectionNumber": "103",
-        "Top": 54.0,
-        "Hp": 189.0,
+        "Top": 72.0,
+        "Hp": 252.0,
         "Tp": 10.0,
-        "Edge": 31.0,
-        "PitchLayout": "63 63 ",
+        "Edge": 42.0,
+        "PitchLayout": "84 84 ",
         "Dia": 20.0,
         "BoltType": "8.8XOX",
         "Sw": 6.0
       },
       {
         "Node": {
-          "X": 4500.0,
-          "Y": 10000.0,
-          "Z": 3000.0
-        },
-        "Main": null,
-        "Secondary": null,
-        "MainPartId": "C12",
-        "SecondaryPartId": "MB9",
-        "ConnectionNumber": "103",
-        "Top": 54.0,
-        "Hp": 189.0,
-        "Tp": 10.0,
-        "Edge": 31.0,
-        "PitchLayout": "63 63 ",
-        "Dia": 20.0,
-        "BoltType": "8.8XOX",
-        "Sw": 6.0
-      },
-      {
-        "Node": {
-          "X": 0.0,
-          "Y": 5000.0,
+          "X": 14000.0,
+          "Y": 4000.0,
           "Z": 3000.0
         },
         "Main": null,
         "Secondary": null,
         "MainPartId": "C6",
-        "SecondaryPartId": "MB5",
+        "SecondaryPartId": "MB4",
         "ConnectionNumber": "103",
-        "Top": 54.0,
-        "Hp": 189.0,
+        "Top": 72.0,
+        "Hp": 252.0,
         "Tp": 10.0,
-        "Edge": 31.0,
-        "PitchLayout": "63 63 ",
-        "Dia": 20.0,
-        "BoltType": "8.8XOX",
-        "Sw": 6.0
-      },
-      {
-        "Node": {
-          "X": 4500.0,
-          "Y": 5000.0,
-          "Z": 3000.0
-        },
-        "Main": null,
-        "Secondary": null,
-        "MainPartId": "C7",
-        "SecondaryPartId": "MB5",
-        "ConnectionNumber": "103",
-        "Top": 54.0,
-        "Hp": 189.0,
-        "Tp": 10.0,
-        "Edge": 31.0,
-        "PitchLayout": "63 63 ",
-        "Dia": 20.0,
-        "BoltType": "8.8XOX",
-        "Sw": 6.0
-      },
-      {
-        "Node": {
-          "X": 18500.0,
-          "Y": 10000.0,
-          "Z": 3000.0
-        },
-        "Main": null,
-        "Secondary": null,
-        "MainPartId": "C14",
-        "SecondaryPartId": "MB12",
-        "ConnectionNumber": "103",
-        "Top": 60.0,
-        "Hp": 210.0,
-        "Tp": 10.0,
-        "Edge": 35.0,
-        "PitchLayout": "70 70 ",
-        "Dia": 20.0,
-        "BoltType": "8.8XOX",
-        "Sw": 6.0
-      },
-      {
-        "Node": {
-          "X": 23700.0,
-          "Y": 10000.0,
-          "Z": 3000.0
-        },
-        "Main": null,
-        "Secondary": null,
-        "MainPartId": "C15",
-        "SecondaryPartId": "MB12",
-        "ConnectionNumber": "103",
-        "Top": 60.0,
-        "Hp": 210.0,
-        "Tp": 10.0,
-        "Edge": 35.0,
-        "PitchLayout": "70 70 ",
-        "Dia": 20.0,
-        "BoltType": "8.8XOX",
-        "Sw": 6.0
-      },
-      {
-        "Node": {
-          "X": 18500.0,
-          "Y": 5000.0,
-          "Z": 3000.0
-        },
-        "Main": null,
-        "Secondary": null,
-        "MainPartId": "C9",
-        "SecondaryPartId": "MB8",
-        "ConnectionNumber": "103",
-        "Top": 60.0,
-        "Hp": 210.0,
-        "Tp": 10.0,
-        "Edge": 35.0,
-        "PitchLayout": "70 70 ",
-        "Dia": 20.0,
-        "BoltType": "8.8XOX",
-        "Sw": 6.0
-      },
-      {
-        "Node": {
-          "X": 23700.0,
-          "Y": 5000.0,
-          "Z": 3000.0
-        },
-        "Main": null,
-        "Secondary": null,
-        "MainPartId": "C10",
-        "SecondaryPartId": "MB8",
-        "ConnectionNumber": "103",
-        "Top": 60.0,
-        "Hp": 210.0,
-        "Tp": 10.0,
-        "Edge": 35.0,
-        "PitchLayout": "70 70 ",
-        "Dia": 20.0,
-        "BoltType": "8.8XOX",
-        "Sw": 6.0
-      },
-      {
-        "Node": {
-          "X": 4500.0,
-          "Y": 10000.0,
-          "Z": 3000.0
-        },
-        "Main": null,
-        "Secondary": null,
-        "MainPartId": "C12",
-        "SecondaryPartId": "MB10",
-        "ConnectionNumber": "103",
-        "Top": 60.0,
-        "Hp": 210.0,
-        "Tp": 10.0,
-        "Edge": 35.0,
-        "PitchLayout": "70 70 ",
-        "Dia": 20.0,
-        "BoltType": "8.8XOX",
-        "Sw": 6.0
-      },
-      {
-        "Node": {
-          "X": 10500.0,
-          "Y": 10000.0,
-          "Z": 3000.0
-        },
-        "Main": null,
-        "Secondary": null,
-        "MainPartId": "C13",
-        "SecondaryPartId": "MB10",
-        "ConnectionNumber": "103",
-        "Top": 60.0,
-        "Hp": 210.0,
-        "Tp": 10.0,
-        "Edge": 35.0,
-        "PitchLayout": "70 70 ",
-        "Dia": 20.0,
-        "BoltType": "8.8XOX",
-        "Sw": 6.0
-      },
-      {
-        "Node": {
-          "X": 4500.0,
-          "Y": 5000.0,
-          "Z": 3000.0
-        },
-        "Main": null,
-        "Secondary": null,
-        "MainPartId": "C7",
-        "SecondaryPartId": "MB6",
-        "ConnectionNumber": "103",
-        "Top": 60.0,
-        "Hp": 210.0,
-        "Tp": 10.0,
-        "Edge": 35.0,
-        "PitchLayout": "70 70 ",
-        "Dia": 20.0,
-        "BoltType": "8.8XOX",
-        "Sw": 6.0
-      },
-      {
-        "Node": {
-          "X": 10500.0,
-          "Y": 5000.0,
-          "Z": 3000.0
-        },
-        "Main": null,
-        "Secondary": null,
-        "MainPartId": "C8",
-        "SecondaryPartId": "MB6",
-        "ConnectionNumber": "103",
-        "Top": 60.0,
-        "Hp": 210.0,
-        "Tp": 10.0,
-        "Edge": 35.0,
-        "PitchLayout": "70 70 ",
-        "Dia": 20.0,
-        "BoltType": "8.8XOX",
-        "Sw": 6.0
-      },
-      {
-        "Node": {
-          "X": 10500.0,
-          "Y": 15000.0,
-          "Z": 3000.0
-        },
-        "Main": null,
-        "Secondary": null,
-        "MainPartId": "C18",
-        "SecondaryPartId": "MB15",
-        "ConnectionNumber": "103",
-        "Top": 60.0,
-        "Hp": 210.0,
-        "Tp": 10.0,
-        "Edge": 35.0,
-        "PitchLayout": "70 70 ",
-        "Dia": 20.0,
-        "BoltType": "8.8XOX",
-        "Sw": 6.0
-      },
-      {
-        "Node": {
-          "X": 18500.0,
-          "Y": 15000.0,
-          "Z": 3000.0
-        },
-        "Main": null,
-        "Secondary": null,
-        "MainPartId": "C19",
-        "SecondaryPartId": "MB15",
-        "ConnectionNumber": "103",
-        "Top": 60.0,
-        "Hp": 210.0,
-        "Tp": 10.0,
-        "Edge": 35.0,
-        "PitchLayout": "70 70 ",
-        "Dia": 20.0,
-        "BoltType": "8.8XOX",
-        "Sw": 6.0
-      },
-      {
-        "Node": {
-          "X": 10500.0,
-          "Y": 0.0,
-          "Z": 3000.0
-        },
-        "Main": null,
-        "Secondary": null,
-        "MainPartId": "C3",
-        "SecondaryPartId": "MB3",
-        "ConnectionNumber": "103",
-        "Top": 60.0,
-        "Hp": 210.0,
-        "Tp": 10.0,
-        "Edge": 35.0,
-        "PitchLayout": "70 70 ",
-        "Dia": 20.0,
-        "BoltType": "8.8XOX",
-        "Sw": 6.0
-      },
-      {
-        "Node": {
-          "X": 18500.0,
-          "Y": 0.0,
-          "Z": 3000.0
-        },
-        "Main": null,
-        "Secondary": null,
-        "MainPartId": "C4",
-        "SecondaryPartId": "MB3",
-        "ConnectionNumber": "103",
-        "Top": 60.0,
-        "Hp": 210.0,
-        "Tp": 10.0,
-        "Edge": 35.0,
-        "PitchLayout": "70 70 ",
-        "Dia": 20.0,
-        "BoltType": "8.8XOX",
-        "Sw": 6.0
-      },
-      {
-        "Node": {
-          "X": 10500.0,
-          "Y": 10000.0,
-          "Z": 3000.0
-        },
-        "Main": null,
-        "Secondary": null,
-        "MainPartId": "C13",
-        "SecondaryPartId": "MB11",
-        "ConnectionNumber": "103",
-        "Top": 80.0,
-        "Hp": 280.0,
-        "Tp": 10.0,
-        "Edge": 46.0,
-        "PitchLayout": "93 93 ",
-        "Dia": 20.0,
-        "BoltType": "8.8XOX",
-        "Sw": 6.0
-      },
-      {
-        "Node": {
-          "X": 18500.0,
-          "Y": 10000.0,
-          "Z": 3000.0
-        },
-        "Main": null,
-        "Secondary": null,
-        "MainPartId": "C14",
-        "SecondaryPartId": "MB11",
-        "ConnectionNumber": "103",
-        "Top": 80.0,
-        "Hp": 280.0,
-        "Tp": 10.0,
-        "Edge": 46.0,
-        "PitchLayout": "93 93 ",
-        "Dia": 20.0,
-        "BoltType": "8.8XOX",
-        "Sw": 6.0
-      },
-      {
-        "Node": {
-          "X": 10500.0,
-          "Y": 5000.0,
-          "Z": 3000.0
-        },
-        "Main": null,
-        "Secondary": null,
-        "MainPartId": "C8",
-        "SecondaryPartId": "MB7",
-        "ConnectionNumber": "103",
-        "Top": 80.0,
-        "Hp": 280.0,
-        "Tp": 10.0,
-        "Edge": 46.0,
-        "PitchLayout": "93 93 ",
-        "Dia": 20.0,
-        "BoltType": "8.8XOX",
-        "Sw": 6.0
-      },
-      {
-        "Node": {
-          "X": 18500.0,
-          "Y": 5000.0,
-          "Z": 3000.0
-        },
-        "Main": null,
-        "Secondary": null,
-        "MainPartId": "C9",
-        "SecondaryPartId": "MB7",
-        "ConnectionNumber": "103",
-        "Top": 80.0,
-        "Hp": 280.0,
-        "Tp": 10.0,
-        "Edge": 46.0,
-        "PitchLayout": "93 93 ",
+        "Edge": 42.0,
+        "PitchLayout": "84 84 ",
         "Dia": 20.0,
         "BoltType": "8.8XOX",
         "Sw": 6.0

@@ -593,6 +593,7 @@
                             document.body.removeChild(link); //The link is no longer needed
                             URL.revokeObjectURL(textFile); // Dispose the URL Object
                             $('#staticBackdrop').modal('hide');
+                            showInfoModal('Analysis and design completed.\n Design report is downloaded');
                         }, 1000);
                     },
                     error: function (x, y, err) {
@@ -662,16 +663,21 @@
         }, 1000);
     }
 
-    /*$('#upload').change(function (event) { //Read data from uploaded file
+    $('#upload').change(function (event) { //Read data from uploaded file
+        $('#modalDivDetails').css('display', 'none');
+        $('#staticBackdrop').modal('show');
         debugger
         let file = event.target.files[0];
         var reader = new FileReader();
         reader.onload = function (evt) {
-            let obj = JSON.parse(evt.target.result);
+            let model = JSON.parse(evt.target.result);
+            retrocycle(model);
+            buildModel(model);
+            $('#staticBackdrop').modal('hide');
             console.log(obj);
         };
         reader.readAsText(file);
-    });*/
+    });
 
     //used to toggle between dark and light themes
     window.darkTheme = () => editor.darkTheme();

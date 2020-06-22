@@ -23,9 +23,25 @@ $('#modalNewProjectTitle').click(function () {
     $('#modalNewProjectTitle').addClass("fontBlue");
 });
 
-$('#modalFlipForward').click(function () {
-    $("#modalPage1").hide();
-    $("#modalPage2").show();
+//$('#modalFlipForward').click(function () {
+//    $("#modalPage1").hide();
+//    $("#modalPage2").show();
+//});
+
+//$('#form1ProjectData').submit(function (event) {
+//    event.preventDefault();
+//    $("#modalPage1").hide();
+//    $("#modalPage2").show();
+//});
+
+//$("#modalFlipForward").on("click", function () {
+//    var yourInputElement = $("#form1ProjectData")[0];
+//    yourInputElement.checkValidity();
+//    yourInputElement.reportValidity();
+//})
+
+$(' #closeStartUpBtn ').click(function () {
+    $('#modalDivDetails').fadeOut();
 });
 
 $('#modalFlipBackward').click(function () {
@@ -34,44 +50,53 @@ $('#modalFlipBackward').click(function () {
 });
 
 
-
-// Wait for the DOM to be ready
-$(function () {
-    // Initialize form validation on the registration form.
-    // It has the name attribute "registration"
-    $("form[name='registration']").validate({
+$(document).ready(function () {
+$("form[name='form1ProjectData']").validate({
         // Specify validation rules
         rules: {
-            // The key name on the left side is the name attribute
-            // of an input field. Validation rules are defined
-            // on the right side
-            firstname: "required",
-            lastname: "required",
-            email: {
-                required: true,
-                // Specify that email should be validated
-                // by the built-in "email" rule
-                email: true
-            },
-            password: {
-                required: true,
-                minlength: 5
-            }
+            project: "required",
+            designer: "required",
+            //location: "required",
+            //city: "required",
+            country: "required",
+            owner: "required",
         },
         // Specify validation error messages
         messages: {
-            firstname: "Please enter your firstname",
-            lastname: "Please enter your lastname",
-            password: {
-                required: "Please provide a password",
-                minlength: "Your password must be at least 5 characters long"
-            },
-            email: "Please enter a valid email address"
+            project: "Please enter the project's title. ",
+            designer: "Please enter designer's name. ",
+            location: "Please enter the location. ",
+            city: "Please enter the city. ",
+            country: "Please enter the country.",
+            owner: "Please enter the owner's name.",
         },
-        // Make sure the form is submitted to the destination defined
-        // in the "action" attribute of the form when valid
-        submitHandler: function (form) {
-            form.submit();
-        }
+});
+
+    $("form[name='form2StructureData']").validate({
+        // Specify validation rules
+        rules: {
+            secSpace: "required",
+            spaceY: "required",
+            //location: "required",
+            //city: "required",
+            spaceZ: "required",
+            spaceX: "required",
+        },
+        // Specify validation error messages
+        messages: {
+            secSpace: "Please enter the secondary beams spacing. ",
+            spaceY: "Please enter the structure's height. ",
+            spaceZ: "Please enter the spacing in y direction. ",
+            spaceX: "Please enter the spacing in x direction. ",
+        },
     });
+
+
+$('#modalFlipForward').click(function () {  // capture the click
+    if ($("#form1ProjectData").valid()) {   // test for validity
+        $("#modalPage1").hide();
+        $("#modalPage2").show();
+    }
+});
+
 });

@@ -58,90 +58,95 @@
     }
 
     $('#createGrids').click(function () {
-        $('#exampleModal').modal('hide');
-        $('#staticBackdrop').modal('show');
-        let secSpacing, coordX, coordZ;
-        coordX = getCoords($('#spaceX').val()); //Get X-coordinates from X-spacings
-        coordZ = getCoords($('#spaceZ').val()); //Get Z-coordinates from Z-spacings
-        levels = getCoords($('#spaceY').val()); //Get Y-coordinates from Y-spacings
-        secSpacing = $('#secSpace').val().split(' ').map(s => parseFloat(s)); //Spacing between secondary beams
+        if ($("#form2StructureData").valid()) {
+            $('#modalDivDetails').hide();
+            $('#staticBackdrop').modal('show');
+            let secSpacing, coordX, coordZ;
+            coordX = getCoords($('#spaceX').val()); //Get X-coordinates from X-spacings
+            coordZ = getCoords($('#spaceZ').val()); //Get Z-coordinates from Z-spacings
+            levels = getCoords($('#spaceY').val()); //Get Y-coordinates from Y-spacings
+            secSpacing = $('#secSpace').val().split(' ').map(s => parseFloat(s)); //Spacing between secondary beams
 
-        grids = new Grid(coordX, coordZ, 4.5, levels);
-        editor.init(coordX[coordX.length - 1], coordZ[coordZ.length - 1]); //Setup editor
-        editor.addToGroup(grids.gridLines, 'grids'); //Add x-grids to scene (as a group)this.meshInX
-        editor.addToGroup(grids.gridNames, 'grids'); //Add z-grids to scene (as a group)
-        editor.addToGroup(grids.axes, 'grids'); //Add z-grids to scene (as a group)
-        editor.addToGroup(grids.dimensions, 'dimensions');
-        projectProperties = {
-            number: "1",
-            name: $('#projectName').val(),
-            designer: $('#projectDesigner').val(),
-            location: $('#projectLocation').val(),
-            city: $('#projectCity').val(),
-            Country: $('#projectCountry').val(),
-            owner: $('#projectOwner').val()
-        }
-        if (!document.getElementById("autoMode").checked) {
-            nodes = createNodesZ(editor, coordX, coordZ);
-        }
-        else {
-            material = { $id: 'm', name: $('#material').val() };
-            sections.push({ $id: `${sectionId += 1000}`, name: $('#secSection').val(), material: { $ref: 'm' } },
-                { $id: `${sectionId += 1000}`, name: $('#mainSection').val(), material: { $ref: 'm' } },
-                { $id: `${sectionId += 1000}`, name: $('#colSection').val(), material: { $ref: 'm' } });
-
-            let mainNodes = new Array(), mainBeamsLoop, secondaryBeamsLoop, mainNodesLoop, secNodesLoop, nodesLoop, secSpacings;
-            if (document.getElementById("xOrient").checked) { //Draw main beams on X-axis
-                //creating and adding the Hinged-Nodes to MainNodes Array
-                lowerNodesIntial = createNodesZ(editor, coordX, coordZ);
-                mainNodes.push(lowerNodesIntial);
-                nodes = nodes.concat(lowerNodesIntial);
-
-                for (let i = 1; i < levels.length; i++) {
-
-                    [mainBeamsLoop, secondaryBeamsLoop, mainNodesLoop, secNodesLoop, secSpacings] = generateMainBeamsX(editor, coordX, levels[i], coordZ,
-                        sections[1], sections[0], secSpacing); //Auto generate floor beams and nodes in X
-                    
-                    nodesLoop = mainNodesLoop.concat(secNodesLoop);
-                    nodes = nodes.concat(nodesLoop);
-                    mainNodes.push(mainNodesLoop);
-
-                    columnsLoop = generateColumnsZ(editor, coordX, coordZ, mainNodes[i - 1], mainNodes[i], sections[2]); //Auto generate columns
-
-                    mainBeams.push(mainBeamsLoop);
-                    secondaryBeams.push(secondaryBeamsLoop);
-                    columns.push(columnsLoop);
-                }
-                //if ($('#uniform').prop('checked')) //uniform secondary spacing
-                Load.distributeAreaLoad(parseFloat($('#floorDead').val()), parseFloat($('#floorLive').val()), secondaryBeams, coordZ, secSpacings);
+            grids = new Grid(coordX, coordZ, 4.5, levels);
+            editor.init(coordX[coordX.length - 1], coordZ[coordZ.length - 1]); //Setup editor
+            editor.addToGroup(grids.gridLines, 'grids'); //Add x-grids to scene (as a group)this.meshInX
+            editor.addToGroup(grids.gridNames, 'grids'); //Add z-grids to scene (as a group)
+            editor.addToGroup(grids.axes, 'grids'); //Add z-grids to scene (as a group)
+            editor.addToGroup(grids.dimensions, 'dimensions');
+            projectProperties = {
+                number: "1",
+                name: $('#projectName').val(),
+                designer: $('#projectDesigner').val(),
+                location: $('#projectLocation').val(),
+                city: $('#projectCity').val(),
+                Country: $('#projectCountry').val(),
+                owner: $('#projectOwner').val()
+            }
+            if (!document.getElementById("autoMode").checked) {
+                nodes = createNodesZ(editor, coordX, coordZ);
             }
             else {
-                //creating and adding the Hinged-Nodes to MainNodes Array
-                lowerNodesIntial = createNodesX(editor, coordX, coordZ);
-                mainNodes.push(lowerNodesIntial);
-                nodes = nodes.concat(lowerNodesIntial);
+                material = { $id: 'm', name: $('#material').val() };
+                sections.push({ $id: `${sectionId += 1000}`, name: $('#secSection').val(), material: { $ref: 'm' } },
+                    { $id: `${sectionId += 1000}`, name: $('#mainSection').val(), material: { $ref: 'm' } },
+                    { $id: `${sectionId += 1000}`, name: $('#colSection').val(), material: { $ref: 'm' } });
 
-                for (let i = 1; i < levels.length; i++) {
-                    [mainBeamsLoop, secondaryBeamsLoop, mainNodesLoop, secNodesLoop, secSpacings] = generateMainBeamsZ(editor, coordX, levels[i], coordZ,
-                        sections[1], sections[0], secSpacing); //Auto generate floor beams and nodes in Z
-                    
-                    nodesLoop = mainNodesLoop.concat(secNodesLoop);
-                    nodes = nodes.concat(nodesLoop);
-                    mainNodes.push(mainNodesLoop);
+                let mainNodes = new Array(), mainBeamsLoop, secondaryBeamsLoop, mainNodesLoop, secNodesLoop, nodesLoop, secSpacings;
+                if (document.getElementById("xOrient").checked) { //Draw main beams on X-axis
+                    //creating and adding the Hinged-Nodes to MainNodes Array
+                    lowerNodesIntial = createNodesZ(editor, coordX, coordZ);
+                    mainNodes.push(lowerNodesIntial);
+                    nodes = nodes.concat(lowerNodesIntial);
 
-                    columnsLoop = generateColumnsX(editor, coordX, coordZ, mainNodes[i - 1], mainNodes[i], sections[2]); //Auto generate columns 
+                    for (let i = 1; i < levels.length; i++) {
 
-                    mainBeams.push(mainBeamsLoop);
-                    secondaryBeams.push(secondaryBeamsLoop);
-                    columns.push(columnsLoop);
+                        [mainBeamsLoop, secondaryBeamsLoop, mainNodesLoop, secNodesLoop, secSpacings] = generateMainBeamsX(editor, coordX, levels[i], coordZ,
+                            sections[1], sections[0], secSpacing); //Auto generate floor beams and nodes in X
+
+                        nodesLoop = mainNodesLoop.concat(secNodesLoop);
+                        nodes = nodes.concat(nodesLoop);
+                        mainNodes.push(mainNodesLoop);
+
+                        columnsLoop = generateColumnsZ(editor, coordX, coordZ, mainNodes[i - 1], mainNodes[i], sections[2]); //Auto generate columns
+
+                        mainBeams.push(mainBeamsLoop);
+                        secondaryBeams.push(secondaryBeamsLoop);
+                        columns.push(columnsLoop);
+                    }
+                    //if ($('#uniform').prop('checked')) //uniform secondary spacing
+                    Load.distributeAreaLoad(parseFloat($('#floorDead').val()), parseFloat($('#floorLive').val()), secondaryBeams, coordZ, secSpacings);
                 }
-                //if ($('#uniform').prop('checked')) //uniform secondary spacing
-                //    Load.distributeAreaLoad(0.5, 1, secondaryBeams, coordX.length - 1, secSpacing);
-                Load.distributeAreaLoad(parseFloat($('#floorDead').val()), parseFloat($('#floorLive').val()), secondaryBeams, coordX, secSpacings);
+                else {
+                    //creating and adding the Hinged-Nodes to MainNodes Array
+                    lowerNodesIntial = createNodesX(editor, coordX, coordZ);
+                    mainNodes.push(lowerNodesIntial);
+                    nodes = nodes.concat(lowerNodesIntial);
 
+                    for (let i = 1; i < levels.length; i++) {
+                        [mainBeamsLoop, secondaryBeamsLoop, mainNodesLoop, secNodesLoop, secSpacings] = generateMainBeamsZ(editor, coordX, levels[i], coordZ,
+                            sections[1], sections[0], secSpacing); //Auto generate floor beams and nodes in Z
+
+                        nodesLoop = mainNodesLoop.concat(secNodesLoop);
+                        nodes = nodes.concat(nodesLoop);
+                        mainNodes.push(mainNodesLoop);
+
+                        columnsLoop = generateColumnsX(editor, coordX, coordZ, mainNodes[i - 1], mainNodes[i], sections[2]); //Auto generate columns 
+
+                        mainBeams.push(mainBeamsLoop);
+                        secondaryBeams.push(secondaryBeamsLoop);
+                        columns.push(columnsLoop);
+                    }
+                    //if ($('#uniform').prop('checked')) //uniform secondary spacing
+                    //    Load.distributeAreaLoad(0.5, 1, secondaryBeams, coordX.length - 1, secSpacing);
+                    Load.distributeAreaLoad(parseFloat($('#floorDead').val()), parseFloat($('#floorLive').val()), secondaryBeams, coordX, secSpacings);
+
+                }
             }
+            $('#staticBackdrop').modal('hide');
         }
-        $('#staticBackdrop').modal('hide');
+        else {
+            $('#modalDivDetails').show();
+        }
     })
 
     //Turn spacings into coordinates

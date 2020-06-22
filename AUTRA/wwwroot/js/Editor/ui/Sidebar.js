@@ -95,6 +95,7 @@ $(' #showLoadBtn ').click(function () {
 });
 $(' #analysisResultBtn ').click(function () {
     $('#analysisResultDetails').fadeOut();
+
 });
 $(' #viewsBtn ').click(function () {
     $('#viewsDetails').fadeOut();
@@ -103,9 +104,9 @@ $(' #measureBtn ').click(function () {
     $('#measureDetails').fadeOut();
     $('#distance').val('');
 });
-$(' #createGrids ').click(function () {
-    $('#modalDivDetails').fadeOut(500);
-});
+//$(' #createGrids ').click(function () {
+//    $('#modalDivDetails').fadeOut(500);
+//});
 //#endregion
 
 //#region Show info modal

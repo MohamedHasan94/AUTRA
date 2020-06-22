@@ -121,10 +121,7 @@ list-style-type:none;
     width: 200px;
 }
 
-.largeDivSize {
-    height: 210px;
-    width: 220px;
-}
+
 
 .large2DivSize {
     height: 145px;
@@ -218,43 +215,32 @@ line-height:15px;
     left: 190px;
 }
 
-.modelDivSize {
+.popupDiv {
+    display: none;
     position: absolute;
-    top: 0;
-    left: 0;
-    width: 100%;
-    height: 100%;
-    z-index: 1000;
+    top: 75px;
+    left: 20px;
     border-radius: 5px;
     background-color: #000D20;
-    font-size: 15px;
+    font-size: 12px;
     color: white;
-    overflow: auto;
-    background-image: url("../assets/img/hero/h1_hero.jpg");
+}
+.largeDivSize {
+    height:220px;
+    width: 220px;
+}
+
+.res2Div {
+    display: none;
+    position: absolute;
+    top: 240px;
+    left: 20px;
+    border-radius: 5px;
+    background-color: #000D20;
+    font-size: 12px;
+    color: white;
+    height: 80px;
+    width: 220px;
 }
 
 
-.myModalInput {
-    color: black;
-    text-align: left;
-    border-color: transparent;
-    border-radius: 3px;
-    background-color: #fff;
-    border: none;
-    line-height: 15px;
-    padding: 2px;
-    width: 80%;
-    outline: none;
-}
-
-    .myModalInput:focus {
-        background-color: #b3edf5;
-    }
-
-.fontBlue {
-    color: #04DBEC!important;
-}
-
-.myModalInputCom {
-    width: 100%;
-}

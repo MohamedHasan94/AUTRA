@@ -319,11 +319,14 @@ namespace AUTRA.Design
                 double KL = CalcBucklingLength(length, bracing);
                 double iy = section.Ry;
                 double lambda = KL / iy;
+                if (lambda >= 180)
+                    return false;
+
                 double Fc = GetAllowableCompressionStress(lambda, section.Material.Name,result);
                 double fc = CalcAxialStress(section, Nd);
                 result.Fcact = fc;
                 result.Fcall = Fc;
-                return fc < Fc;
+                return Math.Abs(fc) < Fc;
             }
             return false;
         }
@@ -484,8 +487,7 @@ namespace AUTRA.Design
             conn.Sw = weldSize;
             conn.Tp = plateThickness;
             conn.Bolt = bolt;
-            
-            
+                        
             return conn;
         }
     }

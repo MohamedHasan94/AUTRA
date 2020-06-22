@@ -48,12 +48,14 @@ function createWireframe(startPoint, endPoint, material, rotation) { //Draw line
 
 class ElementData { //Data required for analysis and design
     constructor(sectionId, startPoint, endPoint, startNode, endNode) {
+        this.elementId = ++ElementData.elementId; 
         this.section = { "$ref": sectionId };
         this.startNode = startNode ? { "$ref": startNode.data.$id } : null; // Reference to node in JSON scheme
         this.endNode = endNode ? { "$ref": endNode.data.$id } : null; // Reference to node in JSON scheme
         this.lineLoads = [];
         this.length = parseFloat((startPoint.distanceTo(endPoint)).toPrecision(4));
     }
+    static elementId = 0;
 }
 
 class ElementVisual { // Visual data for editor

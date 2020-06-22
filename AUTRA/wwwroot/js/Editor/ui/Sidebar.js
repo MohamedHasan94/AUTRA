@@ -1,4 +1,4 @@
-var dark=document.getElementById("dark");
+var dark = document.getElementById("dark");
 var light = document.getElementById("light");
 var analysisResult = document.getElementById("analysisResult");
 
@@ -116,9 +116,11 @@ function showInfoModal(message) {
 //#endregion
 
 //#region prevent closing window
-window.onbeforeunload = (e) => {
-    e.preventDefault();
-    return true;
+function confirmCloseWindow() {
+    window.onbeforeunload = (e) => {
+        e.preventDefault();
+        return true;
+    }
 }
 //#endregion
 

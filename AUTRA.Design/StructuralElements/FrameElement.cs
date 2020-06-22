@@ -13,6 +13,8 @@ namespace AUTRA.Design
             StrainingActions = new List<StrainingAction>();
             CombinedSA = new List<StrainingAction>();
         }
+
+        public int ElementId { get; set; }
         public int Id { get; set; }
         public string Prefix { get; set; }
         public Node StartNode { get; set; }

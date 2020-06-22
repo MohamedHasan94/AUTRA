@@ -5,7 +5,7 @@ using System.Linq;
 
 namespace AUTRA.Design
 {
-  public  class LoadCombination
+    public class LoadCombination
     {
         public LoadCombination(string name)
         {
@@ -14,12 +14,12 @@ namespace AUTRA.Design
         }
 
         public string Name { get; set; }
-        public List<FactoredPattern> Combo { get;  }
+        public List<FactoredPattern> Combo { get; }
 
         public bool Add(FactoredPattern factoredPattern)
         {
             bool result = false;
-          var temp =  Combo.FirstOrDefault(fp => fp.Pattern == factoredPattern.Pattern);
+            var temp = Combo.FirstOrDefault(fp => fp.Pattern == factoredPattern.Pattern);
             if (temp == null)
             {
                 Combo.Add(factoredPattern);
@@ -43,7 +43,7 @@ namespace AUTRA.Design
             var temp = Combo.FirstOrDefault(fp => fp.Pattern == factoredPattern.Pattern);
             if (temp != null)
                 Combo.Remove(temp);
-                
+
             Combo.Add(factoredPattern);
         }
     }

@@ -6,7 +6,7 @@
     let nodes = new Array(), grids;
     let columns = new Array(), mainBeams = new Array(), secondaryBeams = new Array(), sections = new Array();
     let canvas, domEvents;
-    let levels, material, projectProperties;
+    let levels, material, projectProperties, loadCombo;
     let draw = false, drawingPoints = [];
     let sectionId = 0;
     //#endregion
@@ -37,7 +37,6 @@
     }
     function buildModel(model) {
         editor.init(model.grids.coordX[model.grids.coordX.length - 1], model.grids.coordZ[model.grids.coordZ.length - 1]); //Setup editor
-
         grids = new Grid(model.grids.coordX, model.grids.coordZ, 4.5, model.grids.levels);
         levels = grids.levels;
         editor.addToGroup(grids.gridLines, 'grids'); //Add x-grids to scene (as a group)this.meshInX
@@ -55,6 +54,8 @@
         secondaryBeams.push(Beam.generate(model.secondaryBeams, editor));
         mainBeams.push(Beam.generate(model.mainBeams, editor));
         columns.push(Column.generate(model.columns, editor));
+        loadCombo = model.loadCombination;
+        confirmCloseWindow();
     }
 
     $('#createGrids').click(function () {
@@ -81,67 +82,67 @@
             Country: $('#projectCountry').val(),
             owner: $('#projectOwner').val()
         }
-        if (!document.getElementById("autoMode").checked) {
-            nodes = createNodesZ(editor, coordX, coordZ);
+
+        let deadFactor = parseFloat($('#deadFactor').val());
+        let liveFactor = parseFloat($('#liveFactor').val());
+        loadCombo = {
+            name: `${deadFactor}*Dead + ${liveFactor}*Live`,
+            combo: [{ pattern: 'dead', scaleFactor: deadFactor }, { pattern: 'live', scaleFactor: liveFactor }]
+        }
+
+        material = { $id: 'm', name: $('#material').val() };
+        sections.push({ $id: `${sectionId += 1000}`, name: $('#secSection').val(), material: { $ref: 'm' } },
+            { $id: `${sectionId += 1000}`, name: $('#mainSection').val(), material: { $ref: 'm' } },
+            { $id: `${sectionId += 1000}`, name: $('#colSection').val(), material: { $ref: 'm' } });
+
+        let mainNodes = new Array(), mainBeamsLoop, secondaryBeamsLoop, mainNodesLoop, secNodesLoop, nodesLoop, secSpacings;
+        if (document.getElementById("xOrient").checked) { //Draw main beams on X-axis
+            //creating and adding the Hinged-Nodes to MainNodes Array
+            lowerNodesIntial = createNodesZ(editor, coordX, coordZ);
+            mainNodes.push(lowerNodesIntial);
+            nodes = nodes.concat(lowerNodesIntial);
+
+            for (let i = 1; i < levels.length; i++) {
+
+                [mainBeamsLoop, secondaryBeamsLoop, mainNodesLoop, secNodesLoop, secSpacings] = generateMainBeamsX(editor, coordX, levels[i], coordZ,
+                    sections[1], sections[0], secSpacing); //Auto generate floor beams and nodes in X
+
+                nodesLoop = mainNodesLoop.concat(secNodesLoop);
+                nodes = nodes.concat(nodesLoop);
+                mainNodes.push(mainNodesLoop);
+
+                columnsLoop = generateColumnsZ(editor, coordX, coordZ, mainNodes[i - 1], mainNodes[i], sections[2]); //Auto generate columns
+
+                mainBeams.push(mainBeamsLoop);
+                secondaryBeams.push(secondaryBeamsLoop);
+                columns.push(columnsLoop);
+            }
+            Load.distributeAreaLoad(parseFloat($('#floorDead').val()), parseFloat($('#floorLive').val()), secondaryBeams, coordZ, secSpacings);
         }
         else {
-            material = { $id: 'm', name: $('#material').val() };
-            sections.push({ $id: `${sectionId += 1000}`, name: $('#secSection').val(), material: { $ref: 'm' } },
-                { $id: `${sectionId += 1000}`, name: $('#mainSection').val(), material: { $ref: 'm' } },
-                { $id: `${sectionId += 1000}`, name: $('#colSection').val(), material: { $ref: 'm' } });
+            //creating and adding the Hinged-Nodes to MainNodes Array
+            lowerNodesIntial = createNodesX(editor, coordX, coordZ);
+            mainNodes.push(lowerNodesIntial);
+            nodes = nodes.concat(lowerNodesIntial);
 
-            let mainNodes = new Array(), mainBeamsLoop, secondaryBeamsLoop, mainNodesLoop, secNodesLoop, nodesLoop, secSpacings;
-            if (document.getElementById("xOrient").checked) { //Draw main beams on X-axis
-                //creating and adding the Hinged-Nodes to MainNodes Array
-                lowerNodesIntial = createNodesZ(editor, coordX, coordZ);
-                mainNodes.push(lowerNodesIntial);
-                nodes = nodes.concat(lowerNodesIntial);
+            for (let i = 1; i < levels.length; i++) {
+                [mainBeamsLoop, secondaryBeamsLoop, mainNodesLoop, secNodesLoop, secSpacings] = generateMainBeamsZ(editor, coordX, levels[i], coordZ,
+                    sections[1], sections[0], secSpacing); //Auto generate floor beams and nodes in Z
 
-                for (let i = 1; i < levels.length; i++) {
+                nodesLoop = mainNodesLoop.concat(secNodesLoop);
+                nodes = nodes.concat(nodesLoop);
+                mainNodes.push(mainNodesLoop);
 
-                    [mainBeamsLoop, secondaryBeamsLoop, mainNodesLoop, secNodesLoop, secSpacings] = generateMainBeamsX(editor, coordX, levels[i], coordZ,
-                        sections[1], sections[0], secSpacing); //Auto generate floor beams and nodes in X
-                    
-                    nodesLoop = mainNodesLoop.concat(secNodesLoop);
-                    nodes = nodes.concat(nodesLoop);
-                    mainNodes.push(mainNodesLoop);
+                columnsLoop = generateColumnsX(editor, coordX, coordZ, mainNodes[i - 1], mainNodes[i], sections[2]); //Auto generate columns 
 
-                    columnsLoop = generateColumnsZ(editor, coordX, coordZ, mainNodes[i - 1], mainNodes[i], sections[2]); //Auto generate columns
-
-                    mainBeams.push(mainBeamsLoop);
-                    secondaryBeams.push(secondaryBeamsLoop);
-                    columns.push(columnsLoop);
-                }
-                //if ($('#uniform').prop('checked')) //uniform secondary spacing
-                Load.distributeAreaLoad(parseFloat($('#floorDead').val()), parseFloat($('#floorLive').val()), secondaryBeams, coordZ, secSpacings);
+                mainBeams.push(mainBeamsLoop);
+                secondaryBeams.push(secondaryBeamsLoop);
+                columns.push(columnsLoop);
             }
-            else {
-                //creating and adding the Hinged-Nodes to MainNodes Array
-                lowerNodesIntial = createNodesX(editor, coordX, coordZ);
-                mainNodes.push(lowerNodesIntial);
-                nodes = nodes.concat(lowerNodesIntial);
-
-                for (let i = 1; i < levels.length; i++) {
-                    [mainBeamsLoop, secondaryBeamsLoop, mainNodesLoop, secNodesLoop, secSpacings] = generateMainBeamsZ(editor, coordX, levels[i], coordZ,
-                        sections[1], sections[0], secSpacing); //Auto generate floor beams and nodes in Z
-                    
-                    nodesLoop = mainNodesLoop.concat(secNodesLoop);
-                    nodes = nodes.concat(nodesLoop);
-                    mainNodes.push(mainNodesLoop);
-
-                    columnsLoop = generateColumnsX(editor, coordX, coordZ, mainNodes[i - 1], mainNodes[i], sections[2]); //Auto generate columns 
-
-                    mainBeams.push(mainBeamsLoop);
-                    secondaryBeams.push(secondaryBeamsLoop);
-                    columns.push(columnsLoop);
-                }
-                //if ($('#uniform').prop('checked')) //uniform secondary spacing
-                //    Load.distributeAreaLoad(0.5, 1, secondaryBeams, coordX.length - 1, secSpacing);
-                Load.distributeAreaLoad(parseFloat($('#floorDead').val()), parseFloat($('#floorLive').val()), secondaryBeams, coordX, secSpacings);
-
-            }
+            Load.distributeAreaLoad(parseFloat($('#floorDead').val()), parseFloat($('#floorLive').val()), secondaryBeams, coordX, secSpacings);
         }
         $('#staticBackdrop').modal('hide');
+        confirmCloseWindow();
     })
 
     //Turn spacings into coordinates
@@ -527,7 +528,8 @@
     function createModel() { //Serialize model components to JSON
         let model = {
             nodes: [], material: material, sections: sections,
-            secondaryBeams: [], mainBeams: [], columns: [], grids: {}
+            secondaryBeams: [], mainBeams: [], columns: [], grids: {},
+            loadCombination: loadCombo
         };
         model.projectProperties = projectProperties;
         for (var i = 0; i < nodes.length; i++) {

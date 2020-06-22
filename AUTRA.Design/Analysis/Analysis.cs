@@ -7,23 +7,23 @@ namespace AUTRA.Design
 {
     public static class Analysis
     {
-        
-        public static void SolveBeam(Beam beam,List<LoadPattern> patterns)
+
+        public static void SolveBeam(Beam beam, List<LoadPattern> patterns)
         {
             //Used to Define Stations For beam and Calculate the straining actions associated with the beam
-            DefineStations(beam,patterns);
-           SolveLineLoad(beam,patterns);
-           SolvePointLoad(beam,patterns);
+            DefineStations(beam, patterns);
+            SolveLineLoad(beam, patterns);
+            SolvePointLoad(beam, patterns);
         }
-        public static void SolveColumn(Column column,List<LoadPattern> patterns) 
+        public static void SolveColumn(Column column, List<LoadPattern> patterns)
         {
             /*
              * 1-Define two stations one at start and one at end point
              * 2-solve for point load 
              * 3-solve for line load(Own weight)
              */
-            DefineStations(column,patterns);
-            List<PointLoad> pointLoads= column.EndNode.PointLoads;
+            DefineStations(column, patterns);
+            List<PointLoad> pointLoads = column.EndNode.PointLoads;
             foreach (var load in pointLoads)
             {
                 var mag = load.Magnitude;
@@ -41,14 +41,14 @@ namespace AUTRA.Design
                 rs = re = column.EndNode.PointLoads.FirstOrDefault(l => l.Pattern == pattern).Magnitude;
                 column.StartNode.PointLoads.FirstOrDefault(l => l.Pattern == pattern).Magnitude += rs;
                 double w = 0;
-                if (pattern==LoadPattern.DEAD)
+                if (pattern == LoadPattern.DEAD)
                 {
-                    rs = column.StartNode.PointLoads.FirstOrDefault(l => l.Pattern == pattern).Magnitude += -1*column.Section.W/1000 * column.Length; //add own weight of column to the reaction at base
-                    w = -1*column.Section.W/1000;//w=> will be the weight of column only in Dead load pattern otherwise =0
+                    rs = column.StartNode.PointLoads.FirstOrDefault(l => l.Pattern == pattern).Magnitude += -1 * column.Section.W / 1000 * column.Length; //add own weight of column to the reaction at base
+                    w = -1 * column.Section.W / 1000;//w=> will be the weight of column only in Dead load pattern otherwise =0
                 }
                 foreach (var station in sa.Stations)
                 {
-                    station.No += re + w * (column.Length-station.X);
+                    station.No += re + w * (column.Length - station.X);
                 }
             }
         }
@@ -64,14 +64,14 @@ namespace AUTRA.Design
                 {
                     Combo = null,
                     Pattern = pattern,
-                    Rv = -1*mag,
+                    Rv = -1 * mag,
                     Rh = 0,
                     Rm = 0
                 };
                 support.Reactions.Add(react);
             }
         }
-        private static void DefineStations(FrameElement frame,List<LoadPattern> patterns)
+        private static void DefineStations(FrameElement frame, List<LoadPattern> patterns)
         {
             //all loads have same x in stations
             int nstations = 7;
@@ -80,7 +80,7 @@ namespace AUTRA.Design
             {
                 //Beam
                 Beam beam = frame as Beam;
-                loads =frame.LineLoads?.OfType<Load>().ToList();
+                loads = frame.LineLoads?.OfType<Load>().ToList();
                 int count = beam.InnerNodes != null ? beam.InnerNodes.Count : 0;
                 if (count == 0 || count == 1 || count == 3)
                     nstations = 5;
@@ -124,7 +124,7 @@ namespace AUTRA.Design
             }
 
         }
-        private static void SolveLineLoad(Beam beam,List<LoadPattern> patterns)
+        private static void SolveLineLoad(Beam beam, List<LoadPattern> patterns)
         {
             //suppose to solve distributed load on beam for each pattern
             List<LineLoad> loads = beam.LineLoads; //maybe equal null
@@ -153,12 +153,12 @@ namespace AUTRA.Design
                 pattern = load.Pattern;
                 if (pattern == LoadPattern.DEAD)
                 {
-                    load.Magnitude += -1*beam.Section.W / 1000;
+                    load.Magnitude += -1 * beam.Section.W / 1000;
                 }
                 mag = load.Magnitude;
                 StrainingAction sa = beam.StrainingActions.FirstOrDefault(a => a.Pattern == pattern);
                 double rs, re; //reaction at start & reaction at end;
-                rs=re= 1*(mag * beam.Length) / 2;
+                rs = re = 1 * (mag * beam.Length) / 2;
                 //if (beam.StartNode.PointLoads == null)
                 //{
                 //    beam.StartNode.PointLoads = PointLoad.CreateZeroPointLoadList(patterns);
@@ -171,15 +171,15 @@ namespace AUTRA.Design
                 beam.EndNode.PointLoads.FirstOrDefault(l => l.Pattern == pattern).Magnitude += re;    //assign reaction at EndNode
                 foreach (var station in sa.Stations)
                 {
-                    station.Vo += -1*rs + mag * station.X;
-                    station.Vf += -1*rs + mag * station.X;
-                    station.Mo += -1*rs * station.X + (mag * station.X * station.X) / 2;
+                    station.Vo += -1 * rs + mag * station.X;
+                    station.Vf += -1 * rs + mag * station.X;
+                    station.Mo += -1 * rs * station.X + (mag * station.X * station.X) / 2;
                 }
             }
         }
-       private static void SolvePointLoad(Beam beam,List<LoadPattern>patterns)
+        private static void SolvePointLoad(Beam beam, List<LoadPattern> patterns)
         {
-            if(beam.InnerNodes!=null && beam.InnerNodes.Count!= 0)
+            if (beam.InnerNodes != null && beam.InnerNodes.Count != 0)
             {
                 foreach (var node in beam.InnerNodes)
                 {
@@ -192,8 +192,8 @@ namespace AUTRA.Design
                         var pattern = load.Pattern;
                         var sa = beam.StrainingActions.FirstOrDefault(a => a.Pattern == pattern);
                         double rs, re; //reaction at start & reaction at end;
-                        rs = 1*(mag * de) / span;
-                        re = 1*(mag * ds) / span;
+                        rs = 1 * (mag * de) / span;
+                        re = 1 * (mag * ds) / span;
                         //if (beam.StartNode.PointLoads==null )
                         //{
                         //    beam.StartNode.PointLoads = PointLoad.CreateZeroPointLoadList(patterns);
@@ -207,25 +207,26 @@ namespace AUTRA.Design
                         foreach (var station in sa.Stations)
                         {
                             double x = station.X;
-                            if(Math.Abs(x-ds) < Tolerance.DIST_TOL) 
+                            if (Math.Abs(x - ds) < Tolerance.DIST_TOL)
                             {
                                 //station is at the Node
-                                station.Vo += -1*rs;
-                                station.Vf += -1*rs + mag;
-                                station.Mo += -1*rs * x;
-                            }else if (x < ds)
+                                station.Vo += -1 * rs;
+                                station.Vf += -1 * rs + mag;
+                                station.Mo += -1 * rs * x;
+                            }
+                            else if (x < ds)
                             {
                                 //Station is before Node
-                                station.Vo += -1*rs;
-                                station.Vf += -1*rs;
-                                station.Mo += -1*rs * x;
+                                station.Vo += -1 * rs;
+                                station.Vf += -1 * rs;
+                                station.Mo += -1 * rs * x;
                             }
                             else
                             {
                                 //station is after Node
-                                station.Vo +=-1* rs+mag;
-                                station.Vf +=-1* rs + mag;
-                                station.Mo +=-1* rs * x+mag*(x-ds);
+                                station.Vo += -1 * rs + mag;
+                                station.Vf += -1 * rs + mag;
+                                station.Mo += -1 * rs * x + mag * (x - ds);
                             }
                         }
                     }
@@ -292,7 +293,7 @@ namespace AUTRA.Design
                 frame.CombinedSA.Add(sa);
             }
         }
-        private static void LinearAddCombineReactions(Support support,LoadCombination combo)
+        private static void LinearAddCombineReactions(Support support, LoadCombination combo)
         {
             //1-Copy point load 
             //2-Combine point load
@@ -310,10 +311,10 @@ namespace AUTRA.Design
             {
                 LoadPattern pattern = factoredPattern.Pattern;
                 double scaleFactor = factoredPattern.ScaleFactor;
-              var pl=  loads.FirstOrDefault(l => l.Pattern == pattern);
+                var pl = loads.FirstOrDefault(l => l.Pattern == pattern);
                 if (pl != null)
                 {
-                    reaction.Rv += scaleFactor*-1*pl.Magnitude;
+                    reaction.Rv += scaleFactor * -1 * pl.Magnitude;
                 }
 
             }
@@ -324,7 +325,7 @@ namespace AUTRA.Design
          * 2-Get Design Values for the group
          * 3-Get the service value for the group
          */
-         public static List<Group> InitBeamsForDesign(List<Beam> beams)
+        public static List<Group> InitBeamsForDesign(List<Beam> beams)
         {
             List<Group> groups = GroupBeams(beams);
             GetDesignValues(groups);
@@ -338,29 +339,57 @@ namespace AUTRA.Design
             Group group = new Group();
             group.Section = column.Section;
             columns.ForEach(c => group.Elements.Add(c));
-           StrainingAction maxComp= column.CombinedSA.OrderByDescending(sa => sa.Stations.GetMaxCompression()).TakeLast(column.CombinedSA.Count).FirstOrDefault();
+            StrainingAction maxComp = column.CombinedSA.OrderByDescending(sa => sa.Stations.GetMaxCompression()).TakeLast(column.CombinedSA.Count).FirstOrDefault();
             DesignLimitState designValues = new DesignLimitState
             {
-                Combo=maxComp.Combo.Name,
-                CriticalElement=column,
-                Nd=maxComp.Stations.GetMaxCompression()
+                Combo = maxComp.Combo.Name,
+                CriticalElement = column,
+                Nd = maxComp.Stations.GetMaxCompression()
             };
             group.DesignValues = designValues;
             return group;
         }
+
+        private static List<Group> GroupColumns(List<Column> columns)
+        {
+            //Group beams by their moment
+            List<Group> groups = new List<Group>();
+            columns.Sort(Column.SortNormalAscendingly());
+            //loop from the smallest to largest
+            double lowerNormal = columns[columns.Count - 1].CombinedSA[0].Stations[0].No; //Group min moment
+            double upperMoment = lowerNormal * 1.5; //Group max moment
+            Group group = new Group();
+            groups.Add(group);
+            for (int i = columns.Count - 1; i > -1; i--)
+            {
+                double maxNormal = columns[i].CombinedSA[0].Stations[0].No;
+                //double maxMoment = beams[i].CombinedSA.GetMaxMoment(); //get max moment for each beam
+                if (maxNormal < upperMoment) //Negitive signs
+                {
+                    //create new group
+                    group = new Group();
+                    groups.Add(group);
+                    lowerNormal = columns[i].CombinedSA[0].Stations[0].No; //Group min moment
+                    upperMoment = lowerNormal * 1.5; //Group max moment
+                }
+                group.Elements.Add(columns[i]);
+            }
+            return groups;
+        }
+
         private static List<Group> GroupBeams(List<Beam> beams)
         {
             //Group beams by their moment
             List<Group> groups = new List<Group>();
             beams.Sort(Beam.SortMomentDescendingly());
             //loop from the smallest to largest
-            double lowerMoment = beams[beams.Count-1].CombinedSA.GetMaxMoment(); //Group min moment
+            double lowerMoment = beams[beams.Count - 1].CombinedSA.GetMaxMoment(); //Group min moment
             double upperMoment = lowerMoment * 1.5; //Group max moment
             Group group = new Group();
             groups.Add(group);
-            for (int i = beams.Count - 1; i >=0 ; i--)
+            for (int i = beams.Count - 1; i >= 0; i--)
             {
-              double maxMoment=  beams[i].CombinedSA.GetMaxMoment(); //get max moment for each beam
+                double maxMoment = beams[i].CombinedSA.GetMaxMoment(); //get max moment for each beam
                 if (maxMoment > upperMoment)
                 {
                     //create new group
@@ -369,7 +398,7 @@ namespace AUTRA.Design
                     lowerMoment = beams[i].CombinedSA.GetMaxMoment(); //Group min moment
                     upperMoment = lowerMoment * 1.5; //Group max moment
                 }
-               group.Elements.Add(beams[i]);
+                group.Elements.Add(beams[i]);
             }
             return groups;
         }
@@ -406,7 +435,7 @@ namespace AUTRA.Design
             {
                 var beam = group.Elements[group.Elements.Count - 1]; //get the latest beam which has the largest moment
                 group.Section = beam.Section;
-                StrainingAction maxSa = beam.CombinedSA.OrderByDescending(sa=> sa.Stations.GetMaxMoment()).Take(1).FirstOrDefault();
+                StrainingAction maxSa = beam.CombinedSA.OrderByDescending(sa => sa.Stations.GetMaxMoment()).Take(1).FirstOrDefault();
                 beamDesignValues = new DesignLimitState
                 {
                     CriticalElement = beam,
@@ -423,8 +452,8 @@ namespace AUTRA.Design
             foreach (var group in groups)
             {
                 //first approach
-              double span=  group.Elements.Max(b => b.Length); //get max span
-              Beam beam = group.Elements.FirstOrDefault(b => Math.Abs(b.Length-span)<Tolerance.DIST_TOL) as Beam; //get beam corresponding to the max span
+                double span = group.Elements.Max(b => b.Length); //get max span
+                Beam beam = group.Elements.FirstOrDefault(b => Math.Abs(b.Length - span) < Tolerance.DIST_TOL) as Beam; //get beam corresponding to the max span
                 //second approach is to sort beams based on their length
                 serviceValues = new ServiceabilityLimitState()
                 {

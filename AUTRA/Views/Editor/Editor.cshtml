@@ -67,32 +67,32 @@
                                         <tr class="form-group">
                                             <td><label for="">Project name&nbsp; &nbsp;&nbsp; &nbsp;&nbsp; &nbsp;  &nbsp;  &nbsp;  &nbsp;  &nbsp;  &nbsp;  &nbsp;  &nbsp;  &nbsp;  &nbsp; &nbsp; </label></td>
 
-                                            <td><input type="text" name="" id="projectName" class="myModalInput" @*value="name"*@ required></td>
+                                            <td><input type="text" name="" id="projectName" class="myModalInput myModalInputCom" @*value="name"*@ required></td>
                                         </tr>
                                         <tr class="form-group">
                                             <td><label for="">Designer </label></td>
 
-                                            <td><input type="text" name="" id="projectDesigner" class="myModalInput" @*value="designer"*@ required></td>
+                                            <td><input type="text" name="" id="projectDesigner" class="myModalInput myModalInputCom" @*value="designer"*@ required></td>
                                         </tr>
                                         <tr class="form-group">
                                             <td><label for="">Location</label></td>
 
-                                            <td><input type="text" name="" id="projectLocation" class="myModalInput" @*value="loc"*@ required></td>
+                                            <td><input type="text" name="" id="projectLocation" class="myModalInput myModalInputCom" @*value="loc"*@ required></td>
                                         </tr>
                                         <tr class="form-group">
                                             <td><label for="">City</label></td>
 
-                                            <td><input type="text" name="" id="projectCity" class="myModalInput" @*value="city"*@ required></td>
+                                            <td><input type="text" name="" id="projectCity" class="myModalInput myModalInputCom" @*value="city"*@ required></td>
                                         </tr>
                                         <tr class="form-group">
                                             <td><label for="">Country</label></td>
 
-                                            <td><input type="text" name="" id="projectCountry" class="myModalInput" @*value="country"*@ required></td>
+                                            <td><input type="text" name="" id="projectCountry" class="myModalInput myModalInputCom" @*value="country"*@ required></td>
                                         </tr>
                                         <tr class="form-group">
                                             <td><label for="">Owner</label></td>
 
-                                            <td><input type="text" name="" id="projectOwner" class="myModalInput" @*value="owner"*@ required></td>
+                                            <td><input type="text" name="" id="projectOwner" class="myModalInput myModalInputCom" @*value="owner"*@ required></td>
                                         </tr>
                                     </table>
                                     <br>
@@ -116,16 +116,16 @@
                         <tr>
                             <td>
                                 <div id="modalOpenProjectDialog" style="display: none;">
-                                    <h5> Open existing project on-site</h5>
+                                    <h5 style="margin-top:10px;"> Open existing project on-site</h5>
 
                                     <a class="btn btn-primary" style="background-color: #04DBEC !important;
-                                        color: #000D20 !important;margin-bottom: 80px;"
+                                        color: #000D20 !important;margin-bottom: 120px; margin-top:10px;"
                                        asp-area="" asp-action="Myprojects" asp-controller="Editor" title="Manage">Go to my Projects</a>
                                     <h5 style=" "> Open a previously downloaded  <br> project file.</h5>
 
                                     <button id="readFromJson" class="btn btn-primary"
                                             style="background-color: #04DBEC !important;
-                                              color: #000D20 !important;">
+                                              color: #000D20 !important; margin-top:10px;">
                                         Upload
                                     </button>
 
@@ -284,31 +284,49 @@
                         </table>
                  </div>
                 <div class="col" style="padding-left: 25px;">
-                    <div id="loadsSection" style="padding-top: 42px;padding-bottom: 20px;">
-                            <table style="display:table; width:110%; " class=" mt-4">
+                    <div id="loadsSection" style="padding-top: 42px;padding-bottom: 70px;" width="100%">
+                        <table style="display:table; width:90%; " class=" mt-4">
 
-                                <tr class="form-group">
-                                    <td>
-                        <h3 >Floor Loads</h3>
-                                    </td>
-                                </tr>
-                                <tr class="form-group">
-                                    <td>
-                                        <label for="secSpace">Dead Load (t/m²)&nbsp;&nbsp; &nbsp;  &nbsp;  &nbsp;  &nbsp;  &nbsp;  &nbsp;  &nbsp;  &nbsp;  &nbsp;  &nbsp; &nbsp; </label>
-                                    </td>
-                                    <td><input type="text" name="" id="floorDead" class="myModalInput" value="0.15" required></td>
-                                </tr>
+                            <tr class="form-group">
+                                <td>
+                                    <h3>Floor Loads</h3>
+                                </td>
+                            </tr>
+                            <tr class="form-group">
+                                <td>
+                                    <label for="secSpace">Dead Load (t/m²)&nbsp;&nbsp; &nbsp;  &nbsp;  &nbsp;  &nbsp;  &nbsp;  &nbsp;  </label>
+                                </td>
+                                <td><input type="text" name="" id="floorDead" class="myModalInput" value="0.15" required></td>
+                            </tr>
 
-                                <tr class="form-group">
-                                    <td>
-                                        <label for="secSpace">Live Load (t/m²)</label>
-                                    </td>
-                                    <td> <input type="text" name="" id="floorLive" class="myModalInput" value="0.2" required style="margin-bottom:20px;"></td>
-                                </tr>
-                            </table>
+                            <tr class="form-group">
+                                <td>
+                                    <label for="secSpace">Live Load (t/m²)</label>
+                                </td>
+                                <td> <input type="text" name="" id="floorLive" class="myModalInput" value="0.2" required style="margin-bottom:20px;"></td>
+                            </tr>
+                            <tr class="form-group">
+                                <td>
+                                    <h3>Load Combination</h3>
+                                </td>
+                            </tr>
+                            <tr class="form-group">
+                                <td>
+                                    <label>Dead load factor&nbsp;&nbsp; &nbsp;  &nbsp;  &nbsp;  &nbsp;  &nbsp;  &nbsp;  </label>
+                                </td>
+                                <td><input type="text" name="" id="deadFactor" class="myModalInput" value="1.2" required></td>
+                            </tr>
+                            <tr class="form-group">
+                                <td>
+                                    <label>Live load factor&nbsp;&nbsp; &nbsp;  &nbsp;  &nbsp;  &nbsp;  &nbsp;  &nbsp; </label>
+                                </td>
+                                <td><input type="text" name="" id="liveFactor" class="myModalInput" value="1.6" required></td>
+                            </tr>
+
+                        </table>
                     </div>
 
-                    <a id="modalFlipBackward" class="btn btn-secondary">Back</a> 
+                    <a id="modalFlipBackward" class="btn btn-secondary" style="margin-left: 174px;">Back</a> 
                     <a asp-area="" asp-controller="Home" asp-action="Index" class="btn btn-secondary">Close</a>
                     <button type="submit" class="btn btn-primary"
                             style="background-color: #04DBEC !important;

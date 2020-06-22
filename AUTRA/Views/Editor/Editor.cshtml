@@ -37,35 +37,132 @@
 <body>
     <input type="text" hidden disabled id="projectName" value='@ViewData["projectName"]' />
     <canvas id="canvas" style="position:absolute"></canvas>
+   
     <!--Start-up window-->
     <div class="modelDivSize" id="modalDivDetails" style="display:none">
         <div class="container mt-3">
             <div class="row">
-                <div class="col-8"><h1>New Project</h1></div>
+                <div class="col-8" style=" padding-left: 0px!important;"><h1></h1></div>
                 <div class="col-4" style="align-content:end;">
-                    <img src="/assets/img/AutraLogo/7.png" alt="AUTRA"
-                         style="width: 100%;padding-left: 130px; padding-right: 5px; padding-top: 5px;" />
+                    <a asp-area="" asp-controller="Home" asp-action="Index" style=" color: inherit;">
+
+                        <img src="/assets/img/AutraLogo/7.png" alt="AUTRA"
+                             style="width: 100%;padding-left: 150px; padding-right: 5px; padding-top: 5px;" />
+                        </a>
                 </div>
             </div>
-            <div class="row mt-3">
-                <div class="col">
-                    <h3> Mezzanine Structure Layout</h3>
-                    <div class="border-white mt-4">
+            <div class="row" id="modalPage1">
+                <div class="col" style=" padding-left: 0px!important;">
+                    <table>
+                        <tr class="form-group" style="margin-top:20px;">
+                            <td>
+                                <h1 class="fontBlue" id="modalNewProjectTitle" style="padding-bottom: 10px;"> New Project</h1>
+                            </td>
+                        </tr>
+                        <tr>
+                            <td>
+                                <div id="modalNewProjectDialog1">
+                                    <h3> Project Information</h3>
+                                    <table style="display:table; width:110%; padding-bottom:20px;" class="mt-4">
+                                        <tr class="form-group">
+                                            <td><label for="">Project name&nbsp; &nbsp;&nbsp; &nbsp;&nbsp; &nbsp;  &nbsp;  &nbsp;  &nbsp;  &nbsp;  &nbsp;  &nbsp;  &nbsp;  &nbsp;  &nbsp; &nbsp; </label></td>
+
+                                            <td><input type="text" name="" id="projectName" class="myModalInput" @*value="name"*@ required></td>
+                                        </tr>
+                                        <tr class="form-group">
+                                            <td><label for="">Designer </label></td>
+
+                                            <td><input type="text" name="" id="projectDesigner" class="myModalInput" @*value="designer"*@ required></td>
+                                        </tr>
+                                        <tr class="form-group">
+                                            <td><label for="">Location</label></td>
+
+                                            <td><input type="text" name="" id="projectLocation" class="myModalInput" @*value="loc"*@ required></td>
+                                        </tr>
+                                        <tr class="form-group">
+                                            <td><label for="">City</label></td>
+
+                                            <td><input type="text" name="" id="projectCity" class="myModalInput" @*value="city"*@ required></td>
+                                        </tr>
+                                        <tr class="form-group">
+                                            <td><label for="">Country</label></td>
+
+                                            <td><input type="text" name="" id="projectCountry" class="myModalInput" @*value="country"*@ required></td>
+                                        </tr>
+                                        <tr class="form-group">
+                                            <td><label for="">Owner</label></td>
+
+                                            <td><input type="text" name="" id="projectOwner" class="myModalInput" @*value="owner"*@ required></td>
+                                        </tr>
+                                    </table>
+                                    <br>
+                                    <br>
+                                    <a class="btn btn-primary"
+                                       style="background-color: #04DBEC !important; color: #000D20 !important;
+                                        "id="modalFlipForward">Next</a>
+
+                                </div>
+                            </td>
+                        </tr>
+                    </table>
+                </div>
+                <div class="col" style=" padding-left: 0px!important;">
+                    <table>
+                        <tr>
+                            <td>
+                                <h1  style="padding-bottom: 10px;" id="modalOpenProjectTitle">  Open Project</h1>
+                            </td>
+                        </tr>
+                        <tr>
+                            <td>
+                                <div id="modalOpenProjectDialog" style="display: none;">
+                                    <h5> Open existing project on-site</h5>
+
+                                    <a class="btn btn-primary" style="background-color: #04DBEC !important;
+                                        color: #000D20 !important;margin-bottom: 80px;"
+                                       asp-area="" asp-action="Myprojects" asp-controller="Editor" title="Manage">Go to my Projects</a>
+                                    <h5 style=" "> Open a previously downloaded  <br> project file.</h5>
+
+                                    <button id="readFromJson" class="btn btn-primary"
+                                            style="background-color: #04DBEC !important;
+                                              color: #000D20 !important;">
+                                        Upload
+                                    </button>
+
+                                </div>
+                            </td>
+                        </tr>
+                    </table>
+                </div>
+            </div>
+            <div class="row" id="modalPage2" style="display:none;">
+                <div class="col" style=" padding-left: 0px!important;">
+                    
                         <table style="display:table; width:110%;">
 
+                            <tr class="form-group m-4" style="margin-top:20px;">
+                                <td>
+                                    <h1 class="fontBlue" id="modalNewProjectTitle"  style="padding-bottom: 10px;"> New Project</h1>
+                                </td>
+                            </tr>
+                            <tr class="form-group mt-4" style="margin-top:20px;">
+                                <td>
+                                    <h3> Mezzanine Structure Layout</h3>
+                                </td>
+                            </tr>
                             <tr class="form-group">
                                 <td><h6 class="subtitle" style=" color: #04DBEC;">Grids</h6></td>
                             </tr>
                             <tr class="form-group">
-                                <td><label for="spaceX">Spacing in X-direction (meters)</label></td>
+                                <td><label for="spaceX">Spacing in X-direction (m)</label></td>
                                 <td> <input type="text" name="" id="spaceX" class=" myModalInput" placeholder="Ex:3*6 or 4.5 6 8"></td>
                             </tr>
                             <tr class="form-group">
-                                <td><label for="spaceZ">Spacing in Y-direction (meters)</label></td>
+                                <td><label for="spaceZ">Spacing in Y-direction (m)</label></td>
                                 <td> <input type="text" name="" id="spaceZ" class=" myModalInput" placeholder="Ex:3*6 or 4.5 6 8" required></td>
                             </tr>
                             <tr class="form-group">
-                                <td><label for="height">height (meters)</label></td>
+                                <td><label for="height">Height (m)</label></td>
                                 <td><input type="text" name="" id="spaceY" class=" myModalInput" placeholder="Ex:3" required></td>
                             </tr>
                             <tr style="display:none;">
@@ -75,8 +172,8 @@
                                     &nbsp; &nbsp;  <input class="radio form-group" type="radio" name="modegrp" id="manMode" value="manMode">Manual
                                 </td>
                             </tr>
-                            <tr class="mt-4">
-                                <td> <h6 for="material" style=" color: #04DBEC;">Material &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp;  &nbsp; &nbsp; </h6></td>
+                            <tr >
+                                <td> <h6 class="mt-4" for="material" style=" color: #04DBEC;">Material &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp;  &nbsp; &nbsp; </h6></td>
 
                                 <td>
                                     <select id="material" style="width:80%;">
@@ -86,17 +183,11 @@
                                     </select>
                                 </td>
                             </tr>
-
-                        </table>
-                    </div>
-
-                    <div class="border-white mt-4" id="autoModeData">
-                        <table style="display:table; width:110%;">
-                            <tr class="form-group">
-                                <td> <h6 class="subtitle" style=" color: #04DBEC;">Main Beams</h6></td>
+                            <tr class="form-group ">
+                                <td> <h6 class="subtitle mt-4" style=" color: #04DBEC;">Main Beams</h6></td>
                             </tr>
                             <tr class="form-group">
-                                <td> <label for="mainOrient">Orientation :</label></td>
+                                <td> <label for="mainOrient">Orientation </label></td>
                                 <td>
                                     <input class="radio form-group" type="radio" name="optradio" id="xOrient" value="X" checked>X Axis &nbsp; &nbsp;
                                     <input class="radio form-group" type="radio" name="optradio" id="yOrient" value="Y">Y Axis
@@ -132,7 +223,7 @@
                                 <td> <h6 class="subtitle mt-4" style=" color: #04DBEC;">Secondary Beams</h6></td>
                             </tr>
                             <tr class="form-group">
-                                <td><label for="secSpace">Beams spacing (meters)&nbsp; &nbsp;  &nbsp; &nbsp; </label></td>
+                                <td><label for="secSpace">Beams spacing (m)&nbsp; &nbsp;  &nbsp; &nbsp; </label></td>
 
                                 <td><input type="text" name="" id="secSpace" class="myModalInput" placeholder="2 or 1.5 2 2" required></td>
                             </tr>
@@ -191,82 +282,45 @@
                                 </td>
                             </tr>
                         </table>
+                 </div>
+                <div class="col" style="padding-left: 25px;">
+                    <div id="loadsSection" style="padding-top: 42px;padding-bottom: 20px;">
+                            <table style="display:table; width:110%; " class=" mt-4">
 
-                    </div>
-
-                </div>
-                <div class="col">
-                    <div id="loadsSection">
-                        <h3 >Floor Loads</h3>
-                        <div  class="border-white mt-4">
-                            <table style="display:table; width:110%;">
                                 <tr class="form-group">
                                     <td>
-                                        <label for="secSpace">Dead Load (t/m2)&nbsp;&nbsp; &nbsp;  &nbsp;  &nbsp;  &nbsp;  &nbsp;  &nbsp;  &nbsp;  &nbsp;  &nbsp;  &nbsp; &nbsp; </label>
+                        <h3 >Floor Loads</h3>
                                     </td>
-                                    <td><input type="text" name="" id="floorDead" class="myModalInput" value="0.25" required></td>
+                                </tr>
+                                <tr class="form-group">
+                                    <td>
+                                        <label for="secSpace">Dead Load (t/m²)&nbsp;&nbsp; &nbsp;  &nbsp;  &nbsp;  &nbsp;  &nbsp;  &nbsp;  &nbsp;  &nbsp;  &nbsp;  &nbsp; &nbsp; </label>
+                                    </td>
+                                    <td><input type="text" name="" id="floorDead" class="myModalInput" value="0.15" required></td>
                                 </tr>
 
                                 <tr class="form-group">
                                     <td>
-                                        <label for="secSpace">Live Load (t/m2)</label>
+                                        <label for="secSpace">Live Load (t/m²)</label>
                                     </td>
-                                    <td> <input type="text" name="" id="floorLive" class="myModalInput" value="0.5" required></td>
+                                    <td> <input type="text" name="" id="floorLive" class="myModalInput" value="0.2" required style="margin-bottom:20px;"></td>
                                 </tr>
                             </table>
-                        </div>
                     </div>
-                    <h3> Project Information</h3>
-                    <div class="border-white mt-4">
-                        <table style="display:table; width:110%;">
-                            <tr class="form-group">
-                                <td><label for="">Project name&nbsp; &nbsp;&nbsp; &nbsp;&nbsp; &nbsp;  &nbsp;  &nbsp;  &nbsp;  &nbsp;  &nbsp;  &nbsp;  &nbsp;  &nbsp;  &nbsp; &nbsp; </label></td>
 
-                                <td><input type="text" name="" id="projectName" class="myModalInput" @*value="name"*@ required></td>
-                            </tr>
-                            <tr class="form-group">
-                                <td><label for="">Designer </label></td>
-
-                                <td><input type="text" name="" id="projectDesigner" class="myModalInput" @*value="designer"*@ required></td>
-                            </tr>
-                            <tr class="form-group">
-                                <td><label for="">Location</label></td>
-
-                                <td><input type="text" name="" id="projectLocation" class="myModalInput" @*value="loc"*@ required></td>
-                            </tr>
-                            <tr class="form-group">
-                                <td><label for="">City</label></td>
-
-                                <td><input type="text" name="" id="projectCity" class="myModalInput" @*value="city"*@ required></td>
-                            </tr>
-                            <tr class="form-group">
-                                <td><label for="">Country</label></td>
-
-                                <td><input type="text" name="" id="projectCountry" class="myModalInput" @*value="country"*@ required></td>
-                            </tr>
-                            <tr class="form-group">
-                                <td><label for="">Owner</label></td>
-
-                                <td><input type="text" name="" id="projectOwner" class="myModalInput" @*value="owner"*@ required></td>
-                            </tr>
-                        </table>
-                        <br>
-                        <br>
-                        <a asp-area="" asp-controller="Home" asp-action="Index" class="btn btn-secondary">Close</a>
-
-                        <button type="button" class="btn btn-primary"
-                                style="background-color: #04DBEC !important;
+                    <a id="modalFlipBackward" class="btn btn-secondary">Back</a> 
+                    <a asp-area="" asp-controller="Home" asp-action="Index" class="btn btn-secondary">Close</a>
+                    <button type="submit" class="btn btn-primary"
+                            style="background-color: #04DBEC !important;
                                     color: #000D20 !important;"
-                                id="createGrids">
-                            Create Model
-                        </button>
+                            id="createGrids">
+                        Create Model
+                    </button>
 
-                        <button id="readFromJson" class="btn-secondary">Upload JSON file</button>
-                    </div>
                 </div>
-            </div>
         </div>
-    </div>
+       </div>
+  </div>
 
     <input type="file" id="upload" accept="text/aut" hidden />
     <div class="btn" id="sidebarBtn">
@@ -417,19 +471,19 @@
                     </div>
                 </section>
                 <section>
+                    <div class="taskbarIconBlock" onclick="downloadFile()">
+                        <div class="flaticon-save icon">
+                            <div class="taskbarIconLabel">Download </div>
+                        </div>
+                    </div>
+                </section>
+                <section>
                     <div class="taskbarIconBlock">
                         <a asp-area="" asp-controller="Home" asp-action="Index" style=" color: inherit;">
                             <div class="flaticon-browser icon">
                                 <div class="taskbarIconLabel">Home</div>
                             </div>
                         </a>
-                    </div>
-                </section>
-                <section>
-                    <div class="taskbarIconBlock" onclick="downloadFile()">
-                        <div class="flaticon-save icon">
-                            <div class="taskbarIconLabel">Download as json</div>
-                        </div>
                     </div>
                 </section>
             </div>
@@ -480,7 +534,7 @@
         </div>
         <div id="addNodeCoordDetails" class="popupDiv narrowShortDivSize">
             <div class="innerDiv">
-                <button class="popupBtn myBtn4" id="addNodeCoordBtn"><i class="fas fa-times"></i></button>
+                <button class="popupBtn myBtn7" id="addNodeCoordBtn"><i class="fas fa-times"></i></button>
                 <table>
                     <thead>
                         <tr> <th> Add Node </th></tr>

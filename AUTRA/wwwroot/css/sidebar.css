@@ -59,7 +59,7 @@ text-align: center;
 }
 
 .taskbarIcon div .icon {
-    width: 90px;
+    width: 85px;
     height: 55px;
 }
 
@@ -205,6 +205,9 @@ line-height:15px;
 .myBtn4 {
     left: 160px;
 }
+.myBtn7 {
+    left: 150px;
+}
 
 .narrow2DivSize {
     height: 90px;
@@ -226,6 +229,7 @@ line-height:15px;
     background-color: #000D20;
     font-size: 15px;
     color: white;
+    overflow: auto;
     background-image: url("../assets/img/hero/h1_hero.jpg");
 }
 
@@ -247,3 +251,6 @@ line-height:15px;
         background-color: #b3edf5;
     }
 
+.fontBlue {
+    color: #04DBEC!important;
+}

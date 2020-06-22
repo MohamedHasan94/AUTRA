@@ -1,0 +1,84 @@
+page("TeklaStructures","")
+{
+   detail(1, "TJ_WeldPrep_Beam_d")
+   {
+       tab_page("", "j_Weld_Prep", 1)
+       {
+           attribute("j_weld_preps_for_flanges", "j_weld_preps_for_flanges", label, "%s",  none, none, "0.0", "0.0", 80, 0)
+           parameter("", "FlgPrepCreate", YesNo, number, 80, 30, 100, 
+           "toggle_field:FlgTopFlip=1;FlgPrepGapUflg=1;FlgBottomFlip=1;FlgPrepGapLflg=1;FlgPrepAngle=1;FlgPrepFace=1;FlgTopCreate=1;FlgBottomCreate=1;")
+
+           picture("TJ_BeamWeldPrepFlangeV2",270,150,150,100)
+           parameter(" jd_weld_Angle", "FlgPrepAngle", angle, number, 260, 72, 60)
+           parameter(" j_root_face", "FlgPrepFace", distance, number, 80, 160, 60)
+
+           attribute("albl_UpperFlange", "albl_UpperFlange", label, "%s",  none, none, "0.0", "0.0", 500, 42)
+           parameter("", "FlgTopCreate", YesNo, number, 500, 72, 100, "toggle_field:FlgTopFlip=1;FlgPrepGapUflg=1;")
+           attribute("FlgTopFlip", "", option,"%s",  none, none, "0.0", "0.0", 500, 102, 100)
+           {
+             value("TJ_BeamWeldPrepFlange_TopPrep.xbm", 1)
+             value("TJ_BeamWeldPrepFlange_BtmPrep.xbm",  0)
+           }
+
+           parameter(" j_weld_gap", "FlgPrepGapUflg", distance, number, 540, 160, 60)
+           parameter(" j_weld_gap", "FlgPrepGapLflg", distance, number, 540, 235, 60)
+
+           attribute("FlgBottomFlip", "", option,"%s",  none, none, "0.0", "0.0", 500, 275, 100)
+           {
+             value("TJ_BeamWeldPrepFlange_BtmPrep.xbm",  1)
+             value("TJ_BeamWeldPrepFlange_TopPrep.xbm", 0)
+           }
+           parameter("", "FlgBottomCreate", YesNo, number, 500, 320, 100, "toggle_field:FlgBottomFlip=1;FlgPrepGapLflg=1;")
+           attribute("albl_LowerFlange", "albl_LowerFlange", label, "%s",  none, none, "0.0", "0.0", 500, 355)
+
+           attribute("j_weld_preps_for_web", "j_weld_preps_for_web", label, "%s",  none, none, "0.0", "0.0", 80, 235)
+           parameter("", "WebPrepCreate", YesNo, number, 80, 265, 100, 
+           "toggle_field:WebPrepAngle=1;WebPrepGap=1;WebPrepFace=1;")
+
+           picture("TJ_BeamWeldPrepWebK1",120,120,150,343)
+           parameter(" jd_weld_Angle", "WebPrepAngle", angle, number, 260, 315, 60)
+           parameter(" j_weld_gap", "WebPrepGap", distance, number, 170, 315, 60)
+           parameter(" j_root_face", "WebPrepFace", distance, number, 80, 403, 60)
+
+           attribute("1.", "1.", label2, "%s",  none, none, "0.0", "0.0", 80, 550)
+           attribute("prompt_Pick_main_part", "prompt_Pick_main_part", label, "%s",  none, none, "0.0", "0.0", 100, 550)
+           attribute("2.", "2.", label2, "%s",  none, none, "0.0", "0.0", 80, 575)
+           attribute("prompt_Pick_position", "prompt_Pick_position", label, "%s",  none, none, "0.0", "0.0", 100, 575)
+          
+       }
+       tab_page("", "j_rat_holes", 2)
+       {
+           attribute("j_rat_holes", "j_rat_holes", label, "%s",  none, none, "0.0", "0.0", 80, 0)
+           parameter("", "RatHoleCreate", YesNo, number, 80, 30, 100, 
+           "toggle_field:RatHoleSize=1;RatHoleShape=1;RatHoleTopCreate=1;RatHoleTopOffset=1;RatHoleBottomOffset=1;RatHoleBottomCreate=1;")
+
+           picture("TJ_BeamScallop_General",270,150,150,100)
+           parameter(" j_root_face", "RatHoleSize", distance, number, 80, 195, 60)
+           attribute("RatHoleShape", "", option,"%s",  none, none, "0.0", "0.0", 221, 172, 160)
+           {
+             value("TJ_BeamScallop_Square.xbm", 0)
+             value("TJ_BeamScallop_Snip.xbm", 0)
+             value("TJ_BeamScallop_Round.xbm",  1)
+           }
+
+           attribute("j_Rat_Hole_At_Top", "j_Rat_Hole_At_Top", label, "%s",  none, none, "0.0", "0.0", 500, 65)
+           parameter("", "RatHoleTopCreate", YesNo, number, 500, 95, 100, "toggle_field:UflgOffset=1;")
+
+           parameter(" j_weld_gap", "RatHoleTopOffset", distance, number, 540, 160, 60)
+           parameter(" j_weld_gap", "RatHoleBottomOffset", distance, number, 540, 235, 60)
+
+           parameter("", "RatHoleBottomCreate", YesNo, number, 500, 300, 100, "toggle_field:LflgOffset=1;")
+           attribute("j_Rat_Hole_At_Bottom", "j_Rat_Hole_At_Bottom", label, "%s",  none, none, "0.0", "0.0", 500, 330)
+
+
+
+           attribute("j_Weld_back_bar", "j_Weld_back_bar", label, "%s",  none, none, "0.0", "0.0", 80, 350)
+           parameter("", "Comp1_create", YesNo, number, 80, 375, 100, "toggle_field:Comp1_name=1;Comp1_attrfile=1;Comp1_offset=1;")
+           parameter("albl_Component_name", "Comp1_name", ComponentName, text, 16)
+           parameter("albl_Component_attribute_file", "Comp1_attrfile", ComponentAttributeFile, text, 17)
+           parameter("albl_Offset", "Comp1_offset", distance, number, 18)
+            
+
+       }
+   }
+}

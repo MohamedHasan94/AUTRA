@@ -20,7 +20,7 @@ namespace TeklaAPIHandler
             //AUTRATekla.InitTekla(data);
             if (args.Length > 0)
             {
-                Console.WriteLine(args[0]);
+                Console.WriteLine("Running tekla.....");
                 try
                 {
                     var data = Reader.Read<TeklaModelData>(args[0]);
@@ -36,6 +36,7 @@ namespace TeklaAPIHandler
             }
             stopwatch.Stop();
             Console.WriteLine(stopwatch.ElapsedMilliseconds);
+            Console.ReadLine();
         }
     }
 }

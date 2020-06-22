@@ -1,0 +1,13 @@
+page("TeklaStructures","")
+{
+   macro(1, "PT_Anchor_Pocket_Former")
+   {
+       tab_page("", " Parameters 1 ", 1)
+       {
+           parameter("Name", "P1", string, text, 1)
+           parameter("Class", "P2", integer, number, 2)
+           parameter("Finish", "P3", string, text, 3)
+           parameter("Sleeve Length", "D1", distance, number, 4)
+       }
+   }
+}

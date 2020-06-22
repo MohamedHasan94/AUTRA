@@ -1,0 +1,55 @@
+page("Xsteel","")
+{
+   macro(1, "Cell_Beam")
+   {
+       tab_page("", " Main ", 1)
+       {
+           picture("Cell_beam", 540,240)
+           parameter("", "P1", distance, number, 800,165,80)
+           parameter("", "P2", distance, number, 620,165,70)
+           parameter("", "P3", distance, number, 800,50,70)
+           parameter("", "P4", distance, number, 690,20,70)
+           attribute(" ","jd_Material",label,"%s",none,none,"0","0", 500, 280)
+           attribute(" ","jd_Name",label,"%s",none,none,"0","0", 670, 280)
+           attribute(" ","jd_Group",label,"%s",none,none,"0","0", 800, 280)
+           attribute(" ","j_Parts",label,"%s",none,none,"0","0", 200, 280)
+           attribute(" ","csc_Assembly",label,"%s",none,none,"0","0", 350, 280)
+           attribute(" ","Prefix",label,"%s",none,none,"0","0", 30, 310)
+           attribute(" ","Start Number",label,"%s",none,none,"0","0", 30, 340)
+           parameter("", "P6", material, text, 500,310,100)
+           parameter("", "P7", integer, number, 800,310,50)
+           parameter("", "P8", distance, number, 270,165,80)
+           parameter("", "P12", integer, number, 200,340,100)
+           parameter("", "P13", string, text, 200,310,100)
+           parameter("", "P14", string, text, 350,310,100)
+           parameter("", "P15", integer, number, 350,340,100)
+           parameter("", "P16", string, text, 670,310,100)
+           parameter("", "P17", distance, number, 350,20,80)
+	   attribute ("P10", "", option, "%s", none, none, "0.0", "0.0", 30,165,150,"toggle_field:!central_split_infill=0")
+	{
+	   value ("Cell_Central.xbm", 1)
+	   value ("Cell_Spaced.xbm", 0)
+        }
+       }
+       tab_page("", " Infill Plates ", 2)
+       {
+           picture("central_split_infill", 400,90)
+           picture("central_cell_infill", 400,90)
+           parameter("Plate Thickness", "P21", distance, number, 370,180,70)
+	   attribute ("P11", "", option, "%s", none, none, "0.0", "0.0", 250,90,70,"toggle_field:P23=0,")
+	{
+	   value ("No", 1)
+	   value ("Yes", 0)
+        }
+	   attribute ("P20", "", option, "%s", none, none, "0.0", "0.0", 500,90,70,"toggle_field:P24=0,")
+	{
+	   value ("No", 1)
+	   value ("Yes", 0)
+        }
+           parameter("", "P23", distance, number, 250,120,70)
+           parameter("", "P24", distance, number, 500,120,70)
+           attribute(" ","Cell Number",label,"%s",none,none,"0","0", 110, 120)
+           attribute(" ","Cell Number",label,"%s",none,none,"0","0", 590, 120)
+       }
+   }
+}

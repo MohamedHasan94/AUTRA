@@ -1,0 +1,18 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no"?>
+<!DOCTYPE TeklaStructuresModels>
+<TeklaStructuresModels>
+    <Model>
+        <Name>fgdg_428</Name>
+        <Designer>Structural Engineer</Designer>
+        <Description></Description>
+        <Version>2020</Version>
+        <Language>enu</Language>
+        <Template></Template>
+        <Environment>middle_east</Environment>
+        <IsTemplate>FALSE</IsTemplate>
+        <XS_PROJECT></XS_PROJECT>
+        <XS_FIRM></XS_FIRM>
+        <XS_SYSTEM>C:\ProgramData\Trimble\Tekla Structures\2020.0\\environments\middle_east\General\component_attribute_files\;C:\ProgramData\Trimble\Tekla Structures\2020.0\\environments\middle_east\General\drawing_filters\;C:\ProgramData\Trimble\Tekla Structures\2020.0\\e</XS_SYSTEM>
+        <ConnectedId></ConnectedId>
+    </Model>
+</TeklaStructuresModels>

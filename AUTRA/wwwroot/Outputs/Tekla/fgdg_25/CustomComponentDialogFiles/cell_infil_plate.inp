@@ -1,0 +1,16 @@
+page("TeklaStructures","")
+{
+   detail(1, "cell_infil_plate")
+   {
+       tab_page("", " Parameters 1 ", 1)
+       {
+           picture("Cell_infill_plate.bmp", 384, 240, 0, 60)
+           parameter("", "P1", distance, number, 160, 230, 70)
+           parameter("Part Prefix", "P3", string, text, 1)
+           parameter("Start Num", "P4", integer, number, 2)
+           parameter("grade", "P5", material, text, 3)
+           parameter("class", "P6", integer, number, 4)
+           parameter("plate thickness", "P7", integer, number, 5)
+       }
+   }
+}

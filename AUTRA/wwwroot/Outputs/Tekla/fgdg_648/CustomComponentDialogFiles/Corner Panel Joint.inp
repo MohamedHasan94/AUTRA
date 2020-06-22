@@ -1,0 +1,20 @@
+page("TeklaStructures", "")
+{
+    joint(1, "Corner Panel Joint")
+    {
+        tab_page("", " Parameters 1 ", 1)
+        {
+            attribute("P4", "", option, "%s", none, none, "0.0", "0.0", 59, 50, 132, "toggle_field:P8=0,1")
+            {
+                value("me_corner_vert.xbm", 1)
+                value("me_corner_horz.xbm", 0)
+                value("me_corner_miter.xbm", 0)
+            }
+            parameter("", "P3", distance, number, 413, 62, 100)
+            attribute("", "Joint", label, "%s", none, none, "0", "0", 339, 69)
+            parameter("", "P8", distance, number, 410, 100, 100)
+            attribute("", "Quark Distance", label, "%s", none, none, "0", "0", 277, 109)
+            picture("me_corner_joint", 540, 273, 56, 210)
+        }
+    }
+}

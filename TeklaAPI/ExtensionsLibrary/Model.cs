@@ -53,6 +53,7 @@ namespace AUTRA.Tekla
             //    new BinaryFilterExpressionItem(expression)
             //};
             List<TSM.ModelObject> modelObjs = new List<TSM.ModelObject>();
+            TSM.ModelObjectEnumerator.AutoFetch = true;
             while (enumerator.MoveNext())
             {
                 var modelObject = enumerator.Current;
@@ -467,5 +468,6 @@ namespace AUTRA.Tekla
                 }
             }
         }
+        public static T3D.Vector GetBoltsVector(this TSM.BoltGroup bolts) => new T3D.Vector(bolts.SecondPosition - bolts.FirstPosition);
     }
 }

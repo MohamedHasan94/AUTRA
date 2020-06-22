@@ -1,0 +1,11 @@
+page("TeklaStructures","")
+{
+   detail(1, "central_cell")
+   {
+       tab_page("", " Parameters 1 ", 1)
+       {
+           parameter("Cell Diameter", "CC1", distance, number, 1)
+           parameter("Cell Spacing", "CC2", distance, number, 2)
+       }
+   }
+}

@@ -1,0 +1,20 @@
+page("TeklaStructures","")
+{
+   detail(1, "WeldBar_Pipe_1Pc")
+   {
+       tab_page("", "jd_Picture", 1)
+       {
+           profile("j_Weld_back_bar", BarProf, BarMark, BarMat, , BarName)
+           parameter("j_weld_prep_for_backing_bar", BarWeld, YesNo, number, 3)
+           picture("WeldBar_Pipe_1Pc", 400, 285, 100, 150)
+           parameter(" j_clearance", PipeGap, distance, number, 535, 175, 50)
+           parameter(" j_gap", BarGap, distance, number, 310, 310, 50)
+           parameter(" j_offset", BarOffset, distance, number, 660, 370, 50)
+
+           attribute("1.", "1.", label2, "%s",  none, none, "0.0", "0.0", 80, 550)
+           attribute("prompt_Pick_main_part", "prompt_Pick_main_part", label, "%s",  none, none, "0.0", "0.0", 100, 550)
+           attribute("2.", "2.", label2, "%s",  none, none, "0.0", "0.0", 80, 575)
+           attribute("prompt_Pick_position", "prompt_Pick_position", label, "%s",  none, none, "0.0", "0.0", 100, 575)
+       }
+   }
+}

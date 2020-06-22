@@ -29,11 +29,11 @@ namespace AUTRA.Tekla
                     project.CreateSecondaryBeams(TSM.Position.DepthEnum.BEHIND);
                     project.CreateConnections();
                     project.CreatePlanDWG();
-                    project.CreateBasePlateDWG();
-                    project.CreateElevationDWGSAlongX();
-                    project.CreateElevationDWGSAlongY();
+                   project.CreateBasePlateDWG();
+                    project.CreateElevationsParallelY();
+                   project.CreateElevationsParallelX();
                     project.PrintDrawings();
-                    project.CompressFolder();
+                   project.CompressFolder();
                     result = true;
                 }
             }

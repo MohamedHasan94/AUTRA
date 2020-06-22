@@ -1,0 +1,51 @@
+page("TeklaStructures", "")
+{
+    macro(1, "Embed Creator")
+    {
+        tab_page("", "Plate Info", 1)
+        {
+            picture("me_Embed_CC", 500, 477, 0, 0)
+            parameter("", "P4", distance, number, 110, 30, 100)
+            parameter("", "P1", distance, number, 300, 105, 100)
+            parameter("", "P3", distance, number, 110, 209, 100)
+            parameter("", "P13", integer, number, 390, 375, 140)
+            parameter("", "P12", integer, number, 390, 345, 140)
+            parameter("", "P11", string, text, 215, 375, 140)
+            parameter("", "P10", string, text, 215, 345, 140)
+            parameter("", "P6", string, text, 285, 430, 160)
+            parameter("", "P9", material, text, 285, 465, 160)
+            parameter("", "P7", string, text, 285, 500, 160)
+            parameter("", "P8", integer, number, 285, 535, 160)
+            attribute("", "Name:", label, "%s", none, none, "0", "0", 120, 435)
+            attribute("", "Finish:", label, "%s", none, none, "0", "0", 120, 500)
+            attribute("", "Class:", label, "%s", none, none, "0", "0", 125, 530)
+            attribute("", "Material:", label, "%s", none, none, "0", "0", 120, 465)
+            attribute("", "Attributes", label, "%s", none, none, "0", "0", 110, 410)
+            attribute("", "Part", label, "%s", none, none, "0", "0", 115, 350)
+            attribute("", "Assembly", label, "%s", none, none, "0", "0", 115, 380)
+            attribute("", "Numbering series", label, "%s", none, none, "0", "0", 110, 300)
+            attribute("", "Prefix:", label, "%s", none, none, "0", "0", 220, 320)
+            attribute("", "Start number:", label, "%s", none, none, "0", "0", 385, 320)
+            attribute("", "Insertion Point", label, "%s", none, none, "0", "0", 506, 187)
+            attribute("P18", "", option, "%s", none, none, "0.0", "0.0", 487, 211, 150)
+            {
+                value("Center of Plate", 1)
+                value("Edge of Plate", 0)
+            }
+        }
+        tab_page("", "Stud info", 2)
+        {
+            parameter("", "P14_size", stud_size, number, 189, 95, 70)
+            parameter("", "P14_length", stud_length, number, 179, 149, 80)
+            parameter("", "P15", distance, number, 292, 250, 80)
+            parameter("", "P16", distance_list, text, 103, 360, 160)
+            parameter("", "P17", distance_list, text, 315, 468, 160)
+            parameter("", "P14_standard", stud_standard, text, 283, 40, 160)
+            attribute("", "Y Spacing", label, "%s", none, none, "0", "0", 351, 503)
+            attribute("", "X Spacing", label, "%s", none, none, "0", "0", 142, 394)
+            attribute("", "Standard", label, "%s", none, none, "0", "0", 135, 44)
+            attribute("", "Attributes", label, "%s", none, none, "0", "0", 55, 20)
+            picture("me_Embed_CC1", 500, 477, 0, 0)
+        }
+    }
+}

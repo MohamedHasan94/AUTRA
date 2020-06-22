@@ -1,0 +1,36 @@
+page("TeklaStructures","")
+{
+   detail(1, "TJ_WeldPrep_Flg_V")
+   {
+       tab_page("", "j_weld_preps_for_flanges", 1)
+       {
+           picture("TJ_BeamWeldPrepFlangeV2",270,150,150,100)
+           parameter(" jd_weld_Angle", "PrepAngle", angle, number, 260, 72, 60)
+           parameter(" j_root_face", "PrepRootFace", distance, number, 80, 160, 60)
+
+           attribute("albl_UpperFlange", "albl_UpperFlange", label, "%s",  none, none, "0.0", "0.0", 500, 42)
+           parameter("", "PrepUflgCreate", YesNo, number, 500, 72, 100, "toggle_field:PrepUflgFlip=1;PrepRoodGapUflg=1;")
+           attribute("PrepUflgFlip", "", option,"%s",  none, none, "0.0", "0.0", 500, 102, 100)
+           {
+             value("TJ_BeamWeldPrepFlange_TopPrep.xbm", 1)
+             value("TJ_BeamWeldPrepFlange_BtmPrep.xbm",  0)
+           }
+
+           parameter(" j_weld_gap", "PrepRootGapUflg", distance, number, 540, 160, 60)
+           parameter(" j_weld_gap", "PrepRootGapLflg", distance, number, 540, 235, 60)
+
+           attribute("PrepLflgFlip", "", option,"%s",  none, none, "0.0", "0.0", 500, 275, 100)
+           {
+             value("TJ_BeamWeldPrepFlange_BtmPrep.xbm",  1)
+             value("TJ_BeamWeldPrepFlange_TopPrep.xbm", 0)
+           }
+           parameter("", "PrepLflgCreate", YesNo, number, 500, 320, 100, "toggle_field:PrepLflgFlip=1;PrepRoodGapLflg=1;")
+           attribute("albl_LowerFlange", "albl_LowerFlange", label, "%s",  none, none, "0.0", "0.0", 500, 355)
+
+           attribute("1.", "1.", label2, "%s",  none, none, "0.0", "0.0", 80, 350)
+           attribute("prompt_Pick_main_part", "prompt_Pick_main_part", label, "%s",  none, none, "0.0", "0.0", 100, 350)
+           attribute("2.", "2.", label2, "%s",  none, none, "0.0", "0.0", 80, 375)
+           attribute("prompt_Pick_position", "prompt_Pick_position", label, "%s",  none, none, "0.0", "0.0", 100, 375)
+       }
+   }
+}

@@ -1,0 +1,27 @@
+page("TeklaStructures","")
+{
+   detail(1, "WeldBar_H_Type4")
+   {
+       tab_page("", "jd_Picture", 1)
+       {
+            profile("j_Weld_back_bar", BarProf, BarMark, BarMat, , BarName)
+            parameter("j_weld_prep_for_backing_bar", BarWeld, YesNo, number, 3)
+            picture("WeldBar_H_Type4", 350, 150, 100, 150)
+
+            parameter(" j_length", L, distance, number, 195, 125, 60)
+            parameter(" j_offset", BarOffset, distance, number, 480, 320, 60)
+            parameter(" j_radius", R, distance, number, 320, 280, 60)
+
+            attribute("", "albl_UpperFlange", label,"%s",  none, none, "0.0", "0.0",650,75)
+            parameter("", "UflgCreate", YesNo, number, 650, 100, 100)
+
+            attribute("", "albl_LowerFlange", label,"%s",  none, none, "0.0", "0.0", 650, 200)
+            parameter("", "LflgCreate", YesNo, number, 650, 225, 100)
+
+            attribute("1.", "1.", label2, "%s",  none, none, "0.0", "0.0", 80, 350)
+            attribute("prompt_Pick_main_part", "prompt_Pick_main_part", label, "%s",  none, none, "0.0", "0.0", 100, 350)
+            attribute("2.", "2.", label2, "%s",  none, none, "0.0", "0.0", 80, 375)
+            attribute("prompt_Pick_position", "prompt_Pick_position", label, "%s",  none, none, "0.0", "0.0", 100, 375)
+       }
+   }
+}

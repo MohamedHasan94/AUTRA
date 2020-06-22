@@ -11,7 +11,20 @@ using System.Reflection;
 
 namespace AUTRA.Tekla
 {
-   internal static class Helper
+    public enum LineDirection
+    {
+        InX, InY
+    }
+    public enum ViewPlacment
+    {
+        CENTER,OTHER
+    }
+    public struct TeklaConstants
+    {
+        public const double DIST_TOL = 1.0;/*mm*/
+        public const double LAYOUT_MARGIN = 20; /*mm*/
+    }
+    internal static class Helper
     {
         public static string GoToPath(this Assembly assembly, string fileRelativePath)
         {

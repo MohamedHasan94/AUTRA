@@ -1,0 +1,18 @@
+page("Xsteel","")
+{
+   macro(1, "safegrid")
+   {
+       tab_page("", " decking ", 1)
+       {
+	   picture("safegrid1", 10, 10, 40, 10)
+           parameter("", "P1", distance, number, 30, 250, 60)
+           parameter("", "P2", distance, number, 300, 10, 60)
+           parameter("", "P3", distance, number, 650, 300, 60)
+           parameter("", "P5", distance, number, 210, 540, 60)
+           parameter("", "P7", profile, text, 650, 150, 90)
+           parameter("", "P8", profile, text, 450, 540, 90)
+           parameter("", "P11", profile, text, 650, 400, 90)
+           parameter("", "P12", material, text, 160, 630, 90)
+       }
+   }
+}

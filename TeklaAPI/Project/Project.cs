@@ -37,6 +37,7 @@ namespace AUTRA.Tekla
         public List<TSM.Beam> MainBeams { get; set; }
         public List<TSM.Beam> SecondaryBeams { get; set; }
         public List<TSM.Beam> Columns { get; set; }
+        public List<T3D.Point> Nodes { get; set; }
         public TSM.Grid Grids;
 
         #endregion
@@ -53,6 +54,7 @@ namespace AUTRA.Tekla
                 MainBeams = new List<TSM.Beam>();
                 SecondaryBeams = new List<TSM.Beam>();
                 Columns = new List<TSM.Beam>();//TODO:to be revisted
+                Nodes = Data.Model.Connections.GetOnlyUnique().ToTeklaPoints().ToList()/*.FilterNodesByHeight(data.Model.Columns[0].Height)*/; //Getting the nodes of the project
                 //intializing somthings in project such as(Grids,Directories,Project Properties,.....)
                 SettingUpProject();
             }
@@ -62,8 +64,8 @@ namespace AUTRA.Tekla
         #region Init
         public bool Init()
         {
-            Random r  = new Random();
-            string modelfolder = @"D:\ITI\GraduationProject\AUTRA\AUTRA\wwwroot\Outputs\Tekla\";//TODO:To be changed
+            Random r = new Random();
+            string modelfolder = @"D:\ITI\GraduationPoject\AUTRA\AUTRA\wwwroot\Outputs\Tekla\";//TODO:To be changed
             _modelHandler = new TSM.ModelHandler();
             _modelHandler.Save();
             if(_modelHandler.CreateNewSingleUserModel($"{Data.ProjectProperties.Name}_{r.Next(0,1000)}", modelfolder) &&
@@ -71,7 +73,8 @@ namespace AUTRA.Tekla
             {
                 return true;
             }
-            return false;            
+            return false;
+            
         }
         private void SettingUpProject()
         {
@@ -163,8 +166,6 @@ namespace AUTRA.Tekla
             foreach (var connection in Data.Model.Connections)
             {
                 Model.SimpleShearPlate(connection.Main, connection.Secondary, connection.Top, connection.Hp, connection.Tp, connection.Edge, connection.PitchLayout, connection.Dia, connection.BoltType, connection.Sw);
-                //List<TSM.Beam> beams = Model.SelectByBoundingBox<TSM.Beam>(new T3D.Point(connection.Node.X,connection.Node.Y,connection.Node.Z));
-                //Model.CreateSimpleShearPlateConnectionAtNode(beams,connection);
             }
             Model.CommitChanges();
         }
@@ -194,32 +195,36 @@ namespace AUTRA.Tekla
 
             T3D.AABB box = new T3D.AABB(min, max);
             _drawingHandler.CloseActiveDrawing(true);
-            TSD.Drawing drawing= _drawings.CreateGADrawing(name, 0.02, new T3D.CoordinateSystem(), box);
+            TSD.Drawing drawing= _drawings.CreateGADrawing(name, 0.02, new T3D.CoordinateSystem(), box,ViewPlacment.CENTER);
             _drawings.CreateDimsAlongGrids(drawing);
             return drawing;
         }
-        public void CreateElevationDWGSAlongX()
+        public void CreateElevationsParallelY()
         {
             string[] labels;
             if (Grids != null)
             {
                labels= Grids.LabelX.Split(' ');
+                double val = 0;
                 for (int i = 0; i < Data.Model.Grids.CXS.Count; i++)
                 {
-                    CreateElevationAlongX($"Elev at Grid {labels[i]}", Data.Model.Grids.CXS[i]);
+                    val += Data.Model.Grids.CXS[i];
+                    CreateElevationParallelY($"Elev at Grid {labels[i]}", val);
                 }
             }
             
         }
-        public void CreateElevationDWGSAlongY()
+        public void CreateElevationsParallelX()
         {
             string[] labels;
             if (Grids != null)
             {
+                double val = 0;
                 labels = Grids.LabelY.Split(' ');
                 for (int i = 0; i < Data.Model.Grids.CYS.Count; i++)
                 {
-                    CreateElevationAlongY($"Elev at Grid {labels[i]}", Data.Model.Grids.CYS[i]);
+                    val += Data.Model.Grids.CYS[i];
+                    CreateElevationParallelX($"Elev at Grid {labels[i]}", val);
                 }
             }
 
@@ -288,27 +293,28 @@ namespace AUTRA.Tekla
         #endregion
 
         #region Helper Private Methods
-       
-        private void CreateElevationAlongX(string name, double xCoord)
+        private void CreateElevationParallelY(string name, double xCoord)
         {
+            //Section is taken parallel to Global-Y
             Model.SetPlaneToGlobal();
-            //Moving the transformation plane at each Grid in X-direction (Note: X-Axis beacomes Y-Axis & Y-Axis bracomes Z-Axis)
+            //Moving the transformation plane at each Grid in X-direction (Note: X-Axis beacomes Y-Axis & Y-Axis becomes Z-Axis)
             T3D.CoordinateSystem coords = new T3D.CoordinateSystem(new T3D.Point(xCoord, 0, 0), new T3D.Vector(0, 1, 0), new T3D.Vector(0, 0, 1));
             Model.SetPlane(coords);
-
             double minHeight = Data.Model.Grids.CZS[0] - 1000;
             double maxHeight = Data.Model.Grids.CZS[Data.Model.Grids.CZS.Count - 1] + 1000;
 
-            T3D.Point max = new T3D.Point(TotalY + 2000, maxHeight, 500);
-            T3D.Point min = new T3D.Point(-2000, minHeight, -500);
+            T3D.Point max = new T3D.Point(TotalY + 2000, maxHeight, 200);
+            T3D.Point min = new T3D.Point(-2000, minHeight, -200);
 
             T3D.AABB box = new T3D.AABB(min, max);
-            TSD.Drawing drawing = _drawings.CreateGADrawing(name, 0.02, coords, box);
+            TSD.Drawing drawing = _drawings.CreateGADrawing(name, 0.02, coords, box,ViewPlacment.OTHER);
             _drawings.CreateHatch(drawing);
             _drawings.CreateDimsAlongGrids(drawing);
+            drawing.CreateDetailView(Model,Nodes.QueryPointsOnLine(LineDirection.InY,xCoord).SwitchCoords(LineDirection.InY),0.02,LineDirection.InY);
         }
-        private void CreateElevationAlongY(string name, double yCoord)
+        private void CreateElevationParallelX(string name, double yCoord)
         {
+            //Section is parallel toX
             Model.SetPlaneToGlobal();
             //Moving the transformation plane at each Grid in X-direction (Note: X-Axis beacomes X-Axis & Y-Axis becomes Z-Axis)
             T3D.CoordinateSystem coords = new T3D.CoordinateSystem(new T3D.Point(0, yCoord, 0), new T3D.Vector(1, 0, 0), new T3D.Vector(0, 0, 1));
@@ -317,14 +323,15 @@ namespace AUTRA.Tekla
             double minHeight = Data.Model.Grids.CZS[0] - 1000;
             double maxHeight = Data.Model.Grids.CZS[Data.Model.Grids.CZS.Count - 1] + 1000;
 
-            T3D.Point max = new T3D.Point(TotalX + 2000, maxHeight, 500);
-            T3D.Point min = new T3D.Point(-2000, minHeight, -500);
+            T3D.Point max = new T3D.Point(TotalX + 2000, maxHeight, 200);
+            T3D.Point min = new T3D.Point(-2000, minHeight, -200);
 
             T3D.AABB box = new T3D.AABB(min, max);
 
-            TSD.Drawing drawing = _drawings.CreateGADrawing(name, 0.02, coords, box);
+            TSD.Drawing drawing = _drawings.CreateGADrawing(name, 0.02, coords, box,ViewPlacment.OTHER);
             _drawings.CreateHatch(drawing);
             _drawings.CreateDimsAlongGrids(drawing);
+            drawing.CreateDetailView(Model, Nodes.QueryPointsOnLine(LineDirection.InX,yCoord).SwitchCoords(LineDirection.InX),0.02,LineDirection.InX);
 
         }
         #endregion
@@ -338,13 +345,14 @@ namespace AUTRA.Tekla
 
         public void CompressFolder()
         {
+            var zipPath = $@"D:\ITI\GraduationPoject\AUTRA\AUTRA\wwwroot\Outputs\plotfiles\{Data.ProjectProperties.Name}.zip";
             var path = Model.GetInfo().ModelPath;
             var folderName = string.Format($"{path}\\PlotFiles");
-            if(File.Exists($@"D:\ITI\GraduationProject\AUTRA\AUTRA\wwwroot\Outputs\plotfiles\{Data.ProjectProperties.Name}.zip"))
+            if (File.Exists(zipPath))
             {
-                File.Delete($@"D:\ITI\GraduationProject\AUTRA\AUTRA\wwwroot\Outputs\plotfiles\{Data.ProjectProperties.Name}.zip");
+                File.Delete(zipPath);
             }
-            ZipFile.CreateFromDirectory(folderName, $@"D:\ITI\GraduationProject\AUTRA\AUTRA\wwwroot\Outputs\plotfiles\{Data.ProjectProperties.Name}.zip");
+            ZipFile.CreateFromDirectory(folderName, zipPath);
         }
     }
 }

@@ -1,0 +1,38 @@
+page("TeklaStructures","")
+{
+   detail(1, "ColumnCrank")
+   {
+       tab_page("", " Picture ", 1)
+       {
+           picture("me_ColumnCrank-1.bmp", 127,432,40,20)
+           picture("me_ColumnStps.bmp", 150,324,260,165)
+           picture("me_ColumnNo.bmp", 130,114,260,30)
+
+           parameter("", "P5", distance, number, 35,75,70)
+           parameter("", "P14", distance, number, 35,440,70)
+	   attribute("space", "Spacings", label, "%s", no, none, "0.0", "0.0",540,170,100)
+           parameter("", "P41", distance, number, 540,205,70)
+           parameter("", "P42", distance, number, 540,350,70)
+           parameter("", "P43", distance, number, 540,485,70)
+           parameter("", "P4", distance, number, 185,550,70)
+           parameter("", "P37", integer, number, 235,85,30)
+           parameter("", "P36", integer, number, 330,7,30)
+           parameter("", "P1", distance, number, 450,130,70)
+           parameter("", "P46", distance, number, 425,205,70)
+           parameter("", "P47", distance, number, 425,485,70)
+       }
+       tab_page("", " Parameters ", 2)
+       {           
+	   attribute("Main_Bar", "Main Bar Attributes", label, "%s", no, none, "0.0", "0.0",10,1,50)           
+	   parameter("Size", "P23_size", rebar_size, text, 3)
+           parameter("Name", "P34", string, text, 2)
+           parameter("Class", "P35", integer, number, 4)
+           attribute("Stirrups", "Stirrups Attributes", label, "%s", no, none, "0.0", "0.0",10,125,100)
+           parameter("Name", "P39", string, text, 7)
+           parameter("Size", "P40_size", rebar_size, text, 8)
+           parameter("Bending Radius", "P40_radius", rebar_radius, text, 9)
+           parameter("Angle Of Hook", "P44", distance, number, 10)
+           parameter("Class", "P45", integer, number, 11)
+       }
+   }
+}

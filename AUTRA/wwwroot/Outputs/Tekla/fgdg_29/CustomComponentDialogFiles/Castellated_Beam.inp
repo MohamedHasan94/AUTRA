@@ -1,0 +1,25 @@
+page("Xsteel","")
+{
+   macro(1, "Castellated_Beam")
+   {
+       tab_page("", " Parameters", 1)
+       {
+           picture("Castellated_beam", 550,430)
+           parameter("", "P1", distance, number, 800,165,70)
+           parameter("", "P2", distance, number, 620,165,70)
+           parameter("", "P3", distance, number, 800,50,70)
+           parameter("", "P4", distance, number, 690,20,70)
+           parameter("", "P6", material, text, 350,445,100)
+           parameter("", "P7", integer, number, 350,475,100)
+           parameter("", "P8", distance, number, 90,170,70)
+           parameter("", "P9", distance, number, 340,20,70)
+           parameter("", "P10", distance, number, 240,20,70)
+           parameter("", "P11", distance, number, 145,20,70)
+           parameter("", "P12", integer, number, 550,335,100)
+           parameter("", "P13", string, text, 350,335,100)
+           parameter("", "P14", string, text, 350,365,100)
+           parameter("", "P15", integer, number, 550,365,100)
+           parameter("", "P16", string, text, 350,415,100)
+       }
+   }
+}

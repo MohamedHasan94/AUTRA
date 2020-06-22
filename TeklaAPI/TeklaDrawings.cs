@@ -46,10 +46,10 @@ namespace AUTRA.Tekla
             _handler.CloseActiveDrawing(true);
             return assembly;
         }
-        public TSD.Drawing CreateGADrawing(string name, double scale, T3D.CoordinateSystem coords, T3D.AABB boundingBox)
+        public TSD.Drawing CreateGADrawing(string name, double scale, T3D.CoordinateSystem coords, T3D.AABB boundingBox,ViewPlacment placement)
         {
             var drawing = _handler.CreateGASheet(name, "AUTRA");
-            var view = drawing.CreateView(coords, boundingBox, scale, drawing.Name, "AUTRA");
+            var view = drawing.CreateView(coords, boundingBox, scale, drawing.Name, "AUTRA",placement);
             if (drawing.PlaceViews())
                 _drawings.Add(drawing);
             return drawing;
@@ -58,7 +58,7 @@ namespace AUTRA.Tekla
         {
             //close and save any open drawing
             _handler.CloseActiveDrawing(true);
-            if (_handler.SetActiveDrawing(drawing))
+            if (_handler.SetActiveDrawing(drawing,false))
             {
                 //Get Drawing Parts from the sheet
                 List<TSD.Part> parts = drawing.GetSheet().GetAllObjects(typeof(TSD.Part)).ToIEnumerable().OfType<TSD.Part>().ToList(); //TODO:to be optimized using filter expressions
@@ -132,7 +132,7 @@ namespace AUTRA.Tekla
         public void CreateDimsAlongGrids(TSD.Drawing drawing)
         {
             _handler.CloseActiveDrawing(true);
-            if (_handler.SetActiveDrawing(drawing))
+            if (_handler.SetActiveDrawing(drawing,false))
             {
                 TSD.Grid grid = drawing.GetGrid(); //Get Grid Entity From Drawing sheet
                 List<TSD.GridLine> gridLines = grid.GetGridLines();
@@ -228,7 +228,7 @@ namespace AUTRA.Tekla
              * 5-Draw dimensions for beams in X and beams in Y
              */
             _handler.CloseActiveDrawing(true);
-            if (_handler.SetActiveDrawing(drawing))
+            if (_handler.SetActiveDrawing(drawing,false))
             {
                 var beams = drawing.GetSheet().GetAllObjects(typeof(TSD.Part))
                     .ToIEnumerable()
@@ -315,13 +315,13 @@ namespace AUTRA.Tekla
                 {
                     OutputType = TSD.DotPrintOutputType.PDF,                                                 //Type of Printer 
                     PaperSize = paperSize,                                                                   //Size of Paper
-                    ScalingMethod = TSD.DotPrintScalingType.Auto,                                              //Scaling Method*                                     
+                    ScalingMethod = TSD.DotPrintScalingType.Auto,                                            //Scaling Method*                                     
                     Orientation = TSD.DotPrintOrientationType.Landscape,                                     //Orientation of Paper 
                     ColorMode = TSD.DotPrintColor.BlackAndWhite,                                             //Print in Color or black and white
-                    PrintToMultipleSheet = TSD.DotPrintToMultipleSheet.Off,                                    //Whether to print to multiple sheets or not
+                    PrintToMultipleSheet = TSD.DotPrintToMultipleSheet.Off,                                  //Whether to print to multiple sheets or not
                     ScaleFactor = 1.0,                                                                       //scale factor          
                     NumberOfCopies = 1,                                                                      //Number of Copies              
-                    OutputFileName = $"{_model.GetInfo().ModelPath}/PlotFiles/{drawing.Name}.pdf",                    //Output File Name 
+                    OutputFileName = $"{_model.GetInfo().ModelPath}/PlotFiles/{drawing.Name}.pdf",            //Output File Name 
                     OpenFileWhenFinished = false                                                              //Open file when printing is finished 
                 };
                 result = _handler.PrintDrawing(drawing, attrs);

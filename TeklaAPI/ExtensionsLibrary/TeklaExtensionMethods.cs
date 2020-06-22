@@ -71,9 +71,7 @@ namespace AUTRA.Tekla
         }
         #endregion
 
-        #region  Beam
-       
-        #endregion
+        
 
 
     }

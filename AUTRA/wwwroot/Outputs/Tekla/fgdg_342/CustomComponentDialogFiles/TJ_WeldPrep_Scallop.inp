@@ -1,0 +1,31 @@
+page("TeklaStructures","")
+{
+   detail(1, "TJ_WeldPrep_Scallop")
+   {
+       tab_page("", "j_rat_holes", 1)
+       {
+           picture("TJ_BeamScallop_General",270,150,150,100)
+           parameter(" j_root_face", "ScallopSize", distance, number, 80, 195, 60)
+           attribute("ScallopShape", "", option,"%s",  none, none, "0.0", "0.0", 221, 172, 160)
+           {
+             value("TJ_BeamScallop_Square.xbm", 0)
+             value("TJ_BeamScallop_Snip.xbm", 0)
+             value("TJ_BeamScallop_Round.xbm",  1)
+           }
+
+           attribute("j_Rat_Hole_At_Top", "j_Rat_Hole_At_Top", label, "%s",  none, none, "0.0", "0.0", 500, 65)
+           parameter("", "ScallopTopCreate", YesNo, number, 500, 95, 100, "toggle_field:UflgOffset=1;")
+
+           parameter(" j_weld_gap", "UflgOffset", distance, number, 540, 160, 60)
+           parameter(" j_weld_gap", "LflgOffset", distance, number, 540, 235, 60)
+
+           parameter("", "ScallopBottomCreate", YesNo, number, 500, 300, 100, "toggle_field:LflgOffset=1;")
+           attribute("j_Rat_Hole_At_Bottom", "j_Rat_Hole_At_Bottom", label, "%s",  none, none, "0.0", "0.0", 500, 330)
+
+           attribute("1.", "1.", label2, "%s",  none, none, "0.0", "0.0", 80, 350)
+           attribute("prompt_Pick_main_part", "prompt_Pick_main_part", label, "%s",  none, none, "0.0", "0.0", 100, 350)
+           attribute("2.", "2.", label2, "%s",  none, none, "0.0", "0.0", 80, 375)
+           attribute("prompt_Pick_position", "prompt_Pick_position", label, "%s",  none, none, "0.0", "0.0", 100, 375)
+       }
+   }
+}

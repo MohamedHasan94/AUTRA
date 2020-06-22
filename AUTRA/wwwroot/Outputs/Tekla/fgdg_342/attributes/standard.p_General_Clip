@@ -1,0 +1,14 @@
+joint_attributes.saveas_file "standard"
+joint_attributes.get_menu "standard"
+joint_attributes.name_enable 0
+joint_attributes.ThirdHandle 0
+joint_attributes.AtDepthValue 0.000000
+joint_attributes.AtDepth 0
+joint_attributes.RotationValue 0.000000
+joint_attributes.Rotation 0
+joint_attributes.OnPlaneValue -0.000000
+joint_attributes.OnPlane 2
+joint_attributes.CLProf "3*100"
+joint_attributes.CLSlotDia 25.000000
+joint_attributes.CLSlotLength 100.000000
+joint_attributes.CLLength 200.000000

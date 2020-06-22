@@ -1,0 +1,23 @@
+joint_attributes.saveas_file "standard"
+joint_attributes.get_menu "< Defaults >"
+joint_attributes.name_enable 1
+joint_attributes.rz_type 272647168
+joint_attributes.ry_type 272647168
+joint_attributes.rx_type 272647168
+joint_attributes.uz_type 272647168
+joint_attributes.uy_type 272647168
+joint_attributes.ux_type 272647168
+joint_attributes.support_condition 272647168
+joint_attributes.restraint_comb 1737418240
+joint_attributes.restraints_sec 0
+joint_attributes.use_restraints 0
+joint_attributes.ac_root ""
+joint_attributes.ad_root ""
+joint_attributes.joint_code ""
+joint_attributes.group_no 0
+joint_attributes.OBJECT_LOCKED 0
+joint_attributes.zang2 0.000000
+joint_attributes.zang1 0.000000
+joint_attributes.zsuunta 7
+joint_attributes.P3 15.000000
+joint_attributes.P4 1

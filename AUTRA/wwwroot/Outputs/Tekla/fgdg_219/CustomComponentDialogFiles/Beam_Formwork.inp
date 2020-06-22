@@ -1,0 +1,54 @@
+page("TeklaStructures","")
+{
+   detail(1, "Beam_Formwork")
+   {
+       tab_page("", "j_beam", 1)
+       {
+           picture("Tekla_Beam_Form2", 450,170,100,50)
+           profile("j_Bottom_Profile", MBFBProf, MBFBMark, MBFBMat, , MBFBName,13)
+           profile("j_Side_Profile", MBFSProf, MBFSMark, MBFSMat, , MBFSName,14)
+           profile("j_Bottom_Support", MBFBSProf, MBFBSMark, MBFBSMat, , MBFBSName,15)
+           profile("j_Side_Support", MBFSSProf, MBFSSMark, MBFSSMat, , MBFSSName,16)
+           attribute(" ","j_class",label,"%s",none,none,"0","0", 840,290)
+           parameter("", "MBFBClass", integer, number, 840,310,80)
+           parameter("", "MBFSClass", integer, number, 840,335,80)
+           parameter("", "MBFBSClass", integer, number, 840,360,80)
+           parameter("", "MBFSSClass", integer, number, 840,385,80)
+           parameter("", "MBFSSSpacing", distance, number, 70,60,80)
+           parameter("", "MBFBS1stDist", distance, number, 80,250,80)
+           parameter("", "MBFBSSpacing", distance, number, 190,250,80)
+           parameter("", "MBFBLength", distance, number, 550,250,80)
+           picture("line", 457,10,10,420)
+           attribute(" ","j_beam",label,"%s",none,none,"0","0", 20,465)
+           attribute(" ","j_name",label,"%s",none,none,"0","0", 150,440)
+           attribute(" ","j_prefix",label,"%s",none,none,"0","0", 350,440)
+           attribute(" ","j_Start_number",label,"%s",none,none,"0","0", 490,440)
+           parameter("", "MBFAssPrefix", string, text, 350,465,80)
+           parameter("", "MBFAssStart", integer, number, 490,465,80)
+           parameter("", "MBFAssName", string, text, 150,465,150)
+           parameter("", "MBFLength", distance, number, 270,30,80)
+       }
+       tab_page("", "j_Parameters", 2)
+       {
+           picture("Tekla_Beam_Ties", 450,250,100,50)
+           parameter("", "MBFTDist1", distance, number, 90,330,80)
+           parameter("", "MBFTSpacing", distance, number, 210,330,80)
+           parameter("", "MBFTBtmDist", distance, number, 720,290,80)
+           parameter("", "MBFTVertSpacing", distance_list, text, 720,250,200)
+           parameter("", "MBFTQty", integer, number, 720,220,80)
+           parameter("j_Tie_Component_Name", "MBFT1_name", ComponentName, text, 18)
+           parameter("j_Tie_Attribute_File", "MBFT1_attrfile", ComponentAttributeFile, text, 19)
+           parameter("j_Clip_Component_Name", "MBFT2_name", ComponentName, text, 20)
+           parameter("j_Clip_Attribute_File", "MBFT2_attrfile", ComponentAttributeFile, text, 21)
+           profile("j_Whaler_Profile", MBFWProf, MBFWMark, MBFWMat, , MBFWName,16)
+           attribute(" ","j_class",label,"%s",none,none,"0","0", 840,360)
+           parameter("", "MBFWClass", integer, number, 840,380,80)
+           parameter("", "MBFWExt", distance_list, text, 670,140,80)
+       }
+       tab_page("", "j_input_example", 3)
+       {
+           picture("Tekla_Beam_Form_Input", 450,100,100,50)
+           attribute(" ","j_1_Select_Beam",label,"%s",none,none,"0","0", 20,200)
+       }
+   }
+}

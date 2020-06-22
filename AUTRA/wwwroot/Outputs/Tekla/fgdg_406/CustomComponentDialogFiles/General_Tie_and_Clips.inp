@@ -1,0 +1,21 @@
+page("TeklaStructures","")
+{
+   macro(1, "General_Tie_and_Clips")
+   {
+       tab_page("", "j_Parameters", 1)
+       {
+           picture("Tekla_Tie_Clip", 320,80,100,50)
+           parameter("", "CLTClipDist", distance, number, 100,30,80)
+           parameter("j_Tie_Component_Name", "CLTTie_name", ComponentName, text, 10)
+           parameter("j_Tie_Attribute_File", "CLTTie_attrfile", ComponentAttributeFile, text, 11)
+           parameter("j_Clip_Component_Name", "CLTClip_name", ComponentName, text, 12)
+           parameter("j_Clip_Attribute_File", "CLTClip_attrfile", ComponentAttributeFile, text, 13)
+       }
+       tab_page("", "j_input_example", 2)
+       {
+           picture("Tekla_Tie_Clip_Input", 150,150,100,50)
+           attribute(" ","j_1_Select_Input_point_1",label,"%s",none,none,"0","0", 20,300)
+           attribute(" ","j_2_Select_Input_point_2",label,"%s",none,none,"0","0", 20,320)
+       }
+   }
+}

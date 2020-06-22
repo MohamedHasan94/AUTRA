@@ -1,0 +1,18 @@
+page("TeklaStructures","")
+{
+   detail(1, "TJ_WeldPrep_Web_K")
+   {
+       tab_page("", "j_weld_preps_for_web", 1)
+       {
+           picture("TJ_BeamWeldPrepWebK1",120,120,150,100)
+           parameter(" jd_weld_Angle", "PrepAngle", angle, number, 260, 72, 60)
+           parameter(" j_weld_gap", "PrepRootGap", distance, number, 170, 72, 60)
+           parameter(" j_root_face", "PrepRootFace", distance, number, 80, 160, 60)
+
+           attribute("1.", "1.", label2, "%s",  none, none, "0.0", "0.0", 80, 350)
+           attribute("prompt_Pick_main_part", "prompt_Pick_main_part", label, "%s",  none, none, "0.0", "0.0", 100, 350)
+           attribute("2.", "2.", label2, "%s",  none, none, "0.0", "0.0", 80, 375)
+           attribute("prompt_Pick_position", "prompt_Pick_position", label, "%s",  none, none, "0.0", "0.0", 100, 375)
+       }
+   }
+}

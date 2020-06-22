@@ -1,0 +1,52 @@
+page("TeklaStructures","")
+{
+   detail(1, "Wall_Formwork")
+   {
+       tab_page("", "j_Panel", 1)
+       {
+           picture("Tekla_Wall_Panel2", 450,320,100,50)
+           parameter("", "MWFPanelHeight", distance, number, 50,230,80)
+           parameter("", "MWFDist1stStud", distance, number, 130,30,80)
+           parameter("", "MWFPStudSpacing", distance, number, 250,30,80)
+           parameter("", "MWFPNotch", distance, number, 600,30,80)
+           profile("j_Edge_Profile", MWFEProf, MWFEMark, MWFEMat, , MWFEName,20)
+           profile("j_Stud_Profile", MWFSProf, MWFSMark, MWFSMat, , MWFSName,21)
+           profile("j_Plywood_Profile", MWFPProf, MWFPMark, MWFPMat, , MWFPName,22)
+           attribute(" ","j_class",label,"%s",none,none,"0","0", 840,460)
+           parameter("", "MWFEClass", integer, number, 840,480,80)
+           parameter("", "MWFSClass", integer, number, 840,506,80)
+           parameter("", "MWFPClass", integer, number, 840,530,80)
+           picture("line", 457,10,10,580)
+           attribute(" ","j_panel",label,"%s",none,none,"0","0", 20,625)
+           attribute(" ","j_name",label,"%s",none,none,"0","0", 150,600)
+           attribute(" ","j_prefix",label,"%s",none,none,"0","0", 350,600)
+           attribute(" ","j_Start_number",label,"%s",none,none,"0","0", 490,600)
+           parameter("", "MWFPanelPrefix", string, text, 350,625,80)
+           parameter("", "MWFPStartno", integer, number, 490,625,80)
+           parameter("", "MWFPanelName", string, text, 150,625,150)
+           parameter("", "MWFLength", distance, number, 340,430,80)
+       }
+       tab_page("", "j_Parameters", 2)
+       {
+           picture("Tekla_Wall_Panel_Ties", 450,250,100,50)
+           parameter("j_Clip_Component_Name", "Clip_name", ComponentName, text, 18)
+           parameter("j_Clip_Attribute_File", "Clip_attrfile", ComponentAttributeFile, text, 19)
+           parameter("j_Tie_Component_Name", "Tie_name", ComponentName, text, 20)
+           parameter("j_Tie_Attribute_File", "Tie_attrfile", ComponentAttributeFile, text, 21)
+           parameter("", "MWFTie1stDist", distance, number, 90,330,80)
+           parameter("", "MWFTieSpacing", distance, number, 210,330,80)
+           parameter("", "MWFBtmDist", distance, number, 720,290,80)
+           parameter("", "MWFTieQty", integer, number, 720,220,80)
+           parameter("", "MWFTieVertSpacing", distance_list, text, 720,250,200)
+           profile("j_Whaler_Profile", MWFWProf, MWFWMark, MWFWMat, , MWFWName,16)
+           attribute(" ","j_class",label,"%s",none,none,"0","0", 840,360)
+           parameter("", "MWFWClass", integer, number, 840,380,80)
+           parameter("", "MWFExt", distance, number, 670,40,80)
+       }
+       tab_page("", "j_input_example", 3)
+       {
+           picture("Tekla_Wall_Input", 450,160,100,50)
+           attribute(" ","j_1_Select_Wall",label,"%s",none,none,"0","0", 20,200)
+       }
+   }
+}

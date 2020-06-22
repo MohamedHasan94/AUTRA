@@ -36,6 +36,7 @@ namespace TeklaAPIHandler
             }
             stopwatch.Stop();
             Console.WriteLine(stopwatch.ElapsedMilliseconds);
+            Console.ReadLine();
         }
     }
 }

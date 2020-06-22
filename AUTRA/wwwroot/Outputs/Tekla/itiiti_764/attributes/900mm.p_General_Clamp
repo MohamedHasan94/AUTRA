@@ -1,0 +1,13 @@
+joint_attributes.saveas_file "900mm"
+joint_attributes.get_menu "900mm"
+joint_attributes.name_enable 0
+joint_attributes.ThirdHandle 0
+joint_attributes.AtDepthValue 0.000000
+joint_attributes.AtDepth 0
+joint_attributes.RotationValue -0.000000
+joint_attributes.Rotation 1
+joint_attributes.OnPlaneValue 0.000000
+joint_attributes.OnPlane 0
+joint_attributes.TGCCutQty 14
+joint_attributes.TGCCutDist 300.000000
+joint_attributes.TGCLength 900.000000

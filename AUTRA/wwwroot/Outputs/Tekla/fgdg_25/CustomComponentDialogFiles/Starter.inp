@@ -1,0 +1,33 @@
+page("TeklaStructures","")
+{
+   joint(1, "Starter")
+   {
+       tab_page("", " Picture ", 1)
+       {
+           picture("me_Starter-1.bmp", 294,326,50,20)
+	   picture("me_Starter-2.bmp", 130,114,450,70)	   
+
+	   parameter("", "P11", integer, number, 410,125,40)
+	   parameter("", "P9", integer, number, 520,40,40)
+	   parameter("", "P12", distance, number, 600,195,70)
+           parameter("", "P1", distance, number, 475,372,70)
+           parameter("", "P2", distance, number, 320,415,70)
+	   parameter("", "P4", distance, number, 110,150,70)
+       }
+
+       tab_page("", " Parameters ", 2)
+       {
+           attribute("Main_Bar", "Main Bar Attributes", label, "%s", no, none, "0.0", "0.0",10,1,50)
+	   parameter("Size", "P5_size", rebar_size, text, 3)
+           parameter("Name", "P6", string, text, 2)
+           parameter("Class", "P7", integer, number, 5)
+           parameter("Bending Radius", "P5_radius", rebar_radius, text, 4)
+           attribute("Stirrups", "Stirrups Attributes", label, "%s", no, none, "0.0", "0.0",10,160,100)
+	   parameter("Name", "P16", string, text, 8) 
+	   parameter("Size", "P17_size", rebar_size, text, 9)
+           parameter("Bending Radius", "P17_radius", rebar_radius, text, 10)
+           parameter("Class", "P18", integer, number, 11)  
+           parameter("No. of Stirrups", "P19", integer, number, 12)       
+       }
+   }
+}

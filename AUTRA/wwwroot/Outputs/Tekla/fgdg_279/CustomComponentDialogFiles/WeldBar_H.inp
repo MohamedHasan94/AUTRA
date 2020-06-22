@@ -1,0 +1,42 @@
+page("TeklaStructures","")
+{
+    detail(1, "WeldBar_H")
+    {
+        tab_page("", "jd_Picture", 1)
+        {
+            profile("j_Weld_back_bar", BarProf, BarMark, BarMat, , BarName)
+            parameter("j_weld_prep_for_backing_bar", BarWeld, YesNo, number, 3)
+
+            picture("WeldBar_H", 100, 150, 400, 75)
+            parameter(" j_offset", "BarOffset", distance, number, 400, 240, 60)
+
+            attribute("LengthType", "", option,"%s",  none, none,  "0.0", "0.0", 148, 120, 150)
+            {
+                value("xs_joint_135_plate_extend.xbm", 1)
+                value("xs_joint_135_plate_length.xbm", 0)
+            }
+            parameter("", L, distance, number, 170, 170, 100)
+
+            attribute("", "albl_UpperFlange", label,"%s",  none, none, "0.0", "0.0",650,75)
+            parameter("", "UflgCreate", YesNo, number, 650, 100, 100, "toggle_field:UflgInOut=1")
+            attribute("UflgInOut", "", option,"%s",  none, none, "0.0", "0.0", 650, 130, 160)
+            {
+                value("backer_bar_yes.xbm", 1)
+                value("backer_bar_out.xbm", 0)
+            }
+
+            attribute("", "albl_LowerFlange", label,"%s",  none, none, "0.0", "0.0", 650, 200)
+            parameter("", "LflgCreate", YesNo, number, 650, 225, 100, "toggle_field:LflgInOut=1")
+            attribute("LflgInOut", "", option,"%s",  none, none, "0.0", "0.0", 650, 255, 160)
+            {
+                value("lbacker_bar_yes.xbm", 1)
+                value("lbacker_bar_out.xbm", 0)
+            }
+
+            attribute("1.", "1.", label2, "%s",  none, none, "0.0", "0.0", 80, 350)
+            attribute("prompt_Pick_main_part", "prompt_Pick_main_part", label, "%s",  none, none, "0.0", "0.0", 100, 350)
+            attribute("2.", "2.", label2, "%s",  none, none, "0.0", "0.0", 80, 375)
+            attribute("prompt_Pick_position", "prompt_Pick_position", label, "%s",  none, none, "0.0", "0.0", 100, 375)
+        }
+    }
+}

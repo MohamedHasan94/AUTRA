@@ -1,0 +1,25 @@
+page("TeklaStructures","")
+{
+   detail(1, "Fire-Proofing")
+   {
+       tab_page("", " Fireproofing ", 1)
+       {
+ 	   picture("IND_Fireproof",300,150,75,65)
+         picture("jbp_bs_hor_line_1", 200, 5, 450, 230)
+	   picture("jbp_bs_hor_line_1", 200, 5, 25, 230)    
+           picture("jbp_bs_hor_line_1", 200, 5, 225, 230)
+
+	   picture("jbp_bs_hor_line_1", 200, 5, 450, 55)    
+           picture("jbp_bs_hor_line_1", 200, 5, 25, 55)             
+           picture("jbp_bs_hor_line_1", 200, 5, 225, 55)
+
+           parameter("Fire Proofing Type (1,2,3,4,5,6)", "P14", integer, number, 10)					
+           parameter("Name", "P12", string, text, 11)
+           parameter("Material", "P13", material, text, 12)
+           parameter("Class (Color)", "P7", integer, number, 13)
+           parameter("Fireproofing Thk.", "P8", distance, number, 14)
+           parameter("Fireproofing Length", "P10", distance, number, 15)
+	 }
+
+      }
+}

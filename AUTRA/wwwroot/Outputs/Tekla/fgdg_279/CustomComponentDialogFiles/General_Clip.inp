@@ -1,0 +1,22 @@
+page("TeklaStructures","")
+{
+   macro(1, "General_Clip")
+   {
+       tab_page("", "j_Parameters", 1)
+       {
+           picture("Tekla_General_Clip", 320,80,100,50)
+           parameter("", "CLLength", distance, number, 250,30,80)
+           parameter("", "CLSlotLength", distance, number, 250,200,80)
+           parameter("", "CLSlotDia", distance, number, 50,150,80)
+           profile("j_Clip_Profile", CLProf, CLMark, CLMat, , CLName,10)
+           attribute(" ","j_class",label,"%s",none,none,"0","0", 840,220)
+           parameter("", "CLClass", integer, number, 840,240,80)
+       }
+       tab_page("", "j_input_example", 2)
+       {
+           picture("Tekla_General_Clip_Input", 320,80,100,50)
+           attribute(" ","j_1_Select_Input_point_1",label,"%s",none,none,"0","0", 20,300)
+           attribute(" ","j_2_Select_Input_point_2",label,"%s",none,none,"0","0", 20,320)
+       }
+   }
+}

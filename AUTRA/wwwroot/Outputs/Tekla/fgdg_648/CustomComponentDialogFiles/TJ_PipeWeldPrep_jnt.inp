@@ -1,0 +1,31 @@
+page("TeklaStructures","")
+{
+   joint(1, "TJ_PipeWeldPrep_jnt")
+   {
+       helpurl("TKKComponentHelp.chm::/TJ_PipeWeldPrep.html")
+       tab_page("", "j_Weld_Prep", 1)
+       {
+           attribute("Prof_Type", "", option,"%s",  none, none, "0.0", "0.0", 300, 50, 160)
+           {
+             value("j_auto", 1)
+             value("albl_Round_tube_profiles", 0)
+             value("albl_Square_tube_profiles",  0)
+           }
+           picture("TJ_PipeWeldPrep_jnt",320,111,100,100)
+           parameter(" jd_weld_Angle", "Prep_Ang", distance, number, 550, 150, 60)
+           parameter(" jd_weld_Root_opening", "RootGap", distance, number, 50, 180, 60)
+           parameter(" jd_weld_RFT", "RootFace", distance, number, 410, 230, 60)
+
+           attribute("j_Weld_back_bar", "j_Weld_back_bar", label, "%s",  none, none, "0.0", "0.0", 80, 350)
+           parameter("", "Comp1_create", YesNo, number, 80, 375, 100, "toggle_field:Comp1_name=1;Comp1_attrfile=1;Comp1_offset=1;")
+           parameter("albl_Component_name", "Comp1_name", ComponentName, text, 16)
+           parameter("albl_Component_attribute_file", "Comp1_attrfile", ComponentAttributeFile, text, 17)
+           parameter("albl_Offset", "Comp1_offset", distance, number, 18)
+
+           attribute("1.", "1.", label2, "%s",  none, none, "0.0", "0.0", 80, 350)
+           attribute("prompt_Pick_main_part", "prompt_Pick_main_part", label, "%s",  none, none, "0.0", "0.0", 100, 350)
+           attribute("2.", "2.", label2, "%s",  none, none, "0.0", "0.0", 80, 375)
+           attribute("prompt_Pick_secondary_part", "prompt_Pick_secondary_part", label, "%s",  none, none, "0.0", "0.0", 100, 375)
+       }
+   }
+}

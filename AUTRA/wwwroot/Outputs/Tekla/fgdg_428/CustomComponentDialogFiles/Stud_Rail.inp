@@ -1,0 +1,26 @@
+page("TeklaStructures","")
+{
+   macro(1, "Stud_Rail")
+   {
+       tab_page("", " Plate Info ", 1)
+       {
+	     picture("me_Stud_Rail_1_CC",225,400,0,0)
+           parameter("Plate Name", "P8", string, text, 13)
+           parameter("Plate Finish", "P9", string, text, 14)
+           parameter("Plate Class", "P10", integer, number, 15)
+           parameter("", "P13", distance, number, 284,177,75)
+           parameter("", "P14", distance, number, 150,225,75)
+       }
+	 tab_page("", " Stud Info ", 2)
+	 {
+	     picture("me_Stud_Rail_2_CC",500,400,0,0)
+           parameter("", "P1", distance, number, 150,55,65)
+           parameter("", "P3", integer, number, 260,55,35)
+           parameter("", "P4", distance, number, 365,55,65)	
+           parameter("", "P2", distance, number, 470,55,65)
+           parameter("", "P11_Stud_size", stud_size, number, 315,450,65)
+           parameter("", "P11_Stud_length", stud_length, number, 430,350,75)
+           parameter("Stud Standard", "P11_Stud_standard", stud_standard, text, 19)
+	 }
+   }
+}

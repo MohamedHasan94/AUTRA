@@ -6,6 +6,7 @@ using System.Threading.Tasks;
 using System.Diagnostics;
 using AUTRA.Tekla;
 using System.IO.Compression;
+using System.IO;
 
 namespace TeklaAPIHandler
 {
@@ -15,7 +16,8 @@ namespace TeklaAPIHandler
         {
             Stopwatch stopwatch = new Stopwatch();
             stopwatch.Start();
-            //string path = @"D:\ITI\GraduationPoject\AUTRA\AUTRA\wwwroot\Inputs\ToTekla05.json";
+            //string path = @"D:\ITI\GraduationPoject\AUTRA\AUTRA\wwwroot\Inputs\ToTekla05.json"; "../AUTRA/wwwroot/Inputs/ToTekla.json"
+            //string path = "../../../AUTRA/wwwroot/Inputs/ToTekla.json";
             //var data = Reader.Read<TeklaModelData>(path/*args[0]*/);
             //AUTRATekla.InitTekla(data);
             if (args.Length > 0)
@@ -23,9 +25,10 @@ namespace TeklaAPIHandler
                 Console.WriteLine("Running tekla.....");
                 try
                 {
+                    string solutionDir = Directory.GetParent(Directory.GetCurrentDirectory()).FullName;
                     var data = Reader.Read<TeklaModelData>(args[0]);
+                    Console.WriteLine("Data read successfully******");
                     AUTRATekla.InitTekla(data);
-
                 }
                 catch (Exception e)
                 {
@@ -36,7 +39,6 @@ namespace TeklaAPIHandler
             }
             stopwatch.Stop();
             Console.WriteLine(stopwatch.ElapsedMilliseconds);
-            Console.ReadLine();
         }
     }
 }

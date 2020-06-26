@@ -54,7 +54,7 @@ namespace AUTRA.Controllers
             string userId = User.FindFirst(ClaimTypes.NameIdentifier).Value;
             var owner = _context.Projects.Find(userId, project.ProjectProperties.Name).Owner;
             stopwatch.Start();
-            AUTRA.Init(project, @"D:\ITI\GraduationProject\AUTRA\AUTRA\wwwroot\Inputs\ToTekla05.json", owner); //Harded coded path and where tekla save also hardcoded=> in AUTRA.Tekla=>Project=>project=> Init
+            AUTRA.Init(project, "../AUTRA/wwwroot/Inputs/ToTekla.json", owner); //Harded coded path and where tekla save also hardcoded=> in AUTRA.Tekla=>Project=>project=> Init
             stopwatch.Stop();
             string response = JsonConvert.SerializeObject(project, new JsonSerializerSettings
             {
@@ -97,7 +97,7 @@ namespace AUTRA.Controllers
         [HttpPost]
         public bool Model() //Model on Tekla
         {
-            return AUTRA.InitTekla(@"D:\ITI\GraduationProject\AUTRA\AUTRA\wwwroot\Inputs\ToTekla05.json");
+            return AUTRA.InitTekla("../AUTRA/wwwroot/Inputs/ToTekla.json");
         }
     }
 }

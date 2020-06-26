@@ -65,10 +65,13 @@ namespace AUTRA.Tekla
         public bool Init()
         {
             Random r = new Random();
-            string modelfolder = @"D:\ITI\GraduationPoject\AUTRA\AUTRA\wwwroot\Outputs\Tekla\";//TODO:To be changed
+            string solutionDir = Directory.GetParent(Directory.GetCurrentDirectory()).FullName;
+            string modelFolder = Path.Combine(solutionDir, "AUTRA/wwwroot/Outputs/Tekla/");
+            Console.WriteLine("in Init() in Project ");
+            Console.WriteLine("modelFolder is : {0}", modelFolder);
             _modelHandler = new TSM.ModelHandler();
             _modelHandler.Save();
-            if(_modelHandler.CreateNewSingleUserModel($"{Data.ProjectProperties.Name}_{r.Next(0,1000)}", modelfolder) &&
+            if(_modelHandler.CreateNewSingleUserModel($"{Data.ProjectProperties.Name}_{r.Next(0,1000)}", modelFolder) &&
                 _modelHandler.Save())
             {
                 return true;
@@ -345,7 +348,10 @@ namespace AUTRA.Tekla
 
         public void CompressFolder()
         {
-            var zipPath = $@"D:\ITI\GraduationPoject\AUTRA\AUTRA\wwwroot\Outputs\plotfiles\{Data.ProjectProperties.Name}.zip";
+            string solutionDir = Directory.GetParent(Directory.GetCurrentDirectory()).FullName;
+            var zipPath = Path.Combine(solutionDir, $"AUTRA/wwwroot/Outputs/plotfiles/{Data.ProjectProperties.Name}.zip");
+            Console.WriteLine("In CompressFolder() in Project");
+            Console.WriteLine("zipPath is {0}", zipPath);
             var path = Model.GetInfo().ModelPath;
             var folderName = string.Format($"{path}\\PlotFiles");
             if (File.Exists(zipPath))

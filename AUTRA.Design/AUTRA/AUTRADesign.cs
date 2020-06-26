@@ -90,7 +90,7 @@ namespace AUTRA.Design
             MainGroups = Analysis.InitBeamsForDesign(Project.MainBeams);
             MainGroups.ForEach(g => DesignGroup(g));
 
-            Section colSection = ColumnsGroup.DesignValues.CriticalElement.Section;
+            Section colSection = ColumnsGroup.Section;
             bool columnResult = false;
             while (!columnResult)
             {
@@ -103,6 +103,7 @@ namespace AUTRA.Design
                         throw new Exception("No bigger section");
                     }
                 }
+                ColumnsGroup.Section = colSection;
             }
 
             Project.SecondaryBeams.Sort(FrameElement.SortByID<Beam>());

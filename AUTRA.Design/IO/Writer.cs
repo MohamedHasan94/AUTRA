@@ -10,6 +10,7 @@ namespace AUTRA.Design
     {
         public static void Write<T>(T data,string path)
         {
+            //string path1 = "../AUTRA/wwwroot/Inputs/ToTekla.json";
             var jsonToWrite = JsonConvert.SerializeObject(data, Formatting.Indented);
             using (var writer = new StreamWriter(path))
             {

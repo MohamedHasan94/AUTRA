@@ -92,13 +92,21 @@ namespace AUTRA
         }
         public static bool InitTekla(string path)
         {
-            var p = new Process();
-            p.StartInfo = new ProcessStartInfo(@"D:\ITI\GraduationPoject\AUTRA\TeklaAPIHandler\bin\Debug\TeklaAPIHandler.exe", path)
+            using (var p = new Process())
             {
-                UseShellExecute = true
-            };
-            p.Start();
-            p.WaitForExit();
+
+                string st = "TeklaAPIHandler\\bin\\Debug\\TeklaAPIHandler.exe";
+                string solutionDir = Directory.GetParent(Directory.GetCurrentDirectory()).FullName;
+                string processPath = Path.Combine(solutionDir, st);
+                p.StartInfo = new ProcessStartInfo(processPath, path)
+                {
+                    UseShellExecute = true,
+                };
+                p.StartInfo.RedirectStandardOutput = false;
+                p.Start();
+                p.WaitForExit();
+            }
+
             return true;
         }
         #region Helper Methods
